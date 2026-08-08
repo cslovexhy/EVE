@@ -1,0 +1,166 @@
+"""EVE - Order System: Click class button, then click building."""
+
+import pygame
+from models import MemberClass, OrderAction, Order
+import config
+
+
+# Button layout at bottom of screen
+BUTTON_Y = config.SCREEN_HEIGHT - 70
+BUTTON_HEIGHT = 50
+BUTTON_WIDTH = 120
+BUTTON_GAP = 12
+BUTTON_START_X = (config.SCREEN_WIDTH - (5 * BUTTON_WIDTH + 4 * BUTTON_GAP)) // 2
+
+
+class ClassButton:
+    """A clickable class selection button."""
+    
+    def __init__(self, index: int, label: str, member_class: MemberClass = None):
+        """member_class=None means 'All' (all classes)."""
+        self.label = label
+        self.member_class = member_class
+        self.rect = pygame.Rect(
+            BUTTON_START_X + index * (BUTTON_WIDTH + BUTTON_GAP),
+            BUTTON_Y,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+        )
+        self.hovered = False
+        self.selected = False
+    
+    @property
+    def color(self):
+        if self.member_class is None:
+            return config.WHITE
+        return {
+            MemberClass.ENFORCER: config.ENFORCER_COLOR,
+            MemberClass.SNIPER: config.SNIPER_COLOR,
+            MemberClass.ASSASSIN: config.ASSASSIN_COLOR,
+            MemberClass.DEMOLITIONIST: config.DEMO_COLOR,
+        }[self.member_class]
+
+
+# Build the 5 buttons
+CLASS_BUTTONS = [
+    ClassButton(0, "[⎵] All", None),
+    ClassButton(1, "[E] Enf", MemberClass.ENFORCER),
+    ClassButton(2, "[A] Ass", MemberClass.ASSASSIN),
+    ClassButton(3, "[S] Sni", MemberClass.SNIPER),
+    ClassButton(4, "[D] Dem", MemberClass.DEMOLITIONIST),
+]
+
+
+class OrderSystem:
+    """Mouse-click order flow: select class → click building."""
+    
+    def __init__(self):
+        self.selected_class = None  # None means nothing selected; "all" means all classes
+        self.selected_button = None  # Reference to the selected ClassButton
+        self.order_history = []
+        self.hovered_building = None  # (empire: "player"/"enemy", index: int)
+    
+    def update(self, dt: float):
+        """Update (no-op, kept for interface compatibility)."""
+        pass
+    
+    @property
+    def can_issue_order(self) -> bool:
+        return True
+    
+    @property
+    def has_class_selected(self) -> bool:
+        return self.selected_button is not None
+    
+    def handle_mouse_move(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list):
+        """Update hover state for buttons and buildings."""
+        mx, my = mouse_pos
+        
+        # Update button hover
+        for btn in CLASS_BUTTONS:
+            btn.hovered = btn.rect.collidepoint(mx, my)
+        
+        # Update building hover (only if a class is selected)
+        self.hovered_building = None
+        if self.has_class_selected:
+            for b in player_buildings:
+                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                    self.hovered_building = ("player", b.index)
+                    return
+            for b in enemy_buildings:
+                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                    self.hovered_building = ("enemy", b.index)
+                    return
+    
+    def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list) -> Order:
+        """Handle a mouse click. Returns an Order if one was completed, else None."""
+        mx, my = mouse_pos
+        
+        # Check class buttons
+        for btn in CLASS_BUTTONS:
+            if btn.rect.collidepoint(mx, my):
+                self._select_button(btn)
+                return None
+        
+        # Check building click (only if class is selected)
+        if not self.has_class_selected:
+            return None
+        
+        # Check player buildings → defend
+        for b in player_buildings:
+            if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                return self._create_order(b.index, OrderAction.DEFEND)
+        
+        # Check enemy buildings → attack
+        for b in enemy_buildings:
+            if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                return self._create_order(b.index, OrderAction.ATTACK)
+        
+        return None
+    
+    def _select_button(self, btn: ClassButton):
+        """Select a class button (no deselect on repeat click)."""
+        if self.selected_button == btn:
+            return  # Already selected, do nothing
+        
+        # Deselect old
+        if self.selected_button:
+            self.selected_button.selected = False
+        
+        # Select new
+        btn.selected = True
+        self.selected_button = btn
+        self.selected_class = btn.member_class  # None = "all"
+    
+    def select_button_by_index(self, index: int):
+        """Select a class button by index (for keyboard shortcuts)."""
+        if 0 <= index < len(CLASS_BUTTONS):
+            self._select_button(CLASS_BUTTONS[index])
+    
+    def _create_order(self, building_index: int, action: OrderAction) -> Order:
+        """Create and return an order."""
+        order = Order(
+            member_class=self.selected_class,  # None means all classes
+            target_building=building_index,
+            action=action,
+        )
+        self.order_history.append(order)
+        return order
+    
+    def _building_rect(self, building) -> pygame.Rect:
+        """Get the clickable rect for a building."""
+        size = 50
+        return pygame.Rect(
+            int(building.x) - size // 2,
+            int(building.y) - size // 2,
+            size,
+            size,
+        )
+    
+    def get_prompt(self) -> str:
+        """Get the current prompt/status text."""
+        if not self.has_class_selected:
+            return "Select a class, then click a building"
+        
+        class_name = self.selected_button.label
+        return f"{class_name} selected — click your building to defend, enemy building to attack"

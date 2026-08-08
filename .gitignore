@@ -3,11 +3,15 @@ __pycache__/
 *.pyc
 *.pyo
 .venv/
+venv/
 env/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Assets (downloaded, run download_portraits.py to fetch)
+assets/portraits/
 
 # IDE
 .idea/
