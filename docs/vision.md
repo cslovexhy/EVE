@@ -95,3 +95,34 @@ When the player sees the battlefield from above (as an empire manager), physics 
 - How much "moment-to-moment" gameplay vs. strategic overview?
 - Is the fun in the planning or the execution?
 - How important is it to "watch" the battle vs. just see results?
+
+### Decision: Commander-Level Real-Time Control
+
+The player is the **war commander**. The fun comes from:
+
+1. **Pre-battle**: Building layout design, defender allocation (right people in right spots)
+2. **During battle**: Issuing high-level orders in real-time — directing squads/individuals to targets
+3. **Watching it unfold**: Members execute via AI, player sees the results of their strategy
+
+**Player control examples:**
+- "Assassin squad — backdoor attack Building 9"
+- "Snipers — blindly shoot into Building 3"
+- "Demolitionists — focus on taking down Building 5"
+- "Pull back defenders from Building 2 to reinforce Building 4"
+
+**What the AI handles:**
+- Individual combat resolution (attack rolls, damage, status effects)
+- Member movement/pathfinding
+- Token spending cadence
+- Defender reactions to being attacked
+- Healing/revival decisions
+
+**What the player controls:**
+- Which buildings to attack and with whom
+- When to commit reserves
+- When to shift focus/redirect
+- Building layout and defender assignment (pre-battle)
+- Special ability activations (super powers)
+
+This means the battle IS physical — members move between buildings, but the player doesn't micromanage each one. They give squad-level orders and watch the AI execute. Think: **RTS commander mode** meets **football manager tactical view**.
+
