@@ -57,12 +57,43 @@
 
 ---
 
-## Rarity (TBD)
+## Rarity
 
-Mentioned but not yet defined:
-- What rarity tiers exist? (Common, Rare, Epic, Legendary?)
-- How does rarity affect stats? (Flat multiplier? Extra skills?)
-- Does rarity determine level cap or IS the level indicator?
+| Rarity | Color | Stat Multiplier |
+|--------|-------|-----------------|
+| Common | White | 100% (base) |
+| Uncommon | Green | 120% |
+| Rare | Blue | 150% |
+| Super Rare | Gold | 200% |
+
+- Stats scale purely from level × rarity multiplier
+- Higher rarity members appear in stronger empires (late game)
+- **No fusion/combine system** — acquiring high-level members requires defeating strong empires, not grinding duplicates
+- This prevents whales from trivializing progression through "play more time"
+- Members are **not unique** — you can have two of the same character (e.g., two Overkills)
+
+---
+
+## Member Pool (from UW Lieutenants)
+
+Source: https://underworld-empire.fandom.com/wiki/Category:Lieutenants
+
+268 named characters available as the recruitable member pool. Each has:
+- A name and visual identity
+- A fixed class (Enforcer/Sniper/Assassin/Demolitionist)
+- A rarity tier
+- A level (determined by which empire they came from)
+
+### Sample Names (from UW)
+**Trending/Popular**: Overkill, Gustavo, Hotwire, Sandsnake, Duke, Lady Luck, Gunslinger, Anson
+
+**A-Z sampling**: Abdullah, AK, Blade, Caine, Diablo, Fox, Ghost, Hammer, Isis, Jax, Kate, Lotus, Mastermind, Nightshade, Overkill, Phantom, Razor, Salvatore...
+
+### Class Assignment (TBD)
+Need to assign each of the 268 characters to one of the 4 classes. Could be:
+- Based on their UW abilities/theme (if available)
+- Random but balanced distribution
+- Manually curated for character flavor
 
 ---
 
@@ -70,3 +101,4 @@ Mentioned but not yet defined:
 
 - Specific class skills and abilities — big topic, separate doc
 - Folding upgraded class (Titan, Ghost, Reaper, Terminator) abilities into base 4
+- Full lieutenant-to-member mapping (name → class → rarity)
