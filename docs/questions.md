@@ -1,0 +1,94 @@
+# EVE — Open Design Questions
+
+Organized by system. Answer when ready — no rush. Check off (replace `[ ]` with `[x]`) as decisions are made.
+
+---
+
+## 1. Economy
+
+- [ ] How much money per war win? Flat? Scaled to enemy strength?
+- [ ] How much money lost on defeat? Percentage of cash? Flat amount?
+- [ ] Property income — per minute? Per hour? Collected manually or auto-accumulate?
+- [ ] Can properties be lost/raided by AI empires? Or purely safe investments?
+- [ ] EvE building upgrade cost curve — linear or exponential?
+- [ ] Any other energy sinks besides entering wars? (Scouting? Recruiting? Training?)
+- [ ] Favor Points acquisition — daily login? Achievements? Rare drops?
+
+---
+
+## 2. Members & Classes
+
+- [ ] How many members do you start with?
+- [ ] How do you recruit new members? (From defeated empires? Hire with money? Random events?)
+- [ ] Do members have individual stats? (ATK, DEF, HP, speed?)
+- [ ] Do members level up / gain XP?
+- [ ] Can members be injured/killed permanently?
+- [ ] Class assignment — fixed at recruit? Or player assigns/changes class?
+- [ ] Class balance — how many of each class in an ideal lineup?
+- [ ] What abilities from upgraded classes (Titan, Ghost, Reaper, Terminator) get folded into the 4 base classes?
+
+---
+
+## 3. EvE Battle Mechanics
+
+- [ ] Player control during battle — real-time commands? Turn-based? Auto with presets? Hybrid?
+- [ ] Battle speed — real-time 2 hours (like UW)? Compressed to minutes? Instant sim?
+- [ ] Token system — keep as-is? Simplify? Tokens per member or shared pool?
+- [ ] How does the AI empire play during battle? Random? Scripted? Difficulty-scaled?
+- [ ] Defender assignment — manual before battle? Auto-optimized? Rearrangeable mid-fight?
+- [ ] Building placement — locked 3×3? Or player chooses arrangement before war?
+- [ ] Victory condition — points only? Or also full destruction win?
+- [ ] Retreat/forfeit option?
+
+---
+
+## 4. City Map & Progression
+
+- [ ] Map structure — grid? Nodes? Zones/districts?
+- [ ] How many rival empires per city?
+- [ ] Do AI empires grow over time (time pressure) or stay static until challenged?
+- [ ] Can you choose which empire to fight? Or matchmade/sequential?
+- [ ] What does controlling territory give you? (Properties? Member pool? Bonuses?)
+- [ ] How do you "fully conquer" a city to get the +50 max energy?
+- [ ] Scouting — can you see enemy empire layout/strength before committing to a war?
+- [ ] Any non-combat interactions on the map? (Trade? Diplomacy? Events?)
+
+---
+
+## 5. Buildings (EvE)
+
+- [ ] Keep all UW building types? (HQ, Hospital, Armory, Sniper Tower, Nuclear Silo, Research Lab, Bunker)
+- [ ] Simplify to fewer building types for our 4-class system?
+- [ ] Building placement — does it matter which slot? (front row = exposed first)
+- [ ] Super powers — keep? Simplify? Unlock at higher building levels?
+- [ ] Building HP scaling — how tanky should buildings be?
+
+---
+
+## 6. Properties (Income)
+
+- [ ] What types of properties? (Named/themed? Or generic tiers?)
+- [ ] How many properties available per city district?
+- [ ] Upgrade levels per property — cap?
+- [ ] Income rate formula — linear per level? Diminishing?
+- [ ] Visual representation on the city map?
+
+---
+
+## 7. Presentation & UX
+
+- [ ] Art style — pixel art? Stylized? Text-heavy management sim?
+- [ ] Tech stack — Python+Pygame (like DND)? Web? Mobile?
+- [ ] Battle view — what does the player see during EvE? Animated? Log-based? Both?
+- [ ] City map view — top-down? Stylized district map? Node graph?
+- [ ] Sound/music direction?
+
+---
+
+## 8. Meta / Long-term
+
+- [ ] Prestige/new game+ mechanic when you conquer a full city?
+- [ ] Difficulty scaling across cities — new city = harder AI empires?
+- [ ] Any multiplayer future? (Async PvP? Leaderboards?)
+- [ ] Save system — single save? Multiple slots?
+- [ ] Session length target — 10 min bursts? 30 min? Hour-long sessions?
