@@ -63,3 +63,35 @@ Instead of boring repeatable chores, progression comes from:
 6. **Between battles** — What do you do on the city map? Passive income? Scouting?
 7. **Member recruitment** — Random? From defeated empires? Hire with money?
 8. **Property system** — What does territory give you? Income? Member bonuses? Building materials?
+
+---
+
+## Design Consideration: Battlelog vs Physical Battlefield
+
+### The Problem
+
+The original UE EvE was a **battlelog system** — each member independently spends tokens to attack any visible target. There's no spatial coherence. A member can defend their own building while simultaneously attacking an enemy. This works as a text log but **breaks down in a visual/physical representation**.
+
+When the player sees the battlefield from above (as an empire manager), physics must make sense:
+- Members must **be somewhere** — they have a position
+- A member **can't defend and attack at the same time** (unless they're at the same location)
+- **Movement takes time** — getting to the back row means crossing the front
+- **Visibility** works differently when you can literally see positions vs. abstract "rows"
+
+### Possible Directions (TBD)
+
+1. **Keep it abstract/card-based** — Don't show physical positions. Show the 3×3 grid as slots/cards. Actions happen instantly. Closer to the original. Less "game" feel, more management.
+
+2. **Real-time tactical** — Members physically move on a battlefield. Assign them to attack or defend positions. Movement matters. Assassins are literally sneaking around the side. Feels like a tactics game (think: auto-battler or tower defense hybrid).
+
+3. **Phase-based hybrid** — Each "round" (token spend), members are assigned a role: attack or defend. Attackers move toward targets, defenders stay put. Resolve combat per round. Compromise between log and physics.
+
+4. **Simultaneous turns with replay** — Battles resolve as a simulation (like Football Manager match engine). Player sets strategy before battle, watches it play out. Can pause/adjust mid-battle at certain intervals.
+
+5. **Compressed time** — 2-hour war compressed to 5-10 minutes of real-time play. Members auto-act based on AI/presets, player intervenes with special commands (like spending tokens on specific targets).
+
+### Key Questions
+- Does the player need to control DURING the battle, or just set up strategy BEFORE?
+- How much "moment-to-moment" gameplay vs. strategic overview?
+- Is the fun in the planning or the execution?
+- How important is it to "watch" the battle vs. just see results?
