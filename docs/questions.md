@@ -18,14 +18,14 @@ Organized by system. Answer when ready — no rush. Check off (replace `[ ]` wit
 
 ## 2. Members & Classes
 
-- [ ] How many members do you start with?
-- [ ] How do you recruit new members? (From defeated empires? Hire with money? Random events?)
-- [ ] Do members have individual stats? (ATK, DEF, HP, speed?)
-- [ ] Do members level up / gain XP?
-- [ ] Can members be injured/killed permanently?
-- [ ] Class assignment — fixed at recruit? Or player assigns/changes class?
-- [ ] Class balance — how many of each class in an ideal lineup?
-- [ ] What abilities from upgraded classes (Titan, Ghost, Reaper, Terminator) get folded into the 4 base classes?
+- [x] How many members do you start with? → **8 (2 per class)**
+- [x] How do you recruit new members? → **After defeating an empire, pick 1 of 4 offered (best from each class of the defeated empire)**
+- [x] Do members have individual stats? → **No. Stats are static, based solely on level + rarity.** Includes damage vs players/buildings, mitigation, skills.
+- [x] Do members level up / gain XP? → **No. Level is a fixed attribute (tied to rarity/progression, not grindable).**
+- [x] Can members be injured/killed permanently? → **No. Full HP reset every new battle. Health only matters during EvE.**
+- [x] Class assignment — **Fixed at recruit. Cannot be changed.**
+- [x] Class balance — **Player's strategic choice. Start even (2 each), adjust based on scouting enemy (e.g., more Demolitionists vs tough buildings).**
+- [x] What abilities from upgraded classes get folded in? → **Deferred — class/skill design is its own topic.**
 
 ---
 
