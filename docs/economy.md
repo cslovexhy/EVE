@@ -28,7 +28,7 @@
 ## Money Flow
 
 ```
-Win War → +Money
+Win War → +Money (30% of enemy empire net worth)
   ↓
 Buy Properties → Passive Money/time
   ↓
@@ -37,7 +37,21 @@ Accumulate → Upgrade EvE Buildings (expensive)
 Stronger Empire → Win Harder Wars → More Money
 ```
 
-Lose War → −Money (setback, not bankruptcy)
+Lose War → −Money (30% of YOUR empire net worth)
+
+### War Reward/Loss Formula
+
+- **Enemy empire net worth** = 100 × sum of all enemy member levels
+- **Win reward** = 30% of enemy net worth
+- **Loss penalty** = 30% of your own net worth
+
+Example: Enemy has 10 members averaging level 5 → net worth = 100 × 50 = 5,000 → you win 1,500.
+Your empire has 8 members averaging level 4 → net worth = 100 × 32 = 3,200 → you lose 960 on defeat.
+
+This means:
+- Beating stronger empires pays more (risk/reward)
+- Losing hurts more as you grow (keeps stakes real)
+- You can't farm weak empires forever (low reward)
 
 ---
 
@@ -45,20 +59,43 @@ Lose War → −Money (setback, not bankruptcy)
 
 - **Not EvE buildings** — completely separate system
 - Purchased with money
-- Generate passive money over time (idle income)
+- Generate passive money **per minute**, based on property level
+- **Auto-collected to Safe House** (first property you build)
 - Upgradeable (more income per level)
 - Represent territory control on the city map
-- Examples from UW: restaurants, clubs, warehouses, fronts, etc.
-- Design TBD: how many types, income rates, upgrade costs
+- **City-specific property types** — conquering new cities unlocks unique properties
+  - e.g., Las Vegas → Casino (high income rate)
+  - Each city has its own themed property types with different income curves
+- Safe House is the starting/mandatory property — acts as your income vault
+- **Properties cannot be lost** — they are permanent virtual investments
+- **Money CAN be lost** on war defeat — loss penalty deducts from total cash regardless of where it's stored (Safe House doesn't protect against war losses)
+- City/country conquering is the single-player campaign; future PvP is just a showcase stage
 
 ---
 
 ## EvE Building Upgrades
 
 - Cost: **energy + money** (high money cost)
+- **Exponential cost curve** — each level costs significantly more than the last
 - Intentionally slow — long-term progression, not something you max in a day
 - Upgrades improve: building HP, defender slots, super power strength, etc.
 - Strategic choice: which buildings to upgrade first given limited resources
+
+---
+
+## Energy Sinks
+
+- **Wars only** — energy exists solely to gate war entry (10 per war)
+- No other energy costs (no scouting, recruiting, training, etc.)
+- Simple and clean — energy = how many fights you get
+
+---
+
+## Favor Points (Premium Currency)
+
+- **Real money only** (IAP) — no free earning method
+- Used solely for energy refills
+- Not a development concern — implement last, balance around free-to-play pacing
 
 ---
 

@@ -6,13 +6,13 @@ Organized by system. Answer when ready — no rush. Check off (replace `[ ]` wit
 
 ## 1. Economy
 
-- [ ] How much money per war win? Flat? Scaled to enemy strength?
-- [ ] How much money lost on defeat? Percentage of cash? Flat amount?
-- [ ] Property income — per minute? Per hour? Collected manually or auto-accumulate?
-- [ ] Can properties be lost/raided by AI empires? Or purely safe investments?
-- [ ] EvE building upgrade cost curve — linear or exponential?
-- [ ] Any other energy sinks besides entering wars? (Scouting? Recruiting? Training?)
-- [ ] Favor Points acquisition — daily login? Achievements? Rare drops?
+- [x] How much money per war win? → **30% of enemy empire net worth** (net worth = 100 × sum of member levels)
+- [x] How much money lost on defeat? → **30% of your own empire net worth**
+- [x] Property income — **per minute**, based on property level. Auto-collects to Safe House. City-specific types (e.g., Las Vegas → Casino).
+- [x] Can properties be lost/raided? → **No. Properties are permanent/safe.** Money in Safe House CAN be lost on war defeat though (loss penalty auto-deducts regardless of where money is stored).
+- [x] EvE building upgrade cost curve → **Exponential.**
+- [x] Any other energy sinks besides entering wars? → **No, wars only for now.**
+- [x] Favor Points acquisition → **Real money only (IAP). Not a concern during dev.**
 
 ---
 
