@@ -16,10 +16,23 @@ class Game:
     
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
+        
+        # Get display size for fullscreen
+        display_info = pygame.display.Info()
+        config.SCREEN_WIDTH = display_info.current_w
+        config.SCREEN_HEIGHT = display_info.current_h
+        
+        self.screen = pygame.display.set_mode(
+            (config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
+            pygame.FULLSCREEN
+        )
         pygame.display.set_caption(config.TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
+        
+        # Recalculate layout based on actual screen size
+        config.BATTLEFIELD_WIDTH = config.SCREEN_WIDTH - 80
+        config.BATTLEFIELD_HEIGHT = config.SCREEN_HEIGHT - config.BATTLEFIELD_Y - config.ORDER_PANEL_HEIGHT
         
         self._start_battle()
     
@@ -63,7 +76,7 @@ class Game:
                 self.running = False
             
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
+                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     self.running = False
                 elif event.key == pygame.K_r and self.engine.battle_over:
                     self._start_battle()
@@ -80,6 +93,7 @@ class Game:
             pos,
             self.player_empire.buildings,
             self.enemy_empire.buildings,
+            engine=self.engine,
         )
         
         if order:
@@ -90,11 +104,10 @@ class Game:
         from orders import CLASS_BUTTONS
         
         key_map = {
-            pygame.K_SPACE: 0,  # All
-            pygame.K_e: 1,      # Enforcer
-            pygame.K_a: 2,      # Assassin
-            pygame.K_s: 3,      # Sniper
-            pygame.K_d: 4,      # Demolitionist
+            pygame.K_e: 0,      # Enforcer
+            pygame.K_a: 1,      # Assassin
+            pygame.K_s: 2,      # Sniper
+            pygame.K_d: 3,      # Demolitionist
         }
         
         if key in key_map:
@@ -102,25 +115,11 @@ class Game:
             self.order_system.select_button_by_index(btn_index)
     
     def _execute_player_order(self, order):
-        """Execute a player order, handling 'All' class selection."""
-        if order.member_class is None:
-            # "All" — send every class
-            for cls in MemberClass:
-                from models import Order as OrderModel
-                sub_order = OrderModel(
-                    member_class=cls,
-                    target_building=order.target_building,
-                    action=order.action,
-                )
-                if order.action == OrderAction.ATTACK:
-                    self.engine.execute_order(sub_order, self.player_empire, self.enemy_empire)
-                else:
-                    self.engine.execute_order(sub_order, self.player_empire, self.player_empire)
+        """Execute a player order."""
+        if order.action == OrderAction.ATTACK:
+            self.engine.execute_order(order, self.player_empire, self.enemy_empire)
         else:
-            if order.action == OrderAction.ATTACK:
-                self.engine.execute_order(order, self.player_empire, self.enemy_empire)
-            else:
-                self.engine.execute_order(order, self.player_empire, self.player_empire)
+            self.engine.execute_order(order, self.player_empire, self.player_empire)
     
     def _update(self, dt: float):
         """Update game state."""

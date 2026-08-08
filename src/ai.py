@@ -1,13 +1,23 @@
-"""EVE - AI Opponent: scripted decision-making for the enemy empire."""
+"""EVE - AI Opponent: coordinated multi-class attack strategies."""
 
 import random
-from models import Empire, MemberClass, OrderAction, Order
+import time
+from models import Empire, MemberClass, MemberState, OrderAction, Order
 from engine import BattleEngine
 import config
 
 
 class BattleAI:
-    """Simple scripted AI that makes attack/defend decisions on a timer."""
+    """AI that coordinates classes into organized attack waves.
+    
+    Strategy:
+    - Enforcers stay home to defend (only sent to attack as last resort)
+    - Assassins + Snipers assault together (assassins engage, snipers support from range)
+    - Demos charge in after defenders are weakened to destroy buildings
+    - Picks a focus target with weighted randomness:
+      - Building 3, 6, 9 (front row from AI's perspective): 30% each
+      - Building 7 (backdoor via assassins): 10%
+    """
     
     def __init__(self, empire: Empire, enemy_empire: Empire):
         self.empire = empire
@@ -15,121 +25,280 @@ class BattleAI:
         self.time_since_last_order = 0.0
         self.first_order_issued = False
         self.orders_issued = 0
+        self.order_queue = []  # Queue of orders to issue in sequence
+        self.queue_delay = 0.0
+        self.current_target = None  # The building we're focusing on
+        self.phase = "opening"  # opening, assault, push, cleanup
+        
+        # Seed RNG based on current time for varied behavior each game
+        self.rng = random.Random(int(time.time() * 1000))
     
     def update(self, dt: float, engine: BattleEngine) -> Order:
-        """Update AI timer and possibly return an order."""
+        """Update AI timer and return next order from queue or plan new attack."""
         self.time_since_last_order += dt
+        
+        # If we have queued orders, issue them with slight delay
+        if self.order_queue:
+            self.queue_delay += dt
+            if self.queue_delay >= 0.5:  # 0.5s between queued orders
+                self.queue_delay = 0.0
+                return self.order_queue.pop(0)
+            return None
         
         # Wait before first order
         if not self.first_order_issued:
             if self.time_since_last_order >= config.AI_FIRST_ORDER_DELAY:
                 self.first_order_issued = True
                 self.time_since_last_order = 0.0
-                return self._decide_order(engine)
+                self._plan_attack(engine)
+                return self.order_queue.pop(0) if self.order_queue else None
             return None
         
-        # Issue orders on interval
+        # Plan new attack wave on interval
         if self.time_since_last_order >= config.AI_ORDER_INTERVAL:
             self.time_since_last_order = 0.0
-            return self._decide_order(engine)
+            self._plan_attack(engine)
+            return self.order_queue.pop(0) if self.order_queue else None
         
         return None
     
-    def _decide_order(self, engine: BattleEngine) -> Order:
-        """AI decision logic: attack or defend based on battle state."""
-        # Evaluate threats to own buildings
-        threatened_buildings = self._find_threatened_buildings(engine)
+    def _plan_attack(self, engine: BattleEngine):
+        """Plan a coordinated attack wave based on current battle state."""
+        self.order_queue = []
         
-        # If buildings are under attack, 40% chance to defend
-        if threatened_buildings and random.random() < 0.4:
-            return self._make_defend_order(threatened_buildings)
+        # First: reinforce defense if needed
+        self._plan_defense(engine)
         
-        # Otherwise, attack
-        return self._make_attack_order(engine)
+        # Then: plan the attack based on phase
+        if self.phase == "opening":
+            self._plan_opening(engine)
+        elif self.phase == "assault":
+            self._plan_assault(engine)
+        elif self.phase == "push":
+            self._plan_push(engine)
+        else:
+            self._plan_cleanup(engine)
+    
+    def _plan_defense(self, engine: BattleEngine):
+        """Send enforcers to defend threatened buildings."""
+        threatened = self._find_threatened_buildings(engine)
+        if not threatened:
+            return
+        
+        # Send enforcers to the most threatened building
+        if self.empire.get_available_by_class(MemberClass.ENFORCER):
+            target = threatened[0]
+            self.order_queue.append(Order(
+                member_class=MemberClass.ENFORCER,
+                target_building=target,
+                action=OrderAction.DEFEND,
+            ))
+    
+    def _plan_opening(self, engine: BattleEngine):
+        """Opening phase: pick a target with weighted randomness, send assassins + snipers.
+        
+        Target weights (player building indices):
+        - Building 1 (index 0): 30% — front row
+        - Building 4 (index 3): 30% — front row
+        - Building 7 (index 6): 30% — front row
+        - Building 9 (index 8): 10% — backdoor (assassins only)
+        """
+        # Weighted target selection
+        targets_weights = [
+            (0, 30),   # Building 1
+            (3, 30),   # Building 4
+            (6, 30),   # Building 7
+            (8, 10),   # Building 9 (backdoor)
+        ]
+        
+        # Filter to only undestroyed and reachable targets
+        valid_weighted = []
+        for target_idx, weight in targets_weights:
+            if self.enemy.buildings[target_idx].destroyed:
+                continue
+            # Backdoor (building 9) only reachable by assassins
+            if target_idx == 8:
+                if engine.is_attackable_by_class(target_idx, MemberClass.ASSASSIN, is_player=False):
+                    valid_weighted.append((target_idx, weight))
+            else:
+                if engine.is_attackable_by_class(target_idx, MemberClass.ASSASSIN, is_player=False):
+                    valid_weighted.append((target_idx, weight))
+        
+        if not valid_weighted:
+            # Fallback: any reachable building
+            valid_targets = [
+                b.index for b in self.enemy.buildings
+                if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.ASSASSIN, is_player=False)
+            ]
+            if not valid_targets:
+                self.phase = "cleanup"
+                return
+            self.current_target = self.rng.choice(valid_targets)
+        else:
+            # Weighted random choice
+            indices = [t[0] for t in valid_weighted]
+            weights = [t[1] for t in valid_weighted]
+            self.current_target = self.rng.choices(indices, weights=weights, k=1)[0]
+        
+        # Send assassins to engage defenders
+        if self.empire.get_available_by_class(MemberClass.ASSASSIN):
+            self.order_queue.append(Order(
+                member_class=MemberClass.ASSASSIN,
+                target_building=self.current_target,
+                action=OrderAction.ATTACK,
+            ))
+        
+        # Send snipers to support (only if they can reach the target)
+        if self.empire.get_available_by_class(MemberClass.SNIPER):
+            if engine.is_attackable_by_class(self.current_target, MemberClass.SNIPER, is_player=False):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.SNIPER,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+        
+        self.phase = "assault"
+        self.orders_issued += 1
+    
+    def _plan_assault(self, engine: BattleEngine):
+        """Assault phase: check if defenders are down, send demos to destroy building."""
+        if self.current_target is None:
+            self.phase = "opening"
+            return
+        
+        target_bldg = self.enemy.buildings[self.current_target]
+        
+        # If target is already destroyed, move to next phase
+        if target_bldg.destroyed:
+            self.phase = "push"
+            return
+        
+        # Check if defenders at target are weakened
+        defenders = [
+            m for m in self.enemy.members
+            if m.is_alive and m.assigned_building == self.current_target
+        ]
+        
+        if len(defenders) <= 2:
+            # Defenders weakened — send demos to finish the building
+            if self.empire.get_available_by_class(MemberClass.DEMOLITIONIST):
+                if engine.is_attackable_by_class(self.current_target, MemberClass.DEMOLITIONIST, is_player=False):
+                    self.order_queue.append(Order(
+                        member_class=MemberClass.DEMOLITIONIST,
+                        target_building=self.current_target,
+                        action=OrderAction.ATTACK,
+                    ))
+        else:
+            # Still has defenders — send more assassins if available
+            if self.empire.get_available_by_class(MemberClass.ASSASSIN):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.ASSASSIN,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+        
+        # Also keep snipers firing
+        if self.empire.get_available_by_class(MemberClass.SNIPER):
+            # Snipers target same building or a nearby one
+            valid_sniper_targets = [
+                b.index for b in self.enemy.buildings
+                if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.SNIPER, is_player=False)
+            ]
+            if valid_sniper_targets:
+                sniper_target = self.current_target if self.current_target in valid_sniper_targets else self.rng.choice(valid_sniper_targets)
+                self.order_queue.append(Order(
+                    member_class=MemberClass.SNIPER,
+                    target_building=sniper_target,
+                    action=OrderAction.ATTACK,
+                ))
+        
+        self.orders_issued += 1
+    
+    def _plan_push(self, engine: BattleEngine):
+        """Push phase: building destroyed, pick next target deeper in."""
+        # Find newly reachable targets
+        valid_targets = [
+            b.index for b in self.enemy.buildings
+            if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.DEMOLITIONIST, is_player=False)
+        ]
+        
+        if not valid_targets:
+            self.phase = "cleanup"
+            return
+        
+        # Pick the next target (prefer ones we couldn't reach before)
+        self.current_target = self.rng.choice(valid_targets)
+        
+        # Coordinated wave on new target
+        if self.empire.get_available_by_class(MemberClass.ASSASSIN):
+            self.order_queue.append(Order(
+                member_class=MemberClass.ASSASSIN,
+                target_building=self.current_target,
+                action=OrderAction.ATTACK,
+            ))
+        
+        if self.empire.get_available_by_class(MemberClass.SNIPER):
+            if engine.is_attackable_by_class(self.current_target, MemberClass.SNIPER, is_player=False):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.SNIPER,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+        
+        if self.empire.get_available_by_class(MemberClass.DEMOLITIONIST):
+            if engine.is_attackable_by_class(self.current_target, MemberClass.DEMOLITIONIST, is_player=False):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.DEMOLITIONIST,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+        
+        self.phase = "assault"
+        self.orders_issued += 1
+    
+    def _plan_cleanup(self, engine: BattleEngine):
+        """Cleanup: send everything at remaining buildings."""
+        valid_targets = [
+            b.index for b in self.enemy.buildings
+            if not b.destroyed
+        ]
+        if not valid_targets:
+            return
+        
+        target = self.rng.choice(valid_targets)
+        
+        for cls in [MemberClass.ASSASSIN, MemberClass.SNIPER, MemberClass.DEMOLITIONIST]:
+            if self.empire.get_available_by_class(cls):
+                if engine.is_attackable_by_class(target, cls, is_player=False):
+                    self.order_queue.append(Order(
+                        member_class=cls,
+                        target_building=target,
+                        action=OrderAction.ATTACK,
+                    ))
+        
+        # Even send enforcers in cleanup
+        if self.empire.get_available_by_class(MemberClass.ENFORCER):
+            if engine.is_attackable_by_class(target, MemberClass.ENFORCER, is_player=False):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.ENFORCER,
+                    target_building=target,
+                    action=OrderAction.ATTACK,
+                ))
     
     def _find_threatened_buildings(self, engine: BattleEngine) -> list:
-        """Find own buildings that are being attacked by enemy."""
+        """Find own buildings being attacked, sorted by threat level."""
         threatened = []
         for building in self.empire.buildings:
             if building.destroyed:
                 continue
-            # Check if any player members are attacking this building
-            for member in self.enemy.members:
-                if (member.is_alive and 
-                    member.state.value == "attacking" and
-                    member.target_building == building.index):
-                    threatened.append(building.index)
-                    break
-        return threatened
-    
-    def _make_defend_order(self, threatened_buildings: list) -> Order:
-        """Issue a defend order to reinforce a threatened building."""
-        target = random.choice(threatened_buildings)
+            attacker_count = sum(
+                1 for m in self.enemy.members
+                if m.is_alive and m.state == MemberState.ATTACKING
+                and m.target_building == building.index
+            )
+            if attacker_count > 0:
+                threatened.append((building.index, attacker_count))
         
-        # Pick a class that has available members
-        available_classes = self._get_classes_with_available()
-        if not available_classes:
-            return None
-        
-        # Prefer enforcers for defense
-        if MemberClass.ENFORCER in available_classes:
-            chosen_class = MemberClass.ENFORCER
-        else:
-            chosen_class = random.choice(available_classes)
-        
-        return Order(
-            member_class=chosen_class,
-            target_building=target,
-            action=OrderAction.DEFEND,
-        )
-    
-    def _make_attack_order(self, engine: BattleEngine) -> Order:
-        """Issue an attack order against an enemy building."""
-        # Pick a target building (prefer undestroyed ones)
-        valid_targets = [b.index for b in self.enemy.buildings if not b.destroyed]
-        if not valid_targets:
-            return None
-        
-        # Strategy: early game attack front row, later go for back row
-        if self.orders_issued < 3:
-            # Attack front row first (0, 3, 6)
-            front = [i for i in valid_targets if i % 3 == 0]
-            target = random.choice(front) if front else random.choice(valid_targets)
-        else:
-            # Mix it up — sometimes go for back row
-            target = random.choice(valid_targets)
-        
-        # Pick attacking class
-        available_classes = self._get_classes_with_available()
-        if not available_classes:
-            return None
-        
-        # Match class to target strategy
-        if target % 3 == 2:  # Back row — send assassins if available
-            if MemberClass.ASSASSIN in available_classes:
-                chosen_class = MemberClass.ASSASSIN
-            else:
-                chosen_class = random.choice(available_classes)
-        elif target % 3 == 0:  # Front row — send demos to break buildings
-            if MemberClass.DEMOLITIONIST in available_classes:
-                chosen_class = MemberClass.DEMOLITIONIST
-            else:
-                chosen_class = random.choice(available_classes)
-        else:
-            chosen_class = random.choice(available_classes)
-        
-        self.orders_issued += 1
-        
-        return Order(
-            member_class=chosen_class,
-            target_building=target,
-            action=OrderAction.ATTACK,
-        )
-    
-    def _get_classes_with_available(self) -> list:
-        """Get list of member classes that have available members."""
-        available = []
-        for cls in MemberClass:
-            if self.empire.get_available_by_class(cls):
-                available.append(cls)
-        return available
+        # Sort by most threatened first
+        threatened.sort(key=lambda x: -x[1])
+        return [t[0] for t in threatened]

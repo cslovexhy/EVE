@@ -1,8 +1,9 @@
 """EVE - Game Configuration Constants"""
 
 # Display
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 0   # Set at runtime from display info
+SCREEN_HEIGHT = 0  # Set at runtime from display info
+FULLSCREEN = True
 FPS = 60
 TITLE = "EVE - Empire vs Empire"
 
@@ -90,7 +91,7 @@ BUILDING_BASE_HP = 500
 BUILDING_DEFENDER_SLOTS = 3  # Max defenders per building
 
 # AI
-AI_ORDER_INTERVAL = 8.0      # Seconds between AI orders
+AI_ORDER_INTERVAL = 6.0      # Seconds between AI attack waves
 AI_FIRST_ORDER_DELAY = 5.0   # Seconds before AI issues first order
 
 # Movement (pixels per second on the battlefield)
@@ -108,10 +109,20 @@ POINTS_PER_BUILDING_DESTROYED = 100
 POINTS_PER_MEMBER_KILLED = 10
 
 # UI Layout
+# Top bar: timer + scores (0-40px)
+# Class stats bar: (40-110px)  
+# Battlefield: (115-600px)
+# Order prompt + buttons: (610-720px)
+HUD_HEIGHT = 40
+STATS_Y = 42
+STATS_HEIGHT = 70
 BATTLEFIELD_X = 40
-BATTLEFIELD_Y = 60
-BATTLEFIELD_WIDTH = 1200
-BATTLEFIELD_HEIGHT = 540
-GRID_CELL_SIZE = 120
-HUD_HEIGHT = 60
-ORDER_PANEL_HEIGHT = 120
+BATTLEFIELD_Y = 115
+BATTLEFIELD_WIDTH = 1200   # Will be recalculated in main
+BATTLEFIELD_HEIGHT = 490   # Will be recalculated in main
+GRID_CELL_SIZE = 200       # 2x from 120
+ORDER_PANEL_HEIGHT = 140
+
+# Building / Member visual sizes (2x)
+BUILDING_SIZE = 100        # Was 50
+MEMBER_ICON_SIZE = 40      # Was 20

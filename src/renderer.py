@@ -22,10 +22,10 @@ class Renderer:
     
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
-        self.font_large = pygame.font.Font(None, 36)
-        self.font_medium = pygame.font.Font(None, 24)
-        self.font_small = pygame.font.Font(None, 18)
-        self.font_tiny = pygame.font.Font(None, 14)
+        self.font_large = pygame.font.Font(None, 42)
+        self.font_medium = pygame.font.Font(None, 28)
+        self.font_small = pygame.font.Font(None, 20)
+        self.font_tiny = pygame.font.Font(None, 16)
         self.font_btn = pygame.font.Font(None, 28)
         
         # Class colors mapping
@@ -85,8 +85,8 @@ class Renderer:
                     pass
     
     def _load_class_icons(self):
-        """Load class icon images scaled to badge size."""
-        icon_size = (12, 12)
+        """Load class icon images scaled to member icon size."""
+        icon_size = (config.MEMBER_ICON_SIZE, config.MEMBER_ICON_SIZE)
         
         if not os.path.isdir(ICON_DIR):
             return
@@ -118,12 +118,6 @@ class Renderer:
         # Draw sniper range circles for defending player snipers
         self._draw_sniper_ranges(engine.player.members)
         
-        # Draw center divider
-        center_x = config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH // 2
-        pygame.draw.line(self.screen, config.DARK_GRAY,
-                        (center_x, config.BATTLEFIELD_Y),
-                        (center_x, config.BATTLEFIELD_Y + config.BATTLEFIELD_HEIGHT), 2)
-        
         # Draw HUD (top)
         self._draw_hud(engine)
         
@@ -145,21 +139,13 @@ class Renderer:
         rect = pygame.Rect(config.BATTLEFIELD_X, config.BATTLEFIELD_Y,
                           config.BATTLEFIELD_WIDTH, config.BATTLEFIELD_HEIGHT)
         pygame.draw.rect(self.screen, (20, 20, 30), rect)
-        pygame.draw.rect(self.screen, config.DARK_GRAY, rect, 1)
-        
-        # Side labels
-        label_p = self.font_medium.render("YOUR EMPIRE", True, config.GREEN)
-        label_e = self.font_medium.render("ENEMY EMPIRE", True, config.RED)
-        self.screen.blit(label_p, (config.BATTLEFIELD_X + 10, config.BATTLEFIELD_Y + 5))
-        self.screen.blit(label_e, (config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH - 150,
-                                   config.BATTLEFIELD_Y + 5))
     
     def _draw_buildings(self, empire: Empire, is_player: bool,
                        engine: BattleEngine = None, order_system: OrderSystem = None):
         """Draw buildings as rectangles with HP bars."""
         for building in empire.buildings:
             x, y = int(building.x), int(building.y)
-            size = 50
+            size = config.BUILDING_SIZE
             
             # Fog of war for enemy buildings
             if not is_player and engine:
@@ -278,8 +264,7 @@ class Renderer:
     
     def _draw_member_card(self, member: Member, cx: int, cy: int):
         """Draw a single member as their class icon with rarity border and level."""
-        # Icon size (scaled up from 12x12 to be visible on battlefield)
-        icon_size = 20
+        icon_size = config.MEMBER_ICON_SIZE
         card_size = icon_size + CARD_BORDER * 2
         
         card_x = cx - card_size // 2
@@ -306,9 +291,7 @@ class Renderer:
         # Draw class icon (centered in card)
         if member.member_class in self.class_icons:
             icon = self.class_icons[member.member_class]
-            # Scale to fit
-            scaled = pygame.transform.smoothscale(icon, (icon_size, icon_size))
-            self.screen.blit(scaled, (card_x + CARD_BORDER, card_y + CARD_BORDER))
+            self.screen.blit(icon, (card_x + CARD_BORDER, card_y + CARD_BORDER))
         else:
             # Fallback: colored square with class letter
             class_color = self.class_colors[member.member_class]
@@ -339,7 +322,7 @@ class Renderer:
     
     def _draw_member_card_alpha(self, member: Member, cx: int, cy: int, alpha: int = 100):
         """Draw a member card with transparency (for stealthed own units)."""
-        icon_size = 20
+        icon_size = config.MEMBER_ICON_SIZE
         card_size = icon_size + CARD_BORDER * 2
         # Render to a temp surface with per-surface alpha
         temp = pygame.Surface((card_size + 4, card_size + 20), pygame.SRCALPHA)
@@ -365,12 +348,20 @@ class Renderer:
         self.screen.blit(temp, (blit_x, blit_y))
     
     def _draw_class_stats(self, engine: BattleEngine):
-        """Draw class member count stats on both sides of HUD."""
-        # Player stats (left side)
-        x_start = 20
-        y_start = 55
+        """Draw class member count stats in the stats bar area."""
+        # Background
+        stats_rect = pygame.Rect(0, config.STATS_Y, config.SCREEN_WIDTH, config.STATS_HEIGHT)
+        pygame.draw.rect(self.screen, (12, 12, 18), stats_rect)
         
-        for i, cls in enumerate(MemberClass):
+        # Player stats (left side, horizontal)
+        x = 15
+        y = config.STATS_Y + 5
+        
+        player_label = self.font_small.render("YOUR FORCES", True, config.GREEN)
+        self.screen.blit(player_label, (x, y))
+        y += 16
+        
+        for cls in MemberClass:
             alive = len([m for m in engine.player.members 
                         if m.member_class == cls and m.is_alive])
             total = len([m for m in engine.player.members 
@@ -379,17 +370,21 @@ class Renderer:
             color = self.class_colors[cls]
             label = cls.value.title()[:3]
             
-            # Draw colored dot + count
-            y = y_start + i * 18
-            pygame.draw.circle(self.screen, color, (x_start + 6, y + 6), 5)
-            
+            pygame.draw.circle(self.screen, color, (x + 6, y + 6), 5)
             text = self.font_small.render(f"{label}: {alive}/{total}", True, color)
-            self.screen.blit(text, (x_start + 15, y))
+            self.screen.blit(text, (x + 15, y))
+            y += 16
         
-        # Enemy stats (right side)
-        x_end = config.SCREEN_WIDTH - 20
+        # Enemy stats (right side, horizontal)
+        x_end = config.SCREEN_WIDTH - 15
+        y = config.STATS_Y + 5
         
-        for i, cls in enumerate(MemberClass):
+        enemy_label = self.font_small.render("ENEMY FORCES", True, config.RED)
+        enemy_label_rect = enemy_label.get_rect(right=x_end, y=y)
+        self.screen.blit(enemy_label, enemy_label_rect)
+        y += 16
+        
+        for cls in MemberClass:
             alive = len([m for m in engine.enemy.members 
                         if m.member_class == cls and m.is_alive])
             total = len([m for m in engine.enemy.members 
@@ -398,12 +393,11 @@ class Renderer:
             color = self.class_colors[cls]
             label = cls.value.title()[:3]
             
-            y = y_start + i * 18
             text = self.font_small.render(f"{alive}/{total} :{label}", True, color)
             text_rect = text.get_rect(right=x_end - 15, y=y)
             self.screen.blit(text, text_rect)
-            
             pygame.draw.circle(self.screen, color, (x_end - 6, y + 6), 5)
+            y += 16
     
     def _draw_class_buttons(self, order_system: OrderSystem):
         """Draw the class selection buttons."""
@@ -427,42 +421,44 @@ class Renderer:
             self.screen.blit(label, label_rect)
     
     def _draw_hud(self, engine: BattleEngine):
-        """Draw top HUD with timer, scores."""
-        # Timer
+        """Draw top HUD bar with timer, scores, building counts."""
+        # Background bar
+        bar_rect = pygame.Rect(0, 0, config.SCREEN_WIDTH, config.HUD_HEIGHT)
+        pygame.draw.rect(self.screen, (15, 15, 20), bar_rect)
+        pygame.draw.line(self.screen, config.DARK_GRAY, (0, config.HUD_HEIGHT), (config.SCREEN_WIDTH, config.HUD_HEIGHT))
+        
+        # Timer (center)
         remaining = max(0, config.BATTLE_DURATION - engine.battle_time)
         minutes = int(remaining) // 60
         seconds = int(remaining) % 60
         timer_text = self.font_large.render(f"{minutes}:{seconds:02d}", True, config.WHITE)
-        timer_rect = timer_text.get_rect(centerx=config.SCREEN_WIDTH // 2, y=10)
+        timer_rect = timer_text.get_rect(centerx=config.SCREEN_WIDTH // 2, centery=config.HUD_HEIGHT // 2)
         self.screen.blit(timer_text, timer_rect)
         
-        # Player score
+        # Player score + buildings (left)
         p_score = self.font_medium.render(
-            f"You: {engine.player.points} pts", True, config.GREEN)
-        self.screen.blit(p_score, (20, 15))
+            f"You: {engine.player.points} pts  |  Buildings: {9 - engine.player.buildings_destroyed}/9",
+            True, config.GREEN)
+        self.screen.blit(p_score, (15, config.HUD_HEIGHT // 2 - 8))
         
-        # Enemy score
+        # Enemy score + buildings (right)
         e_score = self.font_medium.render(
-            f"Enemy: {engine.enemy.points} pts", True, config.RED)
-        e_rect = e_score.get_rect(right=config.SCREEN_WIDTH - 20, y=15)
+            f"Buildings: {9 - engine.enemy.buildings_destroyed}/9  |  Enemy: {engine.enemy.points} pts",
+            True, config.RED)
+        e_rect = e_score.get_rect(right=config.SCREEN_WIDTH - 15, centery=config.HUD_HEIGHT // 2)
         self.screen.blit(e_score, e_rect)
-        
-        # Building counts
-        p_bldg = self.font_small.render(
-            f"Buildings: {9 - engine.player.buildings_destroyed}/9", True, config.GREEN)
-        self.screen.blit(p_bldg, (20, 38))
-        
-        e_bldg = self.font_small.render(
-            f"Buildings: {9 - engine.enemy.buildings_destroyed}/9", True, config.RED)
-        e_rect = e_bldg.get_rect(right=config.SCREEN_WIDTH - 20, y=38)
-        self.screen.blit(e_bldg, e_rect)
     
     def _draw_order_prompt(self, prompt: str):
         """Draw the order prompt above the buttons."""
-        y = config.SCREEN_HEIGHT - 95
+        y = config.SCREEN_HEIGHT - 120
         prompt_text = self.font_medium.render(prompt, True, config.LIGHT_GRAY)
         prompt_rect = prompt_text.get_rect(centerx=config.SCREEN_WIDTH // 2, y=y)
         self.screen.blit(prompt_text, prompt_rect)
+        
+        # ESC hint (right of buttons, same vertical level)
+        esc_text = self.font_small.render("[ESC] Quit", True, config.GRAY)
+        esc_rect = esc_text.get_rect(right=config.SCREEN_WIDTH - 30, centery=config.SCREEN_HEIGHT - 65)
+        self.screen.blit(esc_text, esc_rect)
     
     def _draw_battle_over(self, engine: BattleEngine):
         """Draw battle over overlay."""

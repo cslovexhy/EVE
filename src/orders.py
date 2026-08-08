@@ -5,12 +5,10 @@ from models import MemberClass, OrderAction, Order
 import config
 
 
-# Button layout at bottom of screen
-BUTTON_Y = config.SCREEN_HEIGHT - 70
+# Button layout at bottom of screen (positions calculated at init)
 BUTTON_HEIGHT = 50
 BUTTON_WIDTH = 120
 BUTTON_GAP = 12
-BUTTON_START_X = (config.SCREEN_WIDTH - (5 * BUTTON_WIDTH + 4 * BUTTON_GAP)) // 2
 
 
 class ClassButton:
@@ -20,14 +18,21 @@ class ClassButton:
         """member_class=None means 'All' (all classes)."""
         self.label = label
         self.member_class = member_class
+        self.index = index
+        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
+        self.hovered = False
+        self.selected = False
+    
+    def update_rect(self):
+        """Recalculate button position based on current screen size."""
+        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
+        button_y = config.SCREEN_HEIGHT - 90
         self.rect = pygame.Rect(
-            BUTTON_START_X + index * (BUTTON_WIDTH + BUTTON_GAP),
-            BUTTON_Y,
+            start_x + self.index * (BUTTON_WIDTH + BUTTON_GAP),
+            button_y,
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
         )
-        self.hovered = False
-        self.selected = False
     
     @property
     def color(self):
@@ -41,13 +46,12 @@ class ClassButton:
         }[self.member_class]
 
 
-# Build the 5 buttons
+# Build the 4 buttons
 CLASS_BUTTONS = [
-    ClassButton(0, "[⎵] All", None),
-    ClassButton(1, "[E] Enf", MemberClass.ENFORCER),
-    ClassButton(2, "[A] Ass", MemberClass.ASSASSIN),
-    ClassButton(3, "[S] Sni", MemberClass.SNIPER),
-    ClassButton(4, "[D] Dem", MemberClass.DEMOLITIONIST),
+    ClassButton(0, "[E] Enf", MemberClass.ENFORCER),
+    ClassButton(1, "[A] Ass", MemberClass.ASSASSIN),
+    ClassButton(2, "[S] Sni", MemberClass.SNIPER),
+    ClassButton(3, "[D] Dem", MemberClass.DEMOLITIONIST),
 ]
 
 
@@ -59,10 +63,18 @@ class OrderSystem:
         self.selected_button = None  # Reference to the selected ClassButton
         self.order_history = []
         self.hovered_building = None  # (empire: "player"/"enemy", index: int)
+        self.feedback_msg = ""       # Temporary feedback message
+        self.feedback_timer = 0.0    # How long to show feedback
+        # Update button positions based on screen size
+        for btn in CLASS_BUTTONS:
+            btn.update_rect()
     
     def update(self, dt: float):
-        """Update (no-op, kept for interface compatibility)."""
-        pass
+        """Update feedback timer."""
+        if self.feedback_timer > 0:
+            self.feedback_timer -= dt
+            if self.feedback_timer <= 0:
+                self.feedback_msg = ""
     
     @property
     def can_issue_order(self) -> bool:
@@ -92,7 +104,7 @@ class OrderSystem:
                     self.hovered_building = ("enemy", b.index)
                     return
     
-    def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list) -> Order:
+    def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list, engine=None) -> Order:
         """Handle a mouse click. Returns an Order if one was completed, else None."""
         mx, my = mouse_pos
         
@@ -111,9 +123,16 @@ class OrderSystem:
             if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
                 return self._create_order(b.index, OrderAction.DEFEND)
         
-        # Check enemy buildings → attack
+        # Check enemy buildings → attack (with visibility check)
         for b in enemy_buildings:
             if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                # Check if selected class can reach this building
+                if engine and self.selected_class is not None:
+                    if not engine.is_attackable_by_class(b.index, self.selected_class, is_player=True):
+                        self.feedback_msg = "No visibility"
+                        self.feedback_timer = 1.5
+                        return None
+                
                 return self._create_order(b.index, OrderAction.ATTACK)
         
         return None
@@ -149,7 +168,7 @@ class OrderSystem:
     
     def _building_rect(self, building) -> pygame.Rect:
         """Get the clickable rect for a building."""
-        size = 50
+        size = config.BUILDING_SIZE
         return pygame.Rect(
             int(building.x) - size // 2,
             int(building.y) - size // 2,
@@ -159,6 +178,8 @@ class OrderSystem:
     
     def get_prompt(self) -> str:
         """Get the current prompt/status text."""
+        if self.feedback_msg:
+            return self.feedback_msg
         if not self.has_class_selected:
             return "Select a class, then click a building"
         

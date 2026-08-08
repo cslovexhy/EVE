@@ -71,10 +71,18 @@ python3 src/download_portraits.py  # Download character art
 - Downloaded 80 lieutenant portraits from UE Fandom wiki (40 player + 40 enemy)
 - Class icons from UE wiki for battlefield representation
 - Per-class attack intervals: Enforcer 2.0s, Sniper 2.5s, Assassin 1.0s, Demo 1.8s
-- Sniper behavior: stops at 200px range, shoots from distance
+- Sniper behavior: stops at 200px range, shoots without approaching
 - Assassin stealth: invisible after 5s out of combat, breaks on attack/hit
-- Fog of war: flood-fill from entry points (1/4/7/9) through destroyed buildings
+- Fog of war: flood-fill visibility from entry points (1/4/7/9), destroy buildings to reveal neighbors
 - Movement speed tuned to 60% (48px/s base)
 - Early battle end on full elimination (all buildings or all members down)
 - Defender count bubbles on buildings
 - Class roster stats for both player and enemy
+- Two-tier visibility: assassins can backdoor building 9, other classes blocked
+- "No visibility" feedback when clicking unreachable buildings
+- Coordinated AI: assassins+snipers assault together, demos finish buildings, enforcers defend
+- AI weighted target selection: 30% each front row (1/4/7), 10% backdoor (9)
+- Fullscreen mode with 2x building/member sizes, centered grid layout
+- Sniper range targeting: shoots into nearby buildings within range, 50% accuracy on hidden
+- Clean UI layout: HUD bar, stats bar, battlefield, order panel with proper spacing
+- Removed order cooldown, removed "All" class selection

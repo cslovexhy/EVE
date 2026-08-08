@@ -36,25 +36,37 @@ class BattleEngine:
         """
         center_x = config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH // 2
         
-        # Player buildings (left side)
+        # Calculate grid dimensions
+        grid_w = 2 * config.GRID_CELL_SIZE  # 3 columns, spacing between them
+        grid_h = 2 * config.GRID_CELL_SIZE  # 3 rows, spacing between them
+        
+        # Center player grid in left half
+        left_half_center_x = config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH // 4
+        left_half_center_y = config.BATTLEFIELD_Y + config.BATTLEFIELD_HEIGHT // 2
+        
+        # Center enemy grid in right half
+        right_half_center_x = config.BATTLEFIELD_X + 3 * config.BATTLEFIELD_WIDTH // 4
+        right_half_center_y = config.BATTLEFIELD_Y + config.BATTLEFIELD_HEIGHT // 2
+        
+        # Player buildings (left side, centered in left half)
         for b in self.player.buildings:
             row = b.index // 3   # 0, 1, 2 (top to bottom)
             col = b.index % 3    # 0=front, 1=mid, 2=back
             
-            # X: front row closer to center, back row near left edge
-            b.x = config.BATTLEFIELD_X + 80 + (2 - col) * config.GRID_CELL_SIZE
-            # Y: spread vertically
-            b.y = config.BATTLEFIELD_Y + 60 + row * (config.GRID_CELL_SIZE + 40)
+            # X: front row (col 0) closer to center, back row (col 2) toward left edge
+            b.x = left_half_center_x + (1 - col) * config.GRID_CELL_SIZE
+            # Y: centered vertically
+            b.y = left_half_center_y + (row - 1) * config.GRID_CELL_SIZE
         
-        # Enemy buildings (right side, mirrored)
+        # Enemy buildings (right side, centered in right half)
         for b in self.enemy.buildings:
             row = b.index // 3
             col = b.index % 3
             
-            # X: front row closer to center, back row near right edge
-            b.x = center_x + 40 + col * config.GRID_CELL_SIZE
-            # Y: spread vertically
-            b.y = config.BATTLEFIELD_Y + 60 + row * (config.GRID_CELL_SIZE + 40)
+            # X: front row (col 0) closer to center, back row (col 2) toward right edge
+            b.x = right_half_center_x + (col - 1) * config.GRID_CELL_SIZE
+            # Y: centered vertically
+            b.y = right_half_center_y + (row - 1) * config.GRID_CELL_SIZE
     
     def _assign_initial_defenders(self):
         """Distribute members across buildings as initial defenders."""
@@ -209,26 +221,68 @@ class BattleEngine:
     
     def _resolve_attack(self, attacker: Member, target_bldg: Building, target_empire: Empire):
         """Resolve an attack on a building or its defenders."""
-        # Priority: fight defenders first, then damage building
+        is_player_attacker = attacker in self.player.members
+        stats = attacker.get_stats()
+        
+        # Find defenders at the target building first
         defenders_at_building = [
             m for m in target_empire.members
             if m.is_alive and m.assigned_building == target_bldg.index
             and m.state in (MemberState.DEFENDING, MemberState.IDLE)
         ]
         
-        stats = attacker.get_stats()
+        # Snipers: if no defenders at target, scan all buildings in range
+        if not defenders_at_building and attacker.member_class == MemberClass.SNIPER:
+            for bldg in target_empire.buildings:
+                if bldg.destroyed:
+                    continue
+                dist = self._distance(attacker.x, attacker.y, bldg.x, bldg.y)
+                if dist <= config.SNIPER_RANGE:
+                    nearby_defenders = [
+                        m for m in target_empire.members
+                        if m.is_alive and m.assigned_building == bldg.index
+                        and m.state in (MemberState.DEFENDING, MemberState.IDLE)
+                    ]
+                    if nearby_defenders:
+                        target_member = random.choice(nearby_defenders)
+                        damage = stats["damage_player"]
+                        
+                        # 50% accuracy penalty if building is not visible
+                        if is_player_attacker:
+                            visible = self.is_visible_to_player(bldg.index)
+                        else:
+                            visible = self.is_visible_to_enemy(bldg.index)
+                        if not visible and random.random() < 0.5:
+                            # Miss
+                            return
+                        
+                        target_member.take_damage(damage)
+                        if not target_member.is_alive:
+                            if target_member in bldg.defenders:
+                                bldg.defenders.remove(target_member)
+                            scoring_empire = self.player if is_player_attacker else self.enemy
+                            scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
+                        return
         
         if defenders_at_building:
             # Attack a random defender
             target_member = random.choice(defenders_at_building)
-            target_member.take_damage(stats["damage_player"])
+            
+            damage = stats["damage_player"]
+            # Sniper accuracy penalty for non-visible target building
+            if attacker.member_class == MemberClass.SNIPER:
+                if is_player_attacker:
+                    visible = self.is_visible_to_player(target_bldg.index)
+                else:
+                    visible = self.is_visible_to_enemy(target_bldg.index)
+                if not visible and random.random() < 0.5:
+                    return  # Miss
+            
+            target_member.take_damage(damage)
             
             if not target_member.is_alive:
-                # Remove from building defenders list
                 if target_member in target_bldg.defenders:
                     target_bldg.defenders.remove(target_member)
-                # Award points
-                is_player_attacker = attacker in self.player.members
                 scoring_empire = self.player if is_player_attacker else self.enemy
                 scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
         else:
@@ -236,7 +290,6 @@ class BattleEngine:
             if not target_bldg.destroyed:
                 target_bldg.take_damage(stats["damage_building"])
                 if target_bldg.destroyed:
-                    is_player_attacker = attacker in self.player.members
                     scoring_empire = self.player if is_player_attacker else self.enemy
                     scoring_empire.points += config.POINTS_PER_BUILDING_DESTROYED
     
@@ -279,32 +332,41 @@ class BattleEngine:
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.
         
-        Grid (1-indexed, stored 0-indexed):
-          [1] [2] [3]
-          [4] [5] [6]
-          [7] [8] [9]
-        
-        Player entry points (always visible): 1, 4, 7, 9
-        Enemy entry points (mirror): 3, 6, 9, 7
-        
-        A building is visible if:
-        - It's an entry point, OR
-        - Any 4-connected neighbor is both visible AND destroyed
-        
-        This means you destroy your way in — each destroyed building
-        reveals its adjacent neighbors.
+        This is the PLAYER VIEW — includes building 9 (assassin intel).
+        Used for rendering (what the player can see on screen).
         """
-        # Compute full visibility set via flood fill
-        visible = self._compute_visibility()
+        visible = self._compute_visibility(self.enemy, assassin_entry=True)
         return building_index in visible
     
-    def _compute_visibility(self) -> set:
-        """Flood-fill visibility from player's entry points through destroyed enemy buildings."""
-        # 4-connected adjacency on 3x3 grid (0-indexed)
-        # Grid positions:
-        #   0 1 2
-        #   3 4 5
-        #   6 7 8
+    def is_attackable_by_class(self, building_index: int, member_class, is_player: bool) -> bool:
+        """Can this class attack/reach this building?
+        
+        Non-assassin classes can only reach buildings visible from entry points 1/4/7.
+        Assassins can also use building 9 as entry point.
+        Same logic applies to both sides (mirrored entry points for enemy).
+        """
+        if is_player:
+            has_assassin_entry = (member_class == MemberClass.ASSASSIN)
+            visible = self._compute_visibility(self.enemy, assassin_entry=has_assassin_entry)
+        else:
+            has_assassin_entry = (member_class == MemberClass.ASSASSIN)
+            visible = self._compute_visibility(self.player, assassin_entry=has_assassin_entry, is_enemy_view=True)
+        return building_index in visible
+    
+    def is_visible_to_enemy(self, building_index: int) -> bool:
+        """Fog of war for enemy AI viewing player buildings.
+        Enemy view — includes building 7 (their assassin backdoor entry)."""
+        visible = self._compute_visibility(self.player, assassin_entry=True, is_enemy_view=True)
+        return building_index in visible
+    
+    def _compute_visibility(self, target_empire, assassin_entry: bool = True, is_enemy_view: bool = False) -> set:
+        """Flood-fill visibility through destroyed buildings.
+        
+        Args:
+            target_empire: The empire whose buildings we're looking at
+            assassin_entry: Whether to include the assassin backdoor entry point
+            is_enemy_view: If True, use enemy's entry points (mirrored)
+        """
         adjacency = {
             0: [1, 3],
             1: [0, 2, 4],
@@ -317,17 +379,23 @@ class BattleEngine:
             8: [5, 7],
         }
         
-        # Player entry points (0-indexed): buildings 1,4,7,9 → indices 0,3,6,8
-        entry_points = {0, 3, 6, 8}
+        if is_enemy_view:
+            # Enemy entry points into player buildings: 1, 4, 7 (indices 0, 3, 6) + backdoor 9 (index 8)
+            entry_points = {0, 3, 6}
+            if assassin_entry:
+                entry_points.add(8)  # Building 9 is backdoor
+        else:
+            # Player entry points into enemy buildings: 1, 4, 7 (indices 0, 3, 6) + backdoor 9 (index 8)
+            entry_points = {0, 3, 6}
+            if assassin_entry:
+                entry_points.add(8)  # Building 9 is backdoor
         
-        # BFS: start from entry points, spread through destroyed buildings
         visible = set(entry_points)
         queue = list(entry_points)
         
         while queue:
             current = queue.pop(0)
-            # If this building is destroyed, its neighbors become visible
-            if self.enemy.buildings[current].destroyed:
+            if target_empire.buildings[current].destroyed:
                 for neighbor in adjacency[current]:
                     if neighbor not in visible:
                         visible.add(neighbor)
