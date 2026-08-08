@@ -84,9 +84,33 @@ Each side sees the other's grid mirrored — your left faces their right.
 | Assassin | HIGH vs players | Low | Can reach back-row buildings, bonus vs unaware |
 | Demolitionist | LOW vs players, HIGH vs buildings | Medium | Primary building destroyer |
 
+## Order Logic & Prioritization
+
+### Who responds to an order?
+When you issue "Enforcer → Building 4 → Defend":
+- All **idle/unengaged** Enforcers respond immediately
+- Enforcers **defending other buildings** (assigned, not under attack) respond
+- Enforcers **currently in combat on your side** respond (disengage and rally)
+
+### Who does NOT respond:
+- Members **actively attacking enemy buildings** — they're deep in enemy territory, doing work. Don't recall them.
+- Members **currently engaged in enemy territory** — too far committed, pulling back would get them killed
+
+### Smart Order Rules:
+- Orders only pull members from **your side of the field** (defending, idle, in transit home)
+- Members on **offensive operations in enemy territory** are committed — they finish or die
+- To recall attackers, you'd need a separate explicit "Retreat" command (TBD if this exists)
+- This prevents accidental self-sabotage (recalling assassins mid-backdoor)
+
+### Implication:
+- Once you send members on an attack, they're **committed**
+- Defensive orders only summon members who are available on your side
+- This creates real commitment cost — sending all your enforcers to attack means you CAN'T recall them to defend
+
 ## Open Questions
 - How do tokens/action points work in the 5-min format? Cooldown on orders?
 - Can you cancel/redirect an order mid-execution?
 - What happens when a building is destroyed? Members inside die? Displaced?
 - Do snipers need line of sight or can they always shoot "over" buildings?
 - Auto-battle AI: what do members do when they have NO orders? (idle in building? auto-defend nearest?)
+- Is there a "Retreat" command to pull back committed attackers? Cost/penalty?
