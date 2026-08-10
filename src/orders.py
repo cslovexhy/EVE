@@ -150,11 +150,6 @@ class OrderSystem:
         if not self.has_class_selected:
             return None
         
-        # Check player buildings → defend
-        for b in player_buildings:
-            if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
-                return self._create_order(b.index, OrderAction.DEFEND)
-        
         # Check enemy buildings → attack (with visibility check)
         for b in enemy_buildings:
             if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
@@ -216,4 +211,4 @@ class OrderSystem:
             return "Select a class, then click a building"
         
         class_name = self.selected_button.label
-        return f"{class_name} selected — click your building to defend, enemy building to attack"
+        return f"{class_name} selected — click enemy building to attack"

@@ -188,8 +188,6 @@ class BattleEngine:
         
         if member.state == MemberState.ATTACKING:
             self._update_attacker(member, dt)
-        elif member.state == MemberState.MOVING:
-            self._update_mover(member, dt)
         elif member.state == MemberState.DEFENDING:
             self._update_defender(member, dt)
     
@@ -236,19 +234,6 @@ class BattleEngine:
             
             member.attack_cooldown = member.get_stats()["attack_interval"]
             member.time_since_combat = 0.0
-    
-    def _update_mover(self, member: Member, dt: float):
-        """Member moving to a defensive position."""
-        dist = self._distance(member.x, member.y, member.target_x, member.target_y)
-        
-        if dist <= 10:
-            # Arrived
-            member.state = MemberState.DEFENDING
-            member.x = member.target_x
-            member.y = member.target_y
-        else:
-            speed = config.MEMBER_MOVE_SPEED * member.get_stats()["speed"]
-            self._move_toward(member, member.target_x, member.target_y, speed, dt)
     
     def _update_defender(self, member: Member, dt: float):
         """Defender: stays in building. Defense is passive — you're a target for enemy fire.
@@ -305,23 +290,6 @@ class BattleEngine:
                 # Stay in current building, just switch to attacking state
                 member.state = MemberState.ATTACKING
                 member.target_building = order.target_building
-        
-        elif order.action == OrderAction.DEFEND:
-            target_bldg = empire.buildings[order.target_building]
-            for member in available:
-                # Remove from old building
-                if member.assigned_building is not None:
-                    old_bldg = empire.buildings[member.assigned_building]
-                    if member in old_bldg.defenders:
-                        old_bldg.defenders.remove(member)
-                
-                # Assign to new building
-                member.assigned_building = order.target_building
-                target_bldg.defenders.append(member)
-                member.state = MemberState.DEFENDING
-                member.target_building = None
-                member.x = target_bldg.x + random.uniform(-20, 20)
-                member.y = target_bldg.y + random.uniform(-20, 20)
     
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.

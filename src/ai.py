@@ -69,10 +69,7 @@ class BattleAI:
         # Use health packs if needed
         self._use_health_packs()
         
-        # First: reinforce defense if needed
-        self._plan_defense(engine)
-        
-        # Then: plan the attack based on phase
+        # Plan the attack based on phase
         if self.phase == "opening":
             self._plan_opening(engine)
         elif self.phase == "assault":
@@ -99,21 +96,6 @@ class BattleAI:
                 # Use up to 2 packs per wave on the same class if badly depleted
                 if alive < 1 and self.empire.health_packs > 0 and self.empire.get_dead_by_class(cls):
                     self.empire.heal_member(cls)
-    
-    def _plan_defense(self, engine: BattleEngine):
-        """Send enforcers to defend threatened buildings."""
-        threatened = self._find_threatened_buildings(engine)
-        if not threatened:
-            return
-        
-        # Send enforcers to the most threatened building
-        if self.empire.get_available_by_class(MemberClass.ENFORCER):
-            target = threatened[0]
-            self.order_queue.append(Order(
-                member_class=MemberClass.ENFORCER,
-                target_building=target,
-                action=OrderAction.DEFEND,
-            ))
     
     def _plan_opening(self, engine: BattleEngine):
         """Opening phase: pick a target with weighted randomness, send assassins + snipers.
@@ -306,20 +288,4 @@ class BattleAI:
                     action=OrderAction.ATTACK,
                 ))
     
-    def _find_threatened_buildings(self, engine: BattleEngine) -> list:
-        """Find own buildings being attacked, sorted by threat level."""
-        threatened = []
-        for building in self.empire.buildings:
-            if building.destroyed:
-                continue
-            attacker_count = sum(
-                1 for m in self.enemy.members
-                if m.is_alive and m.state == MemberState.ATTACKING
-                and m.target_building == building.index
-            )
-            if attacker_count > 0:
-                threatened.append((building.index, attacker_count))
-        
-        # Sort by most threatened first
-        threatened.sort(key=lambda x: -x[1])
-        return [t[0] for t in threatened]
+
