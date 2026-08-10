@@ -588,12 +588,12 @@ class Renderer:
                 # Get target building if attacking
                 attacking = [m for m in members if m.state == MemberState.ATTACKING]
                 if attacking and attacking[0].target_building is not None:
-                    target_str = f"→B{attacking[0].target_building + 1}"
+                    target_str = f"B{attacking[0].target_building + 1}"
                 else:
-                    target_str = "idle"
+                    target_str = "--"
                 
-                info = self.font_small.render(f"{total_ammo}⚡ {target_str}", True, text_color)
-                info_rect = info.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 30)
+                info = self.font_small.render(f"Ammo:{total_ammo} T:{target_str}", True, text_color)
+                info_rect = info.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 32)
                 self.screen.blit(info, info_rect)
         
         # Draw attack mode toggle button
