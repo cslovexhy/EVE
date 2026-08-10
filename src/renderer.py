@@ -10,6 +10,7 @@ import config
 # Portrait and icon directories
 PORTRAIT_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "portraits")
 ICON_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "icons")
+BUILDING_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "buildings")
 
 # Mini card dimensions
 CARD_WIDTH = 24
@@ -51,6 +52,14 @@ class Renderer:
         # Load class icons
         self.class_icons = {}
         self._load_class_icons()
+        
+        # Load building images
+        self.building_images = {}
+        self._load_building_images()
+        
+        # Load battlefield background
+        self.battlefield_bg = None
+        self._load_battlefield_bg()
     
     def _load_portraits(self):
         """Load portraits, crop to face area (top portion), and scale to card size."""
@@ -100,6 +109,95 @@ class Renderer:
             except (pygame.error, FileNotFoundError):
                 pass
     
+    def _load_building_images(self):
+        """Load building sprite images, crop to content, and scale to building size."""
+        # Building type assignment for each slot (0-8)
+        self.building_types = [
+            "headquarters",   # 1 - front row
+            "hospital",       # 2 - mid
+            "safehouse",      # 3 - back
+            "armory",         # 4 - front row
+            "research_lab",   # 5 - mid
+            "warehouse",      # 6 - back
+            "sniper_tower",   # 7 - front row
+            "bunker",         # 8 - mid
+            "nuclear_silo",   # 9 - back (backdoor)
+        ]
+        
+        bldg_size = (config.BUILDING_SIZE, config.BUILDING_SIZE)
+        
+        # Per-building-type scale multipliers
+        building_scale = {
+            "headquarters": 2.0,
+            "hospital": 1.2,
+            "safehouse": 1.2,
+            "armory": 1.2,
+            "research_lab": 1.2,
+            "warehouse": 1.2,
+            "sniper_tower": 1.2,
+            "bunker": 1.2,
+            "nuclear_silo": 1.2,
+        }
+        
+        if not os.path.isdir(BUILDING_DIR):
+            return
+        
+        for btype in set(self.building_types):
+            path = os.path.join(BUILDING_DIR, f"{btype}.png")
+            try:
+                img = pygame.image.load(path).convert_alpha()
+                
+                # Crop to non-transparent content bounds
+                w, h = img.get_width(), img.get_height()
+                min_x, min_y, max_x, max_y = w, h, 0, 0
+                for y in range(0, h, 2):
+                    for x in range(0, w, 2):
+                        if img.get_at((x, y)).a > 10:
+                            min_x = min(min_x, x)
+                            min_y = min(min_y, y)
+                            max_x = max(max_x, x)
+                            max_y = max(max_y, y)
+                
+                if max_x > min_x and max_y > min_y:
+                    # Add small padding
+                    pad = 4
+                    min_x = max(0, min_x - pad)
+                    min_y = max(0, min_y - pad)
+                    max_x = min(w, max_x + pad)
+                    max_y = min(h, max_y + pad)
+                    img = img.subsurface(pygame.Rect(min_x, min_y, max_x - min_x, max_y - min_y)).copy()
+                
+                # Scale to fit within building size, maintaining aspect ratio
+                scale_mult = building_scale.get(btype, 1.0)
+                target_w = int(bldg_size[0] * scale_mult)
+                target_h = int(bldg_size[1] * scale_mult)
+                
+                iw, ih = img.get_width(), img.get_height()
+                scale = min(target_w / iw, target_h / ih)
+                new_w = int(iw * scale)
+                new_h = int(ih * scale)
+                img = pygame.transform.smoothscale(img, (new_w, new_h))
+                
+                # Center on a surface sized to the scaled building
+                surface = pygame.Surface((target_w, target_h), pygame.SRCALPHA)
+                ox = (target_w - new_w) // 2
+                oy = (target_h - new_h) // 2
+                surface.blit(img, (ox, oy))
+                
+                self.building_images[btype] = surface
+            except (pygame.error, FileNotFoundError, ValueError):
+                pass
+    
+    def _load_battlefield_bg(self):
+        """Load and scale the battlefield background image."""
+        bg_path = os.path.join(os.path.dirname(__file__), "..", "assets", "bg", "battlefield.png")
+        try:
+            img = pygame.image.load(bg_path).convert()
+            self.battlefield_bg = pygame.transform.smoothscale(
+                img, (config.BATTLEFIELD_WIDTH, config.BATTLEFIELD_HEIGHT))
+        except (pygame.error, FileNotFoundError):
+            self.battlefield_bg = None
+    
     def render(self, engine: BattleEngine, order_system: OrderSystem):
         """Render the full battle scene."""
         self.screen.fill(config.BLACK)
@@ -118,6 +216,9 @@ class Renderer:
         # Draw sniper range circles for defending player snipers
         self._draw_sniper_ranges(engine.player.members)
         
+        # Draw projectiles
+        self._draw_projectiles(engine.projectiles)
+        
         # Draw HUD (top)
         self._draw_hud(engine)
         
@@ -135,10 +236,13 @@ class Renderer:
             self._draw_battle_over(engine)
     
     def _draw_battlefield_bg(self):
-        """Draw the battlefield background area."""
-        rect = pygame.Rect(config.BATTLEFIELD_X, config.BATTLEFIELD_Y,
-                          config.BATTLEFIELD_WIDTH, config.BATTLEFIELD_HEIGHT)
-        pygame.draw.rect(self.screen, (20, 20, 30), rect)
+        """Draw the battlefield background."""
+        if self.battlefield_bg:
+            self.screen.blit(self.battlefield_bg, (config.BATTLEFIELD_X, config.BATTLEFIELD_Y))
+        else:
+            rect = pygame.Rect(config.BATTLEFIELD_X, config.BATTLEFIELD_Y,
+                              config.BATTLEFIELD_WIDTH, config.BATTLEFIELD_HEIGHT)
+            pygame.draw.rect(self.screen, (20, 20, 30), rect)
     
     def _draw_buildings(self, empire: Empire, is_player: bool,
                        engine: BattleEngine = None, order_system: OrderSystem = None):
@@ -161,22 +265,32 @@ class Renderer:
                     if (side == "player" and is_player) or (side == "enemy" and not is_player):
                         is_hovered = True
             
-            # Building rect
-            if building.destroyed:
-                color = config.DARK_GRAY
-            elif is_player:
-                color = (40, 80, 40)
-            else:
-                color = (80, 40, 40) if visible else (40, 40, 40)
-            
+            # Building rendering
             rect = pygame.Rect(x - size // 2, y - size // 2, size, size)
-            pygame.draw.rect(self.screen, color, rect)
+            
+            if building.destroyed:
+                # Destroyed: dark gray rubble
+                pygame.draw.rect(self.screen, config.DARK_GRAY, rect)
+            else:
+                # Draw building sprite if available
+                btype = self.building_types[building.index]
+                if btype in self.building_images and visible:
+                    img = self.building_images[btype]
+                    iw, ih = img.get_width(), img.get_height()
+                    self.screen.blit(img, (x - iw // 2, y - ih // 2))
+                else:
+                    # Fallback colored rect
+                    if is_player:
+                        color = (40, 80, 40)
+                    else:
+                        color = (80, 40, 40) if visible else (40, 40, 40)
+                    pygame.draw.rect(self.screen, color, rect)
             
             # Hover highlight
             if is_hovered and not building.destroyed:
                 highlight_color = config.GREEN if is_player else config.RED
                 pygame.draw.rect(self.screen, highlight_color, rect, 3)
-            else:
+            elif not building.destroyed:
                 pygame.draw.rect(self.screen, config.GRAY, rect, 1)
             
             # Building number
@@ -261,6 +375,33 @@ class Renderer:
                     config.SNIPER_RANGE, 1)
                 self.screen.blit(range_surface, 
                                (x - config.SNIPER_RANGE - 1, y - config.SNIPER_RANGE - 1))
+    
+    def _draw_projectiles(self, projectiles: list):
+        """Draw projectiles as colored dots/trails."""
+        from models import ProjectileType
+        
+        for proj in projectiles:
+            if not proj.alive:
+                continue
+            
+            x, y = int(proj.x), int(proj.y)
+            
+            if proj.projectile_type == ProjectileType.SNIPER:
+                # Sniper bullet: small bright yellow dot with trail
+                color = (255, 255, 100)
+                pygame.draw.circle(self.screen, color, (x, y), 4)
+                # Short trail
+                dx = proj.target_x - proj.x
+                dy = proj.target_y - proj.y
+                dist = max(1, (dx*dx + dy*dy) ** 0.5)
+                trail_x = x - int((dx / dist) * 8)
+                trail_y = y - int((dy / dist) * 8)
+                pygame.draw.line(self.screen, (255, 255, 100, 150), (trail_x, trail_y), (x, y), 2)
+            else:
+                # Demo projectile: larger orange-red circle
+                color = (255, 100, 30)
+                pygame.draw.circle(self.screen, color, (x, y), 6)
+                pygame.draw.circle(self.screen, (255, 200, 50), (x, y), 3)
     
     def _draw_member_card(self, member: Member, cx: int, cy: int):
         """Draw a single member as their class icon with rarity border and level."""
@@ -400,7 +541,9 @@ class Renderer:
             y += 16
     
     def _draw_class_buttons(self, order_system: OrderSystem):
-        """Draw the class selection buttons."""
+        """Draw the class selection buttons and heal button."""
+        from orders import HEAL_BUTTON
+        
         for btn in CLASS_BUTTONS:
             if btn.selected:
                 bg_color = btn.color
@@ -419,6 +562,22 @@ class Renderer:
             label = self.font_btn.render(btn.label, True, text_color)
             label_rect = label.get_rect(center=btn.rect.center)
             self.screen.blit(label, label_rect)
+        
+        # Draw heal button
+        btn = HEAL_BUTTON
+        if btn.hovered:
+            bg_color = (180, 40, 40)
+            text_color = config.WHITE
+        else:
+            bg_color = config.DARK_GRAY
+            text_color = btn.color
+        
+        pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
+        pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
+        
+        label = self.font_btn.render(btn.label, True, text_color)
+        label_rect = label.get_rect(center=btn.rect.center)
+        self.screen.blit(label, label_rect)
     
     def _draw_hud(self, engine: BattleEngine):
         """Draw top HUD bar with timer, scores, building counts."""
@@ -434,6 +593,11 @@ class Renderer:
         timer_text = self.font_large.render(f"{minutes}:{seconds:02d}", True, config.WHITE)
         timer_rect = timer_text.get_rect(centerx=config.SCREEN_WIDTH // 2, centery=config.HUD_HEIGHT // 2)
         self.screen.blit(timer_text, timer_rect)
+        
+        # Health packs (below timer)
+        hp_text = self.font_small.render(f"HP: {engine.player.health_packs}", True, (200, 50, 50))
+        hp_rect = hp_text.get_rect(centerx=config.SCREEN_WIDTH // 2, y=config.HUD_HEIGHT - 14)
+        self.screen.blit(hp_text, hp_rect)
         
         # Player score + buildings (left)
         p_score = self.font_medium.render(

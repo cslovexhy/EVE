@@ -1,9 +1,11 @@
 """EVE - Battle Engine: grid positions, movement, combat resolution, fog of war."""
 
 import math
+import os
 import random
 from models import (
-    Empire, Member, Building, Order, MemberClass, MemberState, OrderAction
+    Empire, Member, Building, Order, MemberClass, MemberState, OrderAction,
+    Projectile, ProjectileType
 )
 import config
 
@@ -17,78 +19,137 @@ class BattleEngine:
         self.battle_time = 0.0
         self.battle_over = False
         self.winner = None
+        self.projectiles = []  # Active projectiles in flight
         
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
     
     def _position_buildings(self):
-        """Place buildings on the battlefield grid.
+        """Place buildings to match the parallelogram planks in the battlefield background.
         
-        Layout (from player's perspective):
-        Player side (left):          Enemy side (right):
-        [0] [1] [2]                  [0] [1] [2]
-        [3] [4] [5]                  [3] [4] [5]
-        [6] [7] [8]                  [6] [7] [8]
-        
-        Index 0,3,6 = front row (closest to center)
-        Index 2,5,8 = back row (furthest from center)
+        Loads positions from assets/building_positions.json if available (created by placement_tool.py).
+        Otherwise uses calculated defaults with perspective compression.
         """
-        center_x = config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH // 2
+        import json
         
-        # Calculate grid dimensions
-        grid_w = 2 * config.GRID_CELL_SIZE  # 3 columns, spacing between them
-        grid_h = 2 * config.GRID_CELL_SIZE  # 3 rows, spacing between them
+        bx = config.BATTLEFIELD_X
+        by = config.BATTLEFIELD_Y
+        bw = config.BATTLEFIELD_WIDTH
+        bh = config.BATTLEFIELD_HEIGHT
         
-        # Center player grid in left half
-        left_half_center_x = config.BATTLEFIELD_X + config.BATTLEFIELD_WIDTH // 4
-        left_half_center_y = config.BATTLEFIELD_Y + config.BATTLEFIELD_HEIGHT // 2
+        # Try loading saved positions from placement tool
+        positions_file = os.path.join(os.path.dirname(__file__), "..", "assets", "building_positions.json")
+        if os.path.exists(positions_file):
+            with open(positions_file, "r") as f:
+                saved = json.load(f)
+            for b in self.player.buildings:
+                px, py = saved["blue"][b.index]
+                b.x = bx + px * bw
+                b.y = by + py * bh
+            for b in self.enemy.buildings:
+                px, py = saved["red"][b.index]
+                b.x = bx + px * bw
+                b.y = by + py * bh
+            return
         
-        # Center enemy grid in right half
-        right_half_center_x = config.BATTLEFIELD_X + 3 * config.BATTLEFIELD_WIDTH // 4
-        right_half_center_y = config.BATTLEFIELD_Y + config.BATTLEFIELD_HEIGHT // 2
+        # Fallback: calculated positions with perspective compression
+        # Row 3 (bottom) anchor positions as fractions of background image
+        # These are tuned to sit on the planks
+        # Building 8 is midpoint of 7 and 9
+        # BLUE_X_OFFSET: negative = shift left, positive = shift right
+        BLUE_X_OFFSET = -0.01
         
-        # Player buildings (left side, centered in left half)
+        blue_row3 = [(0.340 + BLUE_X_OFFSET, 0.779), (0.211 + BLUE_X_OFFSET, 0.779), (0.082 + BLUE_X_OFFSET, 0.779)]  # bldg 7, 8, 9
+        red_row3 = [(0.662, 0.779), (0.791, 0.779), (0.920, 0.779)]    # bldg 7, 8, 9
+        
+        # Perspective compression: how much upper rows narrow compared to row 3
+        # 0.0 = no compression (all rows same width), 1.0 = max compression
+        PERSPECTIVE_STRENGTH = 0.075
+        
+        # Row Y positions
+        row_y = [0.360, 0.551, 0.779]  # row 1 (top), row 2 (mid), row 3 (bottom)
+        
+        # Column spacing scale per row (derived from PERSPECTIVE_STRENGTH)
+        # Row 3 = 1.0, row 2 = slightly narrower, row 1 = narrowest
+        row_col_scale = [
+            1.0 - PERSPECTIVE_STRENGTH * 2,  # row 1 (top)
+            1.0 - PERSPECTIVE_STRENGTH,       # row 2 (mid)
+            1.0,                              # row 3 (bottom)
+        ]
+        
+        bx = config.BATTLEFIELD_X
+        by = config.BATTLEFIELD_Y
+        bw = config.BATTLEFIELD_WIDTH
+        bh = config.BATTLEFIELD_HEIGHT
+        
+        # Blue side: front col (col 0) = bldg 7 position, back col (col 2) = bldg 9 position
+        blue_front = blue_row3[0][0]  # 0.340 (front row X, anchored)
+        blue_back = blue_row3[2][0]   # 0.082 (back row X at row 3)
+        blue_span = blue_front - blue_back  # Full span at row 3
+        
         for b in self.player.buildings:
-            row = b.index // 3   # 0, 1, 2 (top to bottom)
+            row = b.index // 3   # 0=top, 1=mid, 2=bottom
             col = b.index % 3    # 0=front, 1=mid, 2=back
             
-            # X: front row (col 0) closer to center, back row (col 2) toward left edge
-            b.x = left_half_center_x + (1 - col) * config.GRID_CELL_SIZE
-            # Y: centered vertically
-            b.y = left_half_center_y + (row - 1) * config.GRID_CELL_SIZE
+            # Front position shifts slightly inward per row up
+            front_x = blue_front + (2 - row) * 0.020
+            # Column spacing compressed by perspective
+            span = blue_span * row_col_scale[row]
+            px = front_x - col * (span / 2.0)
+            py = row_y[row]
+            
+            b.x = bx + px * bw
+            b.y = by + py * bh
         
-        # Enemy buildings (right side, centered in right half)
+        # Red side: front col (col 0) = bldg 7 position, back col (col 2) = bldg 9 position
+        red_front = red_row3[0][0]   # 0.662 (front row X, anchored)
+        red_back = red_row3[2][0]    # 0.920 (back row X at row 3)
+        red_span = red_back - red_front  # Full span at row 3
+        
         for b in self.enemy.buildings:
             row = b.index // 3
             col = b.index % 3
             
-            # X: front row (col 0) closer to center, back row (col 2) toward right edge
-            b.x = right_half_center_x + (col - 1) * config.GRID_CELL_SIZE
-            # Y: centered vertically
-            b.y = right_half_center_y + (row - 1) * config.GRID_CELL_SIZE
+            # Front position shifts slightly inward per row up
+            front_x = red_front - (2 - row) * 0.020
+            # Column spacing compressed by perspective
+            span = red_span * row_col_scale[row]
+            px = front_x + col * (span / 2.0)
+            py = row_y[row]
+            
+            b.x = bx + px * bw
+            b.y = by + py * bh
     
     def _assign_initial_defenders(self):
-        """Distribute members across buildings as initial defenders."""
-        # Player: spread evenly, 1 per building for first 8
-        for i, member in enumerate(self.player.members):
-            building_idx = i % 9
-            building = self.player.buildings[building_idx]
-            building.defenders.append(member)
-            member.assigned_building = building_idx
-            member.state = MemberState.DEFENDING
-            member.x = building.x
-            member.y = building.y
+        """Distribute members across buildings.
         
-        # Enemy: same distribution
-        for i, member in enumerate(self.enemy.members):
-            building_idx = i % 9
-            building = self.enemy.buildings[building_idx]
-            building.defenders.append(member)
-            member.assigned_building = building_idx
-            member.state = MemberState.DEFENDING
-            member.x = building.x
-            member.y = building.y
+        Non-enforcers (sniper/assassin/demo) all in building 3 (back, index 2).
+        Enforcers spread across other buildings (1/2/4/5/6/7/8/9).
+        """
+        for empire in (self.player, self.enemy):
+            enforcers = [m for m in empire.members if m.member_class == MemberClass.ENFORCER]
+            others = [m for m in empire.members if m.member_class != MemberClass.ENFORCER]
+            
+            # Non-enforcers all go to building 3 (index 2)
+            building_3 = empire.buildings[2]
+            for member in others:
+                building_3.defenders.append(member)
+                member.assigned_building = 2
+                member.state = MemberState.DEFENDING
+                member.x = building_3.x + random.uniform(-20, 20)
+                member.y = building_3.y + random.uniform(-20, 20)
+            
+            # Enforcers spread across other buildings (indices 0,1,3,4,5,6,7,8)
+            other_indices = [0, 1, 3, 4, 5, 6, 7, 8]
+            for i, member in enumerate(enforcers):
+                bldg_idx = other_indices[i % len(other_indices)]
+                building = empire.buildings[bldg_idx]
+                building.defenders.append(member)
+                member.assigned_building = bldg_idx
+                member.state = MemberState.DEFENDING
+                member.x = building.x + random.uniform(-15, 15)
+                member.y = building.y + random.uniform(-15, 15)
     
     def update(self, dt: float):
         """Main update tick. Called every frame."""
@@ -110,10 +171,20 @@ class BattleEngine:
         for member in self.player.members + self.enemy.members:
             if member.is_alive:
                 self._update_member(member, dt)
+        
+        # Update projectiles
+        self._update_projectiles(dt)
     
     def _update_member(self, member: Member, dt: float):
         """Update a single member: movement and combat."""
         member.attack_cooldown = max(0, member.attack_cooldown - dt)
+        
+        # Ammo regeneration
+        member.ammo_regen_timer += dt
+        if member.ammo_regen_timer >= config.AMMO_REGEN_INTERVAL:
+            member.ammo_regen_timer -= config.AMMO_REGEN_INTERVAL
+            if member.ammo < config.AMMO_MAX:
+                member.ammo += 1
         
         if member.state == MemberState.ATTACKING:
             self._update_attacker(member, dt)
@@ -123,8 +194,11 @@ class BattleEngine:
             self._update_defender(member, dt)
     
     def _update_attacker(self, member: Member, dt: float):
-        """Attacker: move toward target, fight defenders, damage building."""
-        # Determine which empire this member belongs to
+        """Attacker: shoot at target building from current position. No movement needed.
+        
+        All classes are ranged — they fire projectiles at the target building
+        as long as it's visible. The only limit is ammo and attack speed.
+        """
         is_player_member = member in self.player.members
         target_empire = self.enemy if is_player_member else self.player
         
@@ -133,34 +207,35 @@ class BattleEngine:
         
         target_bldg = target_empire.buildings[member.target_building]
         
-        # Move toward target building
-        dist = self._distance(member.x, member.y, target_bldg.x, target_bldg.y)
-        
-        # Snipers stop at SNIPER_RANGE, others at ATTACK_RANGE
-        if member.member_class == MemberClass.SNIPER:
-            engage_range = config.SNIPER_RANGE
+        # Can only attack visible buildings
+        if is_player_member:
+            if not self.is_visible_to_player(target_bldg.index):
+                return  # Can't see target, do nothing
         else:
-            engage_range = config.ATTACK_RANGE
+            if not self.is_visible_to_enemy(target_bldg.index):
+                return
         
-        if dist > engage_range:
-            # Move toward target
-            speed = config.MEMBER_MOVE_SPEED * member.get_stats()["speed"]
-            self._move_toward(member, target_bldg.x, target_bldg.y, speed, dt)
-            # Assassin stealth: accumulate time since combat while moving
-            if member.member_class == MemberClass.ASSASSIN:
-                member.time_since_combat += dt
-                if member.time_since_combat >= config.STEALTH_DELAY:
-                    member.stealthed = True
-        else:
-            # In range — fight
-            if member.attack_cooldown <= 0:
-                # Break stealth on attack
-                if member.stealthed:
-                    member.stealthed = False
-                    member.time_since_combat = 0.0
-                self._resolve_attack(member, target_bldg, target_empire)
-                member.attack_cooldown = member.get_stats()["attack_interval"]
+        # Assassin stealth: accumulate time since combat
+        if member.member_class == MemberClass.ASSASSIN:
+            member.time_since_combat += dt
+            if member.time_since_combat >= config.STEALTH_DELAY:
+                member.stealthed = True
+        
+        # Fire when ready and have ammo
+        if member.attack_cooldown <= 0 and member.ammo > 0:
+            # Break stealth on attack
+            if member.stealthed:
+                member.stealthed = False
                 member.time_since_combat = 0.0
+            
+            # Consume ammo
+            member.ammo -= 1
+            
+            # All classes fire projectiles from current position
+            self._fire_projectile(member, target_bldg, target_empire)
+            
+            member.attack_cooldown = member.get_stats()["attack_interval"]
+            member.time_since_combat = 0.0
     
     def _update_mover(self, member: Member, dt: float):
         """Member moving to a defensive position."""
@@ -176,109 +251,34 @@ class BattleEngine:
             self._move_toward(member, member.target_x, member.target_y, speed, dt)
     
     def _update_defender(self, member: Member, dt: float):
-        """Defender: attack nearby enemies."""
-        # Assassin stealth while defending (accumulate out-of-combat time)
+        """Defender: stays in building. Defense is passive — you're a target for enemy fire.
+        
+        Since all combat is ranged and nobody moves, defenders just exist
+        in their building to absorb shots before the building takes damage.
+        Assassins still accumulate stealth while defending.
+        """
+        # Assassin stealth while defending
         if member.member_class == MemberClass.ASSASSIN:
             member.time_since_combat += dt
             if member.time_since_combat >= config.STEALTH_DELAY:
                 member.stealthed = True
-        
-        if member.attack_cooldown > 0:
-            return
-        
-        is_player_member = member in self.player.members
-        enemy_members = self.enemy.members if is_player_member else self.player.members
-        own_empire = self.player if is_player_member else self.enemy
-        
-        # Find closest enemy in range (skip stealthed enemies)
-        attack_range = config.SNIPER_RANGE if member.member_class == MemberClass.SNIPER else config.ATTACK_RANGE
-        
-        closest = None
-        closest_dist = float('inf')
-        
-        for enemy in enemy_members:
-            if not enemy.is_alive or enemy.state not in (MemberState.ATTACKING, MemberState.MOVING):
-                continue
-            if enemy.stealthed:
-                continue  # Can't target stealthed enemies
-            dist = self._distance(member.x, member.y, enemy.x, enemy.y)
-            if dist < closest_dist and dist <= attack_range:
-                closest = enemy
-                closest_dist = dist
-        
-        if closest:
-            stats = member.get_stats()
-            closest.take_damage(stats["damage_player"])
-            member.attack_cooldown = stats["attack_interval"]
-            # Break own stealth when attacking
-            member.stealthed = False
-            member.time_since_combat = 0.0
-            
-            if not closest.is_alive:
-                # Award points
-                scoring_empire = self.player if is_player_member else self.enemy
-                scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
     
     def _resolve_attack(self, attacker: Member, target_bldg: Building, target_empire: Empire):
-        """Resolve an attack on a building or its defenders."""
+        """Resolve a melee attack on a building or its defenders (enforcer/assassin only)."""
         is_player_attacker = attacker in self.player.members
         stats = attacker.get_stats()
         
-        # Find defenders at the target building first
+        # Find defenders at the target building
         defenders_at_building = [
             m for m in target_empire.members
             if m.is_alive and m.assigned_building == target_bldg.index
             and m.state in (MemberState.DEFENDING, MemberState.IDLE)
         ]
         
-        # Snipers: if no defenders at target, scan all buildings in range
-        if not defenders_at_building and attacker.member_class == MemberClass.SNIPER:
-            for bldg in target_empire.buildings:
-                if bldg.destroyed:
-                    continue
-                dist = self._distance(attacker.x, attacker.y, bldg.x, bldg.y)
-                if dist <= config.SNIPER_RANGE:
-                    nearby_defenders = [
-                        m for m in target_empire.members
-                        if m.is_alive and m.assigned_building == bldg.index
-                        and m.state in (MemberState.DEFENDING, MemberState.IDLE)
-                    ]
-                    if nearby_defenders:
-                        target_member = random.choice(nearby_defenders)
-                        damage = stats["damage_player"]
-                        
-                        # 50% accuracy penalty if building is not visible
-                        if is_player_attacker:
-                            visible = self.is_visible_to_player(bldg.index)
-                        else:
-                            visible = self.is_visible_to_enemy(bldg.index)
-                        if not visible and random.random() < 0.5:
-                            # Miss
-                            return
-                        
-                        target_member.take_damage(damage)
-                        if not target_member.is_alive:
-                            if target_member in bldg.defenders:
-                                bldg.defenders.remove(target_member)
-                            scoring_empire = self.player if is_player_attacker else self.enemy
-                            scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
-                        return
-        
         if defenders_at_building:
             # Attack a random defender
             target_member = random.choice(defenders_at_building)
-            
-            damage = stats["damage_player"]
-            # Sniper accuracy penalty for non-visible target building
-            if attacker.member_class == MemberClass.SNIPER:
-                if is_player_attacker:
-                    visible = self.is_visible_to_player(target_bldg.index)
-                else:
-                    visible = self.is_visible_to_enemy(target_bldg.index)
-                if not visible and random.random() < 0.5:
-                    return  # Miss
-            
-            target_member.take_damage(damage)
+            target_member.take_damage(stats["damage_player"])
             
             if not target_member.is_alive:
                 if target_member in target_bldg.defenders:
@@ -301,17 +301,10 @@ class BattleEngine:
             return  # No available members of this class
         
         if order.action == OrderAction.ATTACK:
-            target_bldg = target_empire.buildings[order.target_building]
             for member in available:
-                # Remove from current building's defender list
-                if member.assigned_building is not None:
-                    old_bldg = empire.buildings[member.assigned_building]
-                    if member in old_bldg.defenders:
-                        old_bldg.defenders.remove(member)
-                
+                # Stay in current building, just switch to attacking state
                 member.state = MemberState.ATTACKING
                 member.target_building = order.target_building
-                member.assigned_building = None
         
         elif order.action == OrderAction.DEFEND:
             target_bldg = empire.buildings[order.target_building]
@@ -325,9 +318,10 @@ class BattleEngine:
                 # Assign to new building
                 member.assigned_building = order.target_building
                 target_bldg.defenders.append(member)
-                member.state = MemberState.MOVING
-                member.target_x = target_bldg.x + random.uniform(-20, 20)
-                member.target_y = target_bldg.y + random.uniform(-20, 20)
+                member.state = MemberState.DEFENDING
+                member.target_building = None
+                member.x = target_bldg.x + random.uniform(-20, 20)
+                member.y = target_bldg.y + random.uniform(-20, 20)
     
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.
@@ -402,6 +396,141 @@ class BattleEngine:
                         queue.append(neighbor)
         
         return visible
+    
+    def _fire_projectile(self, attacker: Member, target_bldg: Building, target_empire: Empire):
+        """Fire a projectile at a building or its defenders. All classes are ranged."""
+        stats = attacker.get_stats()
+        
+        # Determine projectile type and speed based on class
+        if attacker.member_class == MemberClass.SNIPER:
+            proj_type = ProjectileType.SNIPER
+            proj_speed = config.PROJECTILE_SPEED_SNIPER
+        elif attacker.member_class == MemberClass.DEMOLITIONIST:
+            proj_type = ProjectileType.DEMO
+            proj_speed = config.PROJECTILE_SPEED_DEMO
+        else:
+            # Enforcer/Assassin use sniper-speed projectiles
+            proj_type = ProjectileType.SNIPER
+            proj_speed = config.PROJECTILE_SPEED_SNIPER
+        
+        # Find defenders at target building (skip stealthed)
+        defenders_at_building = [
+            m for m in target_empire.members
+            if m.is_alive and m.assigned_building == target_bldg.index
+            and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
+            and not m.stealthed
+        ]
+        
+        if defenders_at_building:
+            # Fire at a random defender
+            target_member = random.choice(defenders_at_building)
+            
+            proj = Projectile(
+                x=attacker.x, y=attacker.y,
+                target_x=target_member.x, target_y=target_member.y,
+                speed=proj_speed,
+                damage=stats["damage_player"],
+                projectile_type=proj_type,
+                target_member=target_member,
+                missed=False,
+            )
+            self.projectiles.append(proj)
+        else:
+            # No defenders — fire at the building itself
+            if not target_bldg.destroyed:
+                proj = Projectile(
+                    x=attacker.x, y=attacker.y,
+                    target_x=target_bldg.x, target_y=target_bldg.y,
+                    speed=proj_speed,
+                    damage=stats["damage_building"],
+                    projectile_type=proj_type,
+                    target_building=target_bldg,
+                    hit_building_directly=True,
+                )
+                self.projectiles.append(proj)
+    
+    def _fire_projectile_at_member(self, attacker: Member, target: Member):
+        """Fire a projectile from a defending ranged unit at an enemy member."""
+        stats = attacker.get_stats()
+        
+        if attacker.member_class == MemberClass.SNIPER:
+            proj_type = ProjectileType.SNIPER
+            proj_speed = config.PROJECTILE_SPEED_SNIPER
+        else:
+            proj_type = ProjectileType.DEMO
+            proj_speed = config.PROJECTILE_SPEED_DEMO
+        
+        proj = Projectile(
+            x=attacker.x, y=attacker.y,
+            target_x=target.x, target_y=target.y,
+            speed=proj_speed,
+            damage=stats["damage_player"],
+            projectile_type=proj_type,
+            target_member=target,
+            missed=False,
+        )
+        self.projectiles.append(proj)
+    
+    def _update_projectiles(self, dt: float):
+        """Move projectiles and resolve impacts."""
+        for proj in self.projectiles:
+            if not proj.alive:
+                continue
+            
+            # If target member died before impact, kill projectile
+            if proj.target_member and not proj.target_member.is_alive:
+                proj.alive = False
+                continue
+            
+            # Update target position (track moving targets)
+            if proj.target_member and proj.target_member.is_alive:
+                proj.target_x = proj.target_member.x
+                proj.target_y = proj.target_member.y
+            
+            # Move toward target
+            dx = proj.target_x - proj.x
+            dy = proj.target_y - proj.y
+            dist = math.sqrt(dx * dx + dy * dy)
+            
+            if dist <= proj.speed * dt + 5:
+                # Impact!
+                proj.alive = False
+                
+                if proj.missed:
+                    continue  # Missed shot, no damage
+                
+                if proj.hit_building_directly and proj.target_building:
+                    # Damage building
+                    if not proj.target_building.destroyed:
+                        proj.target_building.take_damage(proj.damage)
+                        if proj.target_building.destroyed:
+                            # Award points — determine which side fired
+                            # Check if target building belongs to enemy
+                            if proj.target_building in self.enemy.buildings:
+                                self.player.points += config.POINTS_PER_BUILDING_DESTROYED
+                            else:
+                                self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
+                elif proj.target_member and proj.target_member.is_alive:
+                    # Damage member
+                    proj.target_member.take_damage(proj.damage)
+                    if not proj.target_member.is_alive:
+                        # Remove from building defenders list
+                        for bldg in self.player.buildings + self.enemy.buildings:
+                            if proj.target_member in bldg.defenders:
+                                bldg.defenders.remove(proj.target_member)
+                                break
+                        # Award points
+                        if proj.target_member in self.enemy.members:
+                            self.player.points += config.POINTS_PER_MEMBER_KILLED
+                        else:
+                            self.enemy.points += config.POINTS_PER_MEMBER_KILLED
+            else:
+                # Move
+                proj.x += (dx / dist) * proj.speed * dt
+                proj.y += (dy / dist) * proj.speed * dt
+        
+        # Remove dead projectiles
+        self.projectiles = [p for p in self.projectiles if p.alive]
     
     def _check_elimination(self) -> bool:
         """Check if either side has lost all buildings or all members."""

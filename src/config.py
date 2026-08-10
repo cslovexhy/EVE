@@ -90,6 +90,9 @@ BASE_STATS = {
 BUILDING_BASE_HP = 500
 BUILDING_DEFENDER_SLOTS = 3  # Max defenders per building
 
+# Health Packs
+HEALTH_PACKS_START = 8  # Starting health packs per battle
+
 # AI
 AI_ORDER_INTERVAL = 6.0      # Seconds between AI attack waves
 AI_FIRST_ORDER_DELAY = 5.0   # Seconds before AI issues first order
@@ -100,9 +103,18 @@ MEMBER_MOVE_SPEED = 48
 # Combat
 ATTACK_RANGE = 50      # Pixels - melee range
 SNIPER_RANGE = 200     # Pixels - sniper can shoot from further
+DEMO_RANGE = 200       # Pixels - demo shoots at buildings from range
+
+# Projectiles
+PROJECTILE_SPEED_SNIPER = 400   # Pixels per second
+PROJECTILE_SPEED_DEMO = 250     # Pixels per second (slower, heavier)
 
 # Stealth (Assassins)
 STEALTH_DELAY = 5.0    # Seconds out of combat before going stealth
+
+# Ammo
+AMMO_MAX = 10          # Starting/max ammo per member
+AMMO_REGEN_INTERVAL = 10.0  # Seconds per ammo regen
 
 # Points
 POINTS_PER_BUILDING_DESTROYED = 100

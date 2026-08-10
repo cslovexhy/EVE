@@ -55,6 +55,31 @@ CLASS_BUTTONS = [
 ]
 
 
+class HealButton:
+    """The Heal button — uses a health pack on selected class."""
+    
+    def __init__(self):
+        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
+        self.hovered = False
+        self.label = "[H] Heal"
+        self.color = (200, 50, 50)  # Red cross color
+    
+    def update_rect(self):
+        """Position to the right of class buttons."""
+        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
+        button_y = config.SCREEN_HEIGHT - 90
+        # Place after the 4 class buttons with a larger gap
+        self.rect = pygame.Rect(
+            start_x + 4 * (BUTTON_WIDTH + BUTTON_GAP) + BUTTON_GAP,
+            button_y,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+        )
+
+
+HEAL_BUTTON = HealButton()
+
+
 class OrderSystem:
     """Mouse-click order flow: select class → click building."""
     
@@ -68,6 +93,7 @@ class OrderSystem:
         # Update button positions based on screen size
         for btn in CLASS_BUTTONS:
             btn.update_rect()
+        HEAL_BUTTON.update_rect()
     
     def update(self, dt: float):
         """Update feedback timer."""
@@ -91,6 +117,7 @@ class OrderSystem:
         # Update button hover
         for btn in CLASS_BUTTONS:
             btn.hovered = btn.rect.collidepoint(mx, my)
+        HEAL_BUTTON.hovered = HEAL_BUTTON.rect.collidepoint(mx, my)
         
         # Update building hover (only if a class is selected)
         self.hovered_building = None
@@ -105,8 +132,13 @@ class OrderSystem:
                     return
     
     def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list, engine=None) -> Order:
-        """Handle a mouse click. Returns an Order if one was completed, else None."""
+        """Handle a mouse click. Returns an Order if one was completed, else None.
+        Returns 'heal' string if heal was clicked (handled separately)."""
         mx, my = mouse_pos
+        
+        # Check heal button
+        if HEAL_BUTTON.rect.collidepoint(mx, my):
+            return "heal"
         
         # Check class buttons
         for btn in CLASS_BUTTONS:

@@ -71,7 +71,7 @@ python3 src/download_portraits.py  # Download character art
 - Downloaded 80 lieutenant portraits from UE Fandom wiki (40 player + 40 enemy)
 - Class icons from UE wiki for battlefield representation
 - Per-class attack intervals: Enforcer 2.0s, Sniper 2.5s, Assassin 1.0s, Demo 1.8s
-- Sniper behavior: stops at 200px range, shoots without approaching
+- Sniper behavior: stays at range (200px), shoots without approaching
 - Assassin stealth: invisible after 5s out of combat, breaks on attack/hit
 - Fog of war: flood-fill visibility from entry points (1/4/7/9), destroy buildings to reveal neighbors
 - Movement speed tuned to 60% (48px/s base)
@@ -86,3 +86,19 @@ python3 src/download_portraits.py  # Download character art
 - Sniper range targeting: shoots into nearby buildings within range, 50% accuracy on hidden
 - Clean UI layout: HUD bar, stats bar, battlefield, order panel with proper spacing
 - Removed order cooldown, removed "All" class selection
+
+### 2026-08-09 — All-Ranged Combat + Assets
+
+- Demolitionist: ranged attack (200px), stays at distance for safe building demolition
+- Projectile system: visible projectiles (sniper=yellow trail, demo=orange fireball), damage on impact
+- Health pack system: 8 packs per battle, revive dead class member at building 3, AI uses packs
+- Battlefield background: UE Empire Wars artwork, isometric perspective
+- Building placement tool (place.sh): drag-and-drop buildings onto background, saves to JSON
+- Building sprites: downloaded 9 UE building images (HQ 2x size, others 1.2x), cropped to content
+- Perspective-correct grid: row compression (85%/92.5%/100%) matching fake-3D background
+- Ammo system: 10 per member, regen 1 per 10s, can't fire at 0
+- All-ranged combat: members stay in buildings, fire across map at visible targets
+- No movement needed: visibility is the only range limit
+- Defender redistribution: non-enforcers in building 3 (safe backline), enforcers as frontline shields
+- Removed miss chances (sniper/demo) — ammo scarcity replaces accuracy as limiting factor
+- Passive defense: enforcers absorb shots, no active defender shooting

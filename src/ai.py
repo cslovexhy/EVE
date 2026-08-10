@@ -66,6 +66,9 @@ class BattleAI:
         """Plan a coordinated attack wave based on current battle state."""
         self.order_queue = []
         
+        # Use health packs if needed
+        self._use_health_packs()
+        
         # First: reinforce defense if needed
         self._plan_defense(engine)
         
@@ -78,6 +81,24 @@ class BattleAI:
             self._plan_push(engine)
         else:
             self._plan_cleanup(engine)
+    
+    def _use_health_packs(self):
+        """AI uses health packs when an attack class is depleted."""
+        if self.empire.health_packs <= 0:
+            return
+        
+        # Priority: revive attack classes that are fully dead
+        for cls in [MemberClass.ASSASSIN, MemberClass.DEMOLITIONIST, MemberClass.SNIPER]:
+            alive = len([m for m in self.empire.members
+                        if m.member_class == cls and m.is_alive])
+            dead = self.empire.get_dead_by_class(cls)
+            
+            # Use health packs if class has fewer than 3 alive and has dead members
+            if alive < 3 and dead and self.empire.health_packs > 0:
+                self.empire.heal_member(cls)
+                # Use up to 2 packs per wave on the same class if badly depleted
+                if alive < 1 and self.empire.health_packs > 0 and self.empire.get_dead_by_class(cls):
+                    self.empire.heal_member(cls)
     
     def _plan_defense(self, engine: BattleEngine):
         """Send enforcers to defend threatened buildings."""

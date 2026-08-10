@@ -33,6 +33,28 @@ class OrderAction(Enum):
     DEFEND = "defend"
 
 
+class ProjectileType(Enum):
+    SNIPER = "sniper"
+    DEMO = "demo"
+
+
+@dataclass
+class Projectile:
+    """A visible projectile traveling from attacker to target."""
+    x: float
+    y: float
+    target_x: float
+    target_y: float
+    speed: float              # Pixels per second
+    damage: float             # Damage to deal on impact
+    projectile_type: ProjectileType
+    target_member: Optional['Member'] = None    # If targeting a member
+    target_building: Optional['Building'] = None  # If targeting a building
+    hit_building_directly: bool = False  # True = damage building, False = damage member
+    missed: bool = False      # If this shot will miss (pre-determined)
+    alive: bool = True        # Set to False when it hits or target dies
+
+
 @dataclass
 class Member:
     """A single empire member (fighter)."""
@@ -55,6 +77,9 @@ class Member:
     # Stealth (assassins only)
     stealthed: bool = False
     time_since_combat: float = 0.0
+    # Ammo
+    ammo: int = config.AMMO_MAX
+    ammo_regen_timer: float = 0.0
     
     def __post_init__(self):
         self.reset_for_battle()
@@ -69,6 +94,8 @@ class Member:
         self.target_building = None
         self.stealthed = False
         self.time_since_combat = 0.0
+        self.ammo = config.AMMO_MAX
+        self.ammo_regen_timer = 0.0
     
     def get_stats(self) -> dict:
         """Calculate stats based on level and rarity."""
@@ -147,6 +174,7 @@ class Empire:
     buildings: list = field(default_factory=list)      # List of Building (9)
     points: int = 0
     is_player: bool = True
+    health_packs: int = config.HEALTH_PACKS_START
     
     def setup_buildings(self):
         """Initialize 9 buildings for battle."""
@@ -164,6 +192,42 @@ class Empire:
     
     def get_alive_members(self) -> list:
         return [m for m in self.members if m.is_alive]
+    
+    def get_dead_by_class(self, member_class: MemberClass) -> list:
+        """Get all dead members of a given class."""
+        return [m for m in self.members
+                if m.member_class == member_class and m.state == MemberState.DEAD]
+    
+    def heal_member(self, member_class: MemberClass) -> bool:
+        """Use a health pack to revive a random dead member of the given class.
+        Revives at building 3 (index 2) with full HP. Returns True if successful."""
+        import random
+        if self.health_packs <= 0:
+            return False
+        
+        dead = self.get_dead_by_class(member_class)
+        if not dead:
+            return False
+        
+        # Pick a random dead member to revive
+        member = random.choice(dead)
+        member.hp = member.max_hp
+        member.state = MemberState.DEFENDING
+        member.stealthed = False
+        member.time_since_combat = 0.0
+        member.attack_cooldown = 0.0
+        member.target_building = None
+        
+        # Place at building 3 (index 2) — hospital location
+        hospital_idx = 2
+        member.assigned_building = hospital_idx
+        building = self.buildings[hospital_idx]
+        member.x = building.x + random.uniform(-15, 15)
+        member.y = building.y + random.uniform(-15, 15)
+        building.defenders.append(member)
+        
+        self.health_packs -= 1
+        return True
     
     @property
     def total_building_hp(self) -> float:

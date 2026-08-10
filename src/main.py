@@ -96,8 +96,32 @@ class Game:
             engine=self.engine,
         )
         
-        if order:
+        if order == "heal":
+            self._use_health_pack()
+        elif order:
             self._execute_player_order(order)
+    
+    def _use_health_pack(self):
+        """Use a health pack on the currently selected class."""
+        if not self.order_system.has_class_selected:
+            self.order_system.feedback_msg = "Select a class first"
+            self.order_system.feedback_timer = 1.5
+            return
+        
+        cls = self.order_system.selected_class
+        if self.player_empire.health_packs <= 0:
+            self.order_system.feedback_msg = "No health packs left"
+            self.order_system.feedback_timer = 1.5
+            return
+        
+        if not self.player_empire.get_dead_by_class(cls):
+            self.order_system.feedback_msg = f"No dead {cls.value}s to revive"
+            self.order_system.feedback_timer = 1.5
+            return
+        
+        if self.player_empire.heal_member(cls):
+            self.order_system.feedback_msg = f"Revived a {cls.value}! ({self.player_empire.health_packs} packs left)"
+            self.order_system.feedback_timer = 2.0
     
     def _handle_keydown(self, key):
         """Handle keyboard shortcuts for class selection."""
@@ -113,6 +137,8 @@ class Game:
         if key in key_map:
             btn_index = key_map[key]
             self.order_system.select_button_by_index(btn_index)
+        elif key == pygame.K_h:
+            self._use_health_pack()
     
     def _execute_player_order(self, order):
         """Execute a player order."""
