@@ -139,11 +139,16 @@ class Game:
             self.order_system.select_button_by_index(btn_index)
         elif key == pygame.K_h:
             self._use_health_pack()
+        elif key == pygame.K_t:
+            from orders import ATTACK_MODE_BUTTON
+            ATTACK_MODE_BUTTON.toggle()
+            self.order_system.attack_mode = "auto" if ATTACK_MODE_BUTTON.auto_mode else "once"
     
     def _execute_player_order(self, order):
         """Execute a player order."""
         if order.action == OrderAction.ATTACK:
-            self.engine.execute_order(order, self.player_empire, self.enemy_empire)
+            self.engine.execute_order(order, self.player_empire, self.enemy_empire, 
+                                     attack_mode=self.order_system.attack_mode)
         else:
             self.engine.execute_order(order, self.player_empire, self.player_empire)
     

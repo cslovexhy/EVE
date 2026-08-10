@@ -102,3 +102,9 @@ python3 src/download_portraits.py  # Download character art
 - Defender redistribution: non-enforcers in building 3 (safe backline), enforcers as frontline shields
 - Removed miss chances (sniper/demo) — ammo scarcity replaces accuracy as limiting factor
 - Passive defense: enforcers absorb shots, no active defender shooting
+- Distinct projectile colors: sniper=yellow, demo=orange, enforcer=green, assassin=dark red
+- Attack mode toggle: Auto (sustained fire) vs Once (single volley then stop), T key
+- Class buttons show ammo count + current attack target
+- Battle log: real-time text file with every hit, kill, building destroyed, orders issued
+- Run.sh tails battle_log.txt in console while game runs
+- No troop movement or defend orders — all positions are fixed from start

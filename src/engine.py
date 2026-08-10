@@ -20,10 +20,21 @@ class BattleEngine:
         self.battle_over = False
         self.winner = None
         self.projectiles = []  # Active projectiles in flight
+        self.battle_log = []   # Text log of key events
         
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
+    
+    def _log(self, msg: str):
+        """Add a timestamped entry to the battle log and write to file immediately."""
+        t = self.battle_time
+        entry = f"[{int(t)//60}:{int(t)%60:02d}.{int((t%1)*10)}] {msg}"
+        self.battle_log.append(entry)
+        # Write immediately to file
+        log_path = os.path.join(os.path.dirname(__file__), "..", "battle_log.txt")
+        with open(log_path, "a") as f:
+            f.write(entry + "\n")
     
     def _position_buildings(self):
         """Place buildings to match the parallelogram planks in the battlefield background.
@@ -234,6 +245,12 @@ class BattleEngine:
             
             member.attack_cooldown = member.get_stats()["attack_interval"]
             member.time_since_combat = 0.0
+            
+            # If attack-once mode, return to defending after firing
+            if member.attack_once:
+                member.state = MemberState.DEFENDING
+                member.target_building = None
+                member.attack_once = False
     
     def _update_defender(self, member: Member, dt: float):
         """Defender: stays in building. Defense is passive — you're a target for enemy fire.
@@ -263,22 +280,28 @@ class BattleEngine:
         if defenders_at_building:
             # Attack a random defender
             target_member = random.choice(defenders_at_building)
+            hp_before = target_member.hp
             target_member.take_damage(stats["damage_player"])
+            hp_after = target_member.hp
+            side = "PLAYER" if is_player_attacker else "ENEMY"
+            self._log(f"{side} hit {target_member.member_class.value} '{target_member.name}' for {hp_before-hp_after:.1f} dmg (HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
             
             if not target_member.is_alive:
                 if target_member in target_bldg.defenders:
                     target_bldg.defenders.remove(target_member)
                 scoring_empire = self.player if is_player_attacker else self.enemy
                 scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
+                self._log(f"{side} killed {target_member.member_class.value} '{target_member.name}' at bldg {target_bldg.index+1}")
         else:
             # No defenders — damage the building
             if not target_bldg.destroyed:
                 target_bldg.take_damage(stats["damage_building"])
+                self._log(f"{'PLAYER' if is_player_attacker else 'ENEMY'} hit building {target_bldg.index+1} for {stats['damage_building']:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
                 if target_bldg.destroyed:
                     scoring_empire = self.player if is_player_attacker else self.enemy
                     scoring_empire.points += config.POINTS_PER_BUILDING_DESTROYED
     
-    def execute_order(self, order: Order, empire: Empire, target_empire: Empire):
+    def execute_order(self, order: Order, empire: Empire, target_empire: Empire, attack_mode: str = "auto"):
         """Execute a player/AI order."""
         available = empire.get_available_by_class(order.member_class)
         
@@ -286,10 +309,12 @@ class BattleEngine:
             return  # No available members of this class
         
         if order.action == OrderAction.ATTACK:
+            side = "PLAYER" if empire == self.player else "ENEMY"
+            self._log(f"{side} orders {len(available)} {order.member_class.value}(s) to attack building {order.target_building+1} ({attack_mode})")
             for member in available:
-                # Stay in current building, just switch to attacking state
                 member.state = MemberState.ATTACKING
                 member.target_building = order.target_building
+                member.attack_once = (attack_mode == "once")
     
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.
@@ -376,10 +401,12 @@ class BattleEngine:
         elif attacker.member_class == MemberClass.DEMOLITIONIST:
             proj_type = ProjectileType.DEMO
             proj_speed = config.PROJECTILE_SPEED_DEMO
-        else:
-            # Enforcer/Assassin use sniper-speed projectiles
-            proj_type = ProjectileType.SNIPER
-            proj_speed = config.PROJECTILE_SPEED_SNIPER
+        elif attacker.member_class == MemberClass.ENFORCER:
+            proj_type = ProjectileType.ENFORCER
+            proj_speed = config.PROJECTILE_SPEED_ENFORCER
+        else:  # Assassin
+            proj_type = ProjectileType.ASSASSIN
+            proj_speed = config.PROJECTILE_SPEED_ASSASSIN
         
         # Find defenders at target building (skip stealthed)
         defenders_at_building = [
@@ -471,16 +498,26 @@ class BattleEngine:
                     # Damage building
                     if not proj.target_building.destroyed:
                         proj.target_building.take_damage(proj.damage)
+                        self._log(f"HIT building {proj.target_building.index+1} for {proj.damage:.1f} dmg (HP: {proj.target_building.hp:.0f}/{proj.target_building.max_hp})")
                         if proj.target_building.destroyed:
-                            # Award points — determine which side fired
-                            # Check if target building belongs to enemy
                             if proj.target_building in self.enemy.buildings:
                                 self.player.points += config.POINTS_PER_BUILDING_DESTROYED
+                                self._log(f"PLAYER destroyed enemy building {proj.target_building.index+1}")
                             else:
                                 self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
+                                self._log(f"ENEMY destroyed player building {proj.target_building.index+1}")
                 elif proj.target_member and proj.target_member.is_alive:
                     # Damage member
+                    hp_before = proj.target_member.hp
                     proj.target_member.take_damage(proj.damage)
+                    hp_after = proj.target_member.hp
+                    # Determine who shot whom
+                    if proj.target_member in self.enemy.members:
+                        shooter_side = "PLAYER"
+                    else:
+                        shooter_side = "ENEMY"
+                    self._log(f"{shooter_side} hit {proj.target_member.member_class.value} '{proj.target_member.name}' for {hp_before-hp_after:.1f} dmg (HP: {hp_after:.0f}/{proj.target_member.max_hp:.0f})")
+                    
                     if not proj.target_member.is_alive:
                         # Remove from building defenders list
                         for bldg in self.player.buildings + self.enemy.buildings:
@@ -490,8 +527,10 @@ class BattleEngine:
                         # Award points
                         if proj.target_member in self.enemy.members:
                             self.player.points += config.POINTS_PER_MEMBER_KILLED
+                            self._log(f"PLAYER killed enemy {proj.target_member.member_class.value} '{proj.target_member.name}' at bldg {proj.target_member.assigned_building+1 if proj.target_member.assigned_building is not None else '?'}")
                         else:
                             self.enemy.points += config.POINTS_PER_MEMBER_KILLED
+                            self._log(f"ENEMY killed player {proj.target_member.member_class.value} '{proj.target_member.name}' at bldg {proj.target_member.assigned_building+1 if proj.target_member.assigned_building is not None else '?'}")
             else:
                 # Move
                 proj.x += (dx / dist) * proj.speed * dt
@@ -511,29 +550,70 @@ class BattleEngine:
         if not enemy_alive or not enemy_buildings:
             self.battle_over = True
             self.winner = self.player
+            reason = "all members dead" if not enemy_alive else "all buildings destroyed"
+            self._log(f"BATTLE OVER: Player wins (enemy {reason})")
+            self._save_log()
             return True
         
         # Player fully eliminated
         if not player_alive or not player_buildings:
             self.battle_over = True
             self.winner = self.enemy
+            reason = "all members dead" if not player_alive else "all buildings destroyed"
+            self._log(f"BATTLE OVER: Enemy wins (player {reason})")
+            self._save_log()
             return True
         
         return False
     
     def _end_battle(self):
-        """Determine winner based on points."""
+        """Determine winner based on points (time ran out)."""
         self.battle_over = True
         if self.player.points > self.enemy.points:
             self.winner = self.player
         elif self.enemy.points > self.player.points:
             self.winner = self.enemy
         else:
-            # Tie: whoever has more building HP remaining wins
             if self.player.total_building_hp >= self.enemy.total_building_hp:
                 self.winner = self.player
             else:
                 self.winner = self.enemy
+        
+        winner_name = "Player" if self.winner == self.player else "Enemy"
+        self._log(f"BATTLE OVER: Time up. {winner_name} wins ({self.player.points} vs {self.enemy.points} pts)")
+        self._save_log()
+    
+    def _save_log(self):
+        """Save battle log to file with final state summary."""
+        # Add final state
+        self.battle_log.append("")
+        self.battle_log.append("=== FINAL STATE ===")
+        self.battle_log.append(f"Player: {self.player.points} pts, {len(self.player.get_alive_members())}/40 alive, "
+                              f"{9-self.player.buildings_destroyed}/9 buildings, {self.player.health_packs} packs left")
+        self.battle_log.append(f"Enemy:  {self.enemy.points} pts, {len(self.enemy.get_alive_members())}/40 alive, "
+                              f"{9-self.enemy.buildings_destroyed}/9 buildings, {self.enemy.health_packs} packs left")
+        
+        self.battle_log.append("")
+        self.battle_log.append("Player members alive:")
+        for cls in MemberClass:
+            alive = [m for m in self.player.members if m.member_class == cls and m.is_alive]
+            if alive:
+                names = [m.name for m in alive]
+                self.battle_log.append(f"  {cls.value}: {len(alive)} - {names}")
+        
+        self.battle_log.append("")
+        self.battle_log.append("Enemy members alive:")
+        for cls in MemberClass:
+            alive = [m for m in self.enemy.members if m.member_class == cls and m.is_alive]
+            if alive:
+                names = [m.name for m in alive]
+                self.battle_log.append(f"  {cls.value}: {len(alive)} - {names}")
+        
+        # Save to file
+        log_path = os.path.join(os.path.dirname(__file__), "..", "battle_log.txt")
+        with open(log_path, "w") as f:
+            f.write("\n".join(self.battle_log))
+        print(f"Battle log saved to {log_path}")
     
     def _distance(self, x1, y1, x2, y2) -> float:
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)

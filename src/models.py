@@ -36,6 +36,8 @@ class OrderAction(Enum):
 class ProjectileType(Enum):
     SNIPER = "sniper"
     DEMO = "demo"
+    ENFORCER = "enforcer"
+    ASSASSIN = "assassin"
 
 
 @dataclass
@@ -80,6 +82,8 @@ class Member:
     # Ammo
     ammo: int = config.AMMO_MAX
     ammo_regen_timer: float = 0.0
+    # Attack mode
+    attack_once: bool = False  # If True, return to defending after one shot
     
     def __post_init__(self):
         self.reset_for_battle()
@@ -198,16 +202,16 @@ class Empire:
         return [m for m in self.members
                 if m.member_class == member_class and m.state == MemberState.DEAD]
     
-    def heal_member(self, member_class: MemberClass) -> bool:
+    def heal_member(self, member_class: MemberClass):
         """Use a health pack to revive a random dead member of the given class.
-        Revives at building 3 (index 2) with full HP. Returns True if successful."""
+        Revives at building 3 (index 2) with full HP. Returns the revived member or None."""
         import random
         if self.health_packs <= 0:
-            return False
+            return None
         
         dead = self.get_dead_by_class(member_class)
         if not dead:
-            return False
+            return None
         
         # Pick a random dead member to revive
         member = random.choice(dead)
@@ -227,7 +231,7 @@ class Empire:
         building.defenders.append(member)
         
         self.health_packs -= 1
-        return True
+        return member
     
     @property
     def total_building_hp(self) -> float:

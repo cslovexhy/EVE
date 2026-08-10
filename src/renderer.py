@@ -200,6 +200,7 @@ class Renderer:
     
     def render(self, engine: BattleEngine, order_system: OrderSystem):
         """Render the full battle scene."""
+        self._engine_ref = engine  # Store for button info access
         self.screen.fill(config.BLACK)
         
         # Draw battlefield background
@@ -386,22 +387,36 @@ class Renderer:
             
             x, y = int(proj.x), int(proj.y)
             
+            # Trail direction
+            dx = proj.target_x - proj.x
+            dy = proj.target_y - proj.y
+            dist = max(1, (dx*dx + dy*dy) ** 0.5)
+            
             if proj.projectile_type == ProjectileType.SNIPER:
-                # Sniper bullet: small bright yellow dot with trail
+                # Yellow dot with trail
                 color = (255, 255, 100)
                 pygame.draw.circle(self.screen, color, (x, y), 4)
-                # Short trail
-                dx = proj.target_x - proj.x
-                dy = proj.target_y - proj.y
-                dist = max(1, (dx*dx + dy*dy) ** 0.5)
                 trail_x = x - int((dx / dist) * 8)
                 trail_y = y - int((dy / dist) * 8)
-                pygame.draw.line(self.screen, (255, 255, 100, 150), (trail_x, trail_y), (x, y), 2)
-            else:
-                # Demo projectile: larger orange-red circle
-                color = (255, 100, 30)
-                pygame.draw.circle(self.screen, color, (x, y), 6)
+                pygame.draw.line(self.screen, color, (trail_x, trail_y), (x, y), 2)
+            elif proj.projectile_type == ProjectileType.DEMO:
+                # Orange fireball
+                pygame.draw.circle(self.screen, (255, 100, 30), (x, y), 6)
                 pygame.draw.circle(self.screen, (255, 200, 50), (x, y), 3)
+            elif proj.projectile_type == ProjectileType.ENFORCER:
+                # Green dot with trail
+                color = (50, 220, 50)
+                pygame.draw.circle(self.screen, color, (x, y), 4)
+                trail_x = x - int((dx / dist) * 8)
+                trail_y = y - int((dy / dist) * 8)
+                pygame.draw.line(self.screen, color, (trail_x, trail_y), (x, y), 2)
+            elif proj.projectile_type == ProjectileType.ASSASSIN:
+                # Dark red dot with trail
+                color = (180, 30, 30)
+                pygame.draw.circle(self.screen, color, (x, y), 3)
+                trail_x = x - int((dx / dist) * 10)
+                trail_y = y - int((dy / dist) * 10)
+                pygame.draw.line(self.screen, color, (trail_x, trail_y), (x, y), 1)
     
     def _draw_member_card(self, member: Member, cx: int, cy: int):
         """Draw a single member as their class icon with rarity border and level."""
@@ -541,8 +556,8 @@ class Renderer:
             y += 16
     
     def _draw_class_buttons(self, order_system: OrderSystem):
-        """Draw the class selection buttons and heal button."""
-        from orders import HEAL_BUTTON
+        """Draw the class selection buttons, attack mode toggle, and heal button."""
+        from orders import HEAL_BUTTON, ATTACK_MODE_BUTTON
         
         for btn in CLASS_BUTTONS:
             if btn.selected:
@@ -559,9 +574,42 @@ class Renderer:
             pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
             pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
             
+            # Main label
             label = self.font_btn.render(btn.label, True, text_color)
-            label_rect = label.get_rect(center=btn.rect.center)
+            label_rect = label.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 5)
             self.screen.blit(label, label_rect)
+            
+            # Ammo count + target info (bottom of button)
+            if btn.member_class and hasattr(self, '_engine_ref'):
+                engine = self._engine_ref
+                members = [m for m in engine.player.members if m.member_class == btn.member_class and m.is_alive]
+                total_ammo = sum(m.ammo for m in members)
+                
+                # Get target building if attacking
+                attacking = [m for m in members if m.state == MemberState.ATTACKING]
+                if attacking and attacking[0].target_building is not None:
+                    target_str = f"→B{attacking[0].target_building + 1}"
+                else:
+                    target_str = "idle"
+                
+                info = self.font_small.render(f"{total_ammo}⚡ {target_str}", True, text_color)
+                info_rect = info.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 30)
+                self.screen.blit(info, info_rect)
+        
+        # Draw attack mode toggle button
+        btn = ATTACK_MODE_BUTTON
+        if btn.hovered:
+            bg_color = btn.color
+            text_color = config.BLACK
+        else:
+            bg_color = config.DARK_GRAY
+            text_color = btn.color
+        
+        pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
+        pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
+        label = self.font_btn.render(btn.label, True, text_color)
+        label_rect = label.get_rect(center=btn.rect.center)
+        self.screen.blit(label, label_rect)
         
         # Draw heal button
         btn = HEAL_BUTTON

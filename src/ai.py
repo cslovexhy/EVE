@@ -92,10 +92,14 @@ class BattleAI:
             
             # Use health packs if class has fewer than 3 alive and has dead members
             if alive < 3 and dead and self.empire.health_packs > 0:
-                self.empire.heal_member(cls)
+                revived = self.empire.heal_member(cls)
+                if revived:
+                    print(f"  [AI] Healed {cls.value} '{revived.name}' (packs left: {self.empire.health_packs})")
                 # Use up to 2 packs per wave on the same class if badly depleted
                 if alive < 1 and self.empire.health_packs > 0 and self.empire.get_dead_by_class(cls):
-                    self.empire.heal_member(cls)
+                    revived = self.empire.heal_member(cls)
+                    if revived:
+                        print(f"  [AI] Healed {cls.value} '{revived.name}' (packs left: {self.empire.health_packs})")
     
     def _plan_opening(self, engine: BattleEngine):
         """Opening phase: pick a target with weighted randomness, send assassins + snipers.

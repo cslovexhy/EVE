@@ -108,6 +108,8 @@ DEMO_RANGE = 200       # Pixels - demo shoots at buildings from range
 # Projectiles
 PROJECTILE_SPEED_SNIPER = 400   # Pixels per second
 PROJECTILE_SPEED_DEMO = 250     # Pixels per second (slower, heavier)
+PROJECTILE_SPEED_ENFORCER = 350 # Pixels per second
+PROJECTILE_SPEED_ASSASSIN = 450 # Pixels per second (fast)
 
 # Stealth (Assassins)
 STEALTH_DELAY = 5.0    # Seconds out of combat before going stealth

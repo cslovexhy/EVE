@@ -80,20 +80,56 @@ class HealButton:
 HEAL_BUTTON = HealButton()
 
 
+class AttackModeButton:
+    """Toggle between Auto and Once attack modes."""
+    
+    def __init__(self):
+        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
+        self.hovered = False
+        self.auto_mode = True  # True = auto (keep firing), False = once (one volley)
+    
+    @property
+    def label(self):
+        return "[T] Auto" if self.auto_mode else "[T] Once"
+    
+    @property
+    def color(self):
+        return (50, 180, 50) if self.auto_mode else (180, 180, 50)
+    
+    def toggle(self):
+        self.auto_mode = not self.auto_mode
+    
+    def update_rect(self):
+        """Position to the left of class buttons."""
+        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
+        button_y = config.SCREEN_HEIGHT - 90
+        self.rect = pygame.Rect(
+            start_x - BUTTON_WIDTH - BUTTON_GAP * 2,
+            button_y,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+        )
+
+
+ATTACK_MODE_BUTTON = AttackModeButton()
+
+
 class OrderSystem:
     """Mouse-click order flow: select class → click building."""
     
     def __init__(self):
-        self.selected_class = None  # None means nothing selected; "all" means all classes
-        self.selected_button = None  # Reference to the selected ClassButton
+        self.selected_class = None
+        self.selected_button = None
         self.order_history = []
-        self.hovered_building = None  # (empire: "player"/"enemy", index: int)
-        self.feedback_msg = ""       # Temporary feedback message
-        self.feedback_timer = 0.0    # How long to show feedback
+        self.hovered_building = None
+        self.feedback_msg = ""
+        self.feedback_timer = 0.0
+        self.attack_mode = "auto"  # "auto" or "once"
         # Update button positions based on screen size
         for btn in CLASS_BUTTONS:
             btn.update_rect()
         HEAL_BUTTON.update_rect()
+        ATTACK_MODE_BUTTON.update_rect()
     
     def update(self, dt: float):
         """Update feedback timer."""
@@ -118,6 +154,7 @@ class OrderSystem:
         for btn in CLASS_BUTTONS:
             btn.hovered = btn.rect.collidepoint(mx, my)
         HEAL_BUTTON.hovered = HEAL_BUTTON.rect.collidepoint(mx, my)
+        ATTACK_MODE_BUTTON.hovered = ATTACK_MODE_BUTTON.rect.collidepoint(mx, my)
         
         # Update building hover (only if a class is selected)
         self.hovered_building = None
@@ -139,6 +176,12 @@ class OrderSystem:
         # Check heal button
         if HEAL_BUTTON.rect.collidepoint(mx, my):
             return "heal"
+        
+        # Check attack mode toggle
+        if ATTACK_MODE_BUTTON.rect.collidepoint(mx, my):
+            ATTACK_MODE_BUTTON.toggle()
+            self.attack_mode = "auto" if ATTACK_MODE_BUTTON.auto_mode else "once"
+            return None
         
         # Check class buttons
         for btn in CLASS_BUTTONS:
