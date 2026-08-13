@@ -22,6 +22,9 @@ class BattleEngine:
         self.projectiles = []  # Active projectiles in flight
         self.battle_log = []   # Text log of key events
         
+        # Randomize enemy building placement and member assignment
+        self._randomize_enemy_setup()
+        
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
@@ -135,32 +138,123 @@ class BattleEngine:
     def _assign_initial_defenders(self):
         """Distribute members across buildings.
         
-        Non-enforcers (sniper/assassin/demo) all in building 3 (back, index 2).
-        Enforcers spread across other buildings (1/2/4/5/6/7/8/9).
+        Uses player's setup choices if available (building_order, member_assignments).
+        Otherwise defaults: non-enforcers in building 3, enforcers spread elsewhere.
         """
         for empire in (self.player, self.enemy):
-            enforcers = [m for m in empire.members if m.member_class == MemberClass.ENFORCER]
-            others = [m for m in empire.members if m.member_class != MemberClass.ENFORCER]
-            
-            # Non-enforcers all go to building 3 (index 2)
-            building_3 = empire.buildings[2]
-            for member in others:
-                building_3.defenders.append(member)
-                member.assigned_building = 2
-                member.state = MemberState.DEFENDING
-                member.x = building_3.x + random.uniform(-20, 20)
-                member.y = building_3.y + random.uniform(-20, 20)
-            
-            # Enforcers spread across other buildings (indices 0,1,3,4,5,6,7,8)
-            other_indices = [0, 1, 3, 4, 5, 6, 7, 8]
-            for i, member in enumerate(enforcers):
-                bldg_idx = other_indices[i % len(other_indices)]
-                building = empire.buildings[bldg_idx]
-                building.defenders.append(member)
-                member.assigned_building = bldg_idx
-                member.state = MemberState.DEFENDING
-                member.x = building.x + random.uniform(-15, 15)
-                member.y = building.y + random.uniform(-15, 15)
+            # Check if this empire has custom assignments from setup UI
+            if hasattr(empire, 'member_assignments') and empire.member_assignments:
+                # Apply custom member assignments
+                for slot_idx, member_indices in enumerate(empire.member_assignments):
+                    building = empire.buildings[slot_idx]
+                    for mi in member_indices:
+                        member = empire.members[mi]
+                        building.defenders.append(member)
+                        member.assigned_building = slot_idx
+                        member.state = MemberState.DEFENDING
+                        member.x = building.x + __import__('random').uniform(-20, 20)
+                        member.y = building.y + __import__('random').uniform(-20, 20)
+            else:
+                # Default assignment
+                enforcers = [m for m in empire.members if m.member_class == MemberClass.ENFORCER]
+                others = [m for m in empire.members if m.member_class != MemberClass.ENFORCER]
+                
+                # Non-enforcers all go to building 3 (index 2)
+                building_3 = empire.buildings[2]
+                for member in others:
+                    building_3.defenders.append(member)
+                    member.assigned_building = 2
+                    member.state = MemberState.DEFENDING
+                    member.x = building_3.x + random.uniform(-20, 20)
+                    member.y = building_3.y + random.uniform(-20, 20)
+                
+                # Enforcers spread across other buildings (indices 0,1,3,4,5,6,7,8)
+                other_indices = [0, 1, 3, 4, 5, 6, 7, 8]
+                for i, member in enumerate(enforcers):
+                    bldg_idx = other_indices[i % len(other_indices)]
+                    building = empire.buildings[bldg_idx]
+                    building.defenders.append(member)
+                    member.assigned_building = bldg_idx
+                    member.state = MemberState.DEFENDING
+                    member.x = building.x + random.uniform(-15, 15)
+                    member.y = building.y + random.uniform(-15, 15)
+    
+    def _randomize_enemy_setup(self):
+        """Randomize enemy building placement and member assignment.
+        
+        Building placement rules:
+        - HQ (index 0) NOT in slots 1/4/7/5/9 (indices 0,3,6,4,8) → only slots 2,3,5,6,8 (indices 1,2,4,5,7)
+        - Armory (index 1) NOT in slots 1/4/7 (indices 0,3,6)
+        - Hospital (index 2) NOT in slots 1/4/7 (indices 0,3,6)
+        - Other buildings: any slot
+        
+        Member assignment rules:
+        - All attackers (sniper/assassin/demo) assigned to HQ slot (50% of them)
+        - Enforcers fill defense slots in all buildings
+        """
+        # Building indices:
+        # 0=HQ, 1=Armory, 2=Hospital, 3=Warehouse, 4=Bunker, 5=Nuke, 6=Sniper Tower, 7=ResLab, 8=Safehouse
+        
+        # Step 1: Randomize building placement
+        FRONT_SLOTS = {0, 3, 6}             # Slots 1/4/7
+        HQ_BANNED = {0, 3, 6, 4, 8}         # Slots 1/4/7/5/9
+        ARMORY_HOSPITAL_BANNED = {0, 3, 6}   # Slots 1/4/7
+        
+        all_slots = set(range(9))
+        
+        # Place HQ first (most restricted)
+        hq_valid = list(all_slots - HQ_BANNED)  # indices 1,2,5,7 (slots 2,3,6,8)
+        hq_slot = random.choice(hq_valid)
+        
+        remaining_slots = list(all_slots - {hq_slot})
+        
+        # Place Armory (building index 1)
+        armory_valid = [s for s in remaining_slots if s not in ARMORY_HOSPITAL_BANNED]
+        armory_slot = random.choice(armory_valid)
+        remaining_slots.remove(armory_slot)
+        
+        # Place Hospital (building index 2)
+        hospital_valid = [s for s in remaining_slots if s not in ARMORY_HOSPITAL_BANNED]
+        hospital_slot = random.choice(hospital_valid)
+        remaining_slots.remove(hospital_slot)
+        
+        # Place remaining buildings (indices 3-8) randomly in remaining slots
+        random.shuffle(remaining_slots)
+        
+        # Build the order: building_order[slot] = building_name_index
+        building_order = [0] * 9
+        building_order[hq_slot] = 0         # HQ
+        building_order[armory_slot] = 1     # Armory
+        building_order[hospital_slot] = 2   # Hospital
+        
+        other_buildings = [3, 4, 5, 6, 7, 8]  # Warehouse, Bunker, Nuke, Sniper Tower, ResLab, Safehouse
+        for i, slot in enumerate(remaining_slots):
+            building_order[slot] = other_buildings[i]
+        
+        self.enemy.building_order = building_order
+        
+        # Step 2: Assign members
+        # All attackers (non-enforcers) go to HQ slot
+        # Enforcers spread across all buildings
+        enforcers = [i for i, m in enumerate(self.enemy.members)
+                     if m.member_class == MemberClass.ENFORCER]
+        attackers = [i for i, m in enumerate(self.enemy.members)
+                     if m.member_class != MemberClass.ENFORCER]
+        
+        member_assignments = [[] for _ in range(9)]
+        
+        # Attackers in HQ (up to 50% of them, the rest also in HQ since there's no other spec)
+        # Per the spec: "all attackers in HQ (50%)" — we interpret as all attackers go to HQ
+        member_assignments[hq_slot] = list(attackers)
+        
+        # Enforcers fill defense slots in all buildings
+        # Distribute enforcers evenly across all 9 slots
+        all_building_slots = list(range(9))
+        for i, enf_idx in enumerate(enforcers):
+            slot = all_building_slots[i % len(all_building_slots)]
+            member_assignments[slot].append(enf_idx)
+        
+        self.enemy.member_assignments = member_assignments
     
     def update(self, dt: float):
         """Main update tick. Called every frame."""
@@ -301,8 +395,14 @@ class BattleEngine:
                     scoring_empire = self.player if is_player_attacker else self.enemy
                     scoring_empire.points += config.POINTS_PER_BUILDING_DESTROYED
     
-    def execute_order(self, order: Order, empire: Empire, target_empire: Empire, attack_mode: str = "auto"):
-        """Execute a player/AI order."""
+    def execute_order(self, order: Order, empire: Empire, target_empire: Empire, attack_mode: str = "half"):
+        """Execute a player/AI order.
+        
+        attack_mode:
+            'half' — only half (rounded up) of available members fire, then stop
+            'once' — all available members fire one volley, then stop
+            'auto' — all available members fire continuously
+        """
         available = empire.get_available_by_class(order.member_class)
         
         if not available:
@@ -310,11 +410,21 @@ class BattleEngine:
         
         if order.action == OrderAction.ATTACK:
             side = "PLAYER" if empire == self.player else "ENEMY"
-            self._log(f"{side} orders {len(available)} {order.member_class.value}(s) to attack building {order.target_building+1} ({attack_mode})")
-            for member in available:
+            
+            # In "half" mode, only select half the available members (rounded up)
+            if attack_mode == "half":
+                import math as _math
+                count = _math.ceil(len(available) / 2)
+                # Pick the first N available (deterministic, no randomness)
+                members_to_order = available[:count]
+            else:
+                members_to_order = available
+            
+            self._log(f"{side} orders {len(members_to_order)} {order.member_class.value}(s) to attack building {order.target_building+1} ({attack_mode})")
+            for member in members_to_order:
                 member.state = MemberState.ATTACKING
                 member.target_building = order.target_building
-                member.attack_once = (attack_mode == "once")
+                member.attack_once = (attack_mode in ("once", "half"))
     
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.
@@ -495,17 +605,55 @@ class BattleEngine:
                     continue  # Missed shot, no damage
                 
                 if proj.hit_building_directly and proj.target_building:
-                    # Damage building
-                    if not proj.target_building.destroyed:
-                        proj.target_building.take_damage(proj.damage)
-                        self._log(f"HIT building {proj.target_building.index+1} for {proj.damage:.1f} dmg (HP: {proj.target_building.hp:.0f}/{proj.target_building.max_hp})")
-                        if proj.target_building.destroyed:
-                            if proj.target_building in self.enemy.buildings:
-                                self.player.points += config.POINTS_PER_BUILDING_DESTROYED
-                                self._log(f"PLAYER destroyed enemy building {proj.target_building.index+1}")
+                    # Re-check for defenders — a healed member may now be here
+                    target_bldg = proj.target_building
+                    if not target_bldg.destroyed:
+                        # Determine which empire owns this building
+                        if target_bldg in self.player.buildings:
+                            target_empire = self.player
+                        else:
+                            target_empire = self.enemy
+                        
+                        defenders_now = [
+                            m for m in target_empire.members
+                            if m.is_alive and m.assigned_building == target_bldg.index
+                            and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
+                            and not m.stealthed
+                        ]
+                        
+                        if defenders_now:
+                            # Redirect damage to a defender instead of building
+                            target_member = random.choice(defenders_now)
+                            hp_before = target_member.hp
+                            target_member.take_damage(proj.damage)
+                            hp_after = target_member.hp
+                            if target_member in self.enemy.members:
+                                shooter_side = "PLAYER"
                             else:
-                                self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
-                                self._log(f"ENEMY destroyed player building {proj.target_building.index+1}")
+                                shooter_side = "ENEMY"
+                            self._log(f"{shooter_side} hit {target_member.member_class.value} '{target_member.name}' for {hp_before-hp_after:.1f} dmg (HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
+                            if not target_member.is_alive:
+                                for bldg in self.player.buildings + self.enemy.buildings:
+                                    if target_member in bldg.defenders:
+                                        bldg.defenders.remove(target_member)
+                                        break
+                                if target_member in self.enemy.members:
+                                    self.player.points += config.POINTS_PER_MEMBER_KILLED
+                                    self._log(f"PLAYER killed enemy {target_member.member_class.value} '{target_member.name}'")
+                                else:
+                                    self.enemy.points += config.POINTS_PER_MEMBER_KILLED
+                                    self._log(f"ENEMY killed player {target_member.member_class.value} '{target_member.name}'")
+                        else:
+                            # No defenders — damage building
+                            target_bldg.take_damage(proj.damage)
+                            self._log(f"HIT building {target_bldg.index+1} for {proj.damage:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
+                            if target_bldg.destroyed:
+                                if target_bldg in self.enemy.buildings:
+                                    self.player.points += config.POINTS_PER_BUILDING_DESTROYED
+                                    self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")
+                                else:
+                                    self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
+                                    self._log(f"ENEMY destroyed player building {target_bldg.index+1}")
                 elif proj.target_member and proj.target_member.is_alive:
                     # Damage member
                     hp_before = proj.target_member.hp

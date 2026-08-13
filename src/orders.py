@@ -81,23 +81,42 @@ HEAL_BUTTON = HealButton()
 
 
 class AttackModeButton:
-    """Toggle between Auto and Once attack modes."""
+    """Toggle between Half, Once, and Auto attack modes.
+    
+    Rotation: Half -> Once -> Auto -> Half
+    Half = fire only half of the selected class (reduces ammo waste)
+    Once = single volley from all, then stop
+    Auto = sustained fire from all
+    """
+    
+    # Mode cycle order
+    MODES = ["half", "once", "auto"]
     
     def __init__(self):
         self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
         self.hovered = False
-        self.auto_mode = True  # True = auto (keep firing), False = once (one volley)
+        self.mode_index = 0  # Start on "half" (default)
+    
+    @property
+    def mode(self) -> str:
+        return self.MODES[self.mode_index]
     
     @property
     def label(self):
-        return "[T] Auto" if self.auto_mode else "[T] Once"
+        return f"[T] {self.mode.capitalize()}"
     
     @property
     def color(self):
-        return (50, 180, 50) if self.auto_mode else (180, 180, 50)
+        if self.mode == "half":
+            return (50, 140, 180)   # Blue-teal for half
+        elif self.mode == "once":
+            return (180, 180, 50)   # Yellow for once
+        else:
+            return (50, 180, 50)    # Green for auto
     
     def toggle(self):
-        self.auto_mode = not self.auto_mode
+        """Cycle to next mode: Half -> Once -> Auto -> Half."""
+        self.mode_index = (self.mode_index + 1) % len(self.MODES)
     
     def update_rect(self):
         """Position to the left of class buttons."""
@@ -124,7 +143,7 @@ class OrderSystem:
         self.hovered_building = None
         self.feedback_msg = ""
         self.feedback_timer = 0.0
-        self.attack_mode = "auto"  # "auto" or "once"
+        self.heal_mode = False  # True when player presses H, waiting for building click
         # Update button positions based on screen size
         for btn in CLASS_BUTTONS:
             btn.update_rect()
@@ -143,6 +162,11 @@ class OrderSystem:
         return True
     
     @property
+    def attack_mode(self) -> str:
+        """Current attack mode from the toggle button."""
+        return ATTACK_MODE_BUTTON.mode
+    
+    @property
     def has_class_selected(self) -> bool:
         return self.selected_button is not None
     
@@ -156,38 +180,48 @@ class OrderSystem:
         HEAL_BUTTON.hovered = HEAL_BUTTON.rect.collidepoint(mx, my)
         ATTACK_MODE_BUTTON.hovered = ATTACK_MODE_BUTTON.rect.collidepoint(mx, my)
         
-        # Update building hover (only if a class is selected)
+        # Update building hover (only if a class is selected or in heal mode)
         self.hovered_building = None
-        if self.has_class_selected:
+        if self.has_class_selected or self.heal_mode:
             for b in player_buildings:
                 if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
                     self.hovered_building = ("player", b.index)
                     return
-            for b in enemy_buildings:
-                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
-                    self.hovered_building = ("enemy", b.index)
-                    return
+            if not self.heal_mode:
+                for b in enemy_buildings:
+                    if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                        self.hovered_building = ("enemy", b.index)
+                        return
     
     def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list, engine=None) -> Order:
         """Handle a mouse click. Returns an Order if one was completed, else None.
-        Returns 'heal' string if heal was clicked (handled separately)."""
+        Returns ('heal_building', index) tuple if heal was applied to a building."""
         mx, my = mouse_pos
         
-        # Check heal button
+        # Check heal button — toggles heal mode
         if HEAL_BUTTON.rect.collidepoint(mx, my):
-            return "heal"
+            self.heal_mode = not self.heal_mode
+            return None
         
         # Check attack mode toggle
         if ATTACK_MODE_BUTTON.rect.collidepoint(mx, my):
             ATTACK_MODE_BUTTON.toggle()
-            self.attack_mode = "auto" if ATTACK_MODE_BUTTON.auto_mode else "once"
             return None
         
         # Check class buttons
         for btn in CLASS_BUTTONS:
             if btn.rect.collidepoint(mx, my):
                 self._select_button(btn)
+                self.heal_mode = False  # Exit heal mode on class select
                 return None
+        
+        # If in heal mode, clicking a player building triggers heal
+        if self.heal_mode:
+            for b in player_buildings:
+                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                    self.heal_mode = False
+                    return ("heal_building", b.index)
+            return None
         
         # Check building click (only if class is selected)
         if not self.has_class_selected:
@@ -250,8 +284,11 @@ class OrderSystem:
         """Get the current prompt/status text."""
         if self.feedback_msg:
             return self.feedback_msg
+        if self.heal_mode:
+            return "HEAL MODE — click a building to revive a defender"
         if not self.has_class_selected:
             return "Select a class, then click a building"
         
         class_name = self.selected_button.label
-        return f"{class_name} selected — click enemy building to attack"
+        mode = ATTACK_MODE_BUTTON.mode.capitalize()
+        return f"{class_name} selected [{mode}] — click enemy building to attack"

@@ -4,11 +4,12 @@ import sys
 import pygame
 
 import config
-from models import MemberClass, OrderAction, create_starting_roster
+from models import MemberClass, MemberState, OrderAction, create_starting_roster
 from engine import BattleEngine
 from orders import OrderSystem
 from ai import BattleAI
 from renderer import Renderer
+from setup_ui import SetupUI, BUILDING_NAMES
 
 
 class Game:
@@ -37,9 +38,17 @@ class Game:
         self._start_battle()
     
     def _start_battle(self):
-        """Initialize a new battle."""
+        """Initialize a new battle with pre-battle setup phase."""
         self.player_empire = create_starting_roster("Your Empire", is_player=True)
         self.enemy_empire = create_starting_roster("Enemy Empire", is_player=False)
+        
+        # Pre-battle setup UI (building arrangement + member assignment)
+        setup = SetupUI(self.screen, self.player_empire)
+        building_order, member_assignments = setup.run()
+        
+        # Apply player's building arrangement and member assignments
+        self.player_empire.building_order = building_order
+        self.player_empire.member_assignments = member_assignments
         
         self.engine = BattleEngine(self.player_empire, self.enemy_empire)
         self.order_system = OrderSystem()
@@ -96,32 +105,59 @@ class Game:
             engine=self.engine,
         )
         
-        if order == "heal":
-            self._use_health_pack()
+        if isinstance(order, tuple) and order[0] == "heal_building":
+            self._use_health_pack_on_building(order[1])
         elif order:
             self._execute_player_order(order)
     
-    def _use_health_pack(self):
-        """Use a health pack on the currently selected class."""
-        if not self.order_system.has_class_selected:
-            self.order_system.feedback_msg = "Select a class first"
-            self.order_system.feedback_timer = 1.5
-            return
-        
-        cls = self.order_system.selected_class
+    def _use_health_pack_on_building(self, building_index: int):
+        """Use a health pack to revive the highest-HP dead defender at the specified building."""
         if self.player_empire.health_packs <= 0:
             self.order_system.feedback_msg = "No health packs left"
             self.order_system.feedback_timer = 1.5
             return
         
-        if not self.player_empire.get_dead_by_class(cls):
-            self.order_system.feedback_msg = f"No dead {cls.value}s to revive"
+        building = self.player_empire.buildings[building_index]
+        if building.destroyed:
+            self.order_system.feedback_msg = "Building is destroyed"
             self.order_system.feedback_timer = 1.5
             return
         
-        if self.player_empire.heal_member(cls):
-            self.order_system.feedback_msg = f"Revived a {cls.value}! ({self.player_empire.health_packs} packs left)"
-            self.order_system.feedback_timer = 2.0
+        # Find dead members that were assigned to this building
+        dead_at_building = [
+            m for m in self.player_empire.members
+            if m.state == MemberState.DEAD and m.assigned_building == building_index
+        ]
+        
+        if not dead_at_building:
+            # Fallback: any dead member (if none were assigned here)
+            dead_at_building = [m for m in self.player_empire.members if m.state == MemberState.DEAD]
+        
+        if not dead_at_building:
+            self.order_system.feedback_msg = "No dead members to revive"
+            self.order_system.feedback_timer = 1.5
+            return
+        
+        # Prioritize highest max_hp (tankiest member first)
+        dead_at_building.sort(key=lambda m: m.max_hp, reverse=True)
+        member = dead_at_building[0]
+        
+        # Revive at the clicked building
+        import random
+        member.hp = member.max_hp
+        member.state = MemberState.DEFENDING
+        member.stealthed = False
+        member.time_since_combat = 0.0
+        member.attack_cooldown = 0.0
+        member.target_building = None
+        member.assigned_building = building_index
+        member.x = building.x + random.uniform(-15, 15)
+        member.y = building.y + random.uniform(-15, 15)
+        building.defenders.append(member)
+        
+        self.player_empire.health_packs -= 1
+        self.order_system.feedback_msg = f"Revived {member.member_class.value} '{member.name}' at bldg {building_index+1} ({self.player_empire.health_packs} packs left)"
+        self.order_system.feedback_timer = 2.0
     
     def _handle_keydown(self, key):
         """Handle keyboard shortcuts for class selection."""
@@ -137,12 +173,12 @@ class Game:
         if key in key_map:
             btn_index = key_map[key]
             self.order_system.select_button_by_index(btn_index)
+            self.order_system.heal_mode = False  # Exit heal mode on class select
         elif key == pygame.K_h:
-            self._use_health_pack()
+            self.order_system.heal_mode = not self.order_system.heal_mode
         elif key == pygame.K_t:
             from orders import ATTACK_MODE_BUTTON
             ATTACK_MODE_BUTTON.toggle()
-            self.order_system.attack_mode = "auto" if ATTACK_MODE_BUTTON.auto_mode else "once"
     
     def _execute_player_order(self, order):
         """Execute a player order."""
@@ -167,9 +203,9 @@ class Game:
         ai_order = self.ai.update(dt, self.engine)
         if ai_order:
             if ai_order.action == OrderAction.ATTACK:
-                self.engine.execute_order(ai_order, self.enemy_empire, self.player_empire)
+                self.engine.execute_order(ai_order, self.enemy_empire, self.player_empire, attack_mode="auto")
             else:
-                self.engine.execute_order(ai_order, self.enemy_empire, self.enemy_empire)
+                self.engine.execute_order(ai_order, self.enemy_empire, self.enemy_empire, attack_mode="auto")
     
     def _render(self):
         """Render the current frame."""

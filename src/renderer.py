@@ -111,17 +111,17 @@ class Renderer:
     
     def _load_building_images(self):
         """Load building sprite images, crop to content, and scale to building size."""
-        # Building type assignment for each slot (0-8)
-        self.building_types = [
-            "headquarters",   # 1 - front row
-            "hospital",       # 2 - mid
-            "safehouse",      # 3 - back
-            "armory",         # 4 - front row
-            "research_lab",   # 5 - mid
-            "warehouse",      # 6 - back
-            "sniper_tower",   # 7 - front row
-            "bunker",         # 8 - mid
-            "nuclear_silo",   # 9 - back (backdoor)
+        # Mapping from building name index (as used in building_order) to sprite filename
+        self.building_type_names = [
+            "headquarters",   # 0
+            "armory",         # 1
+            "hospital",       # 2
+            "warehouse",      # 3
+            "bunker",         # 4
+            "nuclear_silo",   # 5
+            "sniper_tower",   # 6
+            "research_lab",   # 7
+            "safehouse",      # 8
         ]
         
         bldg_size = (config.BUILDING_SIZE, config.BUILDING_SIZE)
@@ -142,7 +142,7 @@ class Renderer:
         if not os.path.isdir(BUILDING_DIR):
             return
         
-        for btype in set(self.building_types):
+        for btype in self.building_type_names:
             path = os.path.join(BUILDING_DIR, f"{btype}.png")
             try:
                 img = pygame.image.load(path).convert_alpha()
@@ -274,7 +274,10 @@ class Renderer:
                 pygame.draw.rect(self.screen, config.DARK_GRAY, rect)
             else:
                 # Draw building sprite if available
-                btype = self.building_types[building.index]
+                building_name_idx = building.index  # default: slot = building name index
+                if hasattr(empire, 'building_order') and empire.building_order:
+                    building_name_idx = empire.building_order[building.index]
+                btype = self.building_type_names[building_name_idx]
                 if btype in self.building_images and visible:
                     img = self.building_images[btype]
                     iw, ih = img.get_width(), img.get_height()
@@ -342,13 +345,15 @@ class Renderer:
             
             # Visibility check for enemy members
             if not is_player and engine:
-                # Stealthed enemies are completely invisible
-                if member.stealthed:
-                    continue
-                if member.state in (MemberState.DEFENDING, MemberState.IDLE):
-                    if member.assigned_building is not None:
-                        if not engine.is_visible_to_player(member.assigned_building):
-                            continue
+                # After battle ends, reveal everything
+                if not engine.battle_over:
+                    # Stealthed enemies are completely invisible
+                    if member.stealthed:
+                        continue
+                    if member.state in (MemberState.DEFENDING, MemberState.IDLE):
+                        if member.assigned_building is not None:
+                            if not engine.is_visible_to_player(member.assigned_building):
+                                continue
             
             x, y = int(member.x), int(member.y)
             

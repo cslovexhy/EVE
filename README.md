@@ -108,3 +108,19 @@ python3 src/download_portraits.py  # Download character art
 - Battle log: real-time text file with every hit, kill, building destroyed, orders issued
 - Run.sh tails battle_log.txt in console while game runs
 - No troop movement or defend orders — all positions are fixed from start
+
+### 2026-08-12 — Battle Setup + UX Improvements
+
+- Half attack mode: fires only half (rounded up) of selected class, default mode, reduces ammo waste
+- Attack mode rotation: Half → Once → Auto → Half (T key)
+- Health pack UX rework: press H → click building to revive highest-HP dead defender there
+- Pre-battle setup screen with two tabs (TAB to switch, ENTER to start):
+  - Buildings tab: click-swap building arrangement across 9 grid slots
+  - Members tab: click member then click building to assign
+- Setup grid mirrors battlefield layout (3 2 1 / 6 5 4 / 9 8 7)
+- Player setup persists to player_setup.json across restarts
+- Enemy building randomization: HQ excluded from front+center slots, Armory/Hospital excluded from front
+- Enemy member assignment: all attackers in HQ, enforcers distributed across all buildings
+- Projectile re-checks defenders on impact — healed defenders absorb shots properly
+- Battle-end reveal: all enemy members shown (stealthed assassins, fog of war) after battle ends
+- Renderer uses empire building_order for correct building sprites per slot
