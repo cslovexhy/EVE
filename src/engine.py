@@ -5,7 +5,7 @@ import os
 import random
 from models import (
     Empire, Member, Building, Order, MemberClass, MemberState, OrderAction,
-    Projectile, ProjectileType
+    Projectile, ProjectileType, BuildingType
 )
 import config
 import buildings
@@ -22,6 +22,10 @@ class BattleEngine:
         self.winner = None
         self.projectiles = []  # Active projectiles in flight
         self.battle_log = []   # Text log of key events
+
+        # Building-power state (per side).
+        self._pack_timer = {"player": 0.0, "enemy": 0.0}   # Hospital pack generation
+        self._nuke_charge = {"player": 0.0, "enemy": 0.0}  # Nuclear Silo charge (seconds)
         
         # Randomize enemy building placement and member assignment — unless the
         # enemy was pre-built (e.g. scaled from a region's underworld power).
@@ -289,18 +293,104 @@ class BattleEngine:
         for member in self.player.members + self.enemy.members:
             if member.is_alive:
                 self._update_member(member, dt)
-        
+
+        # Building powers (hospital packs, nuke charge)
+        self._update_powers(dt)
+
         # Update projectiles
         self._update_projectiles(dt)
+
+    # --- building powers -------------------------------------------------
+    def _side_key(self, empire: Empire) -> str:
+        return "player" if empire is self.player else "enemy"
+
+    def _active_of_type(self, empire: Empire, btype: BuildingType):
+        """Non-destroyed buildings of a type — a power is active only while its
+        building stands, so destroying it removes the power immediately."""
+        return [b for b in empire.buildings
+                if b.building_type == btype and not b.destroyed]
+
+    def _bunkers_shielded(self, empire: Empire) -> bool:
+        """A side's bunkers are untargetable until the defenders in ALL of its
+        bunkers are eliminated (i.e. while any bunker still has a live defender)."""
+        bunkers = self._active_of_type(empire, BuildingType.BUNKER)
+        if not bunkers:
+            return False
+        bunker_slots = {b.index for b in bunkers}
+        return any(m.is_alive and m.assigned_building in bunker_slots
+                   for m in empire.members)
+
+    def _update_powers(self, dt: float):
+        for empire in (self.player, self.enemy):
+            key = self._side_key(empire)
+            # Hospital: each active hospital generates health packs over time.
+            hospitals = len(self._active_of_type(empire, BuildingType.HOSPITAL))
+            if hospitals:
+                self._pack_timer[key] += dt * hospitals
+                while self._pack_timer[key] >= config.HOSPITAL_PACK_INTERVAL:
+                    self._pack_timer[key] -= config.HOSPITAL_PACK_INTERVAL
+                    empire.health_packs += 1
+            # Nuclear Silo: charge 0->100% over the battle while a silo stands.
+            if self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
+                self._nuke_charge[key] = min(config.NUKE_CHARGE_TIME,
+                                             self._nuke_charge[key] + dt)
+
+    def nuke_charge_fraction(self, empire: Empire):
+        """0..1 charge of the side's Nuclear Silo, or None if it has no silo."""
+        if not self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
+            return None
+        return self._nuke_charge[self._side_key(empire)] / config.NUKE_CHARGE_TIME
+
+    def nuke_ready(self, empire: Empire) -> bool:
+        frac = self.nuke_charge_fraction(empire)
+        return frac is not None and frac >= 1.0
+
+    def launch_nuke(self, empire: Empire, target_index: int) -> bool:
+        """Launch the side's charged nuke at an enemy building: 3x3 blast damages
+        every building and member in the block centered on target_index."""
+        if not self.nuke_ready(empire):
+            return False
+        target_empire = self.enemy if empire is self.player else self.player
+        self._nuke_charge[self._side_key(empire)] = 0.0  # consume charge
+
+        r, c = target_index // 3, target_index % 3
+        block = [rr * 3 + cc for rr in range(3) for cc in range(3)
+                 if abs(rr - r) <= 1 and abs(cc - c) <= 1]
+        side = "PLAYER" if empire is self.player else "ENEMY"
+        self._log(f"{side} launched NUKE on building {target_index+1} (3x3 blast)")
+
+        for idx in block:
+            # Members in the blast.
+            for m in list(target_empire.members):
+                if m.is_alive and m.assigned_building == idx:
+                    m.take_damage(config.NUKE_MEMBER_DAMAGE)
+                    if not m.is_alive:
+                        for b in target_empire.buildings:
+                            if m in b.defenders:
+                                b.defenders.remove(m)
+                                break
+                        empire.points += config.POINTS_PER_MEMBER_KILLED
+            # Building in the blast.
+            bldg = target_empire.buildings[idx]
+            if not bldg.destroyed:
+                bldg.take_damage(config.NUKE_BUILDING_DAMAGE)
+                if bldg.destroyed:
+                    empire.points += config.POINTS_PER_BUILDING_DESTROYED
+        return True
     
     def _update_member(self, member: Member, dt: float):
         """Update a single member: movement and combat."""
         member.attack_cooldown = max(0, member.attack_cooldown - dt)
         
         # Ammo regeneration
+        # Ammo regeneration (an active Armory speeds this up for the owning side).
+        own_empire = self.player if member in self.player.members else self.enemy
+        regen_interval = config.AMMO_REGEN_INTERVAL
+        if self._active_of_type(own_empire, BuildingType.ARMORY):
+            regen_interval /= config.ARMORY_AMMO_SPEEDUP
         member.ammo_regen_timer += dt
-        if member.ammo_regen_timer >= config.AMMO_REGEN_INTERVAL:
-            member.ammo_regen_timer -= config.AMMO_REGEN_INTERVAL
+        if member.ammo_regen_timer >= regen_interval:
+            member.ammo_regen_timer -= regen_interval
             if member.ammo < config.AMMO_MAX:
                 member.ammo += 1
         
@@ -510,7 +600,18 @@ class BattleEngine:
                     if neighbor not in visible:
                         visible.add(neighbor)
                         queue.append(neighbor)
-        
+
+        # Research Lab: the attacking side can see + attack buildings 4/5/7/8/9.
+        attacker_empire = self.enemy if is_enemy_view else self.player
+        if self._active_of_type(attacker_empire, BuildingType.RESEARCH_LAB):
+            visible |= set(config.RESEARCH_LAB_REVEAL)
+
+        # Bunker shield: the defending side's bunkers are untargetable until the
+        # defenders in ALL of its bunkers are eliminated.
+        if self._bunkers_shielded(target_empire):
+            visible -= {b.index for b in target_empire.buildings
+                        if b.building_type == BuildingType.BUNKER and not b.destroyed}
+
         return visible
     
     def _fire_projectile(self, attacker: Member, target_bldg: Building, target_empire: Empire):
@@ -530,7 +631,15 @@ class BattleEngine:
         else:  # Assassin
             proj_type = ProjectileType.ASSASSIN
             proj_speed = config.PROJECTILE_SPEED_ASSASSIN
-        
+
+        # Sniper Tower: a Sniper stationed in one fires for bonus damage.
+        dmg_mult = 1.0
+        if attacker.member_class == MemberClass.SNIPER and attacker.assigned_building is not None:
+            own = self.player if attacker in self.player.members else self.enemy
+            b = own.buildings[attacker.assigned_building]
+            if b.building_type == BuildingType.SNIPER_TOWER and not b.destroyed:
+                dmg_mult = 1.0 + config.SNIPER_TOWER_DAMAGE_BONUS
+
         # Find defenders at target building (skip stealthed)
         defenders_at_building = [
             m for m in target_empire.members
@@ -547,7 +656,7 @@ class BattleEngine:
                 x=attacker.x, y=attacker.y,
                 target_x=target_member.x, target_y=target_member.y,
                 speed=proj_speed,
-                damage=stats["damage_player"],
+                damage=stats["damage_player"] * dmg_mult,
                 projectile_type=proj_type,
                 target_member=target_member,
                 missed=False,
@@ -560,7 +669,7 @@ class BattleEngine:
                     x=attacker.x, y=attacker.y,
                     target_x=target_bldg.x, target_y=target_bldg.y,
                     speed=proj_speed,
-                    damage=stats["damage_building"],
+                    damage=stats["damage_building"] * dmg_mult,
                     projectile_type=proj_type,
                     target_building=target_bldg,
                     hit_building_directly=True,

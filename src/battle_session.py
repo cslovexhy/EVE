@@ -40,6 +40,7 @@ class BattleSession:
         # Same AI class drives the player's side when AI-assist is toggled on.
         self.player_ai = BattleAI(player_empire, enemy_empire, is_player=True)
         self.ai_mode = False
+        self.nuke_armed = False   # player has armed the nuke and is picking a target
         self.renderer = Renderer(screen)
 
         self.clock = pygame.time.Clock()
@@ -97,6 +98,13 @@ class BattleSession:
                     self._handle_click(event.pos)
 
     def _handle_click(self, pos):
+        if self.nuke_armed:
+            idx = self._enemy_building_at(pos)
+            if idx is not None and self.engine.launch_nuke(self.player_empire, idx):
+                self.order_system.feedback_msg = f"NUKE launched on building {idx + 1}!"
+                self.order_system.feedback_timer = 2.0
+                self.nuke_armed = False
+            return
         if self.ai_mode:
             return  # AI is driving your side; manual orders are ignored
         order = self.order_system.handle_click(
@@ -174,6 +182,15 @@ class BattleSession:
             ATTACK_MODE_BUTTON.toggle()
         elif key == pygame.K_TAB:
             self.ai_mode = not self.ai_mode
+        elif key == pygame.K_n:
+            if self.engine.nuke_ready(self.player_empire):
+                self.nuke_armed = not self.nuke_armed
+            else:
+                frac = self.engine.nuke_charge_fraction(self.player_empire)
+                self.order_system.feedback_msg = (
+                    "No Nuclear Silo" if frac is None
+                    else f"Nuke charging: {int(frac * 100)}%")
+                self.order_system.feedback_timer = 1.5
         elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
             self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
         elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
@@ -215,6 +232,25 @@ class BattleSession:
             if self.engine.battle_over:
                 break
 
+        # Enemy auto-launches its nuke at your bloodiest building once charged.
+        if not self.engine.battle_over and self.engine.nuke_ready(self.enemy_empire):
+            targets = [b for b in self.player_empire.buildings if not b.destroyed]
+            if targets:
+                best = max(targets, key=lambda b: sum(
+                    1 for m in self.player_empire.members
+                    if m.is_alive and m.assigned_building == b.index))
+                self.engine.launch_nuke(self.enemy_empire, best.index)
+
+    def _enemy_building_at(self, pos):
+        size = config.BUILDING_SIZE
+        for b in self.enemy_empire.buildings:
+            if b.destroyed:
+                continue
+            rect = pygame.Rect(int(b.x) - size // 2, int(b.y) - size // 2, size, size)
+            if rect.collidepoint(pos):
+                return b.index
+        return None
+
     def _render(self):
         self.renderer.render(self.engine, self.order_system)
         if not self.engine.battle_over:
@@ -224,3 +260,14 @@ class BattleSession:
             mode_col = config.GREEN if self.ai_mode else config.LIGHT_GRAY
             mode = self._speed_font.render(mode_txt, True, mode_col)
             self.screen.blit(mode, (config.SCREEN_WIDTH - mode.get_width() - 20, 38))
+
+            frac = self.engine.nuke_charge_fraction(self.player_empire)
+            if frac is not None:
+                if self.nuke_armed:
+                    nuke_txt, nuke_col = "NUKE: click enemy building", config.RED
+                elif frac >= 1.0:
+                    nuke_txt, nuke_col = "NUKE READY  (N)", config.RED
+                else:
+                    nuke_txt, nuke_col = f"Nuke {int(frac * 100)}%", config.LIGHT_GRAY
+                nuke = self._speed_font.render(nuke_txt, True, nuke_col)
+                self.screen.blit(nuke, (config.SCREEN_WIDTH - nuke.get_width() - 20, 66))

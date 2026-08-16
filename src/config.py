@@ -155,6 +155,15 @@ AMMO_REGEN_INTERVAL = 10.0  # Seconds per ammo regen
 POINTS_PER_BUILDING_DESTROYED = 100
 POINTS_PER_MEMBER_KILLED = 10
 
+# --- Building powers (active only while the building stands) ----------------
+HOSPITAL_PACK_INTERVAL = 25.0      # s; each active Hospital yields +1 health pack this often
+ARMORY_AMMO_SPEEDUP = 2.0          # ammo regenerates this many x faster while an Armory stands
+SNIPER_TOWER_DAMAGE_BONUS = 0.5    # +50% damage for a Sniper stationed in a Sniper Tower
+RESEARCH_LAB_REVEAL = (3, 4, 6, 7, 8)   # buildings 4/5/7/8/9 become see-able + attackable
+NUKE_CHARGE_TIME = BATTLE_DURATION       # Nuclear Silo charges 0->100% over the full battle
+NUKE_BUILDING_DAMAGE = 800         # nuke damage to each building in the 3x3 blast
+NUKE_MEMBER_DAMAGE = 600           # nuke damage to each member in the 3x3 blast
+
 # UI Layout
 # Top bar: timer + scores (0-40px)
 # Class stats bar: (40-110px)  
