@@ -147,8 +147,6 @@ class BattleSession:
 
         member.hp = member.max_hp
         member.state = MemberState.DEFENDING
-        member.stealthed = False
-        member.time_since_combat = 0.0
         member.attack_cooldown = 0.0
         member.target_building = None
         member.assigned_building = building_index
@@ -183,14 +181,13 @@ class BattleSession:
         elif key == pygame.K_TAB:
             self.ai_mode = not self.ai_mode
         elif key == pygame.K_n:
-            if self.engine.nuke_ready(self.player_empire):
-                self.nuke_armed = not self.nuke_armed
-            else:
-                frac = self.engine.nuke_charge_fraction(self.player_empire)
-                self.order_system.feedback_msg = (
-                    "No Nuclear Silo" if frac is None
-                    else f"Nuke charging: {int(frac * 100)}%")
+            frac = self.engine.nuke_charge_fraction(self.player_empire)
+            if frac is None:
+                self.order_system.feedback_msg = "No Nuclear Silo"
                 self.order_system.feedback_timer = 1.5
+            else:
+                # Fire-at-will: arm any time; charge only scales the damage.
+                self.nuke_armed = not self.nuke_armed
         elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
             self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
         elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
@@ -232,8 +229,10 @@ class BattleSession:
             if self.engine.battle_over:
                 break
 
-        # Enemy auto-launches its nuke at your bloodiest building once charged.
-        if not self.engine.battle_over and self.engine.nuke_ready(self.enemy_empire):
+        # Enemy auto-launches its nuke at your bloodiest building once charged enough.
+        enemy_frac = self.engine.nuke_charge_fraction(self.enemy_empire)
+        if (not self.engine.battle_over and enemy_frac is not None
+                and enemy_frac >= config.ENEMY_NUKE_THRESHOLD):
             targets = [b for b in self.player_empire.buildings if not b.destroyed]
             if targets:
                 best = max(targets, key=lambda b: sum(
@@ -264,10 +263,9 @@ class BattleSession:
             frac = self.engine.nuke_charge_fraction(self.player_empire)
             if frac is not None:
                 if self.nuke_armed:
-                    nuke_txt, nuke_col = "NUKE: click enemy building", config.RED
-                elif frac >= 1.0:
-                    nuke_txt, nuke_col = "NUKE READY  (N)", config.RED
+                    nuke_txt, nuke_col = f"NUKE {int(frac*100)}%: click enemy building", config.RED
                 else:
-                    nuke_txt, nuke_col = f"Nuke {int(frac * 100)}%", config.LIGHT_GRAY
+                    nuke_txt = f"Nuke {int(frac*100)}%  (N to launch)"
+                    nuke_col = config.RED if frac >= 1.0 else config.LIGHT_GRAY
                 nuke = self._speed_font.render(nuke_txt, True, nuke_col)
                 self.screen.blit(nuke, (config.SCREEN_WIDTH - nuke.get_width() - 20, 66))

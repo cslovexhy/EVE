@@ -552,6 +552,10 @@ class MapScreen(_Screen):
         self.total_pages = 1
         self.prev_btn = None
         self.next_btn = None
+        self.sort_mode = "underworld"   # county-list sort: alpha | underworld | gdp
+        self.sort_desc = True           # True = large->small, False = small->large
+        self.sort_button_rects = {}
+        self.sort_dir_rect = None
 
     # --- navigation ------------------------------------------------------
     _UP = {"city": "county", "county": "state", "state": "country"}
@@ -601,6 +605,16 @@ class MapScreen(_Screen):
             self.page = min(self.total_pages - 1, self.page + 1)
             return
 
+        for mode, rect in self.sort_button_rects.items():
+            if rect.collidepoint(pos):
+                self.sort_mode = mode
+                self.page = 0
+                return
+        if self.sort_dir_rect and self.sort_dir_rect.collidepoint(pos):
+            self.sort_desc = not self.sort_desc
+            self.page = 0
+            return
+
         for rect, value in self.item_rects:
             if rect.collidepoint(pos):
                 self._select(value)
@@ -630,8 +644,20 @@ class MapScreen(_Screen):
         if self.level == "state":
             return wm.states(self.sel_country)
         if self.level == "county":
-            return wm.counties(self.sel_country, self.sel_state)
+            return self._sorted_counties()
         return wm.cities(self.sel_country, self.sel_state, self.sel_county)
+
+    def _sorted_counties(self):
+        st = wm.WORLD[self.sel_country][self.sel_state]
+        names = list(st.keys())
+        if self.sort_mode == "alpha":
+            key = lambda n: n.lower()
+        elif self.sort_mode == "gdp":
+            key = lambda n: (st[n].get("gdp_thousands") or 0)
+        else:  # combined underworld strength
+            key = lambda n: sum(c["underworld_power"] for c in st[n]["cities"].values())
+        names.sort(key=key, reverse=self.sort_desc)
+        return names
 
     def _breadcrumb(self):
         root = "Birthplace" if self.mode == "birthplace" else "Map"
@@ -688,12 +714,38 @@ class MapScreen(_Screen):
         if banner:
             self.screen.blit(self.font_small.render(banner, True, config.GOLD), (40, 128))
 
+        # Sort controls (county level only).
+        self.sort_button_rects = {}
+        self.sort_dir_rect = None
+        top_y = 155
+        if self.level == "county":
+            self.screen.blit(self.font_small.render("Sort by:", True, config.LIGHT_GRAY),
+                             (60, 152))
+            sx = 140
+            for mode, label in (("alpha", "A-Z"), ("underworld", "Underworld"), ("gdp", "GDP")):
+                rect = pygame.Rect(sx, 146, 150, 34)
+                active = self.sort_mode == mode
+                pygame.draw.rect(self.screen, config.GOLD if active else config.GRAY,
+                                 rect, 0 if active else 2, border_radius=6)
+                lbl = self.font_small.render(label, True,
+                                             config.BLACK if active else config.WHITE)
+                self.screen.blit(lbl, lbl.get_rect(center=rect.center))
+                self.sort_button_rects[mode] = rect
+                sx += 160
+            # Direction toggle.
+            self.sort_dir_rect = pygame.Rect(sx + 20, 146, 190, 34)
+            pygame.draw.rect(self.screen, (60, 70, 90), self.sort_dir_rect, border_radius=6)
+            pygame.draw.rect(self.screen, config.GRAY, self.sort_dir_rect, 2, border_radius=6)
+            dir_label = "Large \u2192 Small" if self.sort_desc else "Small \u2192 Large"
+            dl = self.font_small.render(dir_label, True, config.WHITE)
+            self.screen.blit(dl, dl.get_rect(center=self.sort_dir_rect.center))
+            top_y = 194
+
         self.item_rects = []
         items = self._current_items()
         w, h, gap = 420, 76, 12
-        top_y = 155
         col_x = [60, 60 + w + 40, 60 + 2 * (w + 40)]
-        per_col = max(1, (config.SCREEN_HEIGHT - 300) // (h + gap))
+        per_col = max(1, (config.SCREEN_HEIGHT - top_y - 110) // (h + gap))
         ipp = per_col * len(col_x)
         self.total_pages = max(1, (len(items) + ipp - 1) // ipp)
         self.page = min(self.page, self.total_pages - 1)

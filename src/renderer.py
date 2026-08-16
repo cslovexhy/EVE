@@ -125,6 +125,18 @@ class Renderer:
         ]
         
         bldg_size = (config.BUILDING_SIZE, config.BUILDING_SIZE)
+
+        # Rubble sprite shown where a building has been destroyed.
+        self.rubble_image = None
+        try:
+            rimg = pygame.image.load(os.path.join(BUILDING_DIR, "rubble.png")).convert_alpha()
+            target = int(config.BUILDING_SIZE * 1.2)
+            iw, ih = rimg.get_width(), rimg.get_height()
+            scale = min(target / iw, target / ih)
+            self.rubble_image = pygame.transform.smoothscale(
+                rimg, (int(iw * scale), int(ih * scale)))
+        except (pygame.error, FileNotFoundError, ValueError):
+            self.rubble_image = None
         
         # Per-building-type scale multipliers
         building_scale = {
@@ -270,8 +282,12 @@ class Renderer:
             rect = pygame.Rect(x - size // 2, y - size // 2, size, size)
             
             if building.destroyed:
-                # Destroyed: dark gray rubble
-                pygame.draw.rect(self.screen, config.DARK_GRAY, rect)
+                # Destroyed: show rubble sprite (fallback to dark gray rubble).
+                if self.rubble_image is not None:
+                    rw, rh = self.rubble_image.get_size()
+                    self.screen.blit(self.rubble_image, (x - rw // 2, y - rh // 2))
+                else:
+                    pygame.draw.rect(self.screen, config.DARK_GRAY, rect)
             else:
                 # Draw building sprite if available
                 building_name_idx = building.index  # default: slot = building name index
@@ -347,22 +363,13 @@ class Renderer:
             if not is_player and engine:
                 # After battle ends, reveal everything
                 if not engine.battle_over:
-                    # Stealthed enemies are completely invisible
-                    if member.stealthed:
-                        continue
                     if member.state in (MemberState.DEFENDING, MemberState.IDLE):
                         if member.assigned_building is not None:
                             if not engine.is_visible_to_player(member.assigned_building):
                                 continue
             
             x, y = int(member.x), int(member.y)
-            
-            # Player's own stealthed members drawn semi-transparent
-            if is_player and member.stealthed:
-                # Draw to a temp surface with alpha
-                self._draw_member_card_alpha(member, x, y, alpha=100)
-            else:
-                self._draw_member_card(member, x, y)
+            self._draw_member_card(member, x, y)
     
     def _draw_sniper_ranges(self, members: list):
         """Draw subtle range circles around defending player snipers."""
@@ -480,33 +487,6 @@ class Renderer:
             bar_color = config.GREEN if hp_pct > 0.5 else config.RED
             pygame.draw.rect(self.screen, bar_color,
                            (bar_x, bar_y, int(bar_w * hp_pct), bar_h))
-    
-    def _draw_member_card_alpha(self, member: Member, cx: int, cy: int, alpha: int = 100):
-        """Draw a member card with transparency (for stealthed own units)."""
-        icon_size = config.MEMBER_ICON_SIZE
-        card_size = icon_size + CARD_BORDER * 2
-        # Render to a temp surface with per-surface alpha
-        temp = pygame.Surface((card_size + 4, card_size + 20), pygame.SRCALPHA)
-        # Offset drawing to temp surface
-        offset_x = 2
-        offset_y = 2
-        
-        card_rect = pygame.Rect(offset_x, offset_y, card_size, card_size)
-        rarity_color = config.RARITY_COLORS[member.rarity.value]
-        
-        pygame.draw.rect(temp, (30, 30, 30, alpha), card_rect)
-        pygame.draw.rect(temp, (*rarity_color, alpha), card_rect, CARD_BORDER)
-        
-        if member.member_class in self.class_icons:
-            icon = self.class_icons[member.member_class]
-            scaled = pygame.transform.smoothscale(icon, (icon_size, icon_size))
-            scaled.set_alpha(alpha)
-            temp.blit(scaled, (offset_x + CARD_BORDER, offset_y + CARD_BORDER))
-        
-        # Blit temp surface centered on position
-        blit_x = cx - (card_size + 4) // 2
-        blit_y = cy - (card_size + 4) // 2
-        self.screen.blit(temp, (blit_x, blit_y))
     
     def _draw_class_stats(self, engine: BattleEngine):
         """Draw class member count stats in the stats bar area."""

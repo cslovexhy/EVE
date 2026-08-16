@@ -311,14 +311,39 @@ class BattleEngine:
                 if b.building_type == btype and not b.destroyed]
 
     def _bunkers_shielded(self, empire: Empire) -> bool:
-        """A side's bunkers are untargetable until the defenders in ALL of its
-        bunkers are eliminated (i.e. while any bunker still has a live defender)."""
+        """A side's bunkers are protected from structural damage until the
+        defenders in ALL of its bunkers are eliminated (i.e. while any bunker
+        still has a live defender)."""
         bunkers = self._active_of_type(empire, BuildingType.BUNKER)
         if not bunkers:
             return False
         bunker_slots = {b.index for b in bunkers}
         return any(m.is_alive and m.assigned_building in bunker_slots
                    for m in empire.members)
+
+    def _can_damage_building(self, target_empire: Empire, bldg: Building) -> bool:
+        """Bunkers take no structural damage while the side's bunkers are shielded."""
+        if bldg.building_type == BuildingType.BUNKER and self._bunkers_shielded(target_empire):
+            return False
+        return True
+
+    def bunker_block_reason(self, target_empire: Empire, index: int):
+        """If attacking this building is currently pointless because it's a
+        shielded bunker with no defenders left, return a hint string; else None."""
+        b = target_empire.buildings[index]
+        if b.building_type != BuildingType.BUNKER or b.destroyed:
+            return None
+        if not self._bunkers_shielded(target_empire):
+            return None  # all bunkers cleared — attackable
+        has_defenders = any(m.is_alive and m.assigned_building == index
+                            for m in target_empire.members)
+        if has_defenders:
+            return None  # you can still attack this bunker's own defenders
+        return "Find the other bunker and take out the defenders there as well!"
+
+    def attack_block_reason(self, index: int, is_player: bool = True):
+        target = self.enemy if is_player else self.player
+        return self.bunker_block_reason(target, index)
 
     def _update_powers(self, dt: float):
         for empire in (self.player, self.enemy):
@@ -346,24 +371,29 @@ class BattleEngine:
         return frac is not None and frac >= 1.0
 
     def launch_nuke(self, empire: Empire, target_index: int) -> bool:
-        """Launch the side's charged nuke at an enemy building: 3x3 blast damages
-        every building and member in the block centered on target_index."""
-        if not self.nuke_ready(empire):
+        """Launch the side's nuke at an enemy building. Can be fired at any time;
+        the current charge fraction scales the blast damage. 3x3 area centered on
+        target_index; consumes the charge (recharges from 0)."""
+        frac = self.nuke_charge_fraction(empire)
+        if frac is None or frac <= 0:
             return False
         target_empire = self.enemy if empire is self.player else self.player
         self._nuke_charge[self._side_key(empire)] = 0.0  # consume charge
 
+        bldg_dmg = config.NUKE_BUILDING_DAMAGE * frac
+        mem_dmg = config.NUKE_MEMBER_DAMAGE * frac
         r, c = target_index // 3, target_index % 3
         block = [rr * 3 + cc for rr in range(3) for cc in range(3)
                  if abs(rr - r) <= 1 and abs(cc - c) <= 1]
         side = "PLAYER" if empire is self.player else "ENEMY"
-        self._log(f"{side} launched NUKE on building {target_index+1} (3x3 blast)")
+        self._log(f"{side} launched NUKE on building {target_index+1} "
+                  f"at {int(frac*100)}% charge (3x3 blast)")
 
         for idx in block:
             # Members in the blast.
             for m in list(target_empire.members):
                 if m.is_alive and m.assigned_building == idx:
-                    m.take_damage(config.NUKE_MEMBER_DAMAGE)
+                    m.take_damage(mem_dmg)
                     if not m.is_alive:
                         for b in target_empire.buildings:
                             if m in b.defenders:
@@ -373,7 +403,7 @@ class BattleEngine:
             # Building in the blast.
             bldg = target_empire.buildings[idx]
             if not bldg.destroyed:
-                bldg.take_damage(config.NUKE_BUILDING_DAMAGE)
+                bldg.take_damage(bldg_dmg)
                 if bldg.destroyed:
                     empire.points += config.POINTS_PER_BUILDING_DESTROYED
         return True
@@ -421,19 +451,8 @@ class BattleEngine:
             if not self.is_visible_to_enemy(target_bldg.index):
                 return
         
-        # Assassin stealth: accumulate time since combat
-        if member.member_class == MemberClass.ASSASSIN:
-            member.time_since_combat += dt
-            if member.time_since_combat >= config.STEALTH_DELAY:
-                member.stealthed = True
-        
         # Fire when ready and have ammo
         if member.attack_cooldown <= 0 and member.ammo > 0:
-            # Break stealth on attack
-            if member.stealthed:
-                member.stealthed = False
-                member.time_since_combat = 0.0
-            
             # Consume ammo
             member.ammo -= 1
             
@@ -441,7 +460,6 @@ class BattleEngine:
             self._fire_projectile(member, target_bldg, target_empire)
             
             member.attack_cooldown = member.get_stats()["attack_interval"]
-            member.time_since_combat = 0.0
             
             # If attack-once mode, return to defending after firing
             if member.attack_once:
@@ -451,17 +469,12 @@ class BattleEngine:
     
     def _update_defender(self, member: Member, dt: float):
         """Defender: stays in building. Defense is passive — you're a target for enemy fire.
-        
+
         Since all combat is ranged and nobody moves, defenders just exist
         in their building to absorb shots before the building takes damage.
-        Assassins still accumulate stealth while defending.
         """
-        # Assassin stealth while defending
-        if member.member_class == MemberClass.ASSASSIN:
-            member.time_since_combat += dt
-            if member.time_since_combat >= config.STEALTH_DELAY:
-                member.stealthed = True
-    
+        return
+
     def _resolve_attack(self, attacker: Member, target_bldg: Building, target_empire: Empire):
         """Resolve a melee attack on a building or its defenders (enforcer/assassin only)."""
         is_player_attacker = attacker in self.player.members
@@ -490,8 +503,8 @@ class BattleEngine:
                 scoring_empire.points += config.POINTS_PER_MEMBER_KILLED
                 self._log(f"{side} killed {target_member.member_class.value} '{target_member.name}' at bldg {target_bldg.index+1}")
         else:
-            # No defenders — damage the building
-            if not target_bldg.destroyed:
+            # No defenders — damage the building (bunkers resist while shielded)
+            if not target_bldg.destroyed and self._can_damage_building(target_empire, target_bldg):
                 target_bldg.take_damage(stats["damage_building"])
                 self._log(f"{'PLAYER' if is_player_attacker else 'ENEMY'} hit building {target_bldg.index+1} for {stats['damage_building']:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
                 if target_bldg.destroyed:
@@ -606,12 +619,6 @@ class BattleEngine:
         if self._active_of_type(attacker_empire, BuildingType.RESEARCH_LAB):
             visible |= set(config.RESEARCH_LAB_REVEAL)
 
-        # Bunker shield: the defending side's bunkers are untargetable until the
-        # defenders in ALL of its bunkers are eliminated.
-        if self._bunkers_shielded(target_empire):
-            visible -= {b.index for b in target_empire.buildings
-                        if b.building_type == BuildingType.BUNKER and not b.destroyed}
-
         return visible
     
     def _fire_projectile(self, attacker: Member, target_bldg: Building, target_empire: Empire):
@@ -640,12 +647,11 @@ class BattleEngine:
             if b.building_type == BuildingType.SNIPER_TOWER and not b.destroyed:
                 dmg_mult = 1.0 + config.SNIPER_TOWER_DAMAGE_BONUS
 
-        # Find defenders at target building (skip stealthed)
+        # Find defenders at target building
         defenders_at_building = [
             m for m in target_empire.members
             if m.is_alive and m.assigned_building == target_bldg.index
             and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
-            and not m.stealthed
         ]
         
         if defenders_at_building:
@@ -740,7 +746,6 @@ class BattleEngine:
                             m for m in target_empire.members
                             if m.is_alive and m.assigned_building == target_bldg.index
                             and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
-                            and not m.stealthed
                         ]
                         
                         if defenders_now:
@@ -766,16 +771,19 @@ class BattleEngine:
                                     self.enemy.points += config.POINTS_PER_MEMBER_KILLED
                                     self._log(f"ENEMY killed player {target_member.member_class.value} '{target_member.name}'")
                         else:
-                            # No defenders — damage building
-                            target_bldg.take_damage(proj.damage)
-                            self._log(f"HIT building {target_bldg.index+1} for {proj.damage:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
-                            if target_bldg.destroyed:
-                                if target_bldg in self.enemy.buildings:
-                                    self.player.points += config.POINTS_PER_BUILDING_DESTROYED
-                                    self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")
-                                else:
-                                    self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
-                                    self._log(f"ENEMY destroyed player building {target_bldg.index+1}")
+                            # No defenders — damage building (bunkers resist while shielded)
+                            if not self._can_damage_building(target_empire, target_bldg):
+                                pass
+                            else:
+                                target_bldg.take_damage(proj.damage)
+                                self._log(f"HIT building {target_bldg.index+1} for {proj.damage:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
+                                if target_bldg.destroyed:
+                                    if target_bldg in self.enemy.buildings:
+                                        self.player.points += config.POINTS_PER_BUILDING_DESTROYED
+                                        self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")
+                                    else:
+                                        self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
+                                        self._log(f"ENEMY destroyed player building {target_bldg.index+1}")
                 elif proj.target_member and proj.target_member.is_alive:
                     # Damage member
                     hp_before = proj.target_member.hp

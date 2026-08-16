@@ -95,9 +95,6 @@ class Member:
     assigned_building: Optional[int] = None  # Building index (0-8)
     target_building: Optional[int] = None    # Attack/defend target
     attack_cooldown: float = 0.0
-    # Stealth (assassins only)
-    stealthed: bool = False
-    time_since_combat: float = 0.0
     # Ammo
     ammo: int = config.AMMO_MAX
     ammo_regen_timer: float = 0.0
@@ -115,8 +112,6 @@ class Member:
         self.state = MemberState.IDLE
         self.attack_cooldown = 0.0
         self.target_building = None
-        self.stealthed = False
-        self.time_since_combat = 0.0
         self.ammo = config.AMMO_MAX
         self.ammo_regen_timer = 0.0
     
@@ -149,9 +144,6 @@ class Member:
         stats = self.get_stats()
         actual = raw_damage * (1.0 - stats["mitigation"])
         self.hp -= actual
-        # Break stealth on being hit
-        self.stealthed = False
-        self.time_since_combat = 0.0
         if self.hp <= 0:
             self.hp = 0
             self.state = MemberState.DEAD
@@ -274,8 +266,6 @@ class Empire:
         member = random.choice(dead)
         member.hp = member.max_hp
         member.state = MemberState.DEFENDING
-        member.stealthed = False
-        member.time_since_combat = 0.0
         member.attack_cooldown = 0.0
         member.target_building = None
         

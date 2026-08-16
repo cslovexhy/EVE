@@ -144,9 +144,6 @@ PROJECTILE_SPEED_DEMO = 250     # Pixels per second (slower, heavier)
 PROJECTILE_SPEED_ENFORCER = 350 # Pixels per second
 PROJECTILE_SPEED_ASSASSIN = 450 # Pixels per second (fast)
 
-# Stealth (Assassins)
-STEALTH_DELAY = 5.0    # Seconds out of combat before going stealth
-
 # Ammo
 AMMO_MAX = 10          # Starting/max ammo per member
 AMMO_REGEN_INTERVAL = 10.0  # Seconds per ammo regen
@@ -161,8 +158,9 @@ ARMORY_AMMO_SPEEDUP = 2.0          # ammo regenerates this many x faster while a
 SNIPER_TOWER_DAMAGE_BONUS = 0.5    # +50% damage for a Sniper stationed in a Sniper Tower
 RESEARCH_LAB_REVEAL = (3, 4, 6, 7, 8)   # buildings 4/5/7/8/9 become see-able + attackable
 NUKE_CHARGE_TIME = BATTLE_DURATION       # Nuclear Silo charges 0->100% over the full battle
-NUKE_BUILDING_DAMAGE = 800         # nuke damage to each building in the 3x3 blast
-NUKE_MEMBER_DAMAGE = 600           # nuke damage to each member in the 3x3 blast
+NUKE_BUILDING_DAMAGE = 800         # nuke damage to each building in the 3x3 blast, at FULL charge
+NUKE_MEMBER_DAMAGE = 600           # nuke damage to each member in the 3x3 blast, at FULL charge
+ENEMY_NUKE_THRESHOLD = 0.75        # enemy AI fires its nuke once charge reaches this fraction
 
 # UI Layout
 # Top bar: timer + scores (0-40px)

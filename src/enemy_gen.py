@@ -18,17 +18,20 @@ MIN_MEMBERS = 4
 MAX_LEVEL = 15
 REFERENCE_MAX_POWER = 80000  # ~ Virginia's strongest underworld (recalibrate for other states)
 
-# Building fortification priority (strongest first) applied as power rises.
-FORT_PRIORITY = [
-    BuildingType.HEADQUARTERS,
-    BuildingType.BUNKER,
-    BuildingType.NUCLEAR_SILO,
-    BuildingType.SNIPER_TOWER,
-    BuildingType.RESEARCH_LAB,
-    BuildingType.ARMORY,
-    BuildingType.HOSPITAL,
-    BuildingType.SAFEHOUSE,
-    BuildingType.BUNKER,
+# Fortification build order as a city grows stronger. Each entry is one stage;
+# 'add' places a new building, 'upgrade' converts an existing Safehouse into a
+# Bunker (mirroring the player's upgrade chain). More power => more stages applied.
+FORT_STAGES = [
+    ("add", BuildingType.HEADQUARTERS),
+    ("add", BuildingType.SAFEHOUSE),      # Safehouse 1
+    ("add", BuildingType.SAFEHOUSE),      # Safehouse 2
+    ("add", BuildingType.ARMORY),
+    ("add", BuildingType.HOSPITAL),
+    ("add", BuildingType.SNIPER_TOWER),
+    ("add", BuildingType.RESEARCH_LAB),
+    ("upgrade", BuildingType.BUNKER),     # Safehouse 1 -> Bunker 1
+    ("upgrade", BuildingType.BUNKER),     # Safehouse 2 -> Bunker 2
+    ("add", BuildingType.NUCLEAR_SILO),
 ]
 
 CLASS_ORDER = [MemberClass.ENFORCER, MemberClass.SNIPER,
@@ -90,10 +93,25 @@ def _make_members(count: int, level: int, norm: float, rng: random.Random) -> Li
     return members
 
 
+def _fort_types(norm: float) -> List[BuildingType]:
+    """Specialist building types for a fortification level (more stages as power
+    rises). Safehouses are upgraded into Bunkers by the 'upgrade' stages."""
+    k = max(0, min(len(FORT_STAGES), round(len(FORT_STAGES) * norm)))
+    types: List[BuildingType] = []
+    for op, t in FORT_STAGES[:k]:
+        if op == "add":
+            types.append(t)
+        else:  # upgrade a Safehouse into a Bunker
+            if BuildingType.SAFEHOUSE in types:
+                types[types.index(BuildingType.SAFEHOUSE)] = BuildingType.BUNKER
+            else:
+                types.append(t)
+    return types[:9]
+
+
 def _make_layout(norm: float, rng: random.Random) -> List[BuildingType]:
-    num_forts = max(0, min(9, round(9 * norm)))
-    layout = list(FORT_PRIORITY[:num_forts]) + \
-        [BuildingType.WAREHOUSE] * (9 - num_forts)
+    types = _fort_types(norm)
+    layout = types + [BuildingType.WAREHOUSE] * (9 - len(types))
     rng.shuffle(layout)
     return layout
 
@@ -142,5 +160,5 @@ def describe(underworld_power: float) -> dict:
         "norm": round(norm, 3),
         "members": _member_count(norm),
         "level": _member_level(norm),
-        "forts": max(0, min(9, round(9 * norm))),
+        "forts": len(_fort_types(norm)),
     }

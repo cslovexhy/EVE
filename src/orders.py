@@ -236,7 +236,12 @@ class OrderSystem:
                         self.feedback_msg = "No visibility"
                         self.feedback_timer = 1.5
                         return None
-                
+                    reason = engine.attack_block_reason(b.index, is_player=True)
+                    if reason:
+                        self.feedback_msg = reason
+                        self.feedback_timer = 2.5
+                        return None
+
                 return self._create_order(b.index, OrderAction.ATTACK)
         
         return None
