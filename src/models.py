@@ -40,6 +40,25 @@ class ProjectileType(Enum):
     ASSASSIN = "assassin"
 
 
+class BuildingType(Enum):
+    """The 9 building types. Every building starts as WAREHOUSE and can be
+    upgraded along the chain defined in config.BUILDING_TYPES."""
+    WAREHOUSE = "warehouse"
+    SAFEHOUSE = "safehouse"
+    ARMORY = "armory"
+    HOSPITAL = "hospital"
+    RESEARCH_LAB = "research_lab"
+    SNIPER_TOWER = "sniper_tower"
+    NUCLEAR_SILO = "nuclear_silo"
+    HEADQUARTERS = "headquarters"
+    BUNKER = "bunker"
+
+    @property
+    def spec(self) -> dict:
+        """Config entry for this building type."""
+        return config.BUILDING_TYPES[self.value]
+
+
 @dataclass
 class Projectile:
     """A visible projectile traveling from attacker to target."""
@@ -142,19 +161,35 @@ class Member:
 class Building:
     """A building on the 3x3 grid."""
     index: int              # 0-8 position on grid
+    building_type: BuildingType = BuildingType.WAREHOUSE
     hp: float = config.BUILDING_BASE_HP
     max_hp: float = config.BUILDING_BASE_HP
     level: int = 1
     defenders: list = field(default_factory=list)  # List of Member refs
     destroyed: bool = False
-    
+
+    def __post_init__(self):
+        # HP is driven by building type. Warehouse keeps BUILDING_BASE_HP.
+        self.apply_type_hp()
+
+    def apply_type_hp(self):
+        """Set max_hp/hp from the current building type's config."""
+        self.max_hp = self.building_type.spec["hp"]
+        self.hp = self.max_hp
+        self.destroyed = False
+
+    @property
+    def type_name(self) -> str:
+        """Human-readable building type name."""
+        return self.building_type.spec["display_name"]
+
     def take_damage(self, damage: float):
         """Apply damage to building."""
         self.hp -= damage
         if self.hp <= 0:
             self.hp = 0
             self.destroyed = True
-    
+
     @property
     def is_front_row(self) -> bool:
         """Buildings 0, 3, 6 are front row (leftmost column)."""
@@ -179,10 +214,32 @@ class Empire:
     points: int = 0
     is_player: bool = True
     health_packs: int = config.HEALTH_PACKS_START
-    
+    money: int = config.STARTING_MONEY
+
     def setup_buildings(self):
-        """Initialize 9 buildings for battle."""
+        """Initialize 9 buildings for battle (all Warehouses by default)."""
         self.buildings = [Building(index=i) for i in range(9)]
+
+    def apply_building_layout(self, type_layout):
+        """Set building types from a layout list of 9 BuildingType (or type-name
+        strings), refreshing each building's HP to match its type. Slots default
+        to WAREHOUSE where the layout entry is missing/None."""
+        if not self.buildings:
+            self.setup_buildings()
+        for i, building in enumerate(self.buildings):
+            entry = type_layout[i] if i < len(type_layout) else None
+            if entry is None:
+                bt = BuildingType.WAREHOUSE
+            elif isinstance(entry, BuildingType):
+                bt = entry
+            else:
+                bt = BuildingType(entry)
+            building.building_type = bt
+            building.apply_type_hp()
+
+    def count_building_type(self, building_type: BuildingType) -> int:
+        """How many buildings of the given type this empire currently has."""
+        return sum(1 for b in self.buildings if b.building_type == building_type)
     
     def get_members_by_class(self, member_class: MemberClass) -> list:
         """Get all living members of a given class."""

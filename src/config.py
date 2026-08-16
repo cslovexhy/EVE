@@ -90,6 +90,39 @@ BASE_STATS = {
 BUILDING_BASE_HP = 500
 BUILDING_DEFENDER_SLOTS = 3  # Max defenders per building
 
+# --- Building Upgrade System ---------------------------------------------
+# Every building starts as a Warehouse. A Warehouse can be upgraded (with
+# money) into one of the tier-1 specialist buildings. A Safehouse can then be
+# further upgraded into a Bunker.
+#
+# Chain:
+#   warehouse -> headquarters | armory | hospital | safehouse
+#              | sniper_tower | research_lab | nuclear_silo
+#   safehouse -> bunker
+#
+# Each entry:
+#   display_name : human-readable label
+#   hp           : max HP for this building type (warehouse keeps BUILDING_BASE_HP)
+#   upgrade_cost : money cost to upgrade INTO this type (0 for the base warehouse)
+#   upgrades_from: the type that can be upgraded into this one (None for base)
+#   max_count    : max number of this type allowed per empire (None = unlimited)
+#   name_index   : index used by renderer/building_order sprite mapping
+BUILDING_TYPES = {
+    "warehouse":    {"display_name": "Warehouse",    "hp": BUILDING_BASE_HP, "upgrade_cost": 0,     "upgrades_from": None,        "max_count": None, "name_index": 3},
+    "safehouse":    {"display_name": "Safehouse",    "hp": 650,              "upgrade_cost": 1500,  "upgrades_from": "warehouse", "max_count": 2,    "name_index": 8},
+    "armory":       {"display_name": "Armory",       "hp": 750,              "upgrade_cost": 2500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 1},
+    "hospital":     {"display_name": "Hospital",     "hp": 750,              "upgrade_cost": 2500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 2},
+    "research_lab": {"display_name": "Research Lab", "hp": 800,              "upgrade_cost": 3500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 7},
+    "sniper_tower": {"display_name": "Sniper Tower", "hp": 850,              "upgrade_cost": 3500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 6},
+    "nuclear_silo": {"display_name": "Nuclear Silo", "hp": 950,              "upgrade_cost": 10000, "upgrades_from": "warehouse", "max_count": 1,    "name_index": 5},
+    "headquarters": {"display_name": "Headquarters", "hp": 1300,             "upgrade_cost": 6000,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 0},
+    "bunker":       {"display_name": "Bunker",       "hp": 1300,             "upgrade_cost": 5000,  "upgrades_from": "safehouse", "max_count": 2,    "name_index": 4},
+}
+
+# Starting money for a brand-new player (fresh profile only; saved balance
+# takes over once a profile exists). New players earn money by winning wars.
+STARTING_MONEY = 0
+
 # Health Packs
 HEALTH_PACKS_START = 8  # Starting health packs per battle
 

@@ -16,3 +16,11 @@ assets/portraits/
 # IDE
 .idea/
 .vscode/
+
+# Large raw geo datasets (regenerate via ETL)
+data/raw/
+
+# Runtime / per-player state (not source)
+player_profile.json
+player_setup.json
+battle_log.txt

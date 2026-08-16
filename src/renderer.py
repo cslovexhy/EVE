@@ -702,7 +702,7 @@ class Renderer:
                                                  config.SCREEN_HEIGHT // 2 + 10))
         self.screen.blit(score_text, score_rect)
         
-        hint_text = self.font_medium.render("Press R to restart or Q to quit", True, config.GRAY)
+        hint_text = self.font_medium.render("Press ENTER to continue", True, config.GRAY)
         hint_rect = hint_text.get_rect(center=(config.SCREEN_WIDTH // 2,
                                                config.SCREEN_HEIGHT // 2 + 50))
         self.screen.blit(hint_text, hint_rect)

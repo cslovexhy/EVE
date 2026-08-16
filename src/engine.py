@@ -8,6 +8,7 @@ from models import (
     Projectile, ProjectileType
 )
 import config
+import buildings
 
 
 class BattleEngine:
@@ -22,12 +23,24 @@ class BattleEngine:
         self.projectiles = []  # Active projectiles in flight
         self.battle_log = []   # Text log of key events
         
-        # Randomize enemy building placement and member assignment
-        self._randomize_enemy_setup()
+        # Randomize enemy building placement and member assignment — unless the
+        # enemy was pre-built (e.g. scaled from a region's underworld power).
+        if not getattr(self.enemy, "building_order", None):
+            self._randomize_enemy_setup()
+        
+        # Apply building types (and per-type HP) from each side's building_order
+        self._apply_building_types()
         
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
+    
+    def _apply_building_types(self):
+        """Set building types + type-based HP from each empire's building_order."""
+        for empire in (self.player, self.enemy):
+            order = getattr(empire, "building_order", None)
+            if order:
+                buildings.apply_building_order(empire, order)
     
     def _log(self, msg: str):
         """Add a timestamped entry to the battle log and write to file immediately."""

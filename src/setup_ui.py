@@ -44,8 +44,8 @@ def _load_setup() -> tuple:
             data = json.load(f)
         building_order = data["building_order"]
         member_assignments = data["member_assignments"]
-        # Validate
-        if len(building_order) != 9 or sorted(building_order) != list(range(9)):
+        # Validate: 9 slots, each a valid building name-index (duplicates allowed).
+        if len(building_order) != 9 or any(not (0 <= x <= 8) for x in building_order):
             return None, None
         if len(member_assignments) != 9:
             return None, None
@@ -68,7 +68,7 @@ class SetupUI:
     - ENTER/SPACE: start battle
     """
     
-    def __init__(self, screen: pygame.Surface, empire: Empire):
+    def __init__(self, screen: pygame.Surface, empire: Empire, building_order=None):
         self.screen = screen
         self.empire = empire
         self.done = False  # Set True when player starts battle
@@ -79,7 +79,14 @@ class SetupUI:
         # Try loading saved configuration
         saved_order, saved_assignments = _load_setup()
         
-        if saved_order is not None:
+        if building_order is not None:
+            # Explicit layout wins (e.g. persistent base from EVE Layout).
+            self.building_order = list(building_order)
+            if saved_assignments is not None:
+                self.member_assignments = saved_assignments
+            else:
+                self._init_default_assignments()
+        elif saved_order is not None:
             self.building_order = saved_order
             self.member_assignments = saved_assignments
         else:

@@ -19,6 +19,7 @@ Organized by system. Answer when ready — no rush. Check off (replace `[ ]` wit
 ## 2. Members & Classes
 
 - [x] How many members do you start with? → **8 (2 per class)**
+- [x] Max member count (roster cap) → **80** (full empire; enemy/police rosters also scale up to this cap)
 - [x] How do you recruit new members? → **After defeating an empire, pick 1 of 4 offered (best from each class of the defeated empire)**
 - [x] Do members have individual stats? → **No. Stats are static, based solely on level + rarity.** Includes damage vs players/buildings, mitigation, skills.
 - [x] Do members level up / gain XP? → **No. Level is a fixed attribute (tied to rarity/progression, not grindable).**

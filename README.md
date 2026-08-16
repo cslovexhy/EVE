@@ -60,6 +60,76 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-16 — Territory Rollup, Control % + Paginated Map
+
+- **Control rolls up every level**: `world_map.control/county_control/state_control/country_control` compute owned/total cities and % for any region from the conquered set. Each map tile now shows its control (`county/state/country`: "x/y cities · NN% controlled"; cities: pop, GDP/capita, crime, gang/police power, reward).
+- **Owned propagates upward**: a county/state/country tile is marked **✓ owned** (green) once 100% of its cities are taken — so you can see at a glance where to push next. A control summary for the region you're viewing sits beside the breadcrumb (e.g. "Virginia: 12% controlled (29/241)").
+- **Pagination**: the map pages when a level overflows (VA = 133 counties → 8 pages) with Prev/Next buttons, a page indicator, and ←/→ keys. Page resets on drill-down/back.
+- **Birthplace win** now shows a "Congratulations! You are now in control of {city}, {state}." screen (Continue only); the stale "Press R to restart" battle-over hint is gone (retry only exists on the harsh birthplace loss).
+- Verified headless: rollup math, owned propagation, 8-page county navigation, 17 unit tests pass.
+
+### 2026-08-16 — Birthplace as First Battle + Region Info in Map
+
+- **Birthplace is now a fight, not a gift**: picking a starting city stages you as a new force and launches a battle against that city's underworld (scaled from its `underworld_power`). **Win → you own the city and your empire begins. Lose → a game-over screen ("Your path to Godfather ends in {city}, {state}.") resets you to try again.** New `GameOverScreen`; `main._choose_birthplace` loops pick→fight→win/lose.
+- `main._fight_city()` extracted and shared by birthplace and regular wars.
+- **Map now shows region info** on every city tile — population, GDP/capita, crime rate, gang (underworld) power, police power, and (in war mode) reward. The confirm popup shows the full stat block so you can pick a winnable target.
+- Verified headless: birthplace map + stats popup + game-over render; all modules import; 17 unit tests pass.
+
+### 2026-08-16 — Real US Geography + Data-Driven Enemies (Virginia)
+
+- **Data pipeline** (`tools/build_world_data.py`): joins BEA county GDP + Census population + County Health Rankings homicide rate + Census places into a normalized `Country ▸ State ▸ County ▸ City` dataset. Handles Virginia's independent cities (county-equivalents) and BEA "combination area" GDP gaps (estimated from population × state median GDP/capita). Generates `data/world/virginia.json` (133 county-equivalents, 241 cities). `--state XX` builds any state.
+- **Two powers per city**: `underworld_power = K_U × crime_rate × population` (conquerable rival gangs) and `police_power = K_P × GDP` (raid boss, never conquered — deferred to a later phase). Police > underworld everywhere (ratio 2.4×–420×). `reward` ∝ city GDP percentile.
+- **World layer** (`world_map.py`): loads `data/world/*.json`; 4-part city ids; nav + metric + scope-id helpers.
+- **Scope gating** (`GameState`): birthplace = a city; scope ladder **county → state → country → world** (own the whole county to unlock the state, etc.). Self-heals stale saves whose home city isn't in the current world data.
+- **Enemy scaling** (`enemy_gen.py`): `underworld_power` → member count (up to the 80 cap), level (1–15), rarity mix, and building fortification via log-scaling. Engine skips enemy randomization when a pre-built enemy is supplied.
+- **Map screen**: drills `Country ▸ State ▸ County ▸ City`, shows each city's UW/police power + reward, gated by scope. Wars build the scaled enemy from the target's `underworld_power` and pay its `reward` on a win.
+- Verified headless: data loads, scope ladder advances on full-region conquest, enemy scaling is monotonic in power, stale-profile self-heal, reward payout, 17 unit tests pass. **Police raid bosses are the next phase.**
+
+### 2026-08-16 — Birthplace Selection + Map-Visibility Gating
+
+- **Birthplace on first run**: with no `home_city`, the game opens a birthplace picker (`MapScreen` `mode="birthplace"`) — drill Country ▸ State ▸ City and "Start Here" sets your home city (auto-conquered) and home state/country. Backing out quits.
+- **Scope gating** (`GameState.scope()` → `state` / `country` / `world`):
+  - **state** — only your home state's cities are visible/challengeable.
+  - **country** — conquering your whole home state unlocks all of that country's states/cities.
+  - **world** — conquering the whole country unlocks the other countries.
+- `MapScreen` derives a `min_level` from scope so navigation is locked to the unlocked region (Back stops at that level), with a status banner explaining what to conquer next to expand.
+- New `world_map.py` holds `MAP_DATA` + helpers (`state_city_ids`, `country_city_ids`, etc.), shared by `screens` and `game_state` (no circular import). `GameState` gained persisted `home_city`, `set_birthplace`, `home_location`, `owns_entire_state/country`.
+- Verified headless: 17 unit tests pass; scope smoke test walks none→state→country→world, birthplace pick, Nevada-locked navigation, and `home_city` persistence. Existing save migrated (`home_city` = Las Vegas).
+
+### 2026-08-15 — Consolidated Base Management + Direct War Launch
+
+- **EVE Layout is now the single base-management screen** with three tabs (TAB to cycle):
+  - **Upgrade** — click a slot, buy an upgrade (money-gated by chain/limits)
+  - **Arrange** — click two slots to swap their buildings *and* their assigned defenders
+  - **Members** — click a member in the roster, click a slot to assign them
+- **Everything persists to `player_profile.json`** on every change: money, `BuildingType` layout, and member assignments (9 lists of roster indices, validated to cover all 40 members).
+- **Wars skip the pre-battle setup screen** — `BattleSession` now takes `building_order` + `member_assignments` directly and launches straight into the fight. `setup_ui.py` is retired from the flow (file kept).
+- `GameState` gained `member_assignments` + `default_member_assignments()` + `ensure_member_assignments()`; `apply_to_empire` now also seeds defender assignments.
+- Verified headless: 17 unit tests pass; smoke test exercises all three tabs (upgrade/swap/assign), a save→load roundtrip, and the direct war launch (slot HP + defender placement applied with no SetupUI).
+
+### 2026-08-15 — Screen Navigation + Map + Functional Building Upgrades
+
+- **Screen architecture**: new `main.py` navigator drives a screen state machine — Main Menu → EVE Layout / Map → Battle. Battle loop extracted from `main.py` into `battle_session.py` (`BattleSession.run()` returns the winner; ESC forfeits, window-close still quits).
+- **Persistent profile** (`game_state.py`): `GameState` holds money, a 9-slot `BuildingType` layout, and conquered cities; JSON save/load to `player_profile.json`. Helpers: `apply_to_empire`, `empire_net_worth`, `war_reward` (30% of enemy net worth per economy doc).
+- **Main Menu**: buttons for **Map**, **EVE Layout**, **Quit**.
+- **EVE Layout page**: the real upgrade hookup — click a building slot, see valid/affordable upgrade targets (gated by `can_upgrade`: chain, per-type limit, funds), buy with `upgrade_building`; money deducts and the layout persists.
+- **Map page**: layered **Country ▸ State ▸ City** drill-down; click an unconquered city → **Wage War?** popup → launches the battle. Winning marks the city conquered and awards money. Conquered cities are flagged and non-clickable. (`MAP_DATA` is a provisional placeholder — map structure in `docs/questions.md` §4 is still open.)
+- **Interop**: `buildings.building_order_from_layout` / `apply_building_order` bridge the persistent `BuildingType` layout to the renderer/setup `building_order` (duplicates now allowed, e.g. many Warehouses). `SetupUI` accepts a seeded `building_order` and no longer requires a unique-permutation layout.
+- Verified headless: 17 unit tests pass; smoke test covers imports, profile apply, upgrade+persist, layout→HP roundtrip (Armory 750, HQ blocked at $5k), and map drill-down → popup → conquer.
+
+### 2026-08-15 — Building Upgrade Chain + Per-Type HP
+
+- Building type system: `BuildingType` enum (9 types) + config-driven `BUILDING_TYPES` (HP, cost, chain, max count, sprite name-index)
+- Upgrade chain: every building starts as **Warehouse** →
+  - Warehouse → HQ / Armory / Hospital / Sniper Tower / Research Lab / Nuclear Silo (each unique) or Safehouse (max 2)
+  - Safehouse → Bunker (max 2)
+- Per-type HP: Warehouse 500 (base), Safehouse 650, Armory/Hospital 750, Research Lab 800, Sniper Tower 850, Nuclear Silo 950, **HQ & Bunker 1300** (tankiest)
+- Money-based upgrade costs: Safehouse 1,500 · Armory/Hospital 2,500 · Research Lab/Sniper Tower 3,500 · Bunker 5,000 · HQ 6,000 · Nuclear Silo 10,000 (starting money 5,000)
+- `buildings.py`: upgrade validation + apply logic — enforces chain (`invalid_chain`), per-type limits (`max_count_reached`), funds (`insufficient_funds`), slot bounds; deducts money and refreshes HP on success
+- `Building` now carries `building_type`; HP is derived from type. `Empire` gained `money`, `apply_building_layout`, `count_building_type`
+- Engine applies each side's `building_order` → building types before battle so combat HP reflects per-type HP (player + enemy)
+- 17 unit tests (`tests/test_buildings.py`) covering chain, uniqueness/limits, costs, insufficient funds, and HP — all passing
+
 ### 2026-08-08 — Prototype Built
 
 - Scaffolded project: config, models, engine, orders, AI, renderer, main loop

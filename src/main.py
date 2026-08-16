@@ -1,217 +1,121 @@
-"""EVE - Empire vs Empire: Main game loop."""
+"""EVE - Empire vs Empire: screen navigator / entry point.
 
+Flow:
+    Birthplace (fight the town's gang; lose = game over/retry)
+    Main Menu ──▶ EVE Layout (upgrade buildings)
+             └──▶ Map (country ▸ state ▸ county ▸ city) ──▶ Wage War ──▶ Battle
+                                                           └──▶ win: conquer + reward
+"""
 import sys
+
 import pygame
 
 import config
-from models import MemberClass, MemberState, OrderAction, create_starting_roster
-from engine import BattleEngine
-from orders import OrderSystem
-from ai import BattleAI
-from renderer import Renderer
-from setup_ui import SetupUI, BUILDING_NAMES
+import buildings
+import enemy_gen
+import world_map as wm
+from game_state import GameState
+from models import create_starting_roster
+from screens import MainMenu, EveLayout, MapScreen, GameOverScreen, VictoryScreen
+from battle_session import BattleSession
 
 
 class Game:
-    """Main game class — manages the game loop and ties systems together."""
-    
+    """Owns the window and drives navigation between screens."""
+
     def __init__(self):
         pygame.init()
-        
-        # Get display size for fullscreen
+
         display_info = pygame.display.Info()
         config.SCREEN_WIDTH = display_info.current_w
         config.SCREEN_HEIGHT = display_info.current_h
-        
+
         self.screen = pygame.display.set_mode(
-            (config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
-            pygame.FULLSCREEN
-        )
+            (config.SCREEN_WIDTH, config.SCREEN_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption(config.TITLE)
-        self.clock = pygame.time.Clock()
-        self.running = True
-        
-        # Recalculate layout based on actual screen size
+
+        # Battlefield layout metrics (used by the battle renderer).
         config.BATTLEFIELD_WIDTH = config.SCREEN_WIDTH - 80
-        config.BATTLEFIELD_HEIGHT = config.SCREEN_HEIGHT - config.BATTLEFIELD_Y - config.ORDER_PANEL_HEIGHT
-        
-        self._start_battle()
-    
-    def _start_battle(self):
-        """Initialize a new battle with pre-battle setup phase."""
-        self.player_empire = create_starting_roster("Your Empire", is_player=True)
-        self.enemy_empire = create_starting_roster("Enemy Empire", is_player=False)
-        
-        # Pre-battle setup UI (building arrangement + member assignment)
-        setup = SetupUI(self.screen, self.player_empire)
-        building_order, member_assignments = setup.run()
-        
-        # Apply player's building arrangement and member assignments
-        self.player_empire.building_order = building_order
-        self.player_empire.member_assignments = member_assignments
-        
-        self.engine = BattleEngine(self.player_empire, self.enemy_empire)
-        self.order_system = OrderSystem()
-        self.ai = BattleAI(self.enemy_empire, self.player_empire)
-        self.renderer = Renderer(self.screen)
-    
+        config.BATTLEFIELD_HEIGHT = (config.SCREEN_HEIGHT - config.BATTLEFIELD_Y
+                                     - config.ORDER_PANEL_HEIGHT)
+
+        self.state = GameState.load()
+
     def run(self):
-        """Main game loop."""
-        while self.running:
-            dt = self.clock.tick(config.FPS) / 1000.0
-            
-            self._handle_events()
-            self._update(dt)
-            self._render()
-            
-            pygame.display.flip()
-        
+        # First launch: choose a birthplace before anything else.
+        if self.state.home_city is None:
+            if not self._choose_birthplace():
+                pygame.quit()
+                sys.exit()
+
+        screen_name = "menu"
+        while True:
+            if screen_name == "menu":
+                screen_name = MainMenu(self.screen).run()
+            elif screen_name == "layout":
+                EveLayout(self.screen, self.state).run()
+                screen_name = "menu"
+            elif screen_name == "map":
+                result = MapScreen(self.screen, self.state).run()
+                if isinstance(result, tuple) and result[0] == "battle":
+                    self._run_war(result[1])
+                    screen_name = "map"   # return to the map after the battle
+                else:
+                    screen_name = "menu"
+            elif screen_name == "quit":
+                break
+            else:
+                break
+
         pygame.quit()
         sys.exit()
-    
-    def _handle_events(self):
-        """Process input events."""
-        # Update mouse hover every frame
-        mouse_pos = pygame.mouse.get_pos()
-        if not self.engine.battle_over:
-            self.order_system.handle_mouse_move(
-                mouse_pos,
-                self.player_empire.buildings,
-                self.enemy_empire.buildings,
-            )
-        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-            
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
-                    self.running = False
-                elif event.key == pygame.K_r and self.engine.battle_over:
-                    self._start_battle()
-                elif not self.engine.battle_over:
-                    self._handle_keydown(event.key)
-            
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if not self.engine.battle_over:
-                    self._handle_click(event.pos)
-    
-    def _handle_click(self, pos: tuple):
-        """Handle a left mouse click."""
-        order = self.order_system.handle_click(
-            pos,
-            self.player_empire.buildings,
-            self.enemy_empire.buildings,
-            engine=self.engine,
-        )
-        
-        if isinstance(order, tuple) and order[0] == "heal_building":
-            self._use_health_pack_on_building(order[1])
-        elif order:
-            self._execute_player_order(order)
-    
-    def _use_health_pack_on_building(self, building_index: int):
-        """Use a health pack to revive the highest-HP dead defender at the specified building."""
-        if self.player_empire.health_packs <= 0:
-            self.order_system.feedback_msg = "No health packs left"
-            self.order_system.feedback_timer = 1.5
-            return
-        
-        building = self.player_empire.buildings[building_index]
-        if building.destroyed:
-            self.order_system.feedback_msg = "Building is destroyed"
-            self.order_system.feedback_timer = 1.5
-            return
-        
-        # Find dead members that were assigned to this building
-        dead_at_building = [
-            m for m in self.player_empire.members
-            if m.state == MemberState.DEAD and m.assigned_building == building_index
-        ]
-        
-        if not dead_at_building:
-            # Fallback: any dead member (if none were assigned here)
-            dead_at_building = [m for m in self.player_empire.members if m.state == MemberState.DEAD]
-        
-        if not dead_at_building:
-            self.order_system.feedback_msg = "No dead members to revive"
-            self.order_system.feedback_timer = 1.5
-            return
-        
-        # Prioritize highest max_hp (tankiest member first)
-        dead_at_building.sort(key=lambda m: m.max_hp, reverse=True)
-        member = dead_at_building[0]
-        
-        # Revive at the clicked building
-        import random
-        member.hp = member.max_hp
-        member.state = MemberState.DEFENDING
-        member.stealthed = False
-        member.time_since_combat = 0.0
-        member.attack_cooldown = 0.0
-        member.target_building = None
-        member.assigned_building = building_index
-        member.x = building.x + random.uniform(-15, 15)
-        member.y = building.y + random.uniform(-15, 15)
-        building.defenders.append(member)
-        
-        self.player_empire.health_packs -= 1
-        self.order_system.feedback_msg = f"Revived {member.member_class.value} '{member.name}' at bldg {building_index+1} ({self.player_empire.health_packs} packs left)"
-        self.order_system.feedback_timer = 2.0
-    
-    def _handle_keydown(self, key):
-        """Handle keyboard shortcuts for class selection."""
-        from orders import CLASS_BUTTONS
-        
-        key_map = {
-            pygame.K_e: 0,      # Enforcer
-            pygame.K_a: 1,      # Assassin
-            pygame.K_s: 2,      # Sniper
-            pygame.K_d: 3,      # Demolitionist
-        }
-        
-        if key in key_map:
-            btn_index = key_map[key]
-            self.order_system.select_button_by_index(btn_index)
-            self.order_system.heal_mode = False  # Exit heal mode on class select
-        elif key == pygame.K_h:
-            self.order_system.heal_mode = not self.order_system.heal_mode
-        elif key == pygame.K_t:
-            from orders import ATTACK_MODE_BUTTON
-            ATTACK_MODE_BUTTON.toggle()
-    
-    def _execute_player_order(self, order):
-        """Execute a player order."""
-        if order.action == OrderAction.ATTACK:
-            self.engine.execute_order(order, self.player_empire, self.enemy_empire, 
-                                     attack_mode=self.order_system.attack_mode)
-        else:
-            self.engine.execute_order(order, self.player_empire, self.player_empire)
-    
-    def _update(self, dt: float):
-        """Update game state."""
-        if self.engine.battle_over:
-            return
-        
-        # Update battle engine
-        self.engine.update(dt)
-        
-        # Update order cooldown
-        self.order_system.update(dt)
-        
-        # Update AI
-        ai_order = self.ai.update(dt, self.engine)
-        if ai_order:
-            if ai_order.action == OrderAction.ATTACK:
-                self.engine.execute_order(ai_order, self.enemy_empire, self.player_empire, attack_mode="auto")
-            else:
-                self.engine.execute_order(ai_order, self.enemy_empire, self.enemy_empire, attack_mode="auto")
-    
-    def _render(self):
-        """Render the current frame."""
-        self.renderer.render(self.engine, self.order_system)
+
+    def _choose_birthplace(self) -> bool:
+        """Pick a starting city and fight its gang. Win → that city becomes your
+        home. Lose → game over, reset, and try again. Returns False only if the
+        player backs out of the picker (quit)."""
+        while True:
+            result = MapScreen(self.screen, self.state, mode="birthplace").run()
+            if not (isinstance(result, tuple) and result[0] == "birthplace"):
+                return False
+            cid = result[1]
+            if self._fight_city(cid):
+                self.state.set_birthplace(cid)
+                self.state.save()
+                VictoryScreen(self.screen, cid).run()
+                return True
+            # Lost the first fight — your run ends here. Reset and retry.
+            GameOverScreen(self.screen, cid).run()
+            self.state = GameState()
+
+    def _fight_city(self, target_city_id: str) -> bool:
+        """Run one EvE battle against a city's underworld, using the player's
+        current base. Returns True if the player won."""
+        city = wm.get_city(target_city_id)
+        power = city["underworld_power"] if city else 0
+        city_name = wm.split_city_id(target_city_id)[-1]
+
+        player = create_starting_roster("Your Empire", is_player=True)
+        self.state.apply_to_empire(player)
+        order = buildings.building_order_from_layout(self.state.building_layout)
+        member_assignments = [list(s) for s in player.member_assignments]
+
+        enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld")
+
+        session = BattleSession(self.screen, player, enemy,
+                                building_order=order,
+                                member_assignments=member_assignments)
+        return session.run() is player
+
+    def _run_war(self, target_city_id: str):
+        """Wage war on an already-owned-region city. A win pays the city's
+        reward and marks it conquered."""
+        if self._fight_city(target_city_id):
+            city = wm.get_city(target_city_id)
+            self.state.money += (city["reward"] if city else 0)
+            self.state.mark_conquered(target_city_id)
+            self.state.save()
 
 
 if __name__ == "__main__":
-    game = Game()
-    game.run()
+    Game().run()
