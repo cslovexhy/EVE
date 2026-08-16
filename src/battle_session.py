@@ -36,11 +36,23 @@ class BattleSession:
 
         self.engine = BattleEngine(player_empire, enemy_empire)
         self.order_system = OrderSystem()
-        self.ai = BattleAI(enemy_empire, player_empire)
+        self.ai = BattleAI(enemy_empire, player_empire, is_player=False)
+        # Same AI class drives the player's side when AI-assist is toggled on.
+        self.player_ai = BattleAI(player_empire, enemy_empire, is_player=True)
+        self.ai_mode = False
         self.renderer = Renderer(screen)
 
         self.clock = pygame.time.Clock()
         self.finished = False
+
+        # War speed: +/- cycles 1x/2x/4x/8x (implemented by sub-stepping the sim).
+        self.SPEEDS = [1, 2, 4, 8]
+        self.speed_idx = 0
+        self._speed_font = pygame.font.SysFont("Arial", 22, bold=True)
+
+    @property
+    def speed(self) -> int:
+        return self.SPEEDS[self.speed_idx]
 
     def run(self):
         """Blocking battle loop. Returns the winning Empire object or None."""
@@ -85,6 +97,8 @@ class BattleSession:
                     self._handle_click(event.pos)
 
     def _handle_click(self, pos):
+        if self.ai_mode:
+            return  # AI is driving your side; manual orders are ignored
         order = self.order_system.handle_click(
             pos,
             self.player_empire.buildings,
@@ -158,6 +172,12 @@ class BattleSession:
         elif key == pygame.K_t:
             from orders import ATTACK_MODE_BUTTON
             ATTACK_MODE_BUTTON.toggle()
+        elif key == pygame.K_TAB:
+            self.ai_mode = not self.ai_mode
+        elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
+            self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
+        elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
+            self.speed_idx = max(0, self.speed_idx - 1)
 
     def _execute_player_order(self, order):
         if order.action == OrderAction.ATTACK:
@@ -170,16 +190,37 @@ class BattleSession:
     def _update(self, dt: float):
         if self.engine.battle_over:
             return
-        self.engine.update(dt)
-        self.order_system.update(dt)
-        ai_order = self.ai.update(dt, self.engine)
-        if ai_order:
-            if ai_order.action == OrderAction.ATTACK:
-                self.engine.execute_order(ai_order, self.enemy_empire,
-                                          self.player_empire, attack_mode="auto")
-            else:
-                self.engine.execute_order(ai_order, self.enemy_empire,
-                                          self.enemy_empire, attack_mode="auto")
+        # Sub-step the simulation `speed` times per frame for stable fast-forward.
+        for _ in range(self.speed):
+            self.engine.update(dt)
+            self.order_system.update(dt)
+            # Player-side AI (only when AI-assist is toggled on).
+            if self.ai_mode:
+                p_order = self.player_ai.update(dt, self.engine)
+                if p_order:
+                    if p_order.action == OrderAction.ATTACK:
+                        self.engine.execute_order(p_order, self.player_empire,
+                                                  self.enemy_empire, attack_mode="auto")
+                    else:
+                        self.engine.execute_order(p_order, self.player_empire,
+                                                  self.player_empire, attack_mode="auto")
+            ai_order = self.ai.update(dt, self.engine)
+            if ai_order:
+                if ai_order.action == OrderAction.ATTACK:
+                    self.engine.execute_order(ai_order, self.enemy_empire,
+                                              self.player_empire, attack_mode="auto")
+                else:
+                    self.engine.execute_order(ai_order, self.enemy_empire,
+                                              self.enemy_empire, attack_mode="auto")
+            if self.engine.battle_over:
+                break
 
     def _render(self):
         self.renderer.render(self.engine, self.order_system)
+        if not self.engine.battle_over:
+            speed = self._speed_font.render(f"Speed {self.speed}x  (+/-)", True, config.GOLD)
+            self.screen.blit(speed, (config.SCREEN_WIDTH - speed.get_width() - 20, 10))
+            mode_txt = "AI: ON  (Tab)" if self.ai_mode else "Manual  (Tab)"
+            mode_col = config.GREEN if self.ai_mode else config.LIGHT_GRAY
+            mode = self._speed_font.render(mode_txt, True, mode_col)
+            self.screen.blit(mode, (config.SCREEN_WIDTH - mode.get_width() - 20, 38))
