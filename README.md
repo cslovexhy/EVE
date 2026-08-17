@@ -8,9 +8,11 @@ Empire vs Empire — a single-player guild war strategy game inspired by Underwo
 
 ## Developer Notes / Red Flags
 
-- **`player_profile.json` is the live save and is git-ignored (no history).** ALWAYS
-  back it up before running anything that can call `GameState.save()` — including
-  headless verification scripts and `EveLayout`/battle flows. Restore it afterward:
+- **`player_profile.json` is the live save and is now tracked in git** (so it has
+  history — an accidental overwrite is recoverable with `git checkout -- player_profile.json`).
+  Still, back it up before running anything that can call `GameState.save()`
+  (headless verification scripts, `EveLayout`/battle flows) so you don't
+  *commit* garbage:
   ```bash
   cp player_profile.json /tmp/eve_profile_backup.json   # before
   cp /tmp/eve_profile_backup.json player_profile.json   # after
@@ -71,6 +73,13 @@ python3 src/download_portraits.py  # Download character art
 - No external dependencies beyond pygame
 
 ## Worklog
+
+### 2026-08-16 — Track the Save File in Git
+
+- **`player_profile.json` is no longer git-ignored** — it's now tracked so the
+  save has history and an accidental overwrite is recoverable via
+  `git checkout -- player_profile.json`. (`player_setup.json` and `battle_log.txt`
+  stay ignored as pure runtime churn.) Red-flag note updated accordingly.
 
 ### 2026-08-16 — HQ Leveling + Member Cap
 

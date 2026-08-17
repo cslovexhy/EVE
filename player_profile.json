@@ -1,0 +1,89 @@
+{
+  "money": 55500,
+  "building_layout": [
+    "bunker",
+    "headquarters",
+    "sniper_tower",
+    "bunker",
+    "armory",
+    "hospital",
+    "safehouse",
+    "research_lab",
+    "nuclear_silo"
+  ],
+  "building_levels": [
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "conquered": [
+    "United States/Virginia/Rappahannock County/Washington town"
+  ],
+  "member_assignments": [
+    [
+      1,
+      9
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    [
+      7
+    ],
+    [
+      3
+    ],
+    [
+      4
+    ],
+    [
+      6
+    ],
+    [
+      5
+    ],
+    [
+      2
+    ]
+  ],
+  "home_city": "United States/Virginia/Rappahannock County/Washington town"
+}
