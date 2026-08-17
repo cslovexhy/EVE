@@ -6,6 +6,18 @@ Empire vs Empire — a single-player guild war strategy game inspired by Underwo
 
 **Playable prototype.** Core battle system working with real-time 5-minute battles on a 3×3 grid.
 
+## Developer Notes / Red Flags
+
+- **`player_profile.json` is the live save and is git-ignored (no history).** ALWAYS
+  back it up before running anything that can call `GameState.save()` — including
+  headless verification scripts and `EveLayout`/battle flows. Restore it afterward:
+  ```bash
+  cp player_profile.json /tmp/eve_profile_backup.json   # before
+  cp /tmp/eve_profile_backup.json player_profile.json   # after
+  ```
+  Prefer constructing throwaway `GameState()` objects in tests and NOT calling
+  `.save()`; if a test must save, point `game_state.PROFILE_PATH` at a temp file.
+
 ## How to Play
 
 ```bash
@@ -59,6 +71,16 @@ python3 src/download_portraits.py  # Download character art
 - No external dependencies beyond pygame
 
 ## Worklog
+
+### 2026-08-16 — HQ Leveling + Member Cap
+
+- **HQ gates roster size**: no HQ → 40 members; each HQ level adds +10, up to **Lv4 = 80** (`BASE_MEMBER_CAP`, `HQ_MEMBERS_PER_LEVEL`, `HQ_MAX_LEVEL`).
+- **HQ HP scales with level**: Lv1 1300 → Lv2 1700 → Lv3 2200 → Lv4 3000 (`HQ_LEVEL_HP`); `Building.apply_type_hp` uses it for HQs.
+- **Escalating level-up cost**: Lv2 $8k · Lv3 $20k · Lv4 $45k (`HQ_LEVEL_UP_COST`), on top of the $6k to build the HQ. `buildings.can_level_hq` / `level_up_hq`.
+- **EVE Layout**: selecting the HQ shows an "Upgrade HQ to LvN" row (HP / roster cap / cost); a "Roster cap: N (HQ LvX)" readout sits under the money chip. `building_levels` persists in `player_profile.json`.
+- **Enemy HQ matches army size**: `enemy_gen` sets the enemy HQ level from its member count (Lv = ceil((members−40)/10), clamped 1–4), so cap ≥ member count and HQ HP reflects strength.
+- `Empire.hq_level()` / `member_cap()`; `engine` applies per-slot `building_levels` when setting types.
+- Verified headless: cap 40/50/60/70/80, per-level HP, level-up costs + persistence, enemy HQ (weak Lv1 / Danville Lv3 / Richmond Lv4), and the EVE Layout level-up click; 17 unit tests pass.
 
 ### 2026-08-16 — Territory Rollup, Control % + Paginated Map
 

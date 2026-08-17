@@ -187,6 +187,7 @@ class EveLayout(_Screen):
     def _sync_to_state(self):
         self.state.money = self.empire.money
         self.state.building_layout = [b.building_type for b in self.empire.buildings]
+        self.state.building_levels = [b.level for b in self.empire.buildings]
         self.state.member_assignments = [list(s) for s in self.member_assignments]
         self.state.save()
 
@@ -229,7 +230,15 @@ class EveLayout(_Screen):
     def _click_upgrade(self, pos):
         for rect, target, ok in self.upgrade_rows:
             if rect.collidepoint(pos):
-                if ok:
+                if ok and target == "LEVEL_HQ":
+                    success, reason = buildings.level_up_hq(self.empire, self.selected_slot)
+                    if success:
+                        self._sync_to_state()
+                        lvl = self.empire.buildings[self.selected_slot].level
+                        self.feedback = f"HQ upgraded to Lv{lvl} (roster cap {self.empire.member_cap()})"
+                    else:
+                        self.feedback = self._reason_text(reason, None)
+                elif ok:
                     success, reason = buildings.upgrade_building(
                         self.empire, self.selected_slot, target)
                     if success:
@@ -260,6 +269,7 @@ class EveLayout(_Screen):
     def _swap_slots(self, a, b):
         ba, bb = self.empire.buildings[a], self.empire.buildings[b]
         ba.building_type, bb.building_type = bb.building_type, ba.building_type
+        ba.level, bb.level = bb.level, ba.level
         ba.apply_type_hp()
         bb.apply_type_hp()
         self.member_assignments[a], self.member_assignments[b] = \
@@ -290,12 +300,18 @@ class EveLayout(_Screen):
         self.member_assignments[target_slot].append(member_idx)
 
     def _reason_text(self, reason, target):
+        if reason == "insufficient_funds":
+            if target is None:
+                return "Not enough money"
+            return f"Not enough money (need ${buildings.upgrade_cost(target):,})"
+        if reason == "max_count_reached":
+            return f"Max {target.spec['display_name']} reached"
         return {
-            "insufficient_funds": f"Not enough money (need ${buildings.upgrade_cost(target):,})",
-            "max_count_reached": f"Max {target.spec['display_name']} reached",
             "invalid_chain": "Cannot upgrade along that path",
             "already_this_type": "Already this type",
             "invalid_slot": "Invalid slot",
+            "max_level": "HQ at max level",
+            "not_hq": "Not an HQ",
         }.get(reason, reason)
 
     # --- render ----------------------------------------------------------
@@ -332,6 +348,13 @@ class EveLayout(_Screen):
         pygame.draw.rect(self.screen, (34, 60, 40), chip, border_radius=8)
         pygame.draw.rect(self.screen, config.GREEN, chip, 2, border_radius=8)
         self.screen.blit(surf, surf.get_rect(center=chip.center))
+
+        # Roster cap (from HQ level) just below the money chip.
+        hq_lvl = self.empire.hq_level()
+        cap = self.state.member_cap()
+        cap_txt = f"Roster cap: {cap}" + (f"  (HQ Lv{hq_lvl})" if hq_lvl else "  (no HQ)")
+        cs = self.font_small.render(cap_txt, True, config.LIGHT_GRAY)
+        self.screen.blit(cs, cs.get_rect(topright=(config.SCREEN_WIDTH - 32, chip.bottom + 6)))
 
 
     def _hint(self):
@@ -418,6 +441,12 @@ class EveLayout(_Screen):
 
         targets = buildings.available_upgrade_targets(b.building_type)
         y = py + 44
+
+        # HQ is leveled up (raises member cap + HP), not type-upgraded.
+        if b.building_type == BuildingType.HEADQUARTERS:
+            self._render_hq_levelup(px, y, panel_w, mouse_pos, b)
+            return
+
         if not targets:
             self.screen.blit(self.font_med.render("No further upgrades available.",
                                                   True, config.LIGHT_GRAY), (px, y))
@@ -440,6 +469,35 @@ class EveLayout(_Screen):
                 self.screen.blit(tag, tag.get_rect(right=rect.right - 12, centery=rect.centery))
             self.upgrade_rows.append((rect, target, ok))
             y += 66
+
+    def _render_hq_levelup(self, px, y, panel_w, mouse_pos, b):
+        cur_cap = config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * b.level
+        self.screen.blit(self.font_small.render(
+            f"HQ Lv{b.level}  ·  roster cap {cur_cap}", True, config.LIGHT_GRAY), (px, y))
+        y += 26
+        if b.level >= config.HQ_MAX_LEVEL:
+            self.screen.blit(self.font_med.render("HQ at max level (Lv4).",
+                                                  True, config.LIGHT_GRAY), (px, y))
+            return
+        ok, reason = buildings.can_level_hq(self.empire, self.selected_slot)
+        nxt = b.level + 1
+        cost = buildings.hq_next_level_cost(b.level)
+        new_hp = config.HQ_LEVEL_HP[nxt]
+        new_cap = config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * nxt
+        rect = pygame.Rect(px, y, panel_w, 56)
+        hover = rect.collidepoint(mouse_pos)
+        bg = ((64, 96, 64) if hover else (48, 70, 48)) if ok else (54, 40, 40)
+        pygame.draw.rect(self.screen, bg, rect, border_radius=6)
+        pygame.draw.rect(self.screen, config.GRAY, rect, 1, border_radius=6)
+        self.screen.blit(self.font_btn.render(f"Upgrade HQ to Lv{nxt}", True, config.WHITE),
+                         (rect.x + 12, rect.y + 6))
+        self.screen.blit(self.font_small.render(
+            f"HP {new_hp}   Roster cap {new_cap}   Cost ${cost:,}", True, config.LIGHT_GRAY),
+            (rect.x + 12, rect.y + 32))
+        if not ok:
+            tag = self.font_small.render(self._reason_text(reason, None), True, config.RED)
+            self.screen.blit(tag, tag.get_rect(right=rect.right - 12, centery=rect.centery))
+        self.upgrade_rows.append((rect, "LEVEL_HQ", ok))
 
     def _render_arrange_panel(self):
         px, py = self._panel_x(), self.grid_y

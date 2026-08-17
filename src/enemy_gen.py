@@ -10,6 +10,7 @@ import math
 import random
 from typing import List
 
+import config
 import buildings
 from models import Empire, Member, MemberClass, Rarity, BuildingType
 
@@ -146,9 +147,19 @@ def build_enemy(underworld_power: float, name: str = "Rival Gang",
     layout = _make_layout(norm, rng)
     order = buildings.building_order_from_layout(layout)
 
+    # HQ level matches the empire's member count (base 40, +10 per level).
+    count = len(members)
+    hq_level = max(1, min(config.HQ_MAX_LEVEL,
+                          math.ceil((count - config.BASE_MEMBER_CAP)
+                                    / config.HQ_MEMBERS_PER_LEVEL)))
+    levels = [1] * 9
+    if BuildingType.HEADQUARTERS in layout:
+        levels[layout.index(BuildingType.HEADQUARTERS)] = hq_level
+
     empire = Empire(name=name, members=members, is_player=False)
     empire.setup_buildings()
     empire.building_order = order
+    empire.building_levels = levels
     empire.member_assignments = _assign_members(members, order, rng)
     return empire
 

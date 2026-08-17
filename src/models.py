@@ -165,8 +165,12 @@ class Building:
         self.apply_type_hp()
 
     def apply_type_hp(self):
-        """Set max_hp/hp from the current building type's config."""
-        self.max_hp = self.building_type.spec["hp"]
+        """Set max_hp/hp from the current building type (HQ scales with level)."""
+        if self.building_type == BuildingType.HEADQUARTERS:
+            lvl = max(1, min(self.level, config.HQ_MAX_LEVEL))
+            self.max_hp = config.HQ_LEVEL_HP.get(lvl, config.HQ_LEVEL_HP[1])
+        else:
+            self.max_hp = self.building_type.spec["hp"]
         self.hp = self.max_hp
         self.destroyed = False
 
@@ -232,6 +236,16 @@ class Empire:
     def count_building_type(self, building_type: BuildingType) -> int:
         """How many buildings of the given type this empire currently has."""
         return sum(1 for b in self.buildings if b.building_type == building_type)
+
+    def hq_level(self) -> int:
+        """Highest active HQ level, or 0 if the empire has no standing HQ."""
+        levels = [b.level for b in self.buildings
+                  if b.building_type == BuildingType.HEADQUARTERS and not b.destroyed]
+        return max(levels) if levels else 0
+
+    def member_cap(self) -> int:
+        """Max roster size: base cap, +HQ_MEMBERS_PER_LEVEL per HQ level."""
+        return config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * self.hq_level()
     
     def get_members_by_class(self, member_class: MemberClass) -> list:
         """Get all living members of a given class."""

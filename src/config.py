@@ -123,6 +123,18 @@ BUILDING_TYPES = {
 # takes over once a profile exists). New players earn money by winning wars.
 STARTING_MONEY = 0
 
+# --- HQ leveling / member cap ----------------------------------------------
+# Roster size is gated by the HQ. No HQ => BASE_MEMBER_CAP. Each HQ level adds
+# HQ_MEMBERS_PER_LEVEL, up to HQ_MAX_LEVEL (Lv4 => 40 + 4*10 = 80).
+BASE_MEMBER_CAP = 40
+HQ_MEMBERS_PER_LEVEL = 10
+HQ_MAX_LEVEL = 4
+# HQ HP per level (Lv1 matches BUILDING_TYPES["headquarters"]["hp"]).
+HQ_LEVEL_HP = {1: 1300, 2: 1700, 3: 2200, 4: 3000}
+# Money cost to level the HQ FROM level n-1 TO level n (steeply escalating).
+# Building an HQ (Warehouse -> HQ) costs BUILDING_TYPES cost and yields Lv1.
+HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
+
 # Health Packs
 HEALTH_PACKS_START = 8  # Starting health packs per battle
 

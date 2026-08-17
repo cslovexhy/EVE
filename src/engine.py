@@ -40,11 +40,13 @@ class BattleEngine:
         self._assign_initial_defenders()
     
     def _apply_building_types(self):
-        """Set building types + type-based HP from each empire's building_order."""
+        """Set building types + type-based HP from each empire's building_order,
+        plus per-slot levels (e.g. HQ level) from building_levels if present."""
         for empire in (self.player, self.enemy):
             order = getattr(empire, "building_order", None)
             if order:
-                buildings.apply_building_order(empire, order)
+                levels = getattr(empire, "building_levels", None)
+                buildings.apply_building_order(empire, order, levels=levels)
     
     def _log(self, msg: str):
         """Add a timestamped entry to the battle log and write to file immediately."""

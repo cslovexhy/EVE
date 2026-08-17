@@ -41,6 +41,8 @@ class GameState:
     building_layout: List[BuildingType] = field(
         default_factory=lambda: [BuildingType.WAREHOUSE for _ in range(9)]
     )
+    # Per-slot building levels (mainly HQ level 1..4). Defaults to all level 1.
+    building_levels: List[int] = field(default_factory=lambda: [1] * 9)
     conquered: Set[str] = field(default_factory=set)
     # 9 lists of member indices (into a deterministic roster). None until set.
     member_assignments: Optional[List[List[int]]] = None
@@ -60,12 +62,16 @@ class GameState:
             layout = [BuildingType(v) for v in data.get("building_layout", [])]
             if len(layout) != 9:
                 layout = [BuildingType.WAREHOUSE for _ in range(9)]
+            levels = data.get("building_levels") or []
+            if len(levels) != 9:
+                levels = [1] * 9
             member_assignments = data.get("member_assignments")
             if not _valid_assignments(member_assignments):
                 member_assignments = None
             state = cls(
                 money=int(data.get("money", config.STARTING_MONEY)),
                 building_layout=layout,
+                building_levels=[max(1, int(x)) for x in levels],
                 conquered=set(data.get("conquered", [])),
                 member_assignments=member_assignments,
                 home_city=data.get("home_city"),
@@ -84,6 +90,7 @@ class GameState:
         data = {
             "money": self.money,
             "building_layout": [bt.value for bt in self.building_layout],
+            "building_levels": self.building_levels,
             "conquered": sorted(self.conquered),
             "member_assignments": self.member_assignments,
             "home_city": self.home_city,
@@ -150,12 +157,23 @@ class GameState:
         return self.member_assignments
 
     def apply_to_empire(self, empire: Empire) -> None:
-        """Push the persistent money + building layout (+ member assignments)
-        onto a battle empire."""
+        """Push the persistent money + building layout (+ levels + member
+        assignments) onto a battle empire."""
+        import buildings
         empire.money = self.money
         empire.apply_building_layout(list(self.building_layout))
+        buildings.apply_building_levels(empire, list(self.building_levels))
         assignments = self.ensure_member_assignments(empire.members)
         empire.member_assignments = [list(s) for s in assignments]
+
+    def member_cap(self) -> int:
+        """Roster cap from the persistent HQ level (base + 10 per HQ level)."""
+        cap = config.BASE_MEMBER_CAP
+        for bt, lvl in zip(self.building_layout, self.building_levels):
+            if bt == BuildingType.HEADQUARTERS:
+                cap = config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * max(1, lvl)
+                break
+        return cap
 
 
 def _valid_assignments(assignments) -> bool:
