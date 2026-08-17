@@ -126,17 +126,17 @@ class BattleAI:
                 continue
             # Backdoor (building 9) only reachable by assassins
             if target_idx == 8:
-                if engine.is_attackable_by_class(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
+                if engine.worthwhile_target(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
                     valid_weighted.append((target_idx, weight))
             else:
-                if engine.is_attackable_by_class(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
+                if engine.worthwhile_target(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
                     valid_weighted.append((target_idx, weight))
         
         if not valid_weighted:
             # Fallback: any reachable building
             valid_targets = [
                 b.index for b in self.enemy.buildings
-                if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
+                if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
             ]
             if not valid_targets:
                 self.phase = "cleanup"
@@ -158,7 +158,7 @@ class BattleAI:
         
         # Send snipers to support (only if they can reach the target)
         if self.empire.get_available_by_class(MemberClass.SNIPER):
-            if engine.is_attackable_by_class(self.current_target, MemberClass.SNIPER, is_player=self.is_player):
+            if engine.worthwhile_target(self.current_target, MemberClass.SNIPER, is_player=self.is_player):
                 self.order_queue.append(Order(
                     member_class=MemberClass.SNIPER,
                     target_building=self.current_target,
@@ -180,6 +180,17 @@ class BattleAI:
         if target_bldg.destroyed:
             self.phase = "push"
             return
+
+        # If the target is no longer worth attacking — e.g. a shielded bunker
+        # whose own defenders are all dead but which is still protected by the
+        # OTHER bunker — abandon it and go find a new target instead of dumping
+        # ammo into an invulnerable, empty building. This check is class-
+        # independent (the shield does not depend on who is attacking), so it
+        # will not wrongly abandon an assassin-only backdoor target.
+        if engine.attack_block_reason(self.current_target, is_player=self.is_player) is not None:
+            self.current_target = None
+            self.phase = "push"
+            return
         
         # Check if defenders at target are weakened
         defenders = [
@@ -190,7 +201,7 @@ class BattleAI:
         if len(defenders) <= 2:
             # Defenders weakened — send demos to finish the building
             if self.empire.get_available_by_class(MemberClass.DEMOLITIONIST):
-                if engine.is_attackable_by_class(self.current_target, MemberClass.DEMOLITIONIST, is_player=self.is_player):
+                if engine.worthwhile_target(self.current_target, MemberClass.DEMOLITIONIST, is_player=self.is_player):
                     self.order_queue.append(Order(
                         member_class=MemberClass.DEMOLITIONIST,
                         target_building=self.current_target,
@@ -210,7 +221,7 @@ class BattleAI:
             # Snipers target same building or a nearby one
             valid_sniper_targets = [
                 b.index for b in self.enemy.buildings
-                if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.SNIPER, is_player=self.is_player)
+                if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.SNIPER, is_player=self.is_player)
             ]
             if valid_sniper_targets:
                 sniper_target = self.current_target if self.current_target in valid_sniper_targets else self.rng.choice(valid_sniper_targets)
@@ -227,7 +238,7 @@ class BattleAI:
         # Find newly reachable targets
         valid_targets = [
             b.index for b in self.enemy.buildings
-            if not b.destroyed and engine.is_attackable_by_class(b.index, MemberClass.DEMOLITIONIST, is_player=self.is_player)
+            if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.DEMOLITIONIST, is_player=self.is_player)
         ]
         
         if not valid_targets:
@@ -246,7 +257,7 @@ class BattleAI:
             ))
         
         if self.empire.get_available_by_class(MemberClass.SNIPER):
-            if engine.is_attackable_by_class(self.current_target, MemberClass.SNIPER, is_player=self.is_player):
+            if engine.worthwhile_target(self.current_target, MemberClass.SNIPER, is_player=self.is_player):
                 self.order_queue.append(Order(
                     member_class=MemberClass.SNIPER,
                     target_building=self.current_target,
@@ -254,7 +265,7 @@ class BattleAI:
                 ))
         
         if self.empire.get_available_by_class(MemberClass.DEMOLITIONIST):
-            if engine.is_attackable_by_class(self.current_target, MemberClass.DEMOLITIONIST, is_player=self.is_player):
+            if engine.worthwhile_target(self.current_target, MemberClass.DEMOLITIONIST, is_player=self.is_player):
                 self.order_queue.append(Order(
                     member_class=MemberClass.DEMOLITIONIST,
                     target_building=self.current_target,
@@ -277,7 +288,7 @@ class BattleAI:
         
         for cls in [MemberClass.ASSASSIN, MemberClass.SNIPER, MemberClass.DEMOLITIONIST]:
             if self.empire.get_available_by_class(cls):
-                if engine.is_attackable_by_class(target, cls, is_player=self.is_player):
+                if engine.worthwhile_target(target, cls, is_player=self.is_player):
                     self.order_queue.append(Order(
                         member_class=cls,
                         target_building=target,
@@ -286,7 +297,7 @@ class BattleAI:
         
         # Even send enforcers in cleanup
         if self.empire.get_available_by_class(MemberClass.ENFORCER):
-            if engine.is_attackable_by_class(target, MemberClass.ENFORCER, is_player=self.is_player):
+            if engine.worthwhile_target(target, MemberClass.ENFORCER, is_player=self.is_player):
                 self.order_queue.append(Order(
                     member_class=MemberClass.ENFORCER,
                     target_building=target,

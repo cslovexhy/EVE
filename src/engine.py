@@ -347,6 +347,22 @@ class BattleEngine:
         target = self.enemy if is_player else self.player
         return self.bunker_block_reason(target, index)
 
+    def worthwhile_target(self, building_index: int, member_class, is_player: bool) -> bool:
+        """Is this building both reachable AND worth attacking right now?
+
+        Combines fog-of-war reachability (is_attackable_by_class) with the
+        bunker-shield rule: a shielded bunker that has no defenders of its own
+        is a dead end (it takes no structural damage and there is no one to
+        shoot), so it is NOT a worthwhile target while another bunker still
+        holds defenders. The AI uses this to avoid wasting ammo on such
+        bunkers; the player order path keeps the two checks separate so it can
+        show a distinct 'Find the other bunker…' hint."""
+        if not self.is_attackable_by_class(building_index, member_class, is_player=is_player):
+            return False
+        if self.attack_block_reason(building_index, is_player=is_player) is not None:
+            return False
+        return True
+
     def _update_powers(self, dt: float):
         for empire in (self.player, self.enemy):
             key = self._side_key(empire)
@@ -452,6 +468,15 @@ class BattleEngine:
         else:
             if not self.is_visible_to_enemy(target_bldg.index):
                 return
+
+        # A shielded bunker with no defenders of its own cannot be damaged and
+        # has nobody to shoot — continuing to fire at it just burns ammo. Drop
+        # the target and return to defending so the next order can retarget.
+        if self.bunker_block_reason(target_empire, target_bldg.index) is not None:
+            member.state = MemberState.DEFENDING
+            member.target_building = None
+            member.attack_once = False
+            return
         
         # Fire when ready and have ammo
         if member.attack_cooldown <= 0 and member.ammo > 0:
