@@ -1,5 +1,5 @@
 {
-  "money": 55500,
+  "money": 12282,
   "building_layout": [
     "bunker",
     "headquarters",
@@ -13,7 +13,7 @@
   ],
   "building_levels": [
     1,
-    2,
+    4,
     1,
     1,
     1,
@@ -23,16 +23,27 @@
     1
   ],
   "conquered": [
-    "United States/Virginia/Rappahannock County/Washington town"
+    "United States/Virginia/Appomattox County/Appomattox town",
+    "United States/Virginia/Buchanan County/Grundy town",
+    "United States/Virginia/Buena Vista city/Buena Vista city",
+    "United States/Virginia/Craig County/New Castle town",
+    "United States/Virginia/Henry County/Ridgeway town",
+    "United States/Virginia/Highland County/Monterey town",
+    "United States/Virginia/Lancaster County/Irvington town",
+    "United States/Virginia/Lancaster County/White Stone town",
+    "United States/Virginia/Rappahannock County/Washington town",
+    "United States/Virginia/Surry County/Claremont town",
+    "United States/Virginia/Surry County/Dendron town",
+    "United States/Virginia/Surry County/Surry town"
   ],
   "member_assignments": [
     [
-      1,
-      9
-    ],
-    [
       0,
       8
+    ],
+    [
+      1,
+      9
     ],
     [
       10,
@@ -64,26 +75,353 @@
       36,
       37,
       38,
-      39
+      39,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
     ],
     [
-      7
+      2,
+      40
     ],
     [
-      3
+      3,
+      41
     ],
     [
       4
     ],
     [
-      6
-    ],
-    [
       5
     ],
     [
-      2
+      6
+    ],
+    [
+      7
     ]
   ],
+  "roster": [
+    {
+      "name": "Hammer",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Duke",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Tank",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Brick",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Ironside",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Magnus",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bulwark",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Titan",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Rocco",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Slab",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fox",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kate",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hawkeye",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Scope",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Longshot",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Whisper",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Deadshot",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Iris",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bolt",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nightshade",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Shadow",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Wraith",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Stiletto",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Venom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Specter",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Mirage",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Silhouette",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Dagger",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hotwire",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blade",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fuse",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bomber",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Sparks",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Inferno",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nitro",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Torch",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kaboom",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blast",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Viper",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Colossus",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Boulder",
+      "member_class": "enforcer",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 14,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Reticle",
+      "member_class": "sniper",
+      "level": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Mamba",
+      "member_class": "assassin",
+      "level": 13,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Shade",
+      "member_class": "assassin",
+      "level": 7,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Napalm",
+      "member_class": "demolitionist",
+      "level": 10,
+      "rarity": "rare"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 5,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 8,
+      "rarity": "rare"
+    }
+  ],
+  "backup": [],
   "home_city": "United States/Virginia/Rappahannock County/Washington town"
 }
