@@ -74,6 +74,22 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-16 — Recruits + Backup Force + Roster Management UI
+
+- **Persisted roster**: the player roster is no longer regenerated deterministically each battle — it's saved in `player_profile.json` as `roster` (active) + `backup` (bench). Legacy saves auto-migrate by seeding the default 40 (`GameState.load` → `default_player_members`). `member_assignments` index the **active** roster and are validated against its size (`_valid_assignments(assignments, size)`). Battles use fresh member copies (`GameState.build_player_empire` + `Member.copy_identity`) so battle state never corrupts the saved roster.
+- **Win a war → recruit**: defeating an empire recruits its **top-rarity** member (ties broken by highest level, then random — `models.top_rarity_recruit`) into your **Backup Force** (bench, cap `BACKUP_FORCE_CAP = 80`). A `RecruitPopup` reveals the acquisition on the victory screen. Works for both regular wars and the birthplace fight (`main._acquire_recruit`).
+- **Force tab (roster management)**: EVE Layout gained a 4th tab, **Force**, using the full screen width (the building grid is hidden here) with two wide, well-spaced columns — Active Roster (N/cap, header turns red when over cap) and Backup Force (N/80). Both columns are **grouped by class** with headers like the Assign tab, and each row shows the member's name, level, and full rarity word in its rarity color (gray/green/blue/gold). Select a member and use the bottom action bar: **Move to Backup**, **Activate** (backup → roster, auto-assigned to the HQ slot / least-full building), or **Kick Out** (permanent). Moves re-index assignments and persist immediately.
+- **Selected-member stat card**: selecting anyone in either Force column shows a detail card (bordered in the rarity color) with live `get_stats()` — Health, Damage vs members, Damage vs buildings, Mitigation, Attack interval, Move speed — so a Super Rare high-level recruit visibly out-stats a Common one.
+- **Scalable member UI**: the old "Members" tab (now **Assign**) and both Force columns use a clipped viewport + mouse-wheel scrolling (`_Screen.handle_scroll`, `MOUSEWHEEL` dispatch) with scrollbars, so 80-member lists no longer run off-screen.
+- **War-start cap gate**: activating recruits can push the active roster past the HQ cap; starting a war is then **blocked** by a `CapBlockedPopup` telling you to bench members (or level the HQ) — `GameState.roster_over_cap()` checked in `main` before launching.
+- Verified headless: roster/backup persistence + legacy-save migration, recruit pick is a copy (enemy untouched), activate/bench/kick keep assignments valid, backup + HQ caps enforced, and an **end-to-end battle win that recruited and persisted a super-rare member**. 32 unit tests pass (`tests/test_roster.py` +11, `tests/test_bunker_ai.py`, `tests/test_buildings.py`).
+
+### 2026-08-16 — Bunker Shield: Stop Wasting Ammo on Shielded Bunkers
+
+- **Firing guard**: a member ordered onto a bunker now stops firing (drops the target, returns to defending) the moment that bunker becomes a shielded, defenderless dead-end — `engine._update_attacker` checks `bunker_block_reason`. Protects both the AI and the player from burning ammo on an invulnerable, empty bunker.
+- **AI targeting**: the AI filters candidate targets through `engine.worthwhile_target` (reachable AND not a shielded/empty bunker) across opening/assault/push/cleanup, and abandons a current target that becomes a shielded dead-end (class-independent check so assassin-only backdoors aren't wrongly dropped).
+- Verified headless against the live save: with the guard disabled the AI wasted shots on shielded bunkers; with it enabled, **0 wasted shots**. `tests/test_bunker_ai.py` covers target selection and the persistent-fire path.
+
 ### 2026-08-16 — Track the Save File in Git
 
 - **`player_profile.json` is no longer git-ignored** — it's now tracked so the

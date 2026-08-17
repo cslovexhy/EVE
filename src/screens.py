@@ -21,7 +21,7 @@ import config
 import buildings
 import game_state
 import world_map as wm
-from models import Empire, BuildingType, MemberClass, create_starting_roster
+from models import Empire, BuildingType, MemberClass
 
 
 class Button:
@@ -78,6 +78,8 @@ class _Screen:
                     self.handle_key(event.key)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.handle_click(event.pos)
+                elif event.type == pygame.MOUSEWHEEL:
+                    self.handle_scroll(event.y, pygame.mouse.get_pos())
             self.render(mouse_pos)
             pygame.display.flip()
         return self.result
@@ -87,6 +89,9 @@ class _Screen:
         pass
 
     def handle_click(self, pos):
+        pass
+
+    def handle_scroll(self, dy, pos):
         pass
 
     def render(self, mouse_pos):
@@ -141,25 +146,31 @@ class EveLayout(_Screen):
       - Members : click a member, click a slot to assign them there
     Every change syncs to the GameState and saves immediately."""
 
-    TABS = ("upgrade", "arrange", "members")
-    TAB_LABELS = {"upgrade": "Upgrade", "arrange": "Arrange", "members": "Members"}
+    TABS = ("upgrade", "arrange", "members", "force")
+    TAB_LABELS = {"upgrade": "Upgrade", "arrange": "Arrange",
+                  "members": "Assign", "force": "Force"}
 
     def __init__(self, screen, state):
         super().__init__(screen)
         self.state = state
 
-        # A full roster empire mirrors the persistent profile (money + layout +
-        # member assignments), and gives us the member list to display.
-        self.empire = create_starting_roster("Your Empire", is_player=True)
-        self.state.apply_to_empire(self.empire)
+        # The active roster is persisted on the profile; build a working empire
+        # from it (fresh copies) so this screen mirrors money + layout + roster.
+        self.empire = self.state.build_player_empire("Your Empire")
         # Local working copy of assignments (list of 9 lists of member indices).
         self.member_assignments = [list(s) for s in self.empire.member_assignments]
 
         self.tab = "upgrade"
         self.selected_slot = None      # Upgrade tab
         self.swap_slot = None          # Arrange tab
-        self.selected_member = None    # Members tab
+        self.selected_member = None    # Assign tab
+        self.force_sel = None          # Force tab: ("active"|"backup", idx)
         self.feedback = ""
+
+        # Scroll offsets (pixels) for the scrollable lists.
+        self.assign_scroll = 0
+        self.active_scroll = 0
+        self.backup_scroll = 0
 
         self.slot_size = 150
         self.gap = 18
@@ -172,7 +183,10 @@ class EveLayout(_Screen):
             base_color=config.GRAY)
         self.tab_rects = {}
         self.upgrade_rows = []   # (rect, target_type, ok)
-        self.roster_rows = []    # (rect, member_idx)
+        self.roster_rows = []    # (rect, member_idx)   [Assign tab]
+        self.active_rows = []    # (rect, roster_idx)   [Force tab]
+        self.backup_rows = []    # (rect, backup_idx)   [Force tab]
+        self.force_action_rects = {}  # name -> rect  [Force tab bottom bar]
 
     def _compute_slot_rects(self):
         self.slot_rects = {}
@@ -191,6 +205,12 @@ class EveLayout(_Screen):
         self.state.member_assignments = [list(s) for s in self.member_assignments]
         self.state.save()
 
+    def _rebuild_from_state(self):
+        """Rebuild the working empire + assignments from the persisted state
+        (after a Force-tab move that changed the roster and its indices)."""
+        self.empire = self.state.build_player_empire("Your Empire")
+        self.member_assignments = [list(s) for s in self.empire.member_assignments]
+
     # --- input -----------------------------------------------------------
     def handle_key(self, key):
         if key in (pygame.K_q, pygame.K_ESCAPE):
@@ -205,6 +225,7 @@ class EveLayout(_Screen):
         self.selected_slot = None
         self.swap_slot = None
         self.selected_member = None
+        self.force_sel = None
         self.feedback = ""
 
     def handle_click(self, pos):
@@ -224,8 +245,22 @@ class EveLayout(_Screen):
             self._click_upgrade(pos)
         elif self.tab == "arrange":
             self._click_arrange(pos)
-        else:
+        elif self.tab == "members":
             self._click_members(pos)
+        else:
+            self._click_force(pos)
+
+    def handle_scroll(self, dy, pos):
+        step = 40 * dy
+        if self.tab == "members":
+            self.assign_scroll = max(0, self.assign_scroll - step)
+        elif self.tab == "force":
+            # Scroll whichever column the cursor is over.
+            mid = self._force_column_split()
+            if pos[0] < mid:
+                self.active_scroll = max(0, self.active_scroll - step)
+            else:
+                self.backup_scroll = max(0, self.backup_scroll - step)
 
     def _click_upgrade(self, pos):
         for rect, target, ok in self.upgrade_rows:
@@ -299,6 +334,63 @@ class EveLayout(_Screen):
                 break
         self.member_assignments[target_slot].append(member_idx)
 
+    # --- Force tab (active roster <-> backup force) -----------------------
+    def _force_column_split(self):
+        """X coordinate separating the Active (left) and Backup (right) columns,
+        used to route scroll events to the column under the cursor."""
+        left_x, right_x, col_w, *_ = self._force_layout()
+        return (left_x + col_w + right_x) // 2
+
+    def _click_force(self, pos):
+        # Bottom action bar first (Bench / Activate / Kick).
+        for name, rect in self.force_action_rects.items():
+            if rect.collidepoint(pos):
+                self._do_force_action(name)
+                return
+        # Select a row in either column.
+        for rect, ridx in self.active_rows:
+            if rect.collidepoint(pos):
+                self.force_sel = None if self.force_sel == ("active", ridx) else ("active", ridx)
+                self.feedback = ""
+                return
+        for rect, bidx in self.backup_rows:
+            if rect.collidepoint(pos):
+                self.force_sel = None if self.force_sel == ("backup", bidx) else ("backup", bidx)
+                self.feedback = ""
+                return
+
+    def _do_force_action(self, name):
+        if self.force_sel is None:
+            return
+        col, idx = self.force_sel
+        if name == "bench" and col == "active":
+            if len(self.empire.members) <= 1:
+                self.feedback = "You must keep at least one member in the roster."
+                return
+            if self.state.move_to_backup(idx):
+                self._rebuild_from_state()
+                self.state.save()
+                self.force_sel = None
+                self.feedback = "Moved to backup force."
+            else:
+                self.feedback = f"Backup force is full (max {config.BACKUP_FORCE_CAP})."
+        elif name == "activate" and col == "backup":
+            if self.state.move_to_roster(idx):
+                self._rebuild_from_state()
+                self.state.save()
+                self.force_sel = None
+                over = self.state.roster_over_cap()
+                self.feedback = ("Activated. Roster is OVER the HQ cap — bench "
+                                 "someone before you can start a war."
+                                 if over else "Activated into the roster.")
+            else:
+                self.feedback = "Could not activate."
+        elif name == "kick" and col == "backup":
+            if self.state.kick_backup(idx):
+                self.state.save()
+                self.force_sel = None
+                self.feedback = "Recruit kicked out."
+
     def _reason_text(self, reason, target):
         if reason == "insufficient_funds":
             if target is None:
@@ -322,14 +414,17 @@ class EveLayout(_Screen):
         self._draw_money_chip()
 
         self._draw_tabs(mouse_pos)
-        self._draw_grid(mouse_pos)
+        if self.tab != "force":
+            self._draw_grid(mouse_pos)
 
         if self.tab == "upgrade":
             self._render_upgrade_panel(mouse_pos)
         elif self.tab == "arrange":
             self._render_arrange_panel()
-        else:
+        elif self.tab == "members":
             self._render_members_panel(mouse_pos)
+        else:
+            self._render_force_panel(mouse_pos)
 
         if self.feedback:
             fb = self.font_med.render(self.feedback, True, config.GOLD)
@@ -361,7 +456,8 @@ class EveLayout(_Screen):
         return {
             "upgrade": "Click a slot, then click an upgrade to buy it.",
             "arrange": "Click two slots to swap their buildings.",
-            "members": "Click a member, then click a slot to assign them.",
+            "members": "Click a member, then click a slot to assign them.  (scroll to see more)",
+            "force": "Move recruits between your Active Roster and Backup Force.  (scroll each list)",
         }[self.tab] + "   TAB: switch tab   Q/ESC: back"
 
     def _draw_tabs(self, mouse_pos):
@@ -519,29 +615,287 @@ class EveLayout(_Screen):
             self.screen.blit(self.font_med.render(ln, True, config.LIGHT_GRAY), (px, y))
             y += 30
 
+    def _list_viewport(self):
+        """(top, bottom, height) of the scrollable list area on the right."""
+        top = self.grid_y
+        bottom = self.grid_y + 3 * (self.slot_size + self.gap) - 24
+        return top, bottom, bottom - top
+
     def _render_members_panel(self, mouse_pos):
         self.roster_rows = []
         px, py = self._panel_x(), self.grid_y
-        self.screen.blit(self.font_h.render("Roster", True, config.WHITE), (px, py - 46))
+        n = len(self.empire.members)
+        self.screen.blit(self.font_h.render(f"Assign to buildings  ({n})",
+                                            True, config.WHITE), (px, py - 46))
+        view_top, view_bottom, view_h = self._list_viewport()
         row_h = 20
-        y = py
+        panel_w = 320
+
+        # Lay out content in content-space, then cull to the viewport.
+        items = []  # (kind, payload)  kind: 'header'|'member'
         for cls in MemberClass:
-            self.screen.blit(self.font_btn.render(f"— {cls.value.capitalize()} —",
-                                                  True, self._class_color(cls)), (px, y))
-            y += 26
+            items.append(("header", cls))
             for midx, m in enumerate(self.empire.members):
-                if m.member_class != cls:
-                    continue
-                slot = self._slot_of(midx)
-                rect = pygame.Rect(px, y, 300, row_h)
-                if midx == self.selected_member:
-                    pygame.draw.rect(self.screen, config.GOLD, rect, 1)
-                slot_str = f"[S{slot + 1}]" if slot is not None else "[--]"
-                self.screen.blit(self.font_small.render(f"{m.name:12s} {slot_str}",
-                                                        True, config.WHITE), (px + 2, y))
-                self.roster_rows.append((rect, midx))
-                y += row_h
-            y += 8
+                if m.member_class == cls:
+                    items.append(("member", (midx, m)))
+            items.append(("gap", None))
+
+        content_h = 0
+        for kind, _ in items:
+            content_h += 26 if kind == "header" else (8 if kind == "gap" else row_h)
+        max_scroll = max(0, content_h - view_h)
+        self.assign_scroll = min(self.assign_scroll, max_scroll)
+
+        clip = pygame.Rect(px - 4, view_top - 2, panel_w + 20, view_h + 4)
+        self.screen.set_clip(clip)
+        cy = view_top - self.assign_scroll
+        for kind, payload in items:
+            if kind == "header":
+                if cy + 26 > view_top and cy < view_bottom:
+                    self.screen.blit(self.font_btn.render(
+                        f"— {payload.value.capitalize()} —", True,
+                        self._class_color(payload)), (px, cy))
+                cy += 26
+            elif kind == "gap":
+                cy += 8
+            else:
+                midx, m = payload
+                if cy + row_h > view_top and cy < view_bottom:
+                    rect = pygame.Rect(px, cy, panel_w, row_h)
+                    if midx == self.selected_member:
+                        pygame.draw.rect(self.screen, config.GOLD, rect, 1)
+                    slot = self._slot_of(midx)
+                    slot_str = f"[S{slot + 1}]" if slot is not None else "[--]"
+                    tag = f"L{m.level} {self._rarity_short(m.rarity)}"
+                    self.screen.blit(self.font_small.render(
+                        f"{m.name:12s} {slot_str} {tag}", True,
+                        self._class_color(m.member_class)), (px + 2, cy))
+                    self.roster_rows.append((rect, midx))
+                cy += row_h
+        self.screen.set_clip(None)
+        self._draw_scrollbar(clip, content_h, self.assign_scroll)
+
+    def _force_layout(self):
+        """Full-width two-column layout for the Force tab (the building grid is
+        hidden on this tab, so we use the whole screen width). Returns
+        (left_x, right_x, col_w, view_top, view_bottom, view_h)."""
+        left_x = self.grid_x
+        gap = 90
+        total_w = config.SCREEN_WIDTH - left_x - 40
+        col_w = (total_w - gap) // 2
+        right_x = left_x + col_w + gap
+        view_top = self.grid_y + 60          # push lists (and headers) down below the tabs
+        view_bottom = self.grid_y + 3 * (self.slot_size + self.gap) - 40
+        return left_x, right_x, col_w, view_top, view_bottom, view_bottom - view_top
+
+    def _render_force_panel(self, mouse_pos):
+        self.active_rows = []
+        self.backup_rows = []
+        self.force_action_rects = {}
+        left_x, right_x, col_w, view_top, view_bottom, view_h = self._force_layout()
+        hdr_y = view_top - 38
+
+        cap = self.state.member_cap()
+        n_active = len(self.empire.members)
+        over = n_active > cap
+        active_hdr_col = config.RED if over else config.WHITE
+        self.screen.blit(self.font_h.render(
+            f"Active Roster  {n_active}/{cap}", True, active_hdr_col), (left_x, hdr_y))
+        self.screen.blit(self.font_h.render(
+            f"Backup Force  {len(self.state.backup)}/{config.BACKUP_FORCE_CAP}",
+            True, config.WHITE), (right_x, hdr_y))
+
+        # Active column — grouped by class (indices are roster indices).
+        active_entries = list(enumerate(self.empire.members))
+        ch, self.active_scroll = self._draw_force_column(
+            active_entries, left_x, col_w, view_top, view_bottom,
+            self.active_scroll, "active")
+        self._draw_scrollbar(pygame.Rect(left_x, view_top, col_w, view_h),
+                             ch, self.active_scroll)
+
+        # Backup column — grouped by class (indices are backup indices).
+        if not self.state.backup:
+            self.screen.blit(self.font_small.render(
+                "No recruits yet — win wars to recruit.", True, config.GRAY),
+                (right_x + 4, view_top + 4))
+        else:
+            backup_entries = list(enumerate(self.state.backup))
+            ch, self.backup_scroll = self._draw_force_column(
+                backup_entries, right_x, col_w, view_top, view_bottom,
+                self.backup_scroll, "backup")
+            self._draw_scrollbar(pygame.Rect(right_x, view_top, col_w, view_h),
+                                 ch, self.backup_scroll)
+
+        self._draw_force_actions(mouse_pos, view_bottom + 16, left_x)
+
+        # Detail card for the currently-selected member (either column).
+        sel_m = self._force_selected_member()
+        if sel_m is not None:
+            self._draw_force_detail(sel_m, right_x, view_bottom + 16, col_w)
+
+    def _force_selected_member(self):
+        if self.force_sel is None:
+            return None
+        col, idx = self.force_sel
+        if col == "active" and 0 <= idx < len(self.empire.members):
+            return self.empire.members[idx]
+        if col == "backup" and 0 <= idx < len(self.state.backup):
+            return self.state.backup[idx]
+        return None
+
+    def _draw_force_detail(self, m, x, y, w):
+        """A stat card for the selected member: HP, damage, mitigation, speed."""
+        s = m.get_stats()
+        h = 132
+        card = pygame.Rect(x, y, w, h)
+        pygame.draw.rect(self.screen, (30, 32, 46), card, border_radius=8)
+        pygame.draw.rect(self.screen, self._rarity_color(m.rarity), card, 2, border_radius=8)
+
+        title = f"{m.name}"
+        self.screen.blit(self.font_h.render(title, True, config.WHITE),
+                         (x + 14, y + 8))
+        sub = f"{self._rarity_label(m.rarity)} {m.member_class.value.title()}  ·  Level {m.level}"
+        self.screen.blit(self.font_small.render(sub, True, self._rarity_color(m.rarity)),
+                         (x + 14, y + 40))
+
+        # Two columns of stat label/value pairs.
+        stats = [
+            ("Health", f"{int(s['hp'])}"),
+            ("Damage (vs members)", f"{int(s['damage_player'])}"),
+            ("Damage (vs buildings)", f"{int(s['damage_building'])}"),
+            ("Mitigation", f"{int(s['mitigation'] * 100)}%"),
+            ("Attack interval", f"{s['attack_interval']:.1f}s"),
+            ("Move speed", f"{int(s['speed'])}"),
+        ]
+        col_x = [x + 14, x + w // 2 + 10]
+        row_y = y + 66
+        for i, (label, val) in enumerate(stats):
+            cx = col_x[i % 2]
+            cyy = row_y + (i // 2) * 22
+            lbl = self.font_small.render(label + ":", True, config.LIGHT_GRAY)
+            self.screen.blit(lbl, (cx, cyy))
+            vv = self.font_small.render(val, True, config.GOLD)
+            self.screen.blit(vv, (cx + 190, cyy))
+
+    def _draw_force_column(self, entries, x, col_w, view_top, view_bottom,
+                           scroll, col_key):
+        """Draw one Force column grouped by class (headers like the Assign tab),
+        culling to the viewport. Registers clickable rows into active_rows /
+        backup_rows keyed by the entry's original index. Returns (content_h,
+        clamped_scroll)."""
+        hdr_h, row_h, gap_h = 24, 22, 8
+        rows_out = self.active_rows if col_key == "active" else self.backup_rows
+
+        # Lay out in content-space, grouped by class (skip empty classes).
+        items = []  # ('header', cls) | ('member', (idx, m)) | ('gap', None)
+        for cls in MemberClass:
+            cls_entries = [(i, m) for (i, m) in entries if m.member_class == cls]
+            if not cls_entries:
+                continue
+            items.append(("header", cls))
+            for e in cls_entries:
+                items.append(("member", e))
+            items.append(("gap", None))
+
+        content_h = sum(hdr_h if k == "header" else (gap_h if k == "gap" else row_h)
+                        for k, _ in items)
+        view_h = view_bottom - view_top
+        scroll = min(scroll, max(0, content_h - view_h))
+
+        clip = pygame.Rect(x - 4, view_top - 2, col_w + 8, view_h + 4)
+        self.screen.set_clip(clip)
+        cy = view_top - scroll
+        for kind, payload in items:
+            if kind == "header":
+                if cy + hdr_h > view_top and cy < view_bottom:
+                    self.screen.blit(self.font_btn.render(
+                        f"— {payload.value.capitalize()} —", True,
+                        self._class_color(payload)), (x + 2, cy))
+                cy += hdr_h
+            elif kind == "gap":
+                cy += gap_h
+            else:
+                idx, m = payload
+                if cy + row_h > view_top and cy < view_bottom:
+                    rect = pygame.Rect(x, cy, col_w, row_h)
+                    if self.force_sel == (col_key, idx):
+                        pygame.draw.rect(self.screen, config.GOLD, rect, 2, border_radius=4)
+                    self._draw_member_row(m, x, cy, col_w)
+                    rows_out.append((rect, idx))
+                cy += row_h
+        self.screen.set_clip(None)
+        return content_h, scroll
+
+    def _draw_force_actions(self, mouse_pos, y, x):
+        """Bottom action bar; buttons depend on the current selection."""
+        self.force_action_rects = {}
+        actions = []
+        if self.force_sel is not None:
+            col, _ = self.force_sel
+            if col == "active":
+                actions = [("bench", "Move to Backup ▶", config.GRAY)]
+            else:
+                actions = [("activate", "◀ Activate", config.GREEN),
+                           ("kick", "Kick Out", config.RED)]
+        bx = x
+        for name, label, color in actions:
+            w = self.font_btn.size(label)[0] + 28
+            rect = pygame.Rect(bx, y, w, 44)
+            hover = rect.collidepoint(mouse_pos)
+            c = tuple(min(255, ch + 40) for ch in color) if hover else color
+            pygame.draw.rect(self.screen, c, rect, border_radius=8)
+            pygame.draw.rect(self.screen, config.WHITE, rect, 2, border_radius=8)
+            txt = self.font_btn.render(label, True, config.BLACK)
+            self.screen.blit(txt, txt.get_rect(center=rect.center))
+            self.force_action_rects[name] = rect
+            bx += w + 14
+        if self.force_sel is None:
+            self.screen.blit(self.font_small.render(
+                "Select a member on either side to move them.", True, config.GRAY),
+                (x, y + 12))
+
+    def _draw_member_row(self, m, x, y, w):
+        """A single-line row (same spirit as the Assign tab): the name + level in
+        the class color on the left, and the full rarity word — in its rarity
+        color — on the right so rarity stands out."""
+        name = self.font_small.render(f"{m.name}   L{m.level}",
+                                      True, self._class_color(m.member_class))
+        self.screen.blit(name, (x + 6, y + 4))
+        rlabel = self._rarity_label(m.rarity)
+        rt = self.font_small.render(rlabel, True, self._rarity_color(m.rarity))
+        self.screen.blit(rt, rt.get_rect(right=x + w - 16, y=y + 4))
+
+    def _draw_scrollbar(self, view_rect, content_h, scroll):
+        if content_h <= view_rect.height:
+            return
+        track = pygame.Rect(view_rect.right - 8, view_rect.y, 5, view_rect.height)
+        pygame.draw.rect(self.screen, (50, 52, 66), track, border_radius=3)
+        frac = view_rect.height / content_h
+        knob_h = max(24, int(view_rect.height * frac))
+        max_scroll = content_h - view_rect.height
+        t = (scroll / max_scroll) if max_scroll > 0 else 0
+        knob_y = view_rect.y + int((view_rect.height - knob_h) * t)
+        pygame.draw.rect(self.screen, config.GRAY,
+                         pygame.Rect(track.x, knob_y, 5, knob_h), border_radius=3)
+
+    def _panel_x_left(self):
+        return self._panel_x()
+
+    def _rarity_label(self, rarity):
+        return {"common": "Common", "uncommon": "Uncommon", "rare": "Rare",
+                "super_rare": "Super Rare"}.get(rarity.value, "?")
+
+    def _rarity_short(self, rarity):
+        return {"common": "C", "uncommon": "U", "rare": "R",
+                "super_rare": "SR"}.get(rarity.value, "?")
+
+    def _rarity_color(self, rarity):
+        return {
+            "common": config.LIGHT_GRAY,
+            "uncommon": (120, 200, 120),
+            "rare": (110, 170, 255),
+            "super_rare": config.GOLD,
+        }.get(rarity.value, config.LIGHT_GRAY)
 
     def _slot_of(self, member_idx):
         for s, members in enumerate(self.member_assignments):
@@ -1003,4 +1357,101 @@ class VictoryScreen(_Screen):
             True, config.GREEN)
         self.screen.blit(msg, msg.get_rect(centerx=config.SCREEN_WIDTH // 2,
                                            y=config.SCREEN_HEIGHT // 2 - 40))
+        self.btn.draw(self.screen, mouse_pos)
+
+
+class RecruitPopup(_Screen):
+    """Shown after winning a war: reveals the recruit acquired from the
+    defeated empire and confirms they've joined the Backup Force."""
+
+    def __init__(self, screen, member, backup_full=False):
+        super().__init__(screen)
+        self.member = member
+        self.backup_full = backup_full
+        self.btn = Button(
+            (config.SCREEN_WIDTH // 2 - 160, config.SCREEN_HEIGHT // 2 + 110, 320, 60),
+            "Continue", self.font_btn, base_color=config.GREEN)
+
+    def handle_key(self, key):
+        if key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE, pygame.K_q):
+            self.done = True
+
+    def handle_click(self, pos):
+        if self.btn.hit(pos):
+            self.done = True
+
+    def _rarity_color(self, rarity):
+        return {
+            "common": config.LIGHT_GRAY,
+            "uncommon": (120, 200, 120),
+            "rare": (110, 170, 255),
+            "super_rare": config.GOLD,
+        }.get(rarity.value, config.LIGHT_GRAY)
+
+    def render(self, mouse_pos):
+        self.screen.fill((14, 16, 26))
+        cx = config.SCREEN_WIDTH // 2
+        cy = config.SCREEN_HEIGHT // 2
+
+        t = self.font_title.render("New Recruit!", True, config.GOLD)
+        self.screen.blit(t, t.get_rect(centerx=cx, y=cy - 200))
+
+        m = self.member
+        rc = self._rarity_color(m.rarity)
+        name = self.font_h.render(m.name, True, config.WHITE)
+        self.screen.blit(name, name.get_rect(centerx=cx, y=cy - 110))
+        rarity_name = m.rarity.value.replace("_", " ").title()
+        detail = self.font_med.render(
+            f"{rarity_name} {m.member_class.value.title()}   ·   Level {m.level}",
+            True, rc)
+        self.screen.blit(detail, detail.get_rect(centerx=cx, y=cy - 66))
+
+        if self.backup_full:
+            msg = self.font_med.render(
+                f"Backup Force is full (max {config.BACKUP_FORCE_CAP}) — recruit not kept.",
+                True, config.RED)
+        else:
+            msg = self.font_med.render(
+                "Joined your Backup Force. Move them into the roster in EVE Layout ▸ Force.",
+                True, config.LIGHT_GRAY)
+        self.screen.blit(msg, msg.get_rect(centerx=cx, y=cy - 10))
+
+        self.btn.draw(self.screen, mouse_pos)
+
+
+class CapBlockedPopup(_Screen):
+    """Blocks starting a war while the active roster exceeds the HQ cap."""
+
+    def __init__(self, screen, roster_size, cap):
+        super().__init__(screen)
+        self.roster_size = roster_size
+        self.cap = cap
+        self.btn = Button(
+            (config.SCREEN_WIDTH // 2 - 160, config.SCREEN_HEIGHT // 2 + 80, 320, 60),
+            "OK", self.font_btn, base_color=config.GRAY)
+
+    def handle_key(self, key):
+        if key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE, pygame.K_q):
+            self.done = True
+
+    def handle_click(self, pos):
+        if self.btn.hit(pos):
+            self.done = True
+
+    def render(self, mouse_pos):
+        self.screen.fill((22, 12, 12))
+        cx = config.SCREEN_WIDTH // 2
+        cy = config.SCREEN_HEIGHT // 2
+        t = self.font_title.render("Roster over HQ cap", True, config.RED)
+        self.screen.blit(t, t.get_rect(centerx=cx, y=cy - 140))
+        lines = [
+            f"Your active roster is {self.roster_size}, but your HQ only supports {self.cap}.",
+            "Open EVE Layout ▸ Force and move members to the Backup Force",
+            "(or level up your HQ) before you can start a war.",
+        ]
+        y = cy - 60
+        for ln in lines:
+            s = self.font_med.render(ln, True, config.LIGHT_GRAY)
+            self.screen.blit(s, s.get_rect(centerx=cx, y=y))
+            y += 34
         self.btn.draw(self.screen, mouse_pos)

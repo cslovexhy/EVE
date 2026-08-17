@@ -148,6 +148,30 @@ class Member:
             self.hp = 0
             self.state = MemberState.DEAD
 
+    # --- persistence (roster / backup force) -----------------------------
+    def to_dict(self) -> dict:
+        """Serialize the persistent identity of this member (not battle state)."""
+        return {
+            "name": self.name,
+            "member_class": self.member_class.value,
+            "level": self.level,
+            "rarity": self.rarity.value,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Member":
+        return cls(
+            name=data["name"],
+            member_class=MemberClass(data["member_class"]),
+            level=int(data.get("level", 1)),
+            rarity=Rarity(data.get("rarity", Rarity.COMMON.value)),
+        )
+
+    def copy_identity(self) -> "Member":
+        """A fresh Member with the same identity (used when recruiting)."""
+        return Member(name=self.name, member_class=self.member_class,
+                      level=self.level, rarity=self.rarity)
+
 
 @dataclass
 class Building:
@@ -305,7 +329,23 @@ class Empire:
 
 def create_starting_roster(empire_name: str, is_player: bool = True) -> Empire:
     """Create an empire with 40 starting members (10 per class)."""
-    names_by_class = {
+    members = default_player_members() if is_player else default_enemy_members()
+    empire = Empire(name=empire_name, members=members, is_player=is_player)
+    empire.setup_buildings()
+    return empire
+
+
+# Rarity strength order (weakest -> strongest), for picking the best recruit.
+RARITY_ORDER = {
+    Rarity.COMMON: 0,
+    Rarity.UNCOMMON: 1,
+    Rarity.RARE: 2,
+    Rarity.SUPER_RARE: 3,
+}
+
+
+def _PLAYER_NAMES_BY_CLASS():
+    return {
         MemberClass.ENFORCER: [
             "Hammer", "Duke", "Tank", "Brick", "Ironside",
             "Magnus", "Bulwark", "Titan", "Rocco", "Slab",
@@ -324,7 +364,9 @@ def create_starting_roster(empire_name: str, is_player: bool = True) -> Empire:
         ],
     }
 
-    enemy_names = {
+
+def _ENEMY_NAMES_BY_CLASS():
+    return {
         MemberClass.ENFORCER: [
             "Gustavo", "Salvatore", "Brutus", "Goliath", "Mammoth",
             "Ox", "Rhino", "Grizzly", "Boulder", "Colossus",
@@ -343,19 +385,35 @@ def create_starting_roster(empire_name: str, is_player: bool = True) -> Empire:
         ],
     }
 
-    chosen_names = names_by_class if is_player else enemy_names
 
+def _members_from_names(names_by_class) -> list:
     members = []
     for cls in MemberClass:
-        for name in chosen_names[cls]:
-            member = Member(
-                name=name,
-                member_class=cls,
-                level=3,
-                rarity=Rarity.COMMON,
-            )
-            members.append(member)
+        for name in names_by_class[cls]:
+            members.append(Member(name=name, member_class=cls,
+                                  level=3, rarity=Rarity.COMMON))
+    return members
 
-    empire = Empire(name=empire_name, members=members, is_player=is_player)
-    empire.setup_buildings()
-    return empire
+
+def default_player_members() -> list:
+    """The default 40 player members (10 per class), used to seed a new roster."""
+    return _members_from_names(_PLAYER_NAMES_BY_CLASS())
+
+
+def default_enemy_members() -> list:
+    return _members_from_names(_ENEMY_NAMES_BY_CLASS())
+
+
+def top_rarity_recruit(empire: "Empire", rng=None) -> Optional["Member"]:
+    """Pick a recruit from a (defeated) empire: the highest-rarity member,
+    breaking ties randomly, then by highest level. Returns a fresh Member with
+    the same identity, or None if the empire has no members."""
+    import random as _random
+    rng = rng or _random
+    if not empire.members:
+        return None
+    best_rarity = max(RARITY_ORDER[m.rarity] for m in empire.members)
+    pool = [m for m in empire.members if RARITY_ORDER[m.rarity] == best_rarity]
+    top_level = max(m.level for m in pool)
+    pool = [m for m in pool if m.level == top_level]
+    return rng.choice(pool).copy_identity()

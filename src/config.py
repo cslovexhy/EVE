@@ -129,6 +129,9 @@ STARTING_MONEY = 0
 BASE_MEMBER_CAP = 40
 HQ_MEMBERS_PER_LEVEL = 10
 HQ_MAX_LEVEL = 4
+# Bench/backup force: recruits won from defeated empires wait here until you
+# move them into the active roster. Capped independently of the HQ roster cap.
+BACKUP_FORCE_CAP = 80
 # HQ HP per level (Lv1 matches BUILDING_TYPES["headquarters"]["hp"]).
 HQ_LEVEL_HP = {1: 1300, 2: 1700, 3: 2200, 4: 3000}
 # Money cost to level the HQ FROM level n-1 TO level n (steeply escalating).

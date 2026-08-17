@@ -14,7 +14,10 @@ from typing import List, Optional, Set
 
 import config
 import world_map as wm
-from models import BuildingType, Empire, MemberClass
+from models import (
+    BuildingType, Empire, MemberClass, Member,
+    default_player_members,
+)
 
 PROFILE_PATH = os.path.join(os.path.dirname(__file__), "..", "player_profile.json")
 
@@ -44,8 +47,14 @@ class GameState:
     # Per-slot building levels (mainly HQ level 1..4). Defaults to all level 1.
     building_levels: List[int] = field(default_factory=lambda: [1] * 9)
     conquered: Set[str] = field(default_factory=set)
-    # 9 lists of member indices (into a deterministic roster). None until set.
+    # 9 lists of member indices (into the active roster). None until set.
     member_assignments: Optional[List[List[int]]] = None
+    # The player's active fighting roster (persisted; grows via recruits). Empty
+    # until seeded with the default 40 on first load.
+    roster: List[Member] = field(default_factory=list)
+    # The backup force / bench: recruits won from defeated empires wait here
+    # until moved into the active roster. Capped at config.BACKUP_FORCE_CAP.
+    backup: List[Member] = field(default_factory=list)
     # The player's birthplace city id ("Country/State/City"). None until chosen
     # on first run; determines the home state/country for map gating.
     home_city: Optional[str] = None
@@ -65,8 +74,17 @@ class GameState:
             levels = data.get("building_levels") or []
             if len(levels) != 9:
                 levels = [1] * 9
+
+            # Roster / backup force. Seed the default 40 for legacy saves that
+            # predate persisted rosters (or an empty roster).
+            roster = [Member.from_dict(d) for d in data.get("roster", [])]
+            if not roster:
+                roster = default_player_members()
+            backup = [Member.from_dict(d) for d in data.get("backup", [])]
+            backup = backup[:config.BACKUP_FORCE_CAP]
+
             member_assignments = data.get("member_assignments")
-            if not _valid_assignments(member_assignments):
+            if not _valid_assignments(member_assignments, len(roster)):
                 member_assignments = None
             state = cls(
                 money=int(data.get("money", config.STARTING_MONEY)),
@@ -74,6 +92,8 @@ class GameState:
                 building_levels=[max(1, int(x)) for x in levels],
                 conquered=set(data.get("conquered", [])),
                 member_assignments=member_assignments,
+                roster=roster,
+                backup=backup,
                 home_city=data.get("home_city"),
             )
             # Self-heal: if the saved home city no longer exists in the world
@@ -93,6 +113,8 @@ class GameState:
             "building_levels": self.building_levels,
             "conquered": sorted(self.conquered),
             "member_assignments": self.member_assignments,
+            "roster": [m.to_dict() for m in self.roster],
+            "backup": [m.to_dict() for m in self.backup],
             "home_city": self.home_city,
         }
         with open(PROFILE_PATH, "w") as f:
@@ -151,20 +173,99 @@ class GameState:
 
     def ensure_member_assignments(self, members) -> List[List[int]]:
         """Return member assignments, initializing to the default distribution
-        (for the given roster) if not set yet."""
-        if not _valid_assignments(self.member_assignments):
+        (for the given roster) if not set or inconsistent with the roster size."""
+        if not _valid_assignments(self.member_assignments, len(members)):
             self.member_assignments = default_member_assignments(members)
         return self.member_assignments
 
+    # --- roster / backup force -------------------------------------------
+    def ensure_roster(self) -> List[Member]:
+        """Guarantee the active roster is seeded (default 40 for a fresh game)."""
+        if not self.roster:
+            self.roster = default_player_members()
+        return self.roster
+
+    def build_player_empire(self, name: str = "Your Empire") -> Empire:
+        """Build a battle-ready player Empire from the persisted roster. Uses
+        fresh Member copies so battle state never mutates the saved roster."""
+        self.ensure_roster()
+        members = [m.copy_identity() for m in self.roster]
+        empire = Empire(name=name, members=members, is_player=True)
+        empire.setup_buildings()
+        self.apply_to_empire(empire)
+        return empire
+
     def apply_to_empire(self, empire: Empire) -> None:
         """Push the persistent money + building layout (+ levels + member
-        assignments) onto a battle empire."""
+        assignments) onto a battle empire whose members are the active roster."""
         import buildings
         empire.money = self.money
         empire.apply_building_layout(list(self.building_layout))
         buildings.apply_building_levels(empire, list(self.building_levels))
         assignments = self.ensure_member_assignments(empire.members)
         empire.member_assignments = [list(s) for s in assignments]
+
+    def roster_over_cap(self) -> bool:
+        """True if the active roster exceeds the HQ-gated cap (blocks war start)."""
+        return len(self.roster) > self.member_cap()
+
+    def add_recruit(self, member: Member) -> bool:
+        """Add a won recruit to the backup force. Returns False if it's full."""
+        if len(self.backup) >= config.BACKUP_FORCE_CAP:
+            return False
+        self.backup.append(member)
+        return True
+
+    def _default_assign_slot(self) -> int:
+        """Building slot to drop a newly-activated member into: the standing HQ
+        if there is one, else the slot currently holding the fewest members."""
+        self.ensure_member_assignments(self.roster)
+        for i, bt in enumerate(self.building_layout):
+            if bt == BuildingType.HEADQUARTERS:
+                return i
+        counts = [len(s) for s in self.member_assignments]
+        return counts.index(min(counts))
+
+    def _reindex_after_removal(self, removed: int) -> None:
+        """After removing roster[removed], drop it from assignments and shift
+        every higher stored index down by one."""
+        if self.member_assignments is None:
+            return
+        new_assign = []
+        for slot in self.member_assignments:
+            s = [(mi - 1 if mi > removed else mi) for mi in slot if mi != removed]
+            new_assign.append(s)
+        self.member_assignments = new_assign
+
+    def move_to_backup(self, roster_idx: int) -> bool:
+        """Bench an active-roster member (remove from buildings, add to backup)."""
+        if not (0 <= roster_idx < len(self.roster)):
+            return False
+        if len(self.backup) >= config.BACKUP_FORCE_CAP:
+            return False
+        m = self.roster.pop(roster_idx)
+        self._reindex_after_removal(roster_idx)
+        self.backup.append(m)
+        return True
+
+    def move_to_roster(self, backup_idx: int) -> bool:
+        """Activate a backup member into the roster and assign to a building."""
+        if not (0 <= backup_idx < len(self.backup)):
+            return False
+        self.ensure_roster()
+        self.ensure_member_assignments(self.roster)
+        m = self.backup.pop(backup_idx)
+        self.roster.append(m)
+        new_idx = len(self.roster) - 1
+        self.member_assignments[self._default_assign_slot()].append(new_idx)
+        return True
+
+    def kick_backup(self, backup_idx: int) -> bool:
+        """Permanently remove a backup member from the game."""
+        if not (0 <= backup_idx < len(self.backup)):
+            return False
+        self.backup.pop(backup_idx)
+        return True
 
     def member_cap(self) -> int:
         """Roster cap from the persistent HQ level (base + 10 per HQ level)."""
@@ -176,8 +277,9 @@ class GameState:
         return cap
 
 
-def _valid_assignments(assignments) -> bool:
-    """A valid assignment is 9 lists of ints covering all 40 members exactly."""
+def _valid_assignments(assignments, size: int = 40) -> bool:
+    """Valid == 9 lists of ints covering exactly range(size) (each roster member
+    assigned to exactly one building slot)."""
     if not isinstance(assignments, list) or len(assignments) != 9:
         return False
     flat = []
@@ -185,7 +287,7 @@ def _valid_assignments(assignments) -> bool:
         if not isinstance(slot, list):
             return False
         flat.extend(slot)
-    return len(flat) == 40 and sorted(flat) == list(range(40))
+    return len(flat) == size and sorted(flat) == list(range(size))
 
 
 def empire_net_worth(empire: Empire) -> int:

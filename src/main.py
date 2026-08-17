@@ -15,8 +15,9 @@ import buildings
 import enemy_gen
 import world_map as wm
 from game_state import GameState
-from models import create_starting_roster
-from screens import MainMenu, EveLayout, MapScreen, GameOverScreen, VictoryScreen
+from models import top_rarity_recruit
+from screens import (MainMenu, EveLayout, MapScreen, GameOverScreen,
+                     VictoryScreen, RecruitPopup, CapBlockedPopup)
 from battle_session import BattleSession
 
 
@@ -58,7 +59,11 @@ class Game:
             elif screen_name == "map":
                 result = MapScreen(self.screen, self.state).run()
                 if isinstance(result, tuple) and result[0] == "battle":
-                    self._run_war(result[1])
+                    if self.state.roster_over_cap():
+                        CapBlockedPopup(self.screen, len(self.state.roster),
+                                        self.state.member_cap()).run()
+                    else:
+                        self._run_war(result[1])
                     screen_name = "map"   # return to the map after the battle
                 else:
                     screen_name = "menu"
@@ -90,13 +95,13 @@ class Game:
 
     def _fight_city(self, target_city_id: str) -> bool:
         """Run one EvE battle against a city's underworld, using the player's
-        current base. Returns True if the player won."""
+        current base. Returns True if the player won. On a win, a top-rarity
+        recruit from the defeated empire joins the Backup Force (popup shown)."""
         city = wm.get_city(target_city_id)
         power = city["underworld_power"] if city else 0
         city_name = wm.split_city_id(target_city_id)[-1]
 
-        player = create_starting_roster("Your Empire", is_player=True)
-        self.state.apply_to_empire(player)
+        player = self.state.build_player_empire("Your Empire")
         order = buildings.building_order_from_layout(self.state.building_layout)
         member_assignments = [list(s) for s in player.member_assignments]
 
@@ -105,7 +110,19 @@ class Game:
         session = BattleSession(self.screen, player, enemy,
                                 building_order=order,
                                 member_assignments=member_assignments)
-        return session.run() is player
+        won = session.run() is player
+        if won:
+            self._acquire_recruit(enemy)
+        return won
+
+    def _acquire_recruit(self, enemy):
+        """Recruit a top-rarity member from a defeated enemy into the backup
+        force and show the reveal popup. The caller persists state on the win."""
+        recruit = top_rarity_recruit(enemy)
+        if recruit is None:
+            return
+        kept = self.state.add_recruit(recruit)
+        RecruitPopup(self.screen, recruit, backup_full=not kept).run()
 
     def _run_war(self, target_city_id: str):
         """Wage war on an already-owned-region city. A win pays the city's
