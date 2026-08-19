@@ -600,8 +600,17 @@ class BattleEngine:
         return building_index in visible
     
     def _compute_visibility(self, target_empire, assassin_entry: bool = True, is_enemy_view: bool = False) -> set:
-        """Flood-fill visibility through destroyed buildings.
-        
+        """Compute which of target_empire's buildings the attacker can see.
+
+        Visibility rule:
+          * Entry points (1/4/7, plus backdoor 9 for assassins) are always visible.
+          * A Research Lab directly reveals buildings 4/5/7/8/9 for its owner.
+          * ANY building 4-way adjacent to a destroyed building is visible.
+          * A destroyed building is itself visible.
+
+        Because every destroyed building seeds the flood-fill, visibility also
+        chains through strings of destroyed buildings.
+
         Args:
             target_empire: The empire whose buildings we're looking at
             assassin_entry: Whether to include the assassin backdoor entry point
@@ -618,21 +627,30 @@ class BattleEngine:
             7: [4, 6, 8],
             8: [5, 7],
         }
-        
-        if is_enemy_view:
-            # Enemy entry points into player buildings: 1, 4, 7 (indices 0, 3, 6) + backdoor 9 (index 8)
-            entry_points = {0, 3, 6}
-            if assassin_entry:
-                entry_points.add(8)  # Building 9 is backdoor
-        else:
-            # Player entry points into enemy buildings: 1, 4, 7 (indices 0, 3, 6) + backdoor 9 (index 8)
-            entry_points = {0, 3, 6}
-            if assassin_entry:
-                entry_points.add(8)  # Building 9 is backdoor
-        
+
+        # Entry points are identical for both sides (mirrored). 1/4/7 (indices
+        # 0/3/6), plus backdoor 9 (index 8) when the assassin entry is allowed.
+        entry_points = {0, 3, 6}
+        if assassin_entry:
+            entry_points.add(8)
+
         visible = set(entry_points)
-        queue = list(entry_points)
-        
+
+        # Research Lab: the attacking side directly sees buildings 4/5/7/8/9.
+        attacker_empire = self.enemy if is_enemy_view else self.player
+        if self._active_of_type(attacker_empire, BuildingType.RESEARCH_LAB):
+            visible |= set(config.RESEARCH_LAB_REVEAL)
+
+        # Any building next to (4-way) a destroyed building is visible to all.
+        # Seed the flood-fill with EVERY destroyed building (a destroyed building
+        # is itself visible), so its neighbours are revealed regardless of how
+        # that building came to be destroyed (fought through the front, nuked
+        # from range, etc.). The BFS then chains through further destroyed
+        # buildings.
+        destroyed = [i for i, b in enumerate(target_empire.buildings) if b.destroyed]
+        visible.update(destroyed)
+
+        queue = list(visible)
         while queue:
             current = queue.pop(0)
             if target_empire.buildings[current].destroyed:
@@ -640,11 +658,6 @@ class BattleEngine:
                     if neighbor not in visible:
                         visible.add(neighbor)
                         queue.append(neighbor)
-
-        # Research Lab: the attacking side can see + attack buildings 4/5/7/8/9.
-        attacker_empire = self.enemy if is_enemy_view else self.player
-        if self._active_of_type(attacker_empire, BuildingType.RESEARCH_LAB):
-            visible |= set(config.RESEARCH_LAB_REVEAL)
 
         return visible
     
