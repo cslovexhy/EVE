@@ -5,12 +5,11 @@ self-contained, blocking step from the map. run() returns the winner
 ("player" / "enemy") or None if the player exited/forfeited before a result.
 """
 import sys
-import random
 
 import pygame
 
 import config
-from models import MemberClass, MemberState, OrderAction
+from models import OrderAction
 from engine import BattleEngine
 from orders import OrderSystem
 from ai import BattleAI
@@ -130,31 +129,14 @@ class BattleSession:
             self.order_system.feedback_timer = 1.5
             return
 
-        dead_at_building = [
-            m for m in self.player_empire.members
-            if m.state == MemberState.DEAD and m.assigned_building == building_index
-        ]
-        if not dead_at_building:
-            dead_at_building = [m for m in self.player_empire.members
-                                if m.state == MemberState.DEAD]
-        if not dead_at_building:
-            self.order_system.feedback_msg = "No dead members to revive"
+        # Shared heal logic (identical for player and AI): revive one random
+        # dead defender assigned to THIS building, in place.
+        member = self.player_empire.heal_building(building_index)
+        if member is None:
+            self.order_system.feedback_msg = "No more dead members to heal here"
             self.order_system.feedback_timer = 1.5
             return
 
-        dead_at_building.sort(key=lambda m: m.max_hp, reverse=True)
-        member = dead_at_building[0]
-
-        member.hp = member.max_hp
-        member.state = MemberState.DEFENDING
-        member.attack_cooldown = 0.0
-        member.target_building = None
-        member.assigned_building = building_index
-        member.x = building.x + random.uniform(-15, 15)
-        member.y = building.y + random.uniform(-15, 15)
-        building.defenders.append(member)
-
-        self.player_empire.health_packs -= 1
         self.order_system.feedback_msg = (
             f"Revived {member.member_class.value} '{member.name}' at bldg "
             f"{building_index+1} ({self.player_empire.health_packs} packs left)"

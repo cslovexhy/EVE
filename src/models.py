@@ -289,32 +289,38 @@ class Empire:
         return [m for m in self.members
                 if m.member_class == member_class and m.state == MemberState.DEAD]
     
-    def heal_member(self, member_class: MemberClass):
-        """Use a health pack to revive a random dead member of the given class.
-        Revives at building 3 (index 2) with full HP. Returns the revived member or None."""
+    def heal_building(self, building_index: int):
+        """Use a health pack to revive one random dead defender ASSIGNED to the
+        given building, reviving them IN PLACE. Shared by the player (H → click
+        building) and the AI so both sides heal identically. Does not relocate
+        the member or change the base layout. Returns the revived member, or
+        None if no pack is available or no dead defender is assigned there."""
         import random
         if self.health_packs <= 0:
             return None
-        
-        dead = self.get_dead_by_class(member_class)
-        if not dead:
+        if not (0 <= building_index < len(self.buildings)):
             return None
-        
-        # Pick a random dead member to revive
-        member = random.choice(dead)
+        building = self.buildings[building_index]
+        if building.destroyed:
+            return None
+
+        dead_here = [m for m in self.members
+                     if m.state == MemberState.DEAD
+                     and m.assigned_building == building_index]
+        if not dead_here:
+            return None
+
+        member = random.choice(dead_here)
         member.hp = member.max_hp
         member.state = MemberState.DEFENDING
         member.attack_cooldown = 0.0
         member.target_building = None
-        
-        # Place at building 3 (index 2) — hospital location
-        hospital_idx = 2
-        member.assigned_building = hospital_idx
-        building = self.buildings[hospital_idx]
+        # assigned_building is already building_index — keep it as-is.
         member.x = building.x + random.uniform(-15, 15)
         member.y = building.y + random.uniform(-15, 15)
-        building.defenders.append(member)
-        
+        if member not in building.defenders:
+            building.defenders.append(member)
+
         self.health_packs -= 1
         return member
     

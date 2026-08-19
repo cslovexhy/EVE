@@ -81,26 +81,51 @@ class BattleAI:
             self._plan_cleanup(engine)
     
     def _use_health_packs(self):
-        """AI uses health packs when an attack class is depleted."""
+        """AI uses health packs when its attack force is depleted. Uses the
+        SAME per-building heal logic as the player (Empire.heal_building):
+        revive a random dead defender in place, in the chosen building."""
         if self.empire.health_packs <= 0:
             return
-        
-        # Priority: revive attack classes that are fully dead
-        for cls in [MemberClass.ASSASSIN, MemberClass.DEMOLITIONIST, MemberClass.SNIPER]:
-            alive = len([m for m in self.empire.members
-                        if m.member_class == cls and m.is_alive])
-            dead = self.empire.get_dead_by_class(cls)
-            
-            # Use health packs if class has fewer than 3 alive and has dead members
-            if alive < 3 and dead and self.empire.health_packs > 0:
-                revived = self.empire.heal_member(cls)
-                if revived:
-                    print(f"  [AI] Healed {cls.value} '{revived.name}' (packs left: {self.empire.health_packs})")
-                # Use up to 2 packs per wave on the same class if badly depleted
-                if alive < 1 and self.empire.health_packs > 0 and self.empire.get_dead_by_class(cls):
-                    revived = self.empire.heal_member(cls)
-                    if revived:
-                        print(f"  [AI] Healed {cls.value} '{revived.name}' (packs left: {self.empire.health_packs})")
+
+        attack_classes = {MemberClass.ASSASSIN, MemberClass.DEMOLITIONIST,
+                          MemberClass.SNIPER}
+
+        # Heal while the attack force is thin and packs remain. Cap the number
+        # of packs spent per wave so the AI doesn't dump them all at once.
+        packs_this_wave = 0
+        while self.empire.health_packs > 0 and packs_this_wave < 2:
+            alive_attackers = len([m for m in self.empire.members
+                                   if m.member_class in attack_classes and m.is_alive])
+            if alive_attackers >= 3:
+                break
+
+            # Choose the building holding the most dead attack-class defenders;
+            # fall back to any building with a dead defender.
+            best_slot, best_attack_dead, best_any_dead = None, 0, 0
+            for slot, b in enumerate(self.empire.buildings):
+                if b.destroyed:
+                    continue
+                dead_here = [m for m in self.empire.members
+                             if m.state == MemberState.DEAD
+                             and m.assigned_building == slot]
+                if not dead_here:
+                    continue
+                attack_dead = sum(1 for m in dead_here
+                                  if m.member_class in attack_classes)
+                # Prefer buildings with dead attackers; break ties on total dead.
+                key = (attack_dead, len(dead_here))
+                if key > (best_attack_dead, best_any_dead):
+                    best_slot, best_attack_dead, best_any_dead = slot, attack_dead, len(dead_here)
+
+            if best_slot is None:
+                break  # nothing left to revive
+
+            revived = self.empire.heal_building(best_slot)
+            if revived is None:
+                break
+            packs_this_wave += 1
+            print(f"  [AI] Healed {revived.member_class.value} '{revived.name}' "
+                  f"at bldg {best_slot + 1} (packs left: {self.empire.health_packs})")
     
     def _plan_opening(self, engine: BattleEngine):
         """Opening phase: pick a target with weighted randomness, send assassins + snipers.
