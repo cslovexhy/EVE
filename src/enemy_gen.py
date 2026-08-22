@@ -232,3 +232,12 @@ def describe(underworld_power: float) -> dict:
         "level": _member_level(norm),
         "forts": len(_fort_types(norm)),
     }
+
+
+def police_net_worth(police_power: float) -> int:
+    """Net worth (100 x sum of member levels) of the police boss for a city,
+    without building the empire. Mirrors build_enemy(..., police=True): a roster
+    sized by the city's police power, every member at POLICE_LEVEL. Used to
+    preview the police reward in the UI so it matches what _run_police pays."""
+    norm = power_norm(police_power)
+    return 100 * _member_count(norm) * POLICE_LEVEL

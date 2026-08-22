@@ -19,6 +19,7 @@ import pygame
 
 import config
 import buildings
+import enemy_gen
 import game_state
 import world_map as wm
 from models import Empire, BuildingType, MemberClass
@@ -1283,7 +1284,8 @@ class MapScreen(_Screen):
             pop = city["population"]
             gdp_pc = int(city["gdp_thousands"] * 1000 / pop) if pop else 0
             if self.popup_police:
-                reward = int(city["reward"] * config.POLICE_REWARD_MULT)
+                reward = int(0.30 * enemy_gen.police_net_worth(city["police_power"])
+                             * config.POLICE_REWARD_MULT)
                 stats = [
                     f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
                     f"Police power (raid boss): {city['police_power']:,}",

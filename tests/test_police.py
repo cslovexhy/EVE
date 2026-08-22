@@ -64,6 +64,24 @@ class TestPoliceBoss(unittest.TestCase):
     def test_reward_multiplier_configured(self):
         self.assertGreaterEqual(config.POLICE_REWARD_MULT, 1.0)
 
+    def test_police_reward_scales_with_difficulty(self):
+        """The police reward is net-worth based, so a stronger city's police
+        (bigger roster) pays strictly more than a weaker city's — unlike the
+        old flat, GDP-percentile city reward which was capped and near-constant."""
+        weak = enemy_gen.police_net_worth(300)
+        strong = enemy_gen.police_net_worth(200000)
+        self.assertGreater(strong, weak)
+
+    def test_reward_preview_matches_actual(self):
+        """enemy_gen.police_net_worth (used for the UI preview) must equal the
+        real built boss's net worth (used to pay the reward), so what the popup
+        shows is what _run_police pays."""
+        import game_state
+        power = 150000
+        preview = enemy_gen.police_net_worth(power)
+        boss = enemy_gen.build_enemy(power, police=True)
+        self.assertEqual(preview, game_state.empire_net_worth(boss))
+
 
 if __name__ == "__main__":
     unittest.main()

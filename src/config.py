@@ -141,9 +141,12 @@ HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
 # --- Police raid boss ------------------------------------------------------
 # Once a city is conquered you can repeatedly "Challenge Police" — a much harder
 # fight built from the city's police_power. A win pays this multiple of the
-# city's base reward (harder fight => bigger payout). The city is never marked
-# conquered by this and there is no loss penalty.
-POLICE_REWARD_MULT = 2.0
+# standard war reward (30% of the police empire's net worth, i.e. 100 x sum of
+# member levels). The police boss is a maxed level-40 roster, so this is already
+# a large, difficulty-appropriate payout; the multiplier is the tuning knob for
+# how premium the elite fight should feel. The city is never marked conquered by
+# this and there is no loss penalty.
+POLICE_REWARD_MULT = 1.0
 
 # Health Packs
 HEALTH_PACKS_START = 8  # Starting health packs per battle

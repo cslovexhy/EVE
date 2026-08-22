@@ -14,7 +14,7 @@ import config
 import buildings
 import enemy_gen
 import world_map as wm
-from game_state import GameState
+from game_state import GameState, war_reward
 from models import top_rarity_recruit
 from screens import (MainMenu, EveLayout, MapScreen, GameOverScreen,
                      VictoryScreen, RecruitPopup, CapBlockedPopup)
@@ -91,7 +91,8 @@ class Game:
             if not (isinstance(result, tuple) and result[0] == "birthplace"):
                 return False
             cid = result[1]
-            if self._fight_city(cid):
+            won, _ = self._fight_city(cid)
+            if won:
                 self.state.set_birthplace(cid)
                 self.state.save()
                 VictoryScreen(self.screen, cid).run()
@@ -100,11 +101,12 @@ class Game:
             GameOverScreen(self.screen, cid).run()
             self.state = GameState()
 
-    def _fight_city(self, target_city_id: str, police: bool = False) -> bool:
+    def _fight_city(self, target_city_id: str, police: bool = False):
         """Run one EvE battle against a city's underworld (police=False) or its
         police raid boss (police=True), using the player's current base. Returns
-        True if the player won. On a win, a top-rarity recruit from the defeated
-        empire joins the Backup Force (popup shown)."""
+        (won, enemy) — enemy is the (defeated or victorious) enemy empire so the
+        caller can size a net-worth-based reward. On a win, a top-rarity recruit
+        from the defeated empire joins the Backup Force (popup shown)."""
         city = wm.get_city(target_city_id)
         city_name = wm.split_city_id(target_city_id)[-1]
 
@@ -126,7 +128,7 @@ class Game:
         won = session.run() is player
         if won:
             self._acquire_recruit(enemy)
-        return won
+        return won, enemy
 
     def _acquire_recruit(self, enemy):
         """Recruit a top-rarity member from a defeated enemy into the backup
@@ -140,7 +142,8 @@ class Game:
     def _run_war(self, target_city_id: str):
         """Wage war on an already-owned-region city. A win pays the city's
         reward and marks it conquered."""
-        if self._fight_city(target_city_id):
+        won, _ = self._fight_city(target_city_id)
+        if won:
             city = wm.get_city(target_city_id)
             self.state.money += (city["reward"] if city else 0)
             self.state.mark_conquered(target_city_id)
@@ -150,11 +153,14 @@ class Game:
         """Challenge the police raid boss of an already-conquered city. This is
         repeatable: the city stays conquered win or lose, nothing about map
         scope changes, and there is no loss penalty. A win pays an elevated
-        reward (POLICE_REWARD_MULT x the city reward) and persists."""
-        if self._fight_city(target_city_id, police=True):
-            city = wm.get_city(target_city_id)
-            base = city["reward"] if city else 0
-            self.state.money += int(base * config.POLICE_REWARD_MULT)
+        reward scaled to the boss's real strength — POLICE_REWARD_MULT x the
+        standard war_reward (30% of the police empire's net worth) — so the
+        payout tracks the hardest fight in the game rather than the flat,
+        GDP-percentile city reward."""
+        won, enemy = self._fight_city(target_city_id, police=True)
+        if won:
+            reward = int(war_reward(enemy) * config.POLICE_REWARD_MULT)
+            self.state.money += reward
             self.state.save()
 
 
