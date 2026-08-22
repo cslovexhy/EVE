@@ -27,11 +27,10 @@ class BattleEngine:
         self._pack_timer = {"player": 0.0, "enemy": 0.0}   # Hospital pack generation
         self._nuke_charge = {"player": 0.0, "enemy": 0.0}  # Nuclear Silo charge (seconds)
         
-        # Randomize enemy building placement and member assignment — unless the
-        # enemy was pre-built (e.g. scaled from a region's underworld power).
-        if not getattr(self.enemy, "building_order", None):
-            self._randomize_enemy_setup()
-        
+        # The enemy is expected to arrive pre-built (building_order +
+        # member_assignments), e.g. scaled from a region's underworld power by
+        # enemy_gen.build_enemy. Callers that construct an enemy directly must
+        # set enemy.building_order themselves.
         # Apply building types (and per-type HP) from each side's building_order
         self._apply_building_types()
         
@@ -197,83 +196,6 @@ class BattleEngine:
                     member.state = MemberState.DEFENDING
                     member.x = building.x + random.uniform(-15, 15)
                     member.y = building.y + random.uniform(-15, 15)
-    
-    def _randomize_enemy_setup(self):
-        """Randomize enemy building placement and member assignment.
-        
-        Building placement rules:
-        - HQ (index 0) NOT in slots 1/4/7/5/9 (indices 0,3,6,4,8) → only slots 2,3,5,6,8 (indices 1,2,4,5,7)
-        - Armory (index 1) NOT in slots 1/4/7 (indices 0,3,6)
-        - Hospital (index 2) NOT in slots 1/4/7 (indices 0,3,6)
-        - Other buildings: any slot
-        
-        Member assignment rules:
-        - All attackers (sniper/assassin/demo) assigned to HQ slot (50% of them)
-        - Enforcers fill defense slots in all buildings
-        """
-        # Building indices:
-        # 0=HQ, 1=Armory, 2=Hospital, 3=Warehouse, 4=Bunker, 5=Nuke, 6=Sniper Tower, 7=ResLab, 8=Safehouse
-        
-        # Step 1: Randomize building placement
-        FRONT_SLOTS = {0, 3, 6}             # Slots 1/4/7
-        HQ_BANNED = {0, 3, 6, 4, 8}         # Slots 1/4/7/5/9
-        ARMORY_HOSPITAL_BANNED = {0, 3, 6}   # Slots 1/4/7
-        
-        all_slots = set(range(9))
-        
-        # Place HQ first (most restricted)
-        hq_valid = list(all_slots - HQ_BANNED)  # indices 1,2,5,7 (slots 2,3,6,8)
-        hq_slot = random.choice(hq_valid)
-        
-        remaining_slots = list(all_slots - {hq_slot})
-        
-        # Place Armory (building index 1)
-        armory_valid = [s for s in remaining_slots if s not in ARMORY_HOSPITAL_BANNED]
-        armory_slot = random.choice(armory_valid)
-        remaining_slots.remove(armory_slot)
-        
-        # Place Hospital (building index 2)
-        hospital_valid = [s for s in remaining_slots if s not in ARMORY_HOSPITAL_BANNED]
-        hospital_slot = random.choice(hospital_valid)
-        remaining_slots.remove(hospital_slot)
-        
-        # Place remaining buildings (indices 3-8) randomly in remaining slots
-        random.shuffle(remaining_slots)
-        
-        # Build the order: building_order[slot] = building_name_index
-        building_order = [0] * 9
-        building_order[hq_slot] = 0         # HQ
-        building_order[armory_slot] = 1     # Armory
-        building_order[hospital_slot] = 2   # Hospital
-        
-        other_buildings = [3, 4, 5, 6, 7, 8]  # Warehouse, Bunker, Nuke, Sniper Tower, ResLab, Safehouse
-        for i, slot in enumerate(remaining_slots):
-            building_order[slot] = other_buildings[i]
-        
-        self.enemy.building_order = building_order
-        
-        # Step 2: Assign members
-        # All attackers (non-enforcers) go to HQ slot
-        # Enforcers spread across all buildings
-        enforcers = [i for i, m in enumerate(self.enemy.members)
-                     if m.member_class == MemberClass.ENFORCER]
-        attackers = [i for i, m in enumerate(self.enemy.members)
-                     if m.member_class != MemberClass.ENFORCER]
-        
-        member_assignments = [[] for _ in range(9)]
-        
-        # Attackers in HQ (up to 50% of them, the rest also in HQ since there's no other spec)
-        # Per the spec: "all attackers in HQ (50%)" — we interpret as all attackers go to HQ
-        member_assignments[hq_slot] = list(attackers)
-        
-        # Enforcers fill defense slots in all buildings
-        # Distribute enforcers evenly across all 9 slots
-        all_building_slots = list(range(9))
-        for i, enf_idx in enumerate(enforcers):
-            slot = all_building_slots[i % len(all_building_slots)]
-            member_assignments[slot].append(enf_idx)
-        
-        self.enemy.member_assignments = member_assignments
     
     def update(self, dt: float):
         """Main update tick. Called every frame."""

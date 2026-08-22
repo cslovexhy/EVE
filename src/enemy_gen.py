@@ -110,11 +110,52 @@ def _fort_types(norm: float) -> List[BuildingType]:
     return types[:9]
 
 
+# Slot placement bans (slot == index in the 9-length layout list).
+# Front slots are 1/4/7 (indices 0/3/6). Mirrors engine._assign_initial_defenders'
+# intent: keep the HQ (which the attacker stack sits on) and the Armory/Hospital
+# off the exposed front row so the enemy's attackers aren't dumped on the frontline.
+FRONT_SLOTS = {0, 3, 6}                 # slots 1/4/7
+HQ_BANNED_SLOTS = {0, 3, 6, 4, 8}       # slots 1/4/7/5/9
+ARMORY_HOSPITAL_BANNED_SLOTS = {0, 3, 6}  # slots 1/4/7
+
+
+def _place_layout(types: List[BuildingType], rng: random.Random) -> List[BuildingType]:
+    """Place a list of building types into 9 slots, honoring the front-slot bans
+    for HQ / Armory / Hospital. The remaining types fill the leftover slots
+    randomly. Returns a 9-length layout indexed by slot."""
+    layout: List[BuildingType] = [None] * 9
+    all_slots = set(range(9))
+
+    def place(bt: BuildingType, banned: set) -> None:
+        free = list(all_slots - {s for s, v in enumerate(layout) if v is not None})
+        valid = [s for s in free if s not in banned] or free  # fall back if over-constrained
+        slot = rng.choice(valid)
+        layout[slot] = bt
+
+    # Place the restricted types first (most-constrained first).
+    restricted = [
+        (BuildingType.HEADQUARTERS, HQ_BANNED_SLOTS),
+        (BuildingType.ARMORY, ARMORY_HOSPITAL_BANNED_SLOTS),
+        (BuildingType.HOSPITAL, ARMORY_HOSPITAL_BANNED_SLOTS),
+    ]
+    remaining = list(types)
+    for bt, banned in restricted:
+        if bt in remaining:
+            remaining.remove(bt)
+            place(bt, banned)
+
+    # Fill the rest into the open slots at random.
+    open_slots = [s for s, v in enumerate(layout) if v is None]
+    rng.shuffle(open_slots)
+    for slot, bt in zip(open_slots, remaining):
+        layout[slot] = bt
+    return layout
+
+
 def _make_layout(norm: float, rng: random.Random) -> List[BuildingType]:
     types = _fort_types(norm)
-    layout = types + [BuildingType.WAREHOUSE] * (9 - len(types))
-    rng.shuffle(layout)
-    return layout
+    types = types + [BuildingType.WAREHOUSE] * (9 - len(types))
+    return _place_layout(types, rng)
 
 
 def _assign_members(members: List[Member], building_order: List[int],

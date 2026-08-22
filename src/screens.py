@@ -965,7 +965,7 @@ class MapScreen(_Screen):
         self.prev_btn = None
         self.next_btn = None
         self.sort_mode = "underworld"   # county-list sort: alpha | underworld | gdp
-        self.sort_desc = True           # True = large->small, False = small->large
+        self.sort_desc = False          # True = large->small, False = small->large
         self.sort_button_rects = {}
         self.sort_dir_rect = None
 
