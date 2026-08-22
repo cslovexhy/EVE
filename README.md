@@ -74,6 +74,14 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-21 — Challenge Police (repeatable raid boss) + level-cap headroom
+
+- **Challenge Police**: once a city is **conquered**, clicking it on the map (war mode) now opens a **Challenge Police** popup instead of doing nothing. This is a **repeatable** end-of-city fight against the city's **police raid boss** — the toughest battle in the game. The city stays conquered win or lose, map scope is unaffected, and there is **no loss penalty**; on a win you get an **elevated reward** (`config.POLICE_REWARD_MULT = 2.0` × the city's base reward) plus the usual top-rarity **recruit** into the Backup Force.
+- **Police boss scaling** (`enemy_gen.build_enemy(..., police=True)`): a city's `police_power` is 2×–420× its gang `underworld_power` (and far above the reference max), so the boss is always a **maxed roster (80 members)** with the **top HQ level**, fought at an elite fixed **`POLICE_LEVEL = 40`** so its members out-stat any gang's.
+- **Level-cap headroom**: the old placeholder `MAX_LEVEL = 15` in `enemy_gen` was arbitrary — it only capped the *gang difficulty curve*, not any game rule (member stats scale unbounded at +15%/level in `models.Member.get_stats`). Raised to **30** so strong cities field genuinely high-level gangs (and richer recruits), with the police boss above that at 40.
+- **Wiring**: `MapScreen` gained a `popup_police` state; owned-city tiles show a "★ Challenge Police" hint; confirming emits `("police", cid)`, routed in `main` to the new `Game._run_police` (guarded by the same roster-cap check as regular wars). `_fight_city` grew a `police` flag shared by both paths.
+- Verified headless: police boss is 80× level-40 with a max HQ and out-levels the strongest gang; gang curve now tops out at 30; an end-to-end map click on a conquered city opens the police popup and yields `("police", cid)`. **56 unit tests pass** (`tests/test_police.py` +7); live save untouched.
+
 ### 2026-08-16 — Recruits + Backup Force + Roster Management UI
 
 - **Persisted roster**: the player roster is no longer regenerated deterministically each battle — it's saved in `player_profile.json` as `roster` (active) + `backup` (bench). Legacy saves auto-migrate by seeding the default 40 (`GameState.load` → `default_player_members`). `member_assignments` index the **active** roster and are validated against its size (`_valid_assignments(assignments, size)`). Battles use fresh member copies (`GameState.build_player_empire` + `Member.copy_identity`) so battle state never corrupts the saved roster.

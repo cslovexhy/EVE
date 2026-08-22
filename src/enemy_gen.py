@@ -16,7 +16,15 @@ from models import Empire, Member, MemberClass, Rarity, BuildingType
 
 MAX_MEMBERS = 80              # roster cap (docs/questions.md)
 MIN_MEMBERS = 4
-MAX_LEVEL = 15
+# Level ceiling for the *gang* difficulty curve. Not a hard game rule — member
+# stats scale linearly and unbounded with level (models.Member.get_stats:
+# +15%/level) — it's just the strongest a normal rival gang gets. Bumped from
+# the old placeholder 15 so the curve has real headroom (and so a top recruit
+# from a defeated gang can be meaningfully high level).
+MAX_LEVEL = 30
+# The police raid boss is the hardest fight in the game and is deliberately
+# elite: a full maxed roster whose members out-level any gang. See build_enemy.
+POLICE_LEVEL = 40
 REFERENCE_MAX_POWER = 80000  # ~ Virginia's strongest underworld (recalibrate for other states)
 
 # Fortification build order as a city grows stronger. Each entry is one stage;
@@ -177,14 +185,22 @@ def _assign_members(members: List[Member], building_order: List[int],
 
 
 def build_enemy(underworld_power: float, name: str = "Rival Gang",
-                seed: int = None) -> Empire:
-    """Build a scaled enemy Empire for the given underworld power. The returned
-    empire has members, building_order, and member_assignments pre-set, so the
-    battle engine will not randomize it."""
+                seed: int = None, police: bool = False) -> Empire:
+    """Build a scaled enemy Empire for the given power. The returned empire has
+    members, building_order, and member_assignments pre-set, so the battle
+    engine will not randomize it.
+
+    police=True builds the city's police raid boss: because a city's
+    police_power far exceeds any gang's underworld_power (and the reference
+    max), the roster is already maxed out — this additionally forces the elite
+    POLICE_LEVEL, the full fortification, and the top HQ level, making it the
+    hardest, repeatable end-of-city fight.
+    """
     rng = random.Random(seed if seed is not None else int(underworld_power))
     norm = power_norm(underworld_power)
 
-    members = _make_members(_member_count(norm), _member_level(norm), norm, rng)
+    level = POLICE_LEVEL if police else _member_level(norm)
+    members = _make_members(_member_count(norm), level, norm, rng)
     layout = _make_layout(norm, rng)
     order = buildings.building_order_from_layout(layout)
 
@@ -193,6 +209,8 @@ def build_enemy(underworld_power: float, name: str = "Rival Gang",
     hq_level = max(1, min(config.HQ_MAX_LEVEL,
                           math.ceil((count - config.BASE_MEMBER_CAP)
                                     / config.HQ_MEMBERS_PER_LEVEL)))
+    if police:
+        hq_level = config.HQ_MAX_LEVEL
     levels = [1] * 9
     if BuildingType.HEADQUARTERS in layout:
         levels[layout.index(BuildingType.HEADQUARTERS)] = hq_level

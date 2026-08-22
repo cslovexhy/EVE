@@ -927,6 +927,7 @@ class MapScreen(_Screen):
         self.state = state
         self.mode = mode
         self.popup_city = None      # city_id awaiting confirmation
+        self.popup_police = False    # True => the pending popup is a police raid
         self.item_rects = []        # (rect, value) for current level
         self.back_btn = Button(
             (40, config.SCREEN_HEIGHT - 80, 200, 52), "Back", self.font_btn,
@@ -990,6 +991,7 @@ class MapScreen(_Screen):
         if key in (pygame.K_q, pygame.K_ESCAPE):
             if self.popup_city is not None:
                 self.popup_city = None
+                self.popup_police = False
             else:
                 self._go_back()
         elif key in (pygame.K_LEFT, pygame.K_PAGEUP):
@@ -1000,11 +1002,15 @@ class MapScreen(_Screen):
     def handle_click(self, pos):
         if self.popup_city is not None:
             if self.popup_yes and self.popup_yes.hit(pos):
-                kind = "birthplace" if self.mode == "birthplace" else "battle"
+                if self.popup_police:
+                    kind = "police"
+                else:
+                    kind = "birthplace" if self.mode == "birthplace" else "battle"
                 self.result = (kind, self.popup_city)
                 self.done = True
             elif self.popup_no and self.popup_no.hit(pos):
                 self.popup_city = None
+                self.popup_police = False
             return
 
         if self.back_btn.hit(pos):
@@ -1045,8 +1051,12 @@ class MapScreen(_Screen):
         elif self.level == "city":
             cid = wm.city_id(self.sel_country, self.sel_state, self.sel_county, value)
             if self.mode == "war" and self.state.is_conquered(cid):
-                return  # already ours
+                # Already ours — offer the repeatable police raid instead.
+                self.popup_city = cid
+                self.popup_police = True
+                return
             self.popup_city = cid
+            self.popup_police = False
             return
         self.page = 0
 
@@ -1181,7 +1191,10 @@ class MapScreen(_Screen):
                     info1 = f"Pop {pop:,}    ${gdp_pc:,}/capita    crime {city['crime_rate']}"
                     info2 = f"Gang {city['underworld_power']:,}    Police {city['police_power']:,}"
                     if self.mode == "war":
-                        info2 += f"    Reward ${city['reward']:,}"
+                        if owned:
+                            info2 += "    \u2605 Challenge Police"
+                        else:
+                            info2 += f"    Reward ${city['reward']:,}"
             else:
                 if self.level == "country":
                     o, t, pct = wm.country_control(value, conquered)
@@ -1251,7 +1264,10 @@ class MapScreen(_Screen):
 
         _, _, _, city_name = wm.split_city_id(self.popup_city)
         city = wm.get_city(self.popup_city)
-        if self.mode == "birthplace":
+        if self.popup_police:
+            line1 = "Challenge the police in"
+            yes_label = "Challenge Police"
+        elif self.mode == "birthplace":
             line1 = "Rise as a new force in"
             yes_label = "Challenge the Gang"
         else:
@@ -1266,20 +1282,35 @@ class MapScreen(_Screen):
         if city:
             pop = city["population"]
             gdp_pc = int(city["gdp_thousands"] * 1000 / pop) if pop else 0
-            stats = [
-                f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
-                f"Gang power (underworld): {city['underworld_power']:,}",
-                f"Police power (raid boss): {city['police_power']:,}",
-            ]
-            if self.mode == "war":
-                stats.append(f"Reward on victory: ${city['reward']:,}")
+            if self.popup_police:
+                reward = int(city["reward"] * config.POLICE_REWARD_MULT)
+                stats = [
+                    f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
+                    f"Police power (raid boss): {city['police_power']:,}",
+                    f"Reward on victory: ${reward:,}",
+                ]
+                highlight = 1  # emphasise police power
+            else:
+                stats = [
+                    f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
+                    f"Gang power (underworld): {city['underworld_power']:,}",
+                    f"Police power (raid boss): {city['police_power']:,}",
+                ]
+                if self.mode == "war":
+                    stats.append(f"Reward on victory: ${city['reward']:,}")
+                highlight = 1
             sy = py + 108
             for i, s in enumerate(stats):
-                col = config.GOLD if i == 1 else config.LIGHT_GRAY
+                col = config.GOLD if i == highlight else config.LIGHT_GRAY
                 self.screen.blit(self.font_small.render(s, True, col),
                                  (panel.x + 40, sy))
                 sy += 24
-        if self.mode == "birthplace":
+        if self.popup_police:
+            note = self.font_small.render(
+                "The police are the toughest fight — and you can retry any time.",
+                True, config.LIGHT_GRAY)
+            self.screen.blit(note, note.get_rect(centerx=panel.centerx, y=py + ph - 116))
+        elif self.mode == "birthplace":
             warn = self.font_small.render(
                 "Lose and your path ends here — you start over.", True, config.RED)
             self.screen.blit(warn, warn.get_rect(centerx=panel.centerx, y=py + ph - 116))

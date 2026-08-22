@@ -65,6 +65,13 @@ class Game:
                     else:
                         self._run_war(result[1])
                     screen_name = "map"   # return to the map after the battle
+                elif isinstance(result, tuple) and result[0] == "police":
+                    if self.state.roster_over_cap():
+                        CapBlockedPopup(self.screen, len(self.state.roster),
+                                        self.state.member_cap()).run()
+                    else:
+                        self._run_police(result[1])
+                    screen_name = "map"   # return to the map after the raid
                 else:
                     screen_name = "menu"
             elif screen_name == "quit":
@@ -93,19 +100,25 @@ class Game:
             GameOverScreen(self.screen, cid).run()
             self.state = GameState()
 
-    def _fight_city(self, target_city_id: str) -> bool:
-        """Run one EvE battle against a city's underworld, using the player's
-        current base. Returns True if the player won. On a win, a top-rarity
-        recruit from the defeated empire joins the Backup Force (popup shown)."""
+    def _fight_city(self, target_city_id: str, police: bool = False) -> bool:
+        """Run one EvE battle against a city's underworld (police=False) or its
+        police raid boss (police=True), using the player's current base. Returns
+        True if the player won. On a win, a top-rarity recruit from the defeated
+        empire joins the Backup Force (popup shown)."""
         city = wm.get_city(target_city_id)
-        power = city["underworld_power"] if city else 0
         city_name = wm.split_city_id(target_city_id)[-1]
 
         player = self.state.build_player_empire("Your Empire")
         order = buildings.building_order_from_layout(self.state.building_layout)
         member_assignments = [list(s) for s in player.member_assignments]
 
-        enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld")
+        if police:
+            power = city["police_power"] if city else 0
+            enemy = enemy_gen.build_enemy(power, name=f"{city_name} Police",
+                                          police=True)
+        else:
+            power = city["underworld_power"] if city else 0
+            enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld")
 
         session = BattleSession(self.screen, player, enemy,
                                 building_order=order,
@@ -131,6 +144,17 @@ class Game:
             city = wm.get_city(target_city_id)
             self.state.money += (city["reward"] if city else 0)
             self.state.mark_conquered(target_city_id)
+            self.state.save()
+
+    def _run_police(self, target_city_id: str):
+        """Challenge the police raid boss of an already-conquered city. This is
+        repeatable: the city stays conquered win or lose, nothing about map
+        scope changes, and there is no loss penalty. A win pays an elevated
+        reward (POLICE_REWARD_MULT x the city reward) and persists."""
+        if self._fight_city(target_city_id, police=True):
+            city = wm.get_city(target_city_id)
+            base = city["reward"] if city else 0
+            self.state.money += int(base * config.POLICE_REWARD_MULT)
             self.state.save()
 
 

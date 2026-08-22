@@ -138,6 +138,13 @@ HQ_LEVEL_HP = {1: 1300, 2: 1700, 3: 2200, 4: 3000}
 # Building an HQ (Warehouse -> HQ) costs BUILDING_TYPES cost and yields Lv1.
 HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
 
+# --- Police raid boss ------------------------------------------------------
+# Once a city is conquered you can repeatedly "Challenge Police" — a much harder
+# fight built from the city's police_power. A win pays this multiple of the
+# city's base reward (harder fight => bigger payout). The city is never marked
+# conquered by this and there is no loss penalty.
+POLICE_REWARD_MULT = 2.0
+
 # Health Packs
 HEALTH_PACKS_START = 8  # Starting health packs per battle
 
