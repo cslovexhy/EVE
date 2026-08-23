@@ -123,14 +123,10 @@ class BattleSession:
             self.order_system.feedback_timer = 1.5
             return
 
-        building = self.player_empire.buildings[building_index]
-        if building.destroyed:
-            self.order_system.feedback_msg = "Building is destroyed"
-            self.order_system.feedback_timer = 1.5
-            return
-
-        # Shared heal logic (identical for player and AI): revive one random
-        # dead defender assigned to THIS building, in place.
+        # Note: a destroyed building can still hold dead members orphaned in the
+        # rubble (e.g. a nuke that flattened the building without killing its
+        # occupants). heal_building revives them in place; only a truly empty
+        # slot returns None below.
         member = self.player_empire.heal_building(building_index)
         if member is None:
             self.order_system.feedback_msg = "No more dead members to heal here"
@@ -215,7 +211,8 @@ class BattleSession:
         enemy_frac = self.engine.nuke_charge_fraction(self.enemy_empire)
         if (not self.engine.battle_over and enemy_frac is not None
                 and enemy_frac >= config.ENEMY_NUKE_THRESHOLD):
-            targets = [b for b in self.player_empire.buildings if not b.destroyed]
+            targets = [b for b in self.player_empire.buildings
+                       if self.engine.is_slot_targetable(self.player_empire, b.index)]
             if targets:
                 best = max(targets, key=lambda b: sum(
                     1 for m in self.player_empire.members
@@ -225,7 +222,9 @@ class BattleSession:
     def _enemy_building_at(self, pos):
         size = config.BUILDING_SIZE
         for b in self.enemy_empire.buildings:
-            if b.destroyed:
+            # Rubble slots that still hold a live member remain targetable, so a
+            # nuke can finish off members orphaned by an earlier blast.
+            if not self.engine.is_slot_targetable(self.enemy_empire, b.index):
                 continue
             rect = pygame.Rect(int(b.x) - size // 2, int(b.y) - size // 2, size, size)
             if rect.collidepoint(pos):

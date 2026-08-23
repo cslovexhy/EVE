@@ -234,6 +234,23 @@ class BattleEngine:
         return [b for b in empire.buildings
                 if b.building_type == btype and not b.destroyed]
 
+    def slot_has_live_member(self, empire: Empire, index: int) -> bool:
+        """True if any living member is assigned to this slot (regardless of
+        whether the building there is destroyed)."""
+        return any(m.is_alive and m.assigned_building == index
+                   for m in empire.members)
+
+    def is_slot_targetable(self, empire: Empire, index: int) -> bool:
+        """A slot is a valid attack/nuke target while there is still something
+        to hit there: a live member (even if the building is rubble — this is
+        what keeps nuked-but-alive members targetable), OR a standing building.
+        Only a destroyed building with no living members is a dead slot."""
+        if not (0 <= index < len(empire.buildings)):
+            return False
+        if self.slot_has_live_member(empire, index):
+            return True
+        return not empire.buildings[index].destroyed
+
     def _bunkers_shielded(self, empire: Empire) -> bool:
         """A side's bunkers are protected from structural damage until the
         defenders in ALL of its bunkers are eliminated (i.e. while any bunker
@@ -279,6 +296,10 @@ class BattleEngine:
         holds defenders. The AI uses this to avoid wasting ammo on such
         bunkers; the player order path keeps the two checks separate so it can
         show a distinct 'Find the other bunker…' hint."""
+        target = self.player if not is_player else self.enemy
+        # A destroyed slot with no living members is a dead slot — nothing to hit.
+        if not self.is_slot_targetable(target, building_index):
+            return False
         if not self.is_attackable_by_class(building_index, member_class, is_player=is_player):
             return False
         if self.attack_block_reason(building_index, is_player=is_player) is not None:
@@ -723,7 +744,7 @@ class BattleEngine:
                                    the bunker shield is up (then 0).
         """
         target_bldg = proj.target_building
-        if target_bldg is None or target_bldg.destroyed:
+        if target_bldg is None:
             return
 
         target_empire = (self.player if target_bldg in self.player.buildings
@@ -736,8 +757,9 @@ class BattleEngine:
         ]
 
         if defenders_now:
+            # Live member present — hit them, even if the building is rubble.
             self._apply_member_hit(random.choice(defenders_now), proj.damage)
-        else:
+        elif not target_bldg.destroyed:
             self._apply_building_hit(target_empire, target_bldg, proj.building_damage)
 
     def _apply_member_hit(self, target_member, damage):

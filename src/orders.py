@@ -184,12 +184,12 @@ class OrderSystem:
         self.hovered_building = None
         if self.has_class_selected or self.heal_mode:
             for b in player_buildings:
-                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                if self._building_rect(b).collidepoint(mx, my):
                     self.hovered_building = ("player", b.index)
                     return
             if not self.heal_mode:
                 for b in enemy_buildings:
-                    if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                    if self._building_rect(b).collidepoint(mx, my):
                         self.hovered_building = ("enemy", b.index)
                         return
     
@@ -215,10 +215,12 @@ class OrderSystem:
                 self.heal_mode = False  # Exit heal mode on class select
                 return None
         
-        # If in heal mode, clicking a player building triggers heal
+        # If in heal mode, clicking a player building triggers heal. Destroyed
+        # slots are still clickable so dead members orphaned in rubble can be
+        # revived; Empire.heal_building validates there is someone to revive.
         if self.heal_mode:
             for b in player_buildings:
-                if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+                if self._building_rect(b).collidepoint(mx, my):
                     self.heal_mode = False
                     return ("heal_building", b.index)
             return None
@@ -227,9 +229,11 @@ class OrderSystem:
         if not self.has_class_selected:
             return None
         
-        # Check enemy buildings → attack (with visibility check)
+        # Check enemy buildings → attack (with visibility check). Destroyed
+        # slots are still clickable so you can finish off members orphaned in
+        # rubble (e.g. left alive by a nuke that flattened their building).
         for b in enemy_buildings:
-            if not b.destroyed and self._building_rect(b).collidepoint(mx, my):
+            if self._building_rect(b).collidepoint(mx, my):
                 # Check if selected class can reach this building
                 if engine and self.selected_class is not None:
                     if not engine.is_attackable_by_class(b.index, self.selected_class, is_player=True):

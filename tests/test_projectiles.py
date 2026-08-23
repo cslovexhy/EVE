@@ -169,5 +169,51 @@ class TestBunkerShield(_Base):
         self.assertAlmostEqual(empty_bunker.hp, hp0 - 40, places=3)
 
 
+class TestOrphanedMemberTargeting(_Base):
+    def test_live_member_in_destroyed_slot_is_targetable(self):
+        """A living member left in a destroyed slot (e.g. by a nuke) stays a
+        valid target instead of becoming untargetable."""
+        layout = [BuildingType.WAREHOUSE] * 9
+        guard = make_member("Orphan", MemberClass.ENFORCER, 0)
+        eng = self._engine(layout, [guard], [[0]] + [[] for _ in range(8)])
+        bldg = eng.player.buildings[0]
+        bldg.destroyed = True  # rubble, but guard is still alive & assigned here
+
+        self.assertTrue(eng.slot_has_live_member(eng.player, 0))
+        self.assertTrue(eng.is_slot_targetable(eng.player, 0))
+
+    def test_projectile_hits_orphaned_member_in_rubble(self):
+        """A shot into a destroyed slot damages the live member there."""
+        layout = [BuildingType.WAREHOUSE] * 9
+        guard = make_member("Orphan", MemberClass.ENFORCER, 0)
+        guard.state = MemberState.DEFENDING
+        eng = self._engine(layout, [guard], [[0]] + [[] for _ in range(8)])
+        bldg = eng.player.buildings[0]
+        bldg.destroyed = True
+        ghp0 = guard.hp
+
+        proj = self._landed_proj(bldg, guard, dmg_member=20, dmg_building=8)
+        eng.projectiles = [proj]
+        eng._update_projectiles(0.1)
+
+        self.assertLess(guard.hp, ghp0)  # orphan took the hit
+
+    def test_dead_empty_destroyed_slot_not_targetable(self):
+        """A destroyed slot with no living members is a dead slot."""
+        layout = [BuildingType.WAREHOUSE] * 9
+        eng = self._engine(layout, [], [[] for _ in range(9)])
+        eng.player.buildings[0].destroyed = True
+        self.assertFalse(eng.is_slot_targetable(eng.player, 0))
+        self.assertFalse(
+            eng.worthwhile_target(0, MemberClass.SNIPER, is_player=False))
+
+    def test_standing_empty_building_is_targetable(self):
+        """An intact building with no defenders is still targetable (to damage
+        the building)."""
+        layout = [BuildingType.WAREHOUSE] * 9
+        eng = self._engine(layout, [], [[] for _ in range(9)])
+        self.assertTrue(eng.is_slot_targetable(eng.player, 0))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -103,8 +103,6 @@ class BattleAI:
             # fall back to any building with a dead defender.
             best_slot, best_attack_dead, best_any_dead = None, 0, 0
             for slot, b in enumerate(self.empire.buildings):
-                if b.destroyed:
-                    continue
                 dead_here = [m for m in self.empire.members
                              if m.state == MemberState.DEAD
                              and m.assigned_building == slot]
@@ -158,10 +156,11 @@ class BattleAI:
                     valid_weighted.append((target_idx, weight))
         
         if not valid_weighted:
-            # Fallback: any reachable building
+            # Fallback: any reachable building (incl. rubble slots that still
+            # hold a live member — worthwhile_target excludes truly-dead slots)
             valid_targets = [
                 b.index for b in self.enemy.buildings
-                if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
+                if engine.worthwhile_target(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
             ]
             if not valid_targets:
                 self.phase = "cleanup"
@@ -246,7 +245,7 @@ class BattleAI:
             # Snipers target same building or a nearby one
             valid_sniper_targets = [
                 b.index for b in self.enemy.buildings
-                if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.SNIPER, is_player=self.is_player)
+                if engine.worthwhile_target(b.index, MemberClass.SNIPER, is_player=self.is_player)
             ]
             if valid_sniper_targets:
                 sniper_target = self.current_target if self.current_target in valid_sniper_targets else self.rng.choice(valid_sniper_targets)
@@ -263,7 +262,7 @@ class BattleAI:
         # Find newly reachable targets
         valid_targets = [
             b.index for b in self.enemy.buildings
-            if not b.destroyed and engine.worthwhile_target(b.index, MemberClass.DEMOLITIONIST, is_player=self.is_player)
+            if engine.worthwhile_target(b.index, MemberClass.DEMOLITIONIST, is_player=self.is_player)
         ]
         
         if not valid_targets:
@@ -304,7 +303,7 @@ class BattleAI:
         """Cleanup: send everything at remaining buildings."""
         valid_targets = [
             b.index for b in self.enemy.buildings
-            if not b.destroyed
+            if engine.is_slot_targetable(self.enemy, b.index)
         ]
         if not valid_targets:
             return

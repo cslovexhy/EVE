@@ -294,16 +294,17 @@ class Empire:
         """Use a health pack to revive one random dead defender ASSIGNED to the
         given building, reviving them IN PLACE. Shared by the player (H → click
         building) and the AI so both sides heal identically. Does not relocate
-        the member or change the base layout. Returns the revived member, or
-        None if no pack is available or no dead defender is assigned there."""
+        the member or change the base layout. Works even if the building itself
+        is destroyed (dead members can be orphaned in the rubble, e.g. by a nuke
+        that flattened the building without killing its occupants). Returns the
+        revived member, or None if no pack is available or no dead defender is
+        assigned there."""
         import random
         if self.health_packs <= 0:
             return None
         if not (0 <= building_index < len(self.buildings)):
             return None
         building = self.buildings[building_index]
-        if building.destroyed:
-            return None
 
         dead_here = [m for m in self.members
                      if m.state == MemberState.DEAD

@@ -74,6 +74,16 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-23 — No untargetable members: act on any visible slot
+
+- **Problem:** a nuke damages members and the building independently, so it could flatten a building while its occupants survived — leaving a **live member orphaned in a destroyed slot**. Since every attack/nuke/heal/click path gated on `not building.destroyed`, that member became **untargetable** (and unhealable) for the rest of the battle.
+- **Fix — a slot is actionable while there is still something there.** New engine helpers `slot_has_live_member` / `is_slot_targetable` (targetable = has a living member, even in rubble, OR a standing building). All the `destroyed` gates on *actions* now defer to this:
+  - **Attack** (player click + AI target phases, funnelled through `worthwhile_target`, which now rejects only truly-dead slots): you can fire into a destroyed enemy slot to finish off orphaned members.
+  - **Nuke** (player target picker + enemy auto-target): can target rubble slots that still hold live members; the blast already damaged members regardless of building state.
+  - **Heal** (own slots — player H-click, AI, and `Empire.heal_building`): revives dead members orphaned in a destroyed slot, in place.
+- **Unchanged rules:** building *powers* still deactivate when their building is destroyed (`_active_of_type`); the double-bunker shield still zeroes structural damage; a destroyed slot with **no** living members is a dead slot (not targetable, heal returns None, pack preserved). Visibility already treated destroyed slots as visible, so no fog change was needed.
+- Verified headless: a live member orphaned in rubble is targetable and can be finished off (slot then becomes non-targetable); a dead orphan in rubble heals back to full; empty destroyed slots stay dead. **68 unit tests pass** (`tests/test_projectiles.py` +5, `test_heal.py` updated); live save untouched.
+
 ### 2026-08-23 — Unified projectile damage (close the heal-cancel exploit)
 
 - **Building + defenders are one damage sink, resolved at impact.** Previously a shot locked onto a specific `target_member` at fire time and was **cancelled outright** if that member died before impact — so watching the incoming barrage and letting/healing the targeted defender away made a full volley deal **zero** damage (a strong enough exploit to beat the toughest gang). Now a shot in flight is never cancelled: at impact the engine recomputes live defenders at the target building and either damages a live defender (member damage) or, **if none remain, rolls the damage straight onto the building** (building damage).

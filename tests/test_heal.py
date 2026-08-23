@@ -204,7 +204,11 @@ class TestEmpireHealBuilding(unittest.TestCase):
         self.assertIsNone(e.heal_building(0))
         self.assertEqual(m.state, MemberState.DEAD)
 
-    def test_destroyed_building_returns_none(self):
+    def test_destroyed_building_can_still_revive_orphaned_member(self):
+        # A member can be orphaned (still assigned, dead) in a destroyed slot,
+        # e.g. a nuke that flattened the building without killing its occupants.
+        # Healing must still revive them in place so they never become an
+        # untargetable live member later.
         e = self._empire()
         e.buildings[0].destroyed = True
         m = Member(name="Dead", member_class=MemberClass.SNIPER,
@@ -213,6 +217,17 @@ class TestEmpireHealBuilding(unittest.TestCase):
         m.state = MemberState.DEAD
         e.members = [m]
 
+        revived = e.heal_building(0)
+        self.assertIs(revived, m)
+        self.assertEqual(m.state, MemberState.DEFENDING)
+        self.assertEqual(m.hp, m.max_hp)
+        self.assertEqual(m.assigned_building, 0)
+
+    def test_empty_slot_still_returns_none(self):
+        # No dead member assigned there -> nothing to revive, pack preserved.
+        e = self._empire()
+        e.buildings[0].destroyed = True
+        e.members = []
         self.assertIsNone(e.heal_building(0))
 
     def test_player_path_delegates_to_shared_logic(self):
