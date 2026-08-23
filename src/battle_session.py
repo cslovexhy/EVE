@@ -170,6 +170,11 @@ class BattleSession:
             self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
         elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
             self.speed_idx = max(0, self.speed_idx - 1)
+        elif key == pygame.K_m:
+            import sound
+            muted = sound.toggle_muted()
+            self.order_system.feedback_msg = "Sound muted" if muted else "Sound on"
+            self.order_system.feedback_timer = 1.2
 
     def _execute_player_order(self, order):
         if order.action == OrderAction.ATTACK:

@@ -74,6 +74,14 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-23 — Battle sound effects
+
+- **8 SFX wired into battle**, each auditioned and approved: per-class fire (assassin/sniper = Kenney CC0 lasers; enforcer = real Desert Eagle; demolitionist = rocket launcher), member death scream, demolitionist building-hit explosion (trimmed to 1.5 s so rapid fire doesn't smear), building-destroyed collapse, and nuke detonation. Deliberately **no** generic member-hit sound and **no** building-hit sound for non-demo classes (avoids audio spam).
+- **`sound.py` manager** — thin, headless-safe wrapper over `pygame.mixer`: if the mixer can't init (no audio device / dummy driver / CI), every call becomes a no-op instead of raising, so unit tests stay silent and green. Preloads a bank keyed by logical name, per-event volume trims, master volume, and a mute toggle.
+- **Triggers** (`engine.py`): `play_for_class` on each shot fired; `member_death` on any kill (projectile + nuke blast); `building_hit_explosion` only for `ProjectileType.DEMO` building hits; `building_destroyed` on collapse; `nuke` on launch. `main.py` calls `sound.init(muted="--mute" in argv)`; **M** toggles mute mid-battle (`battle_session`).
+- **Assets** live in `assets/sounds/*.ogg` (44.1 kHz, tracked in git — small & license-clean) with `CREDITS.md` (Kenney CC0 + Pixabay/Freesound Content License, no attribution required).
+- Verified: sound init is a safe no-op under the dummy audio driver; **68 unit tests pass**; a scripted real-audio run fired each class, a death scream, a demo explosion, and a building collapse without errors; live save untouched.
+
 ### 2026-08-23 — No untargetable members: act on any visible slot
 
 - **Problem:** a nuke damages members and the building independently, so it could flatten a building while its occupants survived — leaving a **live member orphaned in a destroyed slot**. Since every attack/nuke/heal/click path gated on `not building.destroyed`, that member became **untargetable** (and unhealable) for the rest of the battle.

@@ -9,6 +9,7 @@ from models import (
 )
 import config
 import buildings
+import sound
 
 
 class BattleEngine:
@@ -349,6 +350,7 @@ class BattleEngine:
         side = "PLAYER" if empire is self.player else "ENEMY"
         self._log(f"{side} launched NUKE on building {target_index+1} "
                   f"at {int(frac*100)}% charge (3x3 blast)")
+        sound.play("nuke")
 
         for idx in block:
             # Members in the blast.
@@ -356,6 +358,7 @@ class BattleEngine:
                 if m.is_alive and m.assigned_building == idx:
                     m.take_damage(mem_dmg)
                     if not m.is_alive:
+                        sound.play("member_death")
                         for b in target_empire.buildings:
                             if m in b.defenders:
                                 b.defenders.remove(m)
@@ -366,6 +369,7 @@ class BattleEngine:
             if not bldg.destroyed:
                 bldg.take_damage(bldg_dmg)
                 if bldg.destroyed:
+                    sound.play("building_destroyed")
                     empire.points += config.POINTS_PER_BUILDING_DESTROYED
         return True
     
@@ -428,6 +432,7 @@ class BattleEngine:
             
             # All classes fire projectiles from current position
             self._fire_projectile(member, target_bldg, target_empire)
+            sound.play_for_class(member.member_class)
             
             member.attack_cooldown = member.get_stats()["attack_interval"]
             
@@ -760,7 +765,8 @@ class BattleEngine:
             # Live member present — hit them, even if the building is rubble.
             self._apply_member_hit(random.choice(defenders_now), proj.damage)
         elif not target_bldg.destroyed:
-            self._apply_building_hit(target_empire, target_bldg, proj.building_damage)
+            self._apply_building_hit(target_empire, target_bldg, proj.building_damage,
+                                     proj.projectile_type)
 
     def _apply_member_hit(self, target_member, damage):
         """Damage a defender; on death, remove from its building and award points."""
@@ -772,6 +778,7 @@ class BattleEngine:
                   f"'{target_member.name}' for {hp_before-hp_after:.1f} dmg "
                   f"(HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
         if not target_member.is_alive:
+            sound.play("member_death")
             for bldg in self.player.buildings + self.enemy.buildings:
                 if target_member in bldg.defenders:
                     bldg.defenders.remove(target_member)
@@ -785,14 +792,21 @@ class BattleEngine:
                 self._log(f"ENEMY killed player {target_member.member_class.value} "
                           f"'{target_member.name}'")
 
-    def _apply_building_hit(self, target_empire, target_bldg, damage):
-        """Damage a defenderless building; the bunker shield reduces damage to 0."""
+    def _apply_building_hit(self, target_empire, target_bldg, damage, proj_type=None):
+        """Damage a defenderless building; the bunker shield reduces damage to 0.
+
+        A demolitionist's shot lands as an RPG explosion sound; other classes'
+        building hits are intentionally silent (only the demo gets the boom).
+        """
         if not self._can_damage_building(target_empire, target_bldg):
             return  # bunker shield: structural damage reduced to 0
+        if proj_type == ProjectileType.DEMO:
+            sound.play("building_hit_explosion")
         target_bldg.take_damage(damage)
         self._log(f"HIT building {target_bldg.index+1} for {damage:.1f} dmg "
                   f"(HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
         if target_bldg.destroyed:
+            sound.play("building_destroyed")
             if target_bldg in self.enemy.buildings:
                 self.player.points += config.POINTS_PER_BUILDING_DESTROYED
                 self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")

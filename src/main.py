@@ -31,6 +31,11 @@ class Game:
         config.SCREEN_WIDTH = display_info.current_w
         config.SCREEN_HEIGHT = display_info.current_h
 
+        # Audio: initialize the SFX mixer. Safe no-op if no audio device is
+        # available (headless). Pass --mute to start silent.
+        import sound
+        sound.init(muted=("--mute" in sys.argv))
+
         self.screen = pygame.display.set_mode(
             (config.SCREEN_WIDTH, config.SCREEN_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption(config.TITLE)
