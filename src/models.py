@@ -70,8 +70,9 @@ class Projectile:
     damage: float             # Damage to deal on impact
     projectile_type: ProjectileType
     target_member: Optional['Member'] = None    # If targeting a member
-    target_building: Optional['Building'] = None  # If targeting a building
-    hit_building_directly: bool = False  # True = damage building, False = damage member
+    target_building: Optional['Building'] = None  # The building this shot is aimed at
+    hit_building_directly: bool = False  # True = aimed at the building, False = aimed at a defender
+    building_damage: float = 0.0  # Damage applied if this shot rolls over onto the building
     missed: bool = False      # If this shot will miss (pre-determined)
     alive: bool = True        # Set to False when it hits or target dies
 

@@ -74,6 +74,14 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-23 — Unified projectile damage (close the heal-cancel exploit)
+
+- **Building + defenders are one damage sink, resolved at impact.** Previously a shot locked onto a specific `target_member` at fire time and was **cancelled outright** if that member died before impact — so watching the incoming barrage and letting/healing the targeted defender away made a full volley deal **zero** damage (a strong enough exploit to beat the toughest gang). Now a shot in flight is never cancelled: at impact the engine recomputes live defenders at the target building and either damages a live defender (member damage) or, **if none remain, rolls the damage straight onto the building** (building damage).
+- **Bunker shield is the only zeroing condition.** A defenderless bunker still takes **0** structural damage while the double-bunker shield is up (any bunker on that side still holds a live defender) — intended, unchanged.
+- **Legitimate defence still works:** healing to keep a defender alive still absorbs the shot into that defender and spares the building; you just can't make the barrage *disappear* anymore.
+- **Implementation** (`engine._update_projectiles`): removed the "target member died → cancel" early-out (dead-target shots now steer to the building and land); every projectile now carries `target_building` + a `building_damage` rollover value (`models.Projectile`); impact resolution unified into `_resolve_projectile_impact` / `_apply_member_hit` / `_apply_building_hit`.
+- Verified headless: dead-defender shot rolls onto the building; live defender absorbs and building is spared; two same-tick shots kill the last defender then hit the building; shielded bunker takes 0, unshielded bunker takes full; a 10-shot barrage kills a lone guard then erodes the building (500→290). **63 unit tests pass** (`tests/test_projectiles.py` +5); live save untouched.
+
 ### 2026-08-21 — Challenge Police (repeatable raid boss) + level-cap headroom
 
 - **Challenge Police**: once a city is **conquered**, clicking it on the map (war mode) now opens a **Challenge Police** popup instead of doing nothing. This is a **repeatable** end-of-city fight against the city's **police raid boss** — the toughest battle in the game. The city stays conquered win or lose, map scope is unaffected, and there is **no loss penalty**; on a win you get an **elevated reward** (`config.POLICE_REWARD_MULT = 2.0` × the city's base reward) plus the usual top-rarity **recruit** into the Backup Force.

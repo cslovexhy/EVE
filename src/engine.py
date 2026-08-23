@@ -617,7 +617,10 @@ class BattleEngine:
         ]
         
         if defenders_at_building:
-            # Fire at a random defender
+            # Fire at a random defender. The shot also carries the building it's
+            # defending + the building-damage value, so if that defender is gone
+            # by impact the damage rolls straight onto the building instead of
+            # being wasted (building + defenders are one damage sink).
             target_member = random.choice(defenders_at_building)
             
             proj = Projectile(
@@ -627,6 +630,8 @@ class BattleEngine:
                 damage=stats["damage_player"] * dmg_mult,
                 projectile_type=proj_type,
                 target_member=target_member,
+                target_building=target_bldg,
+                building_damage=stats["damage_building"] * dmg_mult,
                 missed=False,
             )
             self.projectiles.append(proj)
@@ -641,6 +646,7 @@ class BattleEngine:
                     projectile_type=proj_type,
                     target_building=target_bldg,
                     hit_building_directly=True,
+                    building_damage=stats["damage_building"] * dmg_mult,
                 )
                 self.projectiles.append(proj)
     
@@ -667,117 +673,110 @@ class BattleEngine:
         self.projectiles.append(proj)
     
     def _update_projectiles(self, dt: float):
-        """Move projectiles and resolve impacts."""
+        """Move projectiles and resolve impacts.
+
+        Building + its defenders are treated as ONE damage sink, resolved at the
+        moment of impact (not when the shot was fired). A shot in flight is never
+        cancelled by the targeted defender dying or being healed away: if a live
+        defender is present at impact it takes the hit; if none remain, the
+        damage rolls straight onto the building. The only thing that can zero out
+        building damage is the double-bunker shield (a bunker with >0 defenders
+        elsewhere), which is intended, not the heal-cancel exploit.
+        """
         for proj in self.projectiles:
             if not proj.alive:
                 continue
-            
-            # If target member died before impact, kill projectile
-            if proj.target_member and not proj.target_member.is_alive:
-                proj.alive = False
-                continue
-            
-            # Update target position (track moving targets)
+
+            # Track a live target member; if it's gone, steer toward the building
+            # it was defending so the shot still lands (damage rolls to building).
             if proj.target_member and proj.target_member.is_alive:
                 proj.target_x = proj.target_member.x
                 proj.target_y = proj.target_member.y
-            
+            elif proj.target_building is not None:
+                proj.target_x = proj.target_building.x
+                proj.target_y = proj.target_building.y
+
             # Move toward target
             dx = proj.target_x - proj.x
             dy = proj.target_y - proj.y
             dist = math.sqrt(dx * dx + dy * dy)
-            
+
             if dist <= proj.speed * dt + 5:
                 # Impact!
                 proj.alive = False
-                
                 if proj.missed:
                     continue  # Missed shot, no damage
-                
-                if proj.hit_building_directly and proj.target_building:
-                    # Re-check for defenders — a healed member may now be here
-                    target_bldg = proj.target_building
-                    if not target_bldg.destroyed:
-                        # Determine which empire owns this building
-                        if target_bldg in self.player.buildings:
-                            target_empire = self.player
-                        else:
-                            target_empire = self.enemy
-                        
-                        defenders_now = [
-                            m for m in target_empire.members
-                            if m.is_alive and m.assigned_building == target_bldg.index
-                            and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
-                        ]
-                        
-                        if defenders_now:
-                            # Redirect damage to a defender instead of building
-                            target_member = random.choice(defenders_now)
-                            hp_before = target_member.hp
-                            target_member.take_damage(proj.damage)
-                            hp_after = target_member.hp
-                            if target_member in self.enemy.members:
-                                shooter_side = "PLAYER"
-                            else:
-                                shooter_side = "ENEMY"
-                            self._log(f"{shooter_side} hit {target_member.member_class.value} '{target_member.name}' for {hp_before-hp_after:.1f} dmg (HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
-                            if not target_member.is_alive:
-                                for bldg in self.player.buildings + self.enemy.buildings:
-                                    if target_member in bldg.defenders:
-                                        bldg.defenders.remove(target_member)
-                                        break
-                                if target_member in self.enemy.members:
-                                    self.player.points += config.POINTS_PER_MEMBER_KILLED
-                                    self._log(f"PLAYER killed enemy {target_member.member_class.value} '{target_member.name}'")
-                                else:
-                                    self.enemy.points += config.POINTS_PER_MEMBER_KILLED
-                                    self._log(f"ENEMY killed player {target_member.member_class.value} '{target_member.name}'")
-                        else:
-                            # No defenders — damage building (bunkers resist while shielded)
-                            if not self._can_damage_building(target_empire, target_bldg):
-                                pass
-                            else:
-                                target_bldg.take_damage(proj.damage)
-                                self._log(f"HIT building {target_bldg.index+1} for {proj.damage:.1f} dmg (HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
-                                if target_bldg.destroyed:
-                                    if target_bldg in self.enemy.buildings:
-                                        self.player.points += config.POINTS_PER_BUILDING_DESTROYED
-                                        self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")
-                                    else:
-                                        self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
-                                        self._log(f"ENEMY destroyed player building {target_bldg.index+1}")
-                elif proj.target_member and proj.target_member.is_alive:
-                    # Damage member
-                    hp_before = proj.target_member.hp
-                    proj.target_member.take_damage(proj.damage)
-                    hp_after = proj.target_member.hp
-                    # Determine who shot whom
-                    if proj.target_member in self.enemy.members:
-                        shooter_side = "PLAYER"
-                    else:
-                        shooter_side = "ENEMY"
-                    self._log(f"{shooter_side} hit {proj.target_member.member_class.value} '{proj.target_member.name}' for {hp_before-hp_after:.1f} dmg (HP: {hp_after:.0f}/{proj.target_member.max_hp:.0f})")
-                    
-                    if not proj.target_member.is_alive:
-                        # Remove from building defenders list
-                        for bldg in self.player.buildings + self.enemy.buildings:
-                            if proj.target_member in bldg.defenders:
-                                bldg.defenders.remove(proj.target_member)
-                                break
-                        # Award points
-                        if proj.target_member in self.enemy.members:
-                            self.player.points += config.POINTS_PER_MEMBER_KILLED
-                            self._log(f"PLAYER killed enemy {proj.target_member.member_class.value} '{proj.target_member.name}' at bldg {proj.target_member.assigned_building+1 if proj.target_member.assigned_building is not None else '?'}")
-                        else:
-                            self.enemy.points += config.POINTS_PER_MEMBER_KILLED
-                            self._log(f"ENEMY killed player {proj.target_member.member_class.value} '{proj.target_member.name}' at bldg {proj.target_member.assigned_building+1 if proj.target_member.assigned_building is not None else '?'}")
+                self._resolve_projectile_impact(proj)
             else:
                 # Move
                 proj.x += (dx / dist) * proj.speed * dt
                 proj.y += (dy / dist) * proj.speed * dt
-        
+
         # Remove dead projectiles
         self.projectiles = [p for p in self.projectiles if p.alive]
+
+    def _resolve_projectile_impact(self, proj):
+        """Apply a landed projectile's damage to the building+defender sink.
+
+        Live defender present  -> damage a random live defender (member damage).
+        No defenders remaining  -> damage the building (building damage), unless
+                                   the bunker shield is up (then 0).
+        """
+        target_bldg = proj.target_building
+        if target_bldg is None or target_bldg.destroyed:
+            return
+
+        target_empire = (self.player if target_bldg in self.player.buildings
+                         else self.enemy)
+
+        defenders_now = [
+            m for m in target_empire.members
+            if m.is_alive and m.assigned_building == target_bldg.index
+            and m.state in (MemberState.DEFENDING, MemberState.IDLE, MemberState.ATTACKING)
+        ]
+
+        if defenders_now:
+            self._apply_member_hit(random.choice(defenders_now), proj.damage)
+        else:
+            self._apply_building_hit(target_empire, target_bldg, proj.building_damage)
+
+    def _apply_member_hit(self, target_member, damage):
+        """Damage a defender; on death, remove from its building and award points."""
+        hp_before = target_member.hp
+        target_member.take_damage(damage)
+        hp_after = target_member.hp
+        shooter_side = "PLAYER" if target_member in self.enemy.members else "ENEMY"
+        self._log(f"{shooter_side} hit {target_member.member_class.value} "
+                  f"'{target_member.name}' for {hp_before-hp_after:.1f} dmg "
+                  f"(HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
+        if not target_member.is_alive:
+            for bldg in self.player.buildings + self.enemy.buildings:
+                if target_member in bldg.defenders:
+                    bldg.defenders.remove(target_member)
+                    break
+            if target_member in self.enemy.members:
+                self.player.points += config.POINTS_PER_MEMBER_KILLED
+                self._log(f"PLAYER killed enemy {target_member.member_class.value} "
+                          f"'{target_member.name}'")
+            else:
+                self.enemy.points += config.POINTS_PER_MEMBER_KILLED
+                self._log(f"ENEMY killed player {target_member.member_class.value} "
+                          f"'{target_member.name}'")
+
+    def _apply_building_hit(self, target_empire, target_bldg, damage):
+        """Damage a defenderless building; the bunker shield reduces damage to 0."""
+        if not self._can_damage_building(target_empire, target_bldg):
+            return  # bunker shield: structural damage reduced to 0
+        target_bldg.take_damage(damage)
+        self._log(f"HIT building {target_bldg.index+1} for {damage:.1f} dmg "
+                  f"(HP: {target_bldg.hp:.0f}/{target_bldg.max_hp})")
+        if target_bldg.destroyed:
+            if target_bldg in self.enemy.buildings:
+                self.player.points += config.POINTS_PER_BUILDING_DESTROYED
+                self._log(f"PLAYER destroyed enemy building {target_bldg.index+1}")
+            else:
+                self.enemy.points += config.POINTS_PER_BUILDING_DESTROYED
+                self._log(f"ENEMY destroyed player building {target_bldg.index+1}")
     
     def _check_elimination(self) -> bool:
         """Check if either side has lost all buildings or all members."""
