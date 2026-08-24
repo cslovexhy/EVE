@@ -1,5 +1,5 @@
 {
-  "money": 118274,
+  "money": 335018,
   "building_layout": [
     "bunker",
     "armory",
@@ -23,6 +23,7 @@
     1
   ],
   "conquered": [
+    "United States/Kentucky/Kentucky County/Kentucky City",
     "United States/Virginia/Albemarle County/Albemarle",
     "United States/Virginia/Alexandria city/Alexandria city",
     "United States/Virginia/Amherst County/Amherst town",
@@ -39,6 +40,7 @@
     "United States/Virginia/Charlotte County/Phenix town",
     "United States/Virginia/Charlottesville city/Charlottesville city",
     "United States/Virginia/Chesapeake city/Chesapeake city",
+    "United States/Virginia/Chesterfield County/Chesterfield",
     "United States/Virginia/Colonial Heights city/Colonial Heights city",
     "United States/Virginia/Craig County/New Castle town",
     "United States/Virginia/Danville city/Danville city",
@@ -59,9 +61,12 @@
     "United States/Virginia/James City County/James City",
     "United States/Virginia/Lancaster County/Irvington town",
     "United States/Virginia/Lancaster County/White Stone town",
+    "United States/Virginia/Loudoun County/Leesburg town",
     "United States/Virginia/Lynchburg city/Lynchburg city",
     "United States/Virginia/Madison County/Madison town",
     "United States/Virginia/Martinsville city/Martinsville city",
+    "United States/Virginia/Newport News city/Newport News city",
+    "United States/Virginia/Norfolk city/Norfolk city",
     "United States/Virginia/Petersburg city/Petersburg city",
     "United States/Virginia/Portsmouth city/Portsmouth city",
     "United States/Virginia/Prince George County/Prince George",
@@ -83,21 +88,23 @@
   ],
   "member_assignments": [
     [
-      0,
+      14,
+      48
+    ],
+    [
+      26,
+      56,
+      78
+    ],
+    [
+      5,
+      6,
+      7,
       8,
-      54
-    ],
-    [
-      1,
       9,
-      55
-    ],
-    [
       10,
       11,
       12,
-      13,
-      14,
       15,
       16,
       17,
@@ -105,113 +112,81 @@
       19,
       20,
       21,
+      22,
+      23,
       24,
       25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32,
       33,
       34,
+      35,
       36,
       37,
       38,
-      39,
-      41,
+      40,
       42,
       43,
       44,
-      45,
-      46,
-      47,
       49,
+      50,
       51,
       52,
       53,
+      54,
+      55,
+      57,
       58,
-      59,
       60,
       61,
       62,
-      63,
       64,
+      65,
       66,
       67,
+      68,
       69,
-      70,
-      71,
-      73,
-      74,
-      75,
+      72,
       76,
       77,
-      78
-    ],
-    [
       2,
-      22,
-      56
+      3,
+      79
     ],
     [
-      3,
-      23,
-      57
+      0,
+      31,
+      59
+    ],
+    [
+      39,
+      63,
+      75
+    ],
+    [
+      41,
+      70
+    ],
+    [
+      45,
+      71
     ],
     [
       4,
-      35,
-      65
+      46,
+      73
     ],
     [
-      5,
-      40,
-      68
-    ],
-    [
-      6,
-      48,
-      72
-    ],
-    [
-      7,
-      50,
-      79
+      13,
+      47,
+      74,
+      1
     ]
   ],
   "roster": [
-    {
-      "name": "Hammer",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Duke",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Tank",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Brick",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Ironside",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
     {
       "name": "Magnus",
       "member_class": "enforcer",
@@ -243,18 +218,6 @@
       "rarity": "common"
     },
     {
-      "name": "Longshot",
-      "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Whisper",
-      "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Deadshot",
       "member_class": "sniper",
       "level": 3,
@@ -269,18 +232,6 @@
     {
       "name": "Bolt",
       "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Stiletto",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Venom",
-      "member_class": "assassin",
       "level": 3,
       "rarity": "common"
     },
@@ -661,6 +612,60 @@
       "member_class": "enforcer",
       "level": 21,
       "rarity": "rare"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Null",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Gustavo 2",
+      "member_class": "enforcer",
+      "level": 29,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Boulder",
+      "member_class": "enforcer",
+      "level": 18,
+      "rarity": "rare"
+    },
+    {
+      "name": "Boulder 2",
+      "member_class": "enforcer",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Fox",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Whisper",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Goliath 2",
+      "member_class": "enforcer",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Eclipse 2",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
     }
   ],
   "backup": [
@@ -743,12 +748,6 @@
       "rarity": "common"
     },
     {
-      "name": "Fox",
-      "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Wraith",
       "member_class": "assassin",
       "level": 3,
@@ -769,6 +768,54 @@
     {
       "name": "Scope",
       "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Stiletto",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Venom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Tank",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hammer",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Longshot",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Duke",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Brick",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Ironside",
+      "member_class": "enforcer",
       "level": 3,
       "rarity": "common"
     }
