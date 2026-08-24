@@ -138,7 +138,7 @@ HQ_LEVEL_HP = {1: 1300, 2: 1700, 3: 2200, 4: 3000}
 # Building an HQ (Warehouse -> HQ) costs BUILDING_TYPES cost and yields Lv1.
 HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
 
-# --- Police raid boss ------------------------------------------------------
+# --- Police raid boss -------------------------------------------------------------------
 # Once a city is conquered you can repeatedly "Challenge Police" — a much harder
 # fight built from the city's police_power. A win pays this multiple of the
 # standard war reward (30% of the police empire's net worth, i.e. 100 x sum of
@@ -147,6 +147,13 @@ HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
 # how premium the elite fight should feel. The city is never marked conquered by
 # this and there is no loss penalty.
 POLICE_REWARD_MULT = 1.0
+
+# --- Visual US map: adjacency-based state unlocking ------------------------
+# A state on the visual US map is challengeable if it is your home state, or if
+# any state bordering it has been conquered to at least this fraction of its
+# cities. Intended live value is 0.50 (own half a neighbour to spill over);
+# set low (0.01) for testing so a single conquest unlocks neighbours.
+STATE_UNLOCK_THRESHOLD = 0.01   # TEST value; intended production value = 0.50
 
 # Health Packs
 HEALTH_PACKS_START = 8  # Starting health packs per battle

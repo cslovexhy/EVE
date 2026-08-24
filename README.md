@@ -74,6 +74,14 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-23 — Visual US states map + adjacency-based unlocking
+
+- **Real-shape US map at the states level.** New `USMapScreen` draws each lower-48 state (+ DC) as a filled polygon, color-coded by conquest progress and labelled `"AB  NN%"`. Clicking an unlocked state drills into its county/city list (existing `MapScreen`, now launchable pinned to one state via `start_state`, Back returns to the US map); a locked state shows an adjacency hint.
+- **Adjacency-based unlocking replaces the old 100%-hierarchy gate.** A state is challengeable if it's your home state or if any **bordering** state's control fraction ≥ `config.STATE_UNLOCK_THRESHOLD`. Threshold is **0.01 for testing** (documented intended value 0.50). `world_map.state_unlocked` + a static 48-state adjacency table drive it; `GameState.state_unlocked` wraps it with the home state.
+- **Color buckets** (`world_map.state_color_bucket`, relative to the unlock bar X): gray locked · red 0–10% of X · orange 10–30% · yellow 30–100% · green ≥ X.
+- **Data pipeline.** `tools/build_us_map.py` reads a public-domain per-state GeoJSON (PublicaMundi/census, cached in `data/raw/`), drops AK/HI/PR, simplifies + equirectangular-projects each state to normalized 0..1 coords with centroids, and bakes `data/us_states_map.json` (49 states, ~2000 pts, adjacency). The renderer just scales 0..1 into its on-screen rect. `tools/gen_dummy_states.py` seeds a 1-county/1-city placeholder for every state (Virginia keeps its real 133-county data) so all states are enterable for testing.
+- Verified: US map renders correctly (recognizable shapes, labels, legend); VA (home, ≥1%) is green and its 6 neighbours unlock while the rest stay locked; clicking a state routes to its county list; point-in-polygon, color buckets, and symmetric adjacency all unit-tested. **80 unit tests pass** (`tests/test_us_map.py` +12); live save untouched.
+
 ### 2026-08-23 — Battle sound effects
 
 - **8 SFX wired into battle**, each auditioned and approved: per-class fire (assassin/sniper = Kenney CC0 lasers; enforcer = real Desert Eagle; demolitionist = rocket launcher), member death scream, demolitionist building-hit explosion (trimmed to 1.5 s so rapid fire doesn't smear), building-destroyed collapse, and nuke detonation. Deliberately **no** generic member-hit sound and **no** building-hit sound for non-demo classes (avoids audio spam).

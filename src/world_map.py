@@ -124,3 +124,102 @@ def state_control(country, state, conquered):
 
 def country_control(country, conquered):
     return control(country_city_ids(country), conquered)
+
+
+# --- Visual US map data + adjacency-based unlocking ------------------------
+import config  # noqa: E402  (config has no pygame/game deps)
+
+_MAP_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "us_states_map.json")
+
+
+def _load_us_map():
+    try:
+        with open(_MAP_PATH) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {"states": {}, "adjacency": {}, "aspect": 2.4}
+
+
+US_MAP = _load_us_map()
+
+# Full state name <-> two-letter abbreviation (drives map <-> WORLD linking).
+STATE_ABBREV = {
+    "Alabama": "AL", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
+    "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+    "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA",
+    "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+    "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME",
+    "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN",
+    "Mississippi": "MS", "Missouri": "MO", "Montana": "MT", "Nebraska": "NE",
+    "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
+    "New Mexico": "NM", "New York": "NY", "North Carolina": "NC",
+    "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK", "Oregon": "OR",
+    "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+    "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+    "Vermont": "VT", "Virginia": "VA", "Washington": "WA",
+    "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY",
+}
+ABBREV_STATE = {v: k for k, v in STATE_ABBREV.items()}
+
+
+def state_abbrev(state_name: str) -> Optional[str]:
+    return STATE_ABBREV.get(state_name)
+
+
+def state_adjacency(abbrev: str) -> List[str]:
+    """Neighbouring state abbreviations for a state abbreviation."""
+    return US_MAP.get("adjacency", {}).get(abbrev, [])
+
+
+def state_unlocked(country: str, state_name: str, conquered,
+                   home_state: Optional[str] = None,
+                   threshold: Optional[float] = None) -> bool:
+    """Is this state challengeable on the visual US map?
+
+    True if:
+      * it is the player's home state (always open), OR
+      * any bordering state's control fraction is >= threshold
+        (config.STATE_UNLOCK_THRESHOLD by default).
+    """
+    if threshold is None:
+        threshold = config.STATE_UNLOCK_THRESHOLD
+    if home_state is not None and state_name == home_state:
+        return True
+    abbrev = state_abbrev(state_name)
+    if abbrev is None:
+        return False
+    for nb in state_adjacency(abbrev):
+        nb_name = ABBREV_STATE.get(nb)
+        if nb_name is None:
+            continue
+        _, _, frac = state_control(country, nb_name, conquered)
+        if frac >= threshold:
+            return True
+    return False
+
+
+def state_color_bucket(control_frac: float, unlocked: bool,
+                       threshold: Optional[float] = None) -> str:
+    """Map a state's control fraction to a color bucket for the map.
+
+    Buckets are relative to the unlock threshold X:
+        locked  -> not yet challengeable (gray)
+        red     -> 0 .. 10% of X
+        orange  -> 10% .. 30% of X
+        yellow  -> 30% .. 50% of X   (also anything below X once unlocked)
+        green   -> >= X (state "cleared" to the unlock bar)
+    """
+    if not unlocked:
+        return "locked"
+    if threshold is None:
+        threshold = config.STATE_UNLOCK_THRESHOLD
+    if threshold <= 0:
+        return "green" if control_frac > 0 else "red"
+    r = control_frac / threshold   # 0..1+ where 1.0 == the unlock bar (X)
+    if r >= 1.0:
+        return "green"     # >= X : cleared to the unlock bar
+    if r >= 0.3:
+        return "yellow"    # 30% .. 100% of X
+    if r >= 0.1:
+        return "orange"    # 10% .. 30% of X
+    return "red"           # 0% .. 10% of X

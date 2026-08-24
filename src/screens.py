@@ -914,6 +914,186 @@ class EveLayout(_Screen):
 
 
 # ---------------------------------------------------------------------------
+# Visual US states map (states level) — color-coded, adjacency-gated
+# ---------------------------------------------------------------------------
+class USMapScreen(_Screen):
+    """A real-shape US map at the STATES level.
+
+    Each state is drawn as a filled polygon colored by conquest progress
+    (gray locked / red / orange / yellow / green), labelled "AB  NN%".
+    Clicking an unlocked state returns ("state", state_name) to drill into its
+    counties; a locked state shows an adjacency hint. Q/ESC or Back -> "menu".
+    """
+
+    COUNTRY = "United States"
+    _BUCKET_COLORS = {
+        "locked": (70, 74, 82),
+        "red": (200, 60, 55),
+        "orange": (230, 140, 40),
+        "yellow": (225, 205, 60),
+        "green": (60, 190, 90),
+    }
+
+    def __init__(self, screen, state):
+        super().__init__(screen)
+        self.state = state
+        self.hint = ""
+        self.hint_timer = 0.0
+        self.back_btn = Button(
+            (40, config.SCREEN_HEIGHT - 80, 200, 52), "Back", self.font_btn,
+            base_color=config.GRAY)
+        # Compute the on-screen map rect (fit US aspect into the content area).
+        self._layout_map()
+
+    def _layout_map(self):
+        aspect = wm.US_MAP.get("aspect", 2.4) or 2.4
+        margin_x = 60
+        top = 180
+        bottom = 120
+        avail_w = config.SCREEN_WIDTH - 2 * margin_x
+        avail_h = config.SCREEN_HEIGHT - top - bottom
+        # Fit aspect (w/h) inside avail box.
+        if avail_w / avail_h > aspect:
+            h = avail_h
+            w = int(h * aspect)
+        else:
+            w = avail_w
+            h = int(w / aspect)
+        self.map_x = margin_x + (avail_w - w) // 2
+        self.map_y = top + (avail_h - h) // 2
+        self.map_w = w
+        self.map_h = h
+
+    def _to_screen(self, x, y):
+        return (int(self.map_x + x * self.map_w),
+                int(self.map_y + y * self.map_h))
+
+    def _state_polys(self):
+        """Yield (state_name, abbrev, [screen_pts]) for each map state."""
+        for abbrev, sd in wm.US_MAP.get("states", {}).items():
+            name = wm.ABBREV_STATE.get(abbrev)
+            if name is None:
+                continue
+            pts = [self._to_screen(px, py) for px, py in sd["polygon"]]
+            yield name, abbrev, sd, pts
+
+    @staticmethod
+    def _point_in_poly(px, py, pts):
+        """Ray-casting point-in-polygon."""
+        inside = False
+        n = len(pts)
+        j = n - 1
+        for i in range(n):
+            xi, yi = pts[i]
+            xj, yj = pts[j]
+            if ((yi > py) != (yj > py)) and \
+               (px < (xj - xi) * (py - yi) / ((yj - yi) or 1e-9) + xi):
+                inside = not inside
+            j = i
+        return inside
+
+    # --- input -----------------------------------------------------------
+    def handle_key(self, key):
+        if key in (pygame.K_q, pygame.K_ESCAPE):
+            self.result = "menu"
+            self.done = True
+
+    def handle_click(self, pos):
+        if self.back_btn.hit(pos):
+            self.result = "menu"
+            self.done = True
+            return
+        for name, abbrev, sd, pts in self._state_polys():
+            if len(pts) >= 3 and self._point_in_poly(pos[0], pos[1], pts):
+                if self.state.state_unlocked(name):
+                    self.result = ("state", name)
+                    self.done = True
+                else:
+                    self.hint = (f"{name} is locked — conquer an adjacent state "
+                                 f"to unlock it.")
+                    self.hint_timer = 2.5
+                return
+
+    # --- render ----------------------------------------------------------
+    def render(self, mouse_pos):
+        self.screen.fill((16, 26, 22))
+        title = self.font_title.render("United States", True, config.GOLD)
+        self.screen.blit(title, (40, 30))
+        o, t, pct = wm.country_control(self.COUNTRY, self.state.conquered)
+        sub = self.font_med.render(
+            f"{pct * 100:.0f}% controlled ({o}/{t} cities)   "
+            f"Unlock at {int(config.STATE_UNLOCK_THRESHOLD * 100)}% of a neighbour",
+            True, config.LIGHT_GRAY)
+        self.screen.blit(sub, (40, 100))
+
+        conquered = self.state.conquered
+        thr = config.STATE_UNLOCK_THRESHOLD
+        hovered = None
+        for name, abbrev, sd, pts in self._state_polys():
+            if len(pts) < 3:
+                continue
+            unlocked = self.state.state_unlocked(name)
+            _, _, frac = wm.state_control(self.COUNTRY, name, conquered)
+            bucket = wm.state_color_bucket(frac, unlocked, thr)
+            color = self._BUCKET_COLORS[bucket]
+            is_hover = self._point_in_poly(mouse_pos[0], mouse_pos[1], pts)
+            if is_hover:
+                hovered = (name, unlocked, frac)
+                color = tuple(min(255, c + 35) for c in color)
+            pygame.draw.polygon(self.screen, color, pts)
+            pygame.draw.polygon(self.screen, config.WHITE if is_hover else (30, 40, 36),
+                                pts, 2 if is_hover else 1)
+
+        # Labels drawn after fills so they sit on top.
+        for name, abbrev, sd, pts in self._state_polys():
+            cx, cy = self._to_screen(*sd["centroid"])
+            _, _, frac = wm.state_control(self.COUNTRY, name, conquered)
+            unlocked = self.state.state_unlocked(name)
+            lbl = f"{abbrev} {frac * 100:.0f}%" if unlocked else abbrev
+            col = config.WHITE if unlocked else config.LIGHT_GRAY
+            surf = self.font_small.render(lbl, True, col)
+            # subtle shadow for readability
+            sh = self.font_small.render(lbl, True, (0, 0, 0))
+            self.screen.blit(sh, sh.get_rect(center=(cx + 1, cy + 1)))
+            self.screen.blit(surf, surf.get_rect(center=(cx, cy)))
+
+        # Legend.
+        self._draw_legend()
+
+        # Hover tooltip.
+        if hovered:
+            name, unlocked, frac = hovered
+            msg = (f"{name}: {frac * 100:.0f}% — click to enter"
+                   if unlocked else f"{name}: locked")
+            tip = self.font_med.render(msg, True, config.GOLD)
+            self.screen.blit(tip, (self.map_x, self.map_y + self.map_h + 8))
+
+        if self.hint_timer > 0:
+            self.hint_timer -= 1.0 / config.FPS
+            h = self.font_med.render(self.hint, True, config.RED)
+            self.screen.blit(h, h.get_rect(centerx=config.SCREEN_WIDTH // 2,
+                                           y=config.SCREEN_HEIGHT - 120))
+
+        self.back_btn.draw(self.screen, mouse_pos)
+        self.screen.blit(self.font_small.render("Click a state to enter.  Q/ESC: back",
+                                                True, config.GRAY),
+                         (260, config.SCREEN_HEIGHT - 64))
+
+    def _draw_legend(self):
+        items = [("Locked", "locked"), ("0%", "red"), ("<30%", "orange"),
+                 ("<100%", "yellow"), (">= unlock", "green")]
+        x = config.SCREEN_WIDTH - 60 - len(items) * 130
+        y = 100
+        for label, bucket in items:
+            rect = pygame.Rect(x, y, 22, 22)
+            pygame.draw.rect(self.screen, self._BUCKET_COLORS[bucket], rect, border_radius=4)
+            pygame.draw.rect(self.screen, config.WHITE, rect, 1, border_radius=4)
+            self.screen.blit(self.font_small.render(label, True, config.LIGHT_GRAY),
+                             (x + 28, y + 2))
+            x += 130
+
+
+# ---------------------------------------------------------------------------
 # Map (country -> state -> city) with wage-war popup
 # ---------------------------------------------------------------------------
 class MapScreen(_Screen):
@@ -923,10 +1103,13 @@ class MapScreen(_Screen):
     mode="birthplace": full map; pick any city as your starting home.
     """
 
-    def __init__(self, screen, state, mode="war"):
+    def __init__(self, screen, state, mode="war", start_state=None):
         super().__init__(screen)
         self.state = state
         self.mode = mode
+        # When launched from the visual US map, we open directly at a specific
+        # state's county list and Back returns to the US map (not the menu).
+        self.start_state = start_state
         self.popup_city = None      # city_id awaiting confirmation
         self.popup_police = False    # True => the pending popup is a police raid
         self.item_rects = []        # (rect, value) for current level
@@ -939,7 +1122,14 @@ class MapScreen(_Screen):
         # Navigation levels: country -> state -> county -> city.
         # Scope fixes the higher levels and sets the lowest level you can back to.
         fixed_country = fixed_state = fixed_county = None
-        if mode == "birthplace":
+        self._back_result = "menu"   # what Back returns at the top level
+        if start_state is not None:
+            # Launched from the visual US map: pinned to one state's counties.
+            self.scope = "state"
+            self.min_level = "county"
+            fixed_country, fixed_state = "United States", start_state
+            self._back_result = "us_map"
+        elif mode == "birthplace":
             self.scope = "world"
             self.min_level = "country"
         else:
@@ -976,7 +1166,7 @@ class MapScreen(_Screen):
 
     def _go_back(self):
         if self.level == self.min_level:
-            self.result = "menu"
+            self.result = self._back_result
             self.done = True
             return
         if self.level == "city":

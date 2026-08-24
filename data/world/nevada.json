@@ -1,0 +1,26 @@
+{
+  "country": "United States",
+  "state": "Nevada",
+  "state_fips": "00",
+  "counties": {
+    "Nevada County": {
+      "fips": "00000",
+      "gdp_thousands": 2000000,
+      "gdp_estimated": true,
+      "population": 50000,
+      "homicide_rate": 20.0,
+      "difficulty": 0.2,
+      "cities": {
+        "Nevada City": {
+          "population": 50000,
+          "gdp_thousands": 2000000,
+          "crime_rate": 20.0,
+          "reward": 1500,
+          "difficulty": 0.2,
+          "underworld_power": 200,
+          "police_power": 8000
+        }
+      }
+    }
+  }
+}

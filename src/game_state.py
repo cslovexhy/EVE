@@ -171,6 +171,22 @@ class GameState:
             return "state"
         return "county"
 
+    # --- visual US map: adjacency-based state unlocking ------------------
+    def home_state(self) -> Optional[str]:
+        loc = self.home_location()
+        return loc[1] if loc else None
+
+    def state_unlocked(self, state_name: str) -> bool:
+        """Is this state challengeable on the visual US map? Home state is
+        always open; others unlock when a neighbour is conquered to >=
+        config.STATE_UNLOCK_THRESHOLD (see world_map.state_unlocked)."""
+        country = "United States"
+        loc = self.home_location()
+        if loc:
+            country = loc[0]
+        return wm.state_unlocked(country, state_name, self.conquered,
+                                 home_state=self.home_state())
+
     def ensure_member_assignments(self, members) -> List[List[int]]:
         """Return member assignments, initializing to the default distribution
         (for the given roster) if not set or inconsistent with the roster size."""

@@ -16,7 +16,7 @@ import enemy_gen
 import world_map as wm
 from game_state import GameState, war_reward
 from models import top_rarity_recruit
-from screens import (MainMenu, EveLayout, MapScreen, GameOverScreen,
+from screens import (MainMenu, EveLayout, MapScreen, USMapScreen, GameOverScreen,
                      VictoryScreen, RecruitPopup, CapBlockedPopup)
 from battle_session import BattleSession
 
@@ -62,21 +62,11 @@ class Game:
                 EveLayout(self.screen, self.state).run()
                 screen_name = "menu"
             elif screen_name == "map":
-                result = MapScreen(self.screen, self.state).run()
-                if isinstance(result, tuple) and result[0] == "battle":
-                    if self.state.roster_over_cap():
-                        CapBlockedPopup(self.screen, len(self.state.roster),
-                                        self.state.member_cap()).run()
-                    else:
-                        self._run_war(result[1])
-                    screen_name = "map"   # return to the map after the battle
-                elif isinstance(result, tuple) and result[0] == "police":
-                    if self.state.roster_over_cap():
-                        CapBlockedPopup(self.screen, len(self.state.roster),
-                                        self.state.member_cap()).run()
-                    else:
-                        self._run_police(result[1])
-                    screen_name = "map"   # return to the map after the raid
+                # Visual US map at the states level.
+                result = USMapScreen(self.screen, self.state).run()
+                if isinstance(result, tuple) and result[0] == "state":
+                    self._browse_state(result[1])
+                    screen_name = "map"   # back to the US map afterwards
                 else:
                     screen_name = "menu"
             elif screen_name == "quit":
@@ -143,6 +133,29 @@ class Game:
             return
         kept = self.state.add_recruit(recruit)
         RecruitPopup(self.screen, recruit, backup_full=not kept).run()
+
+    def _browse_state(self, state_name: str):
+        """Drill into one state's counties/cities (launched from the US map).
+        Loops so that after a battle/raid we return to the same state's list;
+        backing out of the state returns to the US map."""
+        while True:
+            result = MapScreen(self.screen, self.state,
+                               start_state=state_name).run()
+            if isinstance(result, tuple) and result[0] == "battle":
+                if self.state.roster_over_cap():
+                    CapBlockedPopup(self.screen, len(self.state.roster),
+                                    self.state.member_cap()).run()
+                else:
+                    self._run_war(result[1])
+                # loop back into the same state's list
+            elif isinstance(result, tuple) and result[0] == "police":
+                if self.state.roster_over_cap():
+                    CapBlockedPopup(self.screen, len(self.state.roster),
+                                    self.state.member_cap()).run()
+                else:
+                    self._run_police(result[1])
+            else:
+                return  # "us_map" (or anything else) -> back to the US map
 
     def _run_war(self, target_city_id: str):
         """Wage war on an already-owned-region city. A win pays the city's
