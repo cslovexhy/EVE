@@ -1,5 +1,5 @@
 {
-  "money": 106834,
+  "money": 118274,
   "building_layout": [
     "bunker",
     "armory",
@@ -51,6 +51,8 @@
     "United States/Virginia/Fredericksburg city/Fredericksburg city",
     "United States/Virginia/Greene County/Stanardsville town",
     "United States/Virginia/Hampton city/Hampton city",
+    "United States/Virginia/Harrisonburg city/Harrisonburg city",
+    "United States/Virginia/Henrico County/Henrico",
     "United States/Virginia/Henry County/Ridgeway town",
     "United States/Virginia/Highland County/Monterey town",
     "United States/Virginia/Hopewell city/Hopewell city",
@@ -83,12 +85,12 @@
     [
       0,
       8,
-      56
+      54
     ],
     [
       1,
       9,
-      57
+      55
     ],
     [
       10,
@@ -103,8 +105,8 @@
       19,
       20,
       21,
-      22,
-      23,
+      24,
+      25,
       26,
       27,
       28,
@@ -114,69 +116,69 @@
       32,
       33,
       34,
-      35,
       36,
+      37,
       38,
       39,
-      40,
       41,
+      42,
       43,
       44,
       45,
       46,
       47,
-      48,
       49,
       51,
+      52,
       53,
-      54,
-      55,
+      58,
+      59,
       60,
       61,
       62,
       63,
       64,
-      65,
       66,
-      68,
+      67,
       69,
+      70,
       71,
-      72,
       73,
+      74,
       75,
       76,
       77,
-      78,
-      79
+      78
     ],
     [
       2,
-      24,
-      58
+      22,
+      56
     ],
     [
       3,
-      25,
-      59
+      23,
+      57
     ],
     [
       4,
-      37,
-      67
+      35,
+      65
     ],
     [
       5,
-      42,
-      70
+      40,
+      68
     ],
     [
       6,
-      50,
-      74
+      48,
+      72
     ],
     [
       7,
-      52
+      50,
+      79
     ]
   ],
   "roster": [
@@ -237,18 +239,6 @@
     {
       "name": "Slab",
       "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Hawkeye",
-      "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Scope",
-      "member_class": "sniper",
       "level": 3,
       "rarity": "common"
     },
@@ -659,6 +649,18 @@
       "member_class": "sniper",
       "level": 28,
       "rarity": "super_rare"
+    },
+    {
+      "name": "Reticle 2",
+      "member_class": "sniper",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Goliath 2",
+      "member_class": "enforcer",
+      "level": 21,
+      "rarity": "rare"
     }
   ],
   "backup": [
@@ -754,6 +756,18 @@
     },
     {
       "name": "Kate",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hawkeye",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Scope",
       "member_class": "sniper",
       "level": 3,
       "rarity": "common"
