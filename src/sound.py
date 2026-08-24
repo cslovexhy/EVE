@@ -34,15 +34,18 @@ _FILES: Dict[str, str] = {
     "nuke": "nuke.ogg",
 }
 
-# Per-event volume trim (0..1) so loud/long clips sit under the fire SFX.
+# Per-event volume (0..1) applied on top of a peak-normalized (-1 dB) bank.
+# Since every file now shares the same peak ceiling, these are a deliberate mix
+# hierarchy, not per-file loudness fixes: fires play constantly and overlap so
+# they sit low; punctuating events (destroyed, nuke) sit loud.
 _VOLUMES: Dict[str, float] = {
-    "fire_assassin": 0.6,
-    "fire_sniper": 0.7,
-    "fire_enforcer": 0.7,
-    "fire_demolitionist": 0.8,
+    "fire_assassin": 0.55,
+    "fire_sniper": 0.55,
+    "fire_enforcer": 0.55,
+    "fire_demolitionist": 0.6,
     "member_death": 0.7,
-    "building_hit_explosion": 0.9,
-    "building_destroyed": 1.0,
+    "building_hit_explosion": 0.7,
+    "building_destroyed": 0.9,
     "nuke": 1.0,
 }
 
