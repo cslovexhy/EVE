@@ -43,6 +43,26 @@ RARITY_MULTIPLIERS = {
     "super_rare": 2.0,
 }
 
+# --- Class skills (rarity-keyed) -------------------------------------------
+# Sniper: chance for a shot vs a member to CRIT (deal SNIPER_CRIT_MULT x damage).
+SNIPER_CRIT_CHANCE = {
+    "common": 0.05,
+    "uncommon": 0.10,
+    "rare": 0.15,
+    "super_rare": 0.20,
+}
+SNIPER_CRIT_MULT = 1.5
+
+# Assassin: chance to DECAPITATE (instakill) a member already below
+# ASSASSIN_DECAP_HP_THRESHOLD of max HP; otherwise a normal hit.
+ASSASSIN_DECAP_CHANCE = {
+    "common": 0.10,
+    "uncommon": 0.20,
+    "rare": 0.30,
+    "super_rare": 0.40,
+}
+ASSASSIN_DECAP_HP_THRESHOLD = 0.20   # target must be under 20% HP to be executable
+
 # Battle
 BATTLE_DURATION = 300  # 5 minutes in seconds
 
@@ -62,16 +82,16 @@ BASE_STATS = {
     },
     "sniper": {
         "hp": 80,
-        "damage_player": 15,
-        "damage_building": 8,
+        "damage_player": 20,     # (swapped with assassin) heavy per-shot vs members
+        "damage_building": 6,    # (swapped with assassin)
         "mitigation": 0.1,
         "speed": 0.8,
         "attack_interval": 2.5,  # Slow but ranged
     },
     "assassin": {
         "hp": 90,
-        "damage_player": 20,
-        "damage_building": 6,
+        "damage_player": 15,     # (swapped with sniper) lighter per-shot, but fast + can execute
+        "damage_building": 8,    # (swapped with sniper)
         "mitigation": 0.1,
         "speed": 1.5,
         "attack_interval": 1.0,  # Fast flurry
@@ -129,6 +149,10 @@ STARTING_MONEY = 0
 BASE_MEMBER_CAP = 40
 HQ_MEMBERS_PER_LEVEL = 10
 HQ_MAX_LEVEL = 4
+# Building slot (0-indexed) a newly-activated backup member lands in. Building 3
+# (index 2) is the safe backline where non-enforcers default; the player can
+# then reassign from there. Keeps activation from reshuffling other members.
+DEFAULT_ACTIVATE_SLOT = 2
 # Bench/backup force: recruits won from defeated empires wait here until you
 # move them into the active roster. Capped independently of the HQ roster cap.
 BACKUP_FORCE_CAP = 80

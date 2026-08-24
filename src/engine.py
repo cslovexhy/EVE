@@ -38,7 +38,41 @@ class BattleEngine:
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
-    
+        # Fresh log for this battle: dump both sides' layout + rosters up front.
+        self._log_setup()
+
+    def _log_setup(self):
+        """Truncate the battle log and write a self-contained header: each side's
+        building layout per slot with its assigned defenders (name/class/level/HP)
+        and building HP. Makes every battle log diagnosable on its own.
+
+        Lines are stored in self.battle_log (not just written to disk) so the
+        end-of-battle _save_log rewrite preserves them."""
+        lines = ["=== BATTLE SETUP ==="]
+        for side, emp in (("PLAYER", self.player), ("ENEMY", self.enemy)):
+            live = sum(1 for m in emp.members if m.is_alive)
+            lines.append("")
+            lines.append(f"--- {side}: {emp.name} ({live} members) ---")
+            for slot, b in enumerate(emp.buildings):
+                defs = [m for m in emp.members if m.assigned_building == slot]
+                lines.append(f"  slot {slot+1}: {b.building_type.value:14s} "
+                             f"HP {b.max_hp:.0f}  defenders={len(defs)}")
+                for m in defs:
+                    st = m.get_stats()
+                    lines.append(f"       - {m.member_class.value:13s} "
+                                 f"'{m.name}' Lv{m.level} {m.rarity.value} "
+                                 f"(HP {st['hp']:.0f})")
+        lines.append("")
+        lines.append("=== BATTLE LOG ===")
+        self.battle_log.extend(lines)
+        # Truncate any previous battle's file and write this header.
+        log_path = os.path.join(os.path.dirname(__file__), "..", "battle_log.txt")
+        try:
+            with open(log_path, "w") as f:
+                f.write("\n".join(lines) + "\n")
+        except OSError:
+            pass
+
     def _apply_building_types(self):
         """Set building types + type-based HP from each empire's building_order,
         plus per-slot levels (e.g. HQ level) from building_levels if present."""
@@ -658,6 +692,7 @@ class BattleEngine:
                 target_member=target_member,
                 target_building=target_bldg,
                 building_damage=stats["damage_building"] * dmg_mult,
+                shooter_rarity=attacker.rarity.value,
                 missed=False,
             )
             self.projectiles.append(proj)
@@ -673,6 +708,7 @@ class BattleEngine:
                     target_building=target_bldg,
                     hit_building_directly=True,
                     building_damage=stats["damage_building"] * dmg_mult,
+                    shooter_rarity=attacker.rarity.value,
                 )
                 self.projectiles.append(proj)
     
@@ -763,19 +799,62 @@ class BattleEngine:
 
         if defenders_now:
             # Live member present — hit them, even if the building is rubble.
-            self._apply_member_hit(random.choice(defenders_now), proj.damage)
+            victim = random.choice(defenders_now)
+            dmg, skill = self._apply_class_skill(proj, victim, proj.damage)
+            self._apply_member_hit(victim, dmg, at_index=target_bldg.index,
+                                   skill=skill)
         elif not target_bldg.destroyed:
             self._apply_building_hit(target_empire, target_bldg, proj.building_damage,
                                      proj.projectile_type)
 
-    def _apply_member_hit(self, target_member, damage):
-        """Damage a defender; on death, remove from its building and award points."""
+    def _apply_class_skill(self, proj, victim, base_damage):
+        """Resolve a class combat skill on a member hit. Returns (damage, tag):
+
+        - Sniper CRIT: chance by rarity -> damage x SNIPER_CRIT_MULT.
+        - Assassin DECAPITATE: chance by rarity, only if the victim is already
+          below ASSASSIN_DECAP_HP_THRESHOLD of max HP -> instakill (damage set
+          to remaining HP); otherwise a normal hit.
+        Returns the (possibly modified) damage and a short tag for the log
+        ('CRIT', 'DECAPITATE', or '')."""
+        rarity = proj.shooter_rarity
+        if rarity is None:
+            return base_damage, ""
+        if proj.projectile_type == ProjectileType.SNIPER:
+            if random.random() < config.SNIPER_CRIT_CHANCE.get(rarity, 0.0):
+                return base_damage * config.SNIPER_CRIT_MULT, "CRIT"
+        elif proj.projectile_type == ProjectileType.ASSASSIN:
+            if victim.max_hp > 0 and \
+               victim.hp <= config.ASSASSIN_DECAP_HP_THRESHOLD * victim.max_hp:
+                if random.random() < config.ASSASSIN_DECAP_CHANCE.get(rarity, 0.0):
+                    # Execute: deal enough to guarantee the kill (post-mitigation).
+                    mult = 1.0 - victim.get_stats()["mitigation"]
+                    lethal = victim.hp / mult if mult > 0 else victim.hp
+                    return lethal + 1.0, "DECAPITATE"
+        return base_damage, ""
+
+    def _apply_member_hit(self, target_member, damage, at_index=None, skill=""):
+        """Damage a defender; on death, remove from its building and award points.
+
+        at_index is the building slot the shot was aimed at, logged so a hit
+        absorbed by a defender is attributable to a specific building (e.g. a
+        shielded bunker's defender soaking a barrage). skill is an optional tag
+        ('CRIT'/'DECAPITATE') logged with the hit."""
         hp_before = target_member.hp
         target_member.take_damage(damage)
         hp_after = target_member.hp
         shooter_side = "PLAYER" if target_member in self.enemy.members else "ENEMY"
+        # Note when the hit landed on a defender inside a shielded bunker, since
+        # the building itself takes 0 structural damage in that case.
+        loc = ""
+        if at_index is not None:
+            tgt_empire = self.enemy if target_member in self.enemy.members else self.player
+            b = tgt_empire.buildings[at_index]
+            loc = f" @bldg {at_index+1}"
+            if b.building_type == BuildingType.BUNKER and self._bunkers_shielded(tgt_empire):
+                loc += " [BUNKER SHIELD: 0 structural dmg]"
+        tag = f" {skill}!" if skill else ""
         self._log(f"{shooter_side} hit {target_member.member_class.value} "
-                  f"'{target_member.name}' for {hp_before-hp_after:.1f} dmg "
+                  f"'{target_member.name}'{loc}{tag} for {hp_before-hp_after:.1f} dmg "
                   f"(HP: {hp_after:.0f}/{target_member.max_hp:.0f})")
         if not target_member.is_alive:
             sound.play("member_death")

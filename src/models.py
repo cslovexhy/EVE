@@ -73,6 +73,7 @@ class Projectile:
     target_building: Optional['Building'] = None  # The building this shot is aimed at
     hit_building_directly: bool = False  # True = aimed at the building, False = aimed at a defender
     building_damage: float = 0.0  # Damage applied if this shot rolls over onto the building
+    shooter_rarity: Optional[str] = None  # rarity.value of the shooter (for crit/decap skills)
     missed: bool = False      # If this shot will miss (pre-determined)
     alive: bool = True        # Set to False when it hits or target dies
 
@@ -291,11 +292,13 @@ class Empire:
                 if m.member_class == member_class and m.state == MemberState.DEAD]
     
     def heal_building(self, building_index: int):
-        """Use a health pack to revive one random dead defender ASSIGNED to the
-        given building, reviving them IN PLACE. Shared by the player (H → click
-        building) and the AI so both sides heal identically. Does not relocate
-        the member or change the base layout. Works even if the building itself
-        is destroyed (dead members can be orphaned in the rubble, e.g. by a nuke
+        """Use a health pack to revive the STRONGEST dead defender ASSIGNED to
+        the given building (highest max HP — i.e. the best level/rarity/class),
+        reviving them IN PLACE at full HP. Choosing the toughest member avoids
+        wasting a pack on a weak one. Shared by the player (H -> click building)
+        and the AI so both sides heal identically. Does not relocate the member
+        or change the base layout. Works even if the building itself is
+        destroyed (dead members can be orphaned in the rubble, e.g. by a nuke
         that flattened the building without killing its occupants). Returns the
         revived member, or None if no pack is available or no dead defender is
         assigned there."""
@@ -312,7 +315,9 @@ class Empire:
         if not dead_here:
             return None
 
-        member = random.choice(dead_here)
+        # Revive the strongest (highest max HP). Ties broken by level then a
+        # stable pick so player and AI behave identically and deterministically.
+        member = max(dead_here, key=lambda m: (m.max_hp, m.level))
         member.hp = member.max_hp
         member.state = MemberState.DEFENDING
         member.attack_cooldown = 0.0

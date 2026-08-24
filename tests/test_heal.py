@@ -109,30 +109,29 @@ class TestPerBuildingHeal(unittest.TestCase):
         self.assertEqual(demo.state, MemberState.DEAD)
         self.assertEqual(session.order_system.feedback_msg, "No health packs left")
 
-    def test_revives_a_dead_member_of_that_building(self):
-        # Two dead members in the same building — a random one is revived,
-        # and it must be one of THIS building's dead (never relocate/pull-in).
+    def test_revives_the_strongest_dead_member(self):
+        # Two dead members in the same building — the STRONGEST (highest max HP)
+        # must be revived, never the weak one, so a pack isn't wasted.
         weak = _member("Weak", MemberClass.ASSASSIN, 0, level=1)
         strong = _member("Strong", MemberClass.ENFORCER, 0, level=10)
         weak.state = MemberState.DEAD
         strong.state = MemberState.DEAD
         session = _make_session([weak, strong])
+        # Sanity: the enforcer L10 really is the tougher unit.
+        self.assertGreater(strong.max_hp, weak.max_hp)
 
         session._use_health_pack_on_building(0)
 
-        revived = [m for m in (weak, strong) if m.state == MemberState.DEFENDING]
-        still_dead = [m for m in (weak, strong) if m.state == MemberState.DEAD]
-        # Exactly one revived, and it stayed in building 0.
-        self.assertEqual(len(revived), 1)
-        self.assertEqual(len(still_dead), 1)
-        self.assertEqual(revived[0].assigned_building, 0)
+        self.assertEqual(strong.state, MemberState.DEFENDING)  # strongest revived
+        self.assertEqual(weak.state, MemberState.DEAD)         # weak left dead
+        self.assertEqual(strong.assigned_building, 0)          # stayed in place
         self.assertEqual(session.player_empire.health_packs, 4)
 
 
 class TestEmpireHealBuilding(unittest.TestCase):
     """Empire.heal_building is the SINGLE shared heal used by both the player
-    (H -> click building) and the AI: revive a random dead defender assigned to
-    the given building, in place, never relocating them."""
+    (H -> click building) and the AI: revive the STRONGEST (highest max HP) dead
+    defender assigned to the given building, in place, never relocating them."""
 
     def _empire(self):
         e = Empire(name="P", is_player=True)

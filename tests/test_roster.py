@@ -162,6 +162,35 @@ class TestCapGating(unittest.TestCase):
         if os.path.exists(self.path):
             os.remove(self.path)
 
+    def test_activation_lands_in_building_3_without_reshuffle(self):
+        # Regression: activating a backup member must NOT reshuffle the existing
+        # roster's building assignments (previously it regenerated the whole
+        # distribution, scattering enforcers), and the new member lands in
+        # building 3 (slot index 2).
+        st = gs.GameState.load()
+        st.building_layout = [BuildingType.WAREHOUSE] * 9
+        st.building_levels = [1] * 9
+        st.ensure_roster()
+        st.ensure_member_assignments(st.roster)
+        before = [list(s) for s in st.member_assignments]
+
+        st.add_recruit(Member(name="NewEnf", member_class=MemberClass.ENFORCER,
+                              level=5, rarity=Rarity.RARE))
+        self.assertTrue(st.move_to_roster(0))
+
+        new_idx = len(st.roster) - 1
+        # New member is in building 3 (slot 2).
+        self.assertIn(new_idx, st.member_assignments[config.DEFAULT_ACTIVATE_SLOT])
+        # Every pre-existing member kept its exact slot: after removing the new
+        # index from slot 2, the distribution equals the original.
+        after_without_new = [
+            [mi for mi in slot if mi != new_idx]
+            for slot in st.member_assignments
+        ]
+        self.assertEqual(after_without_new, before)
+        # Assignments remain valid for the grown roster.
+        self.assertTrue(gs._valid_assignments(st.member_assignments, len(st.roster)))
+
     def test_roster_over_cap_blocks(self):
         st = gs.GameState.load()
         # No HQ -> base cap 40, default roster is exactly 40 -> not over.

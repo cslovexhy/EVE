@@ -83,7 +83,7 @@ class BattleAI:
     def _use_health_packs(self):
         """AI uses health packs when its attack force is depleted. Uses the
         SAME per-building heal logic as the player (Empire.heal_building):
-        revive a random dead defender in place, in the chosen building."""
+        revive the strongest dead defender in place, in the chosen building."""
         if self.empire.health_packs <= 0:
             return
 

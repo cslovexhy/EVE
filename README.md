@@ -74,6 +74,16 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-23 — Sniper/Assassin rebalance + skills, heal & roster fixes, richer battle log
+
+- **Sniper vs Assassin rebalance** (all-ranged combat made the old melee-era numbers stale): swapped **both** base damages so neither class dominates the other on both axes — sniper now `damage_player 20 / damage_building 6`, assassin `15 / 8`. Attack intervals untouched (the assassin's fast unload stays its niche).
+- **Sniper CRIT**: per-shot-vs-member crit chance by rarity (**5/10/15/20%**) dealing **1.5×** damage (`config.SNIPER_CRIT_CHANCE`, `SNIPER_CRIT_MULT`). Logged as `CRIT!`.
+- **Assassin DECAPITATE**: chance by rarity (**10/20/30/40%**) to **instakill** a target already below **20% HP** (`ASSASSIN_DECAP_CHANCE`, `ASSASSIN_DECAP_HP_THRESHOLD`); otherwise a normal hit. Logged as `DECAPITATE!`. Skills resolve at projectile impact (`engine._apply_class_skill`); projectiles now carry `shooter_rarity`.
+- **Heal picks the strongest**: `Empire.heal_building` now revives the **highest-max-HP** dead defender in a building (ties by level) instead of a random one, so a pack is never wasted on a weak member. Shared by player (H-click) and enemy AI.
+- **Force-tab activation bug fixed**: activating a backup member no longer reshuffles the whole roster's building assignments. Root cause: `move_to_roster` grew the roster then called `ensure_member_assignments`, which saw a size mismatch and regenerated the distribution (scattering enforcers). Now the new member is appended directly into **building 3** (`config.DEFAULT_ACTIVATE_SLOT`), preserving every existing assignment.
+- **Battle log is now self-diagnostic**: each battle log opens with a `=== BATTLE SETUP ===` dump (both sides, per-slot building type + HP + each defender's name/class/level/rarity/HP), the file is truncated fresh per battle, member-hit lines carry `@bldg N`, and shielded-bunker absorptions are tagged `[BUNKER SHIELD: 0 structural dmg]`. (`tools/fight_arlington.py` is a headless diagnostic runner.)
+- Verified: **92 unit tests pass** (`tests/test_class_skills.py` +11; `test_heal.py` / `test_roster.py` updated); a live Arlington police battle logged 73 crits + 23 decapitates and both bunkers fell correctly; live save untouched.
+
 ### 2026-08-23 — Visual US states map + adjacency-based unlocking
 
 - **Real-shape US map at the states level.** New `USMapScreen` draws each lower-48 state (+ DC) as a filled polygon, color-coded by conquest progress and labelled `"AB  NN%"`. Clicking an unlocked state drills into its county/city list (existing `MapScreen`, now launchable pinned to one state via `start_state`, Back returns to the US map); a locked state shows an adjacency hint.

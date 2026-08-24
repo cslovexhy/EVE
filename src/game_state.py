@@ -232,16 +232,6 @@ class GameState:
         self.backup.append(member)
         return True
 
-    def _default_assign_slot(self) -> int:
-        """Building slot to drop a newly-activated member into: the standing HQ
-        if there is one, else the slot currently holding the fewest members."""
-        self.ensure_member_assignments(self.roster)
-        for i, bt in enumerate(self.building_layout):
-            if bt == BuildingType.HEADQUARTERS:
-                return i
-        counts = [len(s) for s in self.member_assignments]
-        return counts.index(min(counts))
-
     def _reindex_after_removal(self, removed: int) -> None:
         """After removing roster[removed], drop it from assignments and shift
         every higher stored index down by one."""
@@ -265,15 +255,24 @@ class GameState:
         return True
 
     def move_to_roster(self, backup_idx: int) -> bool:
-        """Activate a backup member into the roster and assign to a building."""
+        """Activate a backup member into the active roster.
+
+        The member is placed into building 3 (slot index 2) — the same default
+        landing spot as every class — WITHOUT disturbing the existing building
+        assignments of the current roster. (Previously this went through
+        ensure_member_assignments after the roster had already grown, which saw
+        a size mismatch and regenerated the whole distribution, reshuffling all
+        enforcers. We now append the new index directly.)"""
         if not (0 <= backup_idx < len(self.backup)):
             return False
         self.ensure_roster()
+        # Normalize assignments to the CURRENT roster size first (before growth),
+        # so appending the new member's index keeps them valid.
         self.ensure_member_assignments(self.roster)
         m = self.backup.pop(backup_idx)
         self.roster.append(m)
         new_idx = len(self.roster) - 1
-        self.member_assignments[self._default_assign_slot()].append(new_idx)
+        self.member_assignments[config.DEFAULT_ACTIVATE_SLOT].append(new_idx)
         return True
 
     def kick_backup(self, backup_idx: int) -> bool:
