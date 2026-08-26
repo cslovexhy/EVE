@@ -211,9 +211,25 @@ def build_enemy(underworld_power: float, name: str = "Rival Gang",
                                     / config.HQ_MEMBERS_PER_LEVEL)))
     if police:
         hq_level = config.HQ_MAX_LEVEL
+
+    # Specialist/defensive buildings level up with the empire's power. A police
+    # boss maxes every building; a normal gang scales its buildings from `norm`
+    # (0..1), each clamped to that type's own max_level.
+    def _building_level(bt: BuildingType) -> int:
+        max_lvl = buildings.building_max_level(bt)
+        if max_lvl <= 1:
+            return 1
+        if police:
+            return max_lvl
+        # norm 0..1 -> level 1..max_lvl
+        return max(1, min(max_lvl, 1 + int(round(norm * (max_lvl - 1)))))
+
     levels = [1] * 9
-    if BuildingType.HEADQUARTERS in layout:
-        levels[layout.index(BuildingType.HEADQUARTERS)] = hq_level
+    for i, bt in enumerate(layout):
+        if bt == BuildingType.HEADQUARTERS:
+            levels[i] = hq_level
+        else:
+            levels[i] = _building_level(bt)
 
     empire = Empire(name=name, members=members, is_player=False)
     empire.setup_buildings()

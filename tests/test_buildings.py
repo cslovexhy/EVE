@@ -69,12 +69,21 @@ class TestUpgradeChain(unittest.TestCase):
     def test_safehouse_upgrades_to_bunker(self):
         e = make_empire(money=100000)
         buildings.upgrade_building(e, 0, BuildingType.SAFEHOUSE)
+        # Bunker is gated behind a fully-leveled (Lv3) Safehouse.
+        ok, reason = buildings.can_upgrade(e, 0, BuildingType.BUNKER)
+        self.assertFalse(ok)
+        self.assertEqual(reason, "safehouse_level_required")
+        # Level the Safehouse to Lv3, then the Bunker upgrade unlocks.
+        buildings.level_up_building(e, 0)  # -> Lv2
+        buildings.level_up_building(e, 0)  # -> Lv3
+        self.assertEqual(e.buildings[0].level, config.SAFEHOUSE_BUNKER_MIN_LEVEL)
         ok, reason = buildings.can_upgrade(e, 0, BuildingType.BUNKER)
         self.assertTrue(ok, reason)
         ok2, _ = buildings.upgrade_building(e, 0, BuildingType.BUNKER)
         self.assertTrue(ok2)
         self.assertEqual(e.buildings[0].building_type, BuildingType.BUNKER)
         self.assertEqual(e.buildings[0].max_hp, 1300)
+        self.assertEqual(e.buildings[0].level, 1)  # upgrade resets level
 
     def test_safehouse_cannot_go_to_hq(self):
         e = make_empire(money=100000)
@@ -114,14 +123,21 @@ class TestUpgradeLimits(unittest.TestCase):
 
     def test_bunker_limit_two(self):
         e = make_empire(money=1000000)
+
+        def make_bunker(slot):
+            self.assertTrue(buildings.upgrade_building(e, slot, BuildingType.SAFEHOUSE)[0])
+            buildings.level_up_building(e, slot)  # Lv2
+            buildings.level_up_building(e, slot)  # Lv3
+            return buildings.upgrade_building(e, slot, BuildingType.BUNKER)
+
         # Only 2 safehouses can exist at once, so build 2 and convert to bunkers.
-        buildings.upgrade_building(e, 0, BuildingType.SAFEHOUSE)
-        buildings.upgrade_building(e, 1, BuildingType.SAFEHOUSE)
-        self.assertTrue(buildings.upgrade_building(e, 0, BuildingType.BUNKER)[0])
-        self.assertTrue(buildings.upgrade_building(e, 1, BuildingType.BUNKER)[0])
+        self.assertTrue(make_bunker(0)[0])
+        self.assertTrue(make_bunker(1)[0])
         self.assertEqual(e.count_building_type(BuildingType.BUNKER), 2)
-        # Safehouse slots are free again; build 2 more safehouses.
+        # Safehouse slots are free again; build 2 more safehouses (to Lv3).
         self.assertTrue(buildings.upgrade_building(e, 2, BuildingType.SAFEHOUSE)[0])
+        buildings.level_up_building(e, 2)
+        buildings.level_up_building(e, 2)
         self.assertTrue(buildings.upgrade_building(e, 3, BuildingType.SAFEHOUSE)[0])
         # A 3rd bunker must be blocked by the bunker cap.
         ok, reason = buildings.can_upgrade(e, 2, BuildingType.BUNKER)
@@ -168,6 +184,94 @@ class TestBuildingOrderInterop(unittest.TestCase):
         self.assertEqual(e.buildings[3].max_hp, 500)
         self.assertEqual(e.buildings[4].building_type, BuildingType.BUNKER)
         self.assertEqual(e.buildings[4].max_hp, 1300)
+
+
+class TestBuildingLevels(unittest.TestCase):
+    """Per-building level ladders (HP + cost) and generic leveling."""
+
+    def test_max_levels_per_type(self):
+        self.assertEqual(buildings.building_max_level(BuildingType.WAREHOUSE), 1)
+        self.assertEqual(buildings.building_max_level(BuildingType.SAFEHOUSE), 3)
+        for bt in (BuildingType.ARMORY, BuildingType.HOSPITAL,
+                   BuildingType.RESEARCH_LAB, BuildingType.SNIPER_TOWER,
+                   BuildingType.NUCLEAR_SILO, BuildingType.HEADQUARTERS,
+                   BuildingType.BUNKER):
+            self.assertEqual(buildings.building_max_level(bt), 4, bt)
+
+    def test_level1_hp_matches_flat_spec(self):
+        # Level 1 of every type must equal the flat 'hp' field (back-compat).
+        for bt in BuildingType:
+            self.assertEqual(buildings.level_hp(bt, 1), bt.spec["hp"], bt)
+
+    def test_hp_ladder_values(self):
+        self.assertEqual(buildings.level_hp(BuildingType.ARMORY, 4), 1500)
+        self.assertEqual(buildings.level_hp(BuildingType.SNIPER_TOWER, 3), 1350)
+        self.assertEqual(buildings.level_hp(BuildingType.NUCLEAR_SILO, 4), 1900)
+        self.assertEqual(buildings.level_hp(BuildingType.HEADQUARTERS, 4), 3000)
+        self.assertEqual(buildings.level_hp(BuildingType.SAFEHOUSE, 3), 1100)
+
+    def test_hq_ladder_matches_legacy_constants(self):
+        # The generic ladder must reproduce the old HQ_LEVEL_HP / cost tables.
+        for lvl, hp in config.HQ_LEVEL_HP.items():
+            self.assertEqual(buildings.level_hp(BuildingType.HEADQUARTERS, lvl), hp)
+        for lvl, cost in config.HQ_LEVEL_UP_COST.items():
+            self.assertEqual(
+                buildings.next_level_cost(BuildingType.HEADQUARTERS, lvl - 1), cost)
+
+    def test_level_up_deducts_and_scales_hp(self):
+        e = make_empire(money=100000)
+        buildings.upgrade_building(e, 0, BuildingType.ARMORY)  # Lv1, HP 750
+        self.assertEqual(e.buildings[0].max_hp, 750)
+        money_before = e.money
+        ok, _ = buildings.level_up_building(e, 0)
+        self.assertTrue(ok)
+        self.assertEqual(e.buildings[0].level, 2)
+        self.assertEqual(e.buildings[0].max_hp, 950)
+        self.assertEqual(money_before - e.money, 3000)  # Armory Lv2 cost
+
+    def test_level_up_blocked_at_max(self):
+        e = make_empire(money=10_000_000)
+        buildings.upgrade_building(e, 0, BuildingType.ARMORY)
+        for _ in range(3):
+            self.assertTrue(buildings.level_up_building(e, 0)[0])
+        self.assertEqual(e.buildings[0].level, 4)
+        ok, reason = buildings.can_level_building(e, 0)
+        self.assertFalse(ok)
+        self.assertEqual(reason, "max_level")
+
+    def test_warehouse_cannot_level(self):
+        e = make_empire(money=100000)
+        ok, reason = buildings.can_level_building(e, 0)  # slot 0 is a warehouse
+        self.assertFalse(ok)
+        self.assertEqual(reason, "max_level")
+
+    def test_level_up_insufficient_funds(self):
+        e = make_empire(money=2500)
+        buildings.upgrade_building(e, 0, BuildingType.ARMORY)  # spends 2500 -> $0
+        ok, reason = buildings.can_level_building(e, 0)
+        self.assertFalse(ok)
+        self.assertEqual(reason, "insufficient_funds")
+
+    def test_apply_building_levels_clamps_to_type_max(self):
+        e = make_empire(money=100000)
+        buildings.upgrade_building(e, 0, BuildingType.SAFEHOUSE)
+        # Ask for Lv9; Safehouse max is 3 -> clamp to 3 (HP 1100).
+        buildings.apply_building_levels(e, [9] + [1] * 8)
+        self.assertEqual(e.buildings[0].level, 3)
+        self.assertEqual(e.buildings[0].max_hp, 1100)
+
+    def test_hq_wrappers_still_work(self):
+        e = make_empire(money=100000)
+        buildings.upgrade_building(e, 0, BuildingType.HEADQUARTERS)
+        self.assertTrue(buildings.can_level_hq(e, 0)[0])
+        self.assertTrue(buildings.level_up_hq(e, 0)[0])
+        self.assertEqual(e.buildings[0].level, 2)
+        self.assertEqual(e.buildings[0].max_hp, 1700)
+        # Non-HQ slot rejected by the HQ wrapper.
+        buildings.upgrade_building(e, 1, BuildingType.ARMORY)
+        ok, reason = buildings.can_level_hq(e, 1)
+        self.assertFalse(ok)
+        self.assertEqual(reason, "not_hq")
 
 
 if __name__ == "__main__":

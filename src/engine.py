@@ -38,8 +38,28 @@ class BattleEngine:
         # Position buildings on the battlefield
         self._position_buildings()
         self._assign_initial_defenders()
+        # Hospital: grant its per-level bonus health packs once, at battle start
+        # (on top of Empire.health_packs' base and the over-time generation).
+        self._grant_hospital_bonus_packs()
         # Fresh log for this battle: dump both sides' layout + rosters up front.
         self._log_setup()
+
+    def _grant_hospital_bonus_packs(self):
+        """Add each side's Hospital bonus packs (scales with Hospital level) to
+        its starting health-pack pool. Summed across multiple hospitals."""
+        for empire in (self.player, self.enemy):
+            bonus = 0
+            for b in empire.buildings:
+                if b.building_type == BuildingType.HOSPITAL and not b.destroyed:
+                    bonus += self._level_field(b, "bonus_packs", 0)
+            empire.health_packs += bonus
+
+    @staticmethod
+    def _level_field(building: Building, field: str, default):
+        """Read a per-level skill field from a building's level ladder."""
+        ladder = building.building_type.spec["levels"]
+        lvl = max(1, min(building.level, len(ladder)))
+        return ladder[lvl - 1].get(field, default)
 
     def _log_setup(self):
         """Truncate the battle log and write a self-contained header: each side's
@@ -341,6 +361,17 @@ class BattleEngine:
             return False
         return True
 
+    def _silo_charge_time(self, empire: Empire) -> float:
+        """Seconds for this side's Nuclear Silo to reach full charge, scaled by
+        the silo's level (higher level = faster charge). Falls back to the flat
+        NUKE_CHARGE_TIME if the side has no standing silo."""
+        silos = self._active_of_type(empire, BuildingType.NUCLEAR_SILO)
+        if not silos:
+            return config.NUKE_CHARGE_TIME
+        # Use the fastest (best) silo if somehow more than one stands.
+        return min(self._level_field(b, "charge_time", config.NUKE_CHARGE_TIME)
+                   for b in silos)
+
     def _update_powers(self, dt: float):
         for empire in (self.player, self.enemy):
             key = self._side_key(empire)
@@ -351,16 +382,19 @@ class BattleEngine:
                 while self._pack_timer[key] >= config.HOSPITAL_PACK_INTERVAL:
                     self._pack_timer[key] -= config.HOSPITAL_PACK_INTERVAL
                     empire.health_packs += 1
-            # Nuclear Silo: charge 0->100% over the battle while a silo stands.
+            # Nuclear Silo: charge 0->100% over the (level-scaled) charge time
+            # while a silo stands.
             if self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
-                self._nuke_charge[key] = min(config.NUKE_CHARGE_TIME,
+                charge_time = self._silo_charge_time(empire)
+                self._nuke_charge[key] = min(charge_time,
                                              self._nuke_charge[key] + dt)
 
     def nuke_charge_fraction(self, empire: Empire):
         """0..1 charge of the side's Nuclear Silo, or None if it has no silo."""
         if not self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
             return None
-        return self._nuke_charge[self._side_key(empire)] / config.NUKE_CHARGE_TIME
+        charge_time = self._silo_charge_time(empire)
+        return self._nuke_charge[self._side_key(empire)] / charge_time
 
     def nuke_ready(self, empire: Empire) -> bool:
         frac = self.nuke_charge_fraction(empire)

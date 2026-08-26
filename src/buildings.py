@@ -62,6 +62,10 @@ def can_upgrade(empire: Empire, slot: int,
     if upgrade_source(target_type) != current:
         return False, "invalid_chain"
 
+    # Bunker requires its source Safehouse to be fully leveled first.
+    if target_type == BuildingType.BUNKER and building.level < config.SAFEHOUSE_BUNKER_MIN_LEVEL:
+        return False, "safehouse_level_required"
+
     # Per-type maximum count (uniqueness / limits).
     limit = max_count(target_type)
     if limit is not None and empire.count_building_type(target_type) >= limit:
@@ -96,15 +100,39 @@ def hq_next_level_cost(current_level: int) -> Optional[int]:
     return config.HQ_LEVEL_UP_COST.get(current_level + 1)
 
 
-def can_level_hq(empire: Empire, slot: int) -> Tuple[bool, str]:
+# --- generic building leveling (all types) -------------------------------
+def building_max_level(building_type: BuildingType) -> int:
+    """Highest level this building type can reach."""
+    return building_type.spec.get("max_level", 1)
+
+
+def level_hp(building_type: BuildingType, level: int) -> int:
+    """Max HP for a building type at a given (clamped) level."""
+    ladder = building_type.spec["levels"]
+    lvl = max(1, min(level, len(ladder)))
+    return ladder[lvl - 1]["hp"]
+
+
+def next_level_cost(building_type: BuildingType, current_level: int) -> Optional[int]:
+    """Money to level a building of this type from current_level to
+    current_level+1, or None if already at max level."""
+    ladder = building_type.spec["levels"]
+    nxt = current_level + 1
+    if nxt < 1 or nxt > len(ladder):
+        return None
+    return ladder[nxt - 1]["cost"]
+
+
+def can_level_building(empire: Empire, slot: int) -> Tuple[bool, str]:
+    """Whether the building at `slot` can be leveled up one step. Applies to
+    every level-able type (Warehouse is single-level and always returns
+    'max_level')."""
     if slot < 0 or slot >= len(empire.buildings):
         return False, "invalid_slot"
     b = empire.buildings[slot]
-    if b.building_type != BuildingType.HEADQUARTERS:
-        return False, "not_hq"
-    if b.level >= config.HQ_MAX_LEVEL:
+    if b.level >= building_max_level(b.building_type):
         return False, "max_level"
-    cost = hq_next_level_cost(b.level)
+    cost = next_level_cost(b.building_type, b.level)
     if cost is None:
         return False, "max_level"
     if empire.money < cost:
@@ -112,21 +140,40 @@ def can_level_hq(empire: Empire, slot: int) -> Tuple[bool, str]:
     return True, ""
 
 
-def level_up_hq(empire: Empire, slot: int) -> Tuple[bool, str]:
-    """Raise an HQ one level: deduct escalating cost, bump level, refresh HP
-    (which also raises the empire's member cap)."""
-    ok, reason = can_level_hq(empire, slot)
+def level_up_building(empire: Empire, slot: int) -> Tuple[bool, str]:
+    """Raise a building one level: deduct its level cost, bump level, refresh
+    HP. For an HQ this also raises the empire's member cap (via HP/level)."""
+    ok, reason = can_level_building(empire, slot)
     if not ok:
         return False, reason
     b = empire.buildings[slot]
-    empire.money -= hq_next_level_cost(b.level)
+    empire.money -= next_level_cost(b.building_type, b.level)
     b.level += 1
     b.apply_type_hp()
     return True, ""
 
 
+# --- HQ leveling (thin wrappers over the generic path) -------------------
+def can_level_hq(empire: Empire, slot: int) -> Tuple[bool, str]:
+    if slot < 0 or slot >= len(empire.buildings):
+        return False, "invalid_slot"
+    if empire.buildings[slot].building_type != BuildingType.HEADQUARTERS:
+        return False, "not_hq"
+    return can_level_building(empire, slot)
+
+
+def level_up_hq(empire: Empire, slot: int) -> Tuple[bool, str]:
+    """Raise an HQ one level: deduct escalating cost, bump level, refresh HP
+    (which also raises the empire's member cap)."""
+    if slot < 0 or slot >= len(empire.buildings):
+        return False, "invalid_slot"
+    if empire.buildings[slot].building_type != BuildingType.HEADQUARTERS:
+        return False, "not_hq"
+    return level_up_building(empire, slot)
+
+
 def apply_building_levels(empire: Empire, levels: List[int]) -> None:
-    """Set each building's level (e.g. HQ level) and refresh HP."""
+    """Set each building's level and refresh HP (clamped per type)."""
     for i, b in enumerate(empire.buildings):
         if i < len(levels) and levels[i]:
             b.level = max(1, int(levels[i]))

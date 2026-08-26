@@ -127,17 +127,109 @@ BUILDING_DEFENDER_SLOTS = 3  # Max defenders per building
 #   upgrades_from: the type that can be upgraded into this one (None for base)
 #   max_count    : max number of this type allowed per empire (None = unlimited)
 #   name_index   : index used by renderer/building_order sprite mapping
+#   max_level    : highest level this type can reach (Warehouse=1, Safehouse=3, rest=4)
+#   levels       : per-level ladder, levels[n-1] describes level n. Each entry:
+#                    hp   : max HP at that level
+#                    cost : money to level FROM the previous level INTO this one
+#                           (level 1 "cost" is the upgrade-into cost from the
+#                           source type; for the base warehouse it is 0)
+#                  Plus optional per-type skill fields that scale with level:
+#                    bonus_packs (hospital)  : extra health packs granted on battle start
+#                    charge_time (nuclear silo): seconds to charge the nuke 0->100%
+#
+# Level 1 of every type mirrors the flat "hp"/"upgrade_cost" values, so existing
+# saves (and any code reading the flat fields) behave identically.
 BUILDING_TYPES = {
-    "warehouse":    {"display_name": "Warehouse",    "hp": BUILDING_BASE_HP, "upgrade_cost": 0,     "upgrades_from": None,        "max_count": None, "name_index": 3},
-    "safehouse":    {"display_name": "Safehouse",    "hp": 650,              "upgrade_cost": 1500,  "upgrades_from": "warehouse", "max_count": 2,    "name_index": 8},
-    "armory":       {"display_name": "Armory",       "hp": 750,              "upgrade_cost": 2500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 1},
-    "hospital":     {"display_name": "Hospital",     "hp": 750,              "upgrade_cost": 2500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 2},
-    "research_lab": {"display_name": "Research Lab", "hp": 800,              "upgrade_cost": 3500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 7},
-    "sniper_tower": {"display_name": "Sniper Tower", "hp": 850,              "upgrade_cost": 3500,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 6},
-    "nuclear_silo": {"display_name": "Nuclear Silo", "hp": 950,              "upgrade_cost": 10000, "upgrades_from": "warehouse", "max_count": 1,    "name_index": 5},
-    "headquarters": {"display_name": "Headquarters", "hp": 1300,             "upgrade_cost": 6000,  "upgrades_from": "warehouse", "max_count": 1,    "name_index": 0},
-    "bunker":       {"display_name": "Bunker",       "hp": 1300,             "upgrade_cost": 5000,  "upgrades_from": "safehouse", "max_count": 2,    "name_index": 4},
+    "warehouse": {
+        "display_name": "Warehouse", "hp": BUILDING_BASE_HP, "upgrade_cost": 0,
+        "upgrades_from": None, "max_count": None, "name_index": 3, "max_level": 1,
+        "levels": [
+            {"hp": BUILDING_BASE_HP, "cost": 0},
+        ],
+    },
+    "safehouse": {
+        "display_name": "Safehouse", "hp": 650, "upgrade_cost": 1500,
+        "upgrades_from": "warehouse", "max_count": 2, "name_index": 8, "max_level": 3,
+        "levels": [
+            {"hp": 650,  "cost": 1500},
+            {"hp": 850,  "cost": 2000},
+            {"hp": 1100, "cost": 4000},
+        ],
+    },
+    "armory": {
+        "display_name": "Armory", "hp": 750, "upgrade_cost": 2500,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 1, "max_level": 4,
+        "levels": [
+            {"hp": 750,  "cost": 2500},
+            {"hp": 950,  "cost": 3000},
+            {"hp": 1200, "cost": 6000},
+            {"hp": 1500, "cost": 12000},
+        ],
+    },
+    "hospital": {
+        "display_name": "Hospital", "hp": 750, "upgrade_cost": 2500,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 2, "max_level": 4,
+        "levels": [
+            {"hp": 750,  "cost": 2500,  "bonus_packs": 0},
+            {"hp": 950,  "cost": 3000,  "bonus_packs": 2},
+            {"hp": 1200, "cost": 6000,  "bonus_packs": 4},
+            {"hp": 1500, "cost": 12000, "bonus_packs": 6},
+        ],
+    },
+    "research_lab": {
+        "display_name": "Research Lab", "hp": 800, "upgrade_cost": 3500,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 7, "max_level": 4,
+        "levels": [
+            {"hp": 800,  "cost": 3500},
+            {"hp": 1000, "cost": 4000},
+            {"hp": 1300, "cost": 8000},
+            {"hp": 1600, "cost": 16000},
+        ],
+    },
+    "sniper_tower": {
+        "display_name": "Sniper Tower", "hp": 850, "upgrade_cost": 3500,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 6, "max_level": 4,
+        "levels": [
+            {"hp": 850,  "cost": 3500},
+            {"hp": 1050, "cost": 4000},
+            {"hp": 1350, "cost": 8000},
+            {"hp": 1700, "cost": 16000},
+        ],
+    },
+    "nuclear_silo": {
+        "display_name": "Nuclear Silo", "hp": 950, "upgrade_cost": 10000,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 5, "max_level": 4,
+        "levels": [
+            {"hp": 950,  "cost": 10000, "charge_time": BATTLE_DURATION * 1.00},
+            {"hp": 1200, "cost": 12000, "charge_time": BATTLE_DURATION * 0.85},
+            {"hp": 1500, "cost": 24000, "charge_time": BATTLE_DURATION * 0.70},
+            {"hp": 1900, "cost": 48000, "charge_time": BATTLE_DURATION * 0.55},
+        ],
+    },
+    "headquarters": {
+        "display_name": "Headquarters", "hp": 1300, "upgrade_cost": 6000,
+        "upgrades_from": "warehouse", "max_count": 1, "name_index": 0, "max_level": 4,
+        "levels": [
+            {"hp": 1300, "cost": 6000},
+            {"hp": 1700, "cost": 8000},
+            {"hp": 2200, "cost": 20000},
+            {"hp": 3000, "cost": 45000},
+        ],
+    },
+    "bunker": {
+        "display_name": "Bunker", "hp": 1300, "upgrade_cost": 5000,
+        "upgrades_from": "safehouse", "max_count": 2, "name_index": 4, "max_level": 4,
+        "levels": [
+            {"hp": 1300, "cost": 5000},
+            {"hp": 1700, "cost": 6000},
+            {"hp": 2200, "cost": 12000},
+            {"hp": 3000, "cost": 24000},
+        ],
+    },
 }
+
+# A Safehouse must reach this level before it can be upgraded into a Bunker.
+SAFEHOUSE_BUNKER_MIN_LEVEL = 3
 
 # Starting money for a brand-new player (fresh profile only; saved balance
 # takes over once a profile exists). New players earn money by winning wars.

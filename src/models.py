@@ -191,12 +191,16 @@ class Building:
         self.apply_type_hp()
 
     def apply_type_hp(self):
-        """Set max_hp/hp from the current building type (HQ scales with level)."""
-        if self.building_type == BuildingType.HEADQUARTERS:
-            lvl = max(1, min(self.level, config.HQ_MAX_LEVEL))
-            self.max_hp = config.HQ_LEVEL_HP.get(lvl, config.HQ_LEVEL_HP[1])
-        else:
-            self.max_hp = self.building_type.spec["hp"]
+        """Set max_hp/hp from the current building type + level.
+
+        Every type has a per-level ladder in config.BUILDING_TYPES[...]['levels'];
+        the level is clamped to [1, max_level] for that type. Warehouse has a
+        single level; HQ/specialists scale HP up their ladder."""
+        spec = self.building_type.spec
+        max_level = spec.get("max_level", 1)
+        self.level = max(1, min(self.level, max_level))
+        ladder = spec["levels"]
+        self.max_hp = ladder[self.level - 1]["hp"]
         self.hp = self.max_hp
         self.destroyed = False
 
