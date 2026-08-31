@@ -935,8 +935,15 @@
       "member_class": "demolitionist",
       "level": 40,
       "rarity": "super_rare"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 8,
+      "rarity": "super_rare"
     }
   ],
   "home_city": "United States/Virginia/Rappahannock County/Washington town",
-  "sound_on": false
+  "sound_on": false,
+  "profile_name": "default"
 }
