@@ -8,17 +8,28 @@ Empire vs Empire — a single-player guild war strategy game inspired by Underwo
 
 ## Developer Notes / Red Flags
 
-- **`player_profile.json` is the live save and is now tracked in git** (so it has
-  history — an accidental overwrite is recoverable with `git checkout -- player_profile.json`).
-  Still, back it up before running anything that can call `GameState.save()`
-  (headless verification scripts, `EveLayout`/battle flows) so you don't
-  *commit* garbage:
+- **Save files are sacred — never delete or overwrite one without backing it
+  up first, and NEVER `rm` anything under `profiles/`.** The player's saves are
+  `player_profile.json` (legacy single save) **and** every file under
+  `profiles/<slug>.json` (the multi-profile saves). Treat the whole `profiles/`
+  directory as live user data. Both `player_profile.json` and `profiles/` are
+  **tracked in git** so an accidental overwrite is recoverable with
+  `git checkout -- <path>` — but a file that was never committed is **not**
+  recoverable, so **commit or back up new profiles before running anything that
+  can touch them.** Back up before running anything that can call
+  `GameState.save()` (headless verification scripts, `EveLayout`/battle flows):
   ```bash
   cp player_profile.json /tmp/eve_profile_backup.json   # before
   cp /tmp/eve_profile_backup.json player_profile.json   # after
+  cp -r profiles /tmp/eve_profiles_backup               # before (whole dir)
   ```
-  Prefer constructing throwaway `GameState()` objects in tests and NOT calling
-  `.save()`; if a test must save, point `game_state.PROFILE_PATH` at a temp file.
+- **Tests / smoke scripts MUST NOT write to the real saves.** Prefer throwaway
+  `GameState(path=...)` objects and do NOT call `.save()`; if a test must save,
+  point it at a temp file (`GameState.load(tmp_path)` / monkeypatch
+  `game_state.PROFILE_PATH`) and sandbox `profiles.PROFILES_DIR` +
+  `profiles.LEGACY_PATH` to a `tempfile.mkdtemp()` dir. Never let a test run the
+  real `profiles.migrate_legacy()` / `create_profile()` against the real
+  `profiles/` directory.
 
 ## How to Play
 
