@@ -74,6 +74,10 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-30 — Zoomable/pannable US map (click tiny states like DC)
+
+- **Zoom + pan on the visual US map.** Small states — DC most of all (a ~12 px² speck at default zoom) — were effectively unclickable. `USMapScreen` gained a view transform layered on the base projection: **mouse wheel zooms toward the cursor** (focus-preserving), **arrow keys pan**, **+/- zoom**, **R resets**, plus a **Reset View** button and a live zoom readout. Zoom clamps to **1x–12x**; pan is clamped so the map can't drift entirely off-screen. The map is **clipped to a content band** so it never overdraws the title/legend/controls when zoomed. Verified headless: DC's clickable area grows ~19× at 4.3× zoom (point-in-polygon hit confirmed), zoom homes in on the cursor, and clamps hold. 119 unit tests still pass.
+
 ### 2026-08-30 — Multiple save profiles (choose / create / delete at startup)
 
 - **Multi-profile saves.** The game now opens on a **Profile Select** screen: pick an existing save to play, or **+ New Profile** (free-text name entry) to start fresh. Each profile is its own file under `profiles/<slug>.json`, in the exact format `GameState` already uses. Rows show a quick summary (money · cities conquered · home city). **Delete** a profile via the red **X** on its row (Y/N confirmation).
