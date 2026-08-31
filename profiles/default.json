@@ -1,0 +1,949 @@
+{
+  "money": 713702,
+  "building_layout": [
+    "bunker",
+    "armory",
+    "sniper_tower",
+    "headquarters",
+    "bunker",
+    "hospital",
+    "safehouse",
+    "research_lab",
+    "nuclear_silo"
+  ],
+  "building_levels": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    4,
+    4
+  ],
+  "conquered": [
+    "United States/Kentucky/Kentucky County/Kentucky City",
+    "United States/Virginia/Accomack County/Keller town",
+    "United States/Virginia/Accomack County/Saxis town",
+    "United States/Virginia/Albemarle County/Albemarle",
+    "United States/Virginia/Alexandria city/Alexandria city",
+    "United States/Virginia/Amherst County/Amherst town",
+    "United States/Virginia/Appomattox County/Appomattox town",
+    "United States/Virginia/Arlington County/Arlington",
+    "United States/Virginia/Augusta County/Craigsville town",
+    "United States/Virginia/Botetourt County/Buchanan town",
+    "United States/Virginia/Botetourt County/Fincastle town",
+    "United States/Virginia/Botetourt County/Troutville town",
+    "United States/Virginia/Brunswick County/Alberta town",
+    "United States/Virginia/Brunswick County/Lawrenceville town",
+    "United States/Virginia/Buchanan County/Grundy town",
+    "United States/Virginia/Buckingham County/Dillwyn town",
+    "United States/Virginia/Buena Vista city/Buena Vista city",
+    "United States/Virginia/Charlotte County/Charlotte Court House town",
+    "United States/Virginia/Charlotte County/Drakes Branch town",
+    "United States/Virginia/Charlotte County/Keysville town",
+    "United States/Virginia/Charlotte County/Phenix town",
+    "United States/Virginia/Charlottesville city/Charlottesville city",
+    "United States/Virginia/Chesapeake city/Chesapeake city",
+    "United States/Virginia/Chesterfield County/Chesterfield",
+    "United States/Virginia/Colonial Heights city/Colonial Heights city",
+    "United States/Virginia/Craig County/New Castle town",
+    "United States/Virginia/Danville city/Danville city",
+    "United States/Virginia/Dickenson County/Clinchco town",
+    "United States/Virginia/Dickenson County/Clintwood town",
+    "United States/Virginia/Dickenson County/Haysi town",
+    "United States/Virginia/Dinwiddie County/McKenney town",
+    "United States/Virginia/Essex County/Essex (unincorporated)",
+    "United States/Virginia/Essex County/Tappahannock town",
+    "United States/Virginia/Fairfax County/Clifton town",
+    "United States/Virginia/Fairfax County/Fairfax (unincorporated)",
+    "United States/Virginia/Fairfax County/Vienna town",
+    "United States/Virginia/Floyd County/Floyd town",
+    "United States/Virginia/Franklin County/Franklin (unincorporated)",
+    "United States/Virginia/Frederick County/Middletown town",
+    "United States/Virginia/Frederick County/Stephens City town",
+    "United States/Virginia/Fredericksburg city/Fredericksburg city",
+    "United States/Virginia/Gloucester County/Gloucester",
+    "United States/Virginia/Goochland County/Goochland",
+    "United States/Virginia/Grayson County/Fries town",
+    "United States/Virginia/Grayson County/Independence town",
+    "United States/Virginia/Grayson County/Troutdale town",
+    "United States/Virginia/Greene County/Stanardsville town",
+    "United States/Virginia/Hampton city/Hampton city",
+    "United States/Virginia/Hanover County/Ashland town",
+    "United States/Virginia/Harrisonburg city/Harrisonburg city",
+    "United States/Virginia/Henrico County/Henrico",
+    "United States/Virginia/Henry County/Ridgeway town",
+    "United States/Virginia/Highland County/Highland (unincorporated)",
+    "United States/Virginia/Highland County/Monterey town",
+    "United States/Virginia/Hopewell city/Hopewell city",
+    "United States/Virginia/James City County/James City",
+    "United States/Virginia/Lancaster County/Irvington town",
+    "United States/Virginia/Lancaster County/White Stone town",
+    "United States/Virginia/Lee County/Jonesville town",
+    "United States/Virginia/Lee County/Pennington Gap town",
+    "United States/Virginia/Loudoun County/Leesburg town",
+    "United States/Virginia/Lynchburg city/Lynchburg city",
+    "United States/Virginia/Madison County/Madison town",
+    "United States/Virginia/Manassas city/Manassas city",
+    "United States/Virginia/Martinsville city/Martinsville city",
+    "United States/Virginia/Middlesex County/Urbanna town",
+    "United States/Virginia/Montgomery County/Blacksburg town",
+    "United States/Virginia/Montgomery County/Christiansburg town",
+    "United States/Virginia/Newport News city/Newport News city",
+    "United States/Virginia/Norfolk city/Norfolk city",
+    "United States/Virginia/Patrick County/Stuart town",
+    "United States/Virginia/Petersburg city/Petersburg city",
+    "United States/Virginia/Portsmouth city/Portsmouth city",
+    "United States/Virginia/Powhatan County/Powhatan",
+    "United States/Virginia/Prince George County/Prince George",
+    "United States/Virginia/Prince William County/Prince William (unincorporated)",
+    "United States/Virginia/Rappahannock County/Washington town",
+    "United States/Virginia/Richmond County/Warsaw town",
+    "United States/Virginia/Richmond city/Richmond city",
+    "United States/Virginia/Roanoke County/Vinton town",
+    "United States/Virginia/Roanoke city/Roanoke city",
+    "United States/Virginia/Rockbridge County/Glasgow town",
+    "United States/Virginia/Rockbridge County/Goshen town",
+    "United States/Virginia/Salem city/Salem city",
+    "United States/Virginia/Southampton County/Branchville town",
+    "United States/Virginia/Spotsylvania County/Spotsylvania",
+    "United States/Virginia/Stafford County/Stafford",
+    "United States/Virginia/Staunton city/Staunton city",
+    "United States/Virginia/Suffolk city/Suffolk city",
+    "United States/Virginia/Surry County/Claremont town",
+    "United States/Virginia/Surry County/Dendron town",
+    "United States/Virginia/Surry County/Surry town",
+    "United States/Virginia/Virginia Beach city/Virginia Beach city",
+    "United States/Virginia/Williamsburg city/Williamsburg city",
+    "United States/Virginia/York County/York"
+  ],
+  "member_assignments": [
+    [
+      25
+    ],
+    [
+      31,
+      51
+    ],
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      19,
+      20,
+      21,
+      26,
+      27,
+      28,
+      29,
+      30,
+      32,
+      33,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      47,
+      52,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+    ],
+    [
+      34
+    ],
+    [
+      18,
+      45
+    ],
+    [
+      16,
+      38,
+      50
+    ],
+    [
+      22,
+      46
+    ],
+    [
+      23,
+      48,
+      53
+    ],
+    [
+      0,
+      24,
+      49
+    ]
+  ],
+  "roster": [
+    {
+      "name": "Colossus",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 14,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Reticle",
+      "member_class": "sniper",
+      "level": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Mamba",
+      "member_class": "assassin",
+      "level": 13,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Shade",
+      "member_class": "assassin",
+      "level": 7,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Napalm",
+      "member_class": "demolitionist",
+      "level": 10,
+      "rarity": "rare"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 5,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 8,
+      "rarity": "rare"
+    },
+    {
+      "name": "Arson",
+      "member_class": "demolitionist",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Glint",
+      "member_class": "sniper",
+      "level": 5,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Havoc",
+      "member_class": "demolitionist",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Pyro",
+      "member_class": "demolitionist",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Caine",
+      "member_class": "demolitionist",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 7,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Lotus",
+      "member_class": "assassin",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Goliath 2",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Marksman 2",
+      "member_class": "sniper",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Caine 2",
+      "member_class": "demolitionist",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Marksman 2",
+      "member_class": "sniper",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Grizzly",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Goliath",
+      "member_class": "enforcer",
+      "level": 9,
+      "rarity": "rare"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Scorpion 2",
+      "member_class": "assassin",
+      "level": 11,
+      "rarity": "rare"
+    },
+    {
+      "name": "Arson",
+      "member_class": "demolitionist",
+      "level": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Null",
+      "member_class": "assassin",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Gustavo 2",
+      "member_class": "enforcer",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Goliath",
+      "member_class": "enforcer",
+      "level": 12,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 13,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 13,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Mamba",
+      "member_class": "assassin",
+      "level": 13,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Brutus 2",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Raven",
+      "member_class": "assassin",
+      "level": 14,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Scorpion 2",
+      "member_class": "assassin",
+      "level": 14,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 40,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 27,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Archer 2",
+      "member_class": "sniper",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Reticle 2",
+      "member_class": "sniper",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Goliath 2",
+      "member_class": "enforcer",
+      "level": 21,
+      "rarity": "rare"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Null",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Gustavo 2",
+      "member_class": "enforcer",
+      "level": 29,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Boulder",
+      "member_class": "enforcer",
+      "level": 18,
+      "rarity": "rare"
+    },
+    {
+      "name": "Boulder 2",
+      "member_class": "enforcer",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Goliath 2",
+      "member_class": "enforcer",
+      "level": 28,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Eclipse 2",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Colossus",
+      "member_class": "enforcer",
+      "level": 20,
+      "rarity": "rare"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 40,
+      "rarity": "rare"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Sharpshot",
+      "member_class": "sniper",
+      "level": 19,
+      "rarity": "rare"
+    },
+    {
+      "name": "Rhino",
+      "member_class": "enforcer",
+      "level": 16,
+      "rarity": "rare"
+    },
+    {
+      "name": "Goliath",
+      "member_class": "enforcer",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ox",
+      "member_class": "enforcer",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Crosshair",
+      "member_class": "sniper",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger 2",
+      "member_class": "sniper",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Sharpshot",
+      "member_class": "sniper",
+      "level": 17,
+      "rarity": "rare"
+    },
+    {
+      "name": "Scorpion",
+      "member_class": "assassin",
+      "level": 20,
+      "rarity": "rare"
+    },
+    {
+      "name": "Shade",
+      "member_class": "assassin",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 19,
+      "rarity": "rare"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Fang",
+      "member_class": "assassin",
+      "level": 13,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Shade",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "common"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "common"
+    },
+    {
+      "name": "Pyro",
+      "member_class": "demolitionist",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Shrapnel",
+      "member_class": "demolitionist",
+      "level": 17,
+      "rarity": "rare"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Caine",
+      "member_class": "demolitionist",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 6,
+      "rarity": "common"
+    }
+  ],
+  "backup": [
+    {
+      "name": "Fuse",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bomber",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Inferno",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nitro",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Torch",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kaboom",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blast",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hotwire",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blade",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nightshade",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Sparks",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Shadow",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Wraith",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Stiletto",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Venom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Specter",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Mirage",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Silhouette",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Dagger",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Caine",
+      "member_class": "demolitionist",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Arson",
+      "member_class": "demolitionist",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
+      "name": "Diablo",
+      "member_class": "demolitionist",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 5,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 5,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ox",
+      "member_class": "enforcer",
+      "level": 20,
+      "rarity": "rare"
+    },
+    {
+      "name": "Eclipse",
+      "member_class": "assassin",
+      "level": 19,
+      "rarity": "rare"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 13,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 16,
+      "rarity": "rare"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 27,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 27,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Scorpion",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Pyro 2",
+      "member_class": "demolitionist",
+      "level": 23,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 8,
+      "rarity": "super_rare"
+    }
+  ],
+  "home_city": "United States/Virginia/Rappahannock County/Washington town",
+  "sound_on": false,
+  "profile_name": "default"
+}
