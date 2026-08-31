@@ -278,6 +278,17 @@ HEALTH_PACKS_START = 8  # Starting health packs per battle
 AI_ORDER_INTERVAL = 6.0      # Seconds between AI attack waves
 AI_FIRST_ORDER_DELAY = 5.0   # Seconds before AI issues first order
 
+# AI target scoring: the AI focuses the highest-VALUE building it can currently
+# reach. A building's score = its type value + the sum of its live defenders'
+# values. Only buildings the AI can see/reach are ever scored. Tune here.
+AI_TARGET_SCORE_DEFENDER = 2          # a live non-enforcer defender
+AI_TARGET_SCORE_ENFORCER = 1          # a live enforcer defender
+AI_TARGET_SCORE_BUILDING = {          # by building type (fallback = _DEFAULT)
+    "armory": 20,
+    "hospital": 10,
+}
+AI_TARGET_SCORE_BUILDING_DEFAULT = 5  # HQ, safehouse, bunker, sniper tower, lab, silo, warehouse
+
 # Movement (pixels per second on the battlefield)
 MEMBER_MOVE_SPEED = 48
 

@@ -11,9 +11,12 @@ class BattleAI:
     """AI that coordinates classes into organized attack waves.
     
     Strategy:
-    - Enforcers stay home to defend (only sent to attack as last resort)
-    - Assassins + Snipers assault together (assassins engage, snipers support from range)
-    - Demos charge in after defenders are weakened to destroy buildings
+    - All attack classes (enforcers, assassins, snipers, demolitionists) are
+      batched into each coordinated wave — combat is all-ranged, so enforcers
+      fire alongside everyone else rather than idling on defense.
+    - Assassins + Snipers open the assault (assassins engage, snipers support
+      from range); demos charge in after defenders are weakened to destroy
+      buildings; enforcers add sustained ranged damage on the focus target.
     - Picks a focus target with weighted randomness:
       - Building 3, 6, 9 (front row from AI's perspective): 30% each
       - Building 7 (backdoor via assassins): 10%
@@ -62,7 +65,37 @@ class BattleAI:
             return self.order_queue.pop(0) if self.order_queue else None
         
         return None
-    
+
+    # --- target scoring ---------------------------------------------------
+    # Value model (see config.AI_TARGET_SCORE_*): the AI focuses the highest-
+    # value building it can currently see/reach. Score = building-type value +
+    # sum of the value of its live defenders. Only reachable targets are scored.
+    def _building_type_score(self, building) -> int:
+        return config.AI_TARGET_SCORE_BUILDING.get(
+            building.building_type.value, config.AI_TARGET_SCORE_BUILDING_DEFAULT)
+
+    def _target_score(self, building_index: int) -> int:
+        """Value of attacking this building: its type value plus the value of
+        every live defender inside it."""
+        b = self.enemy.buildings[building_index]
+        score = self._building_type_score(b)
+        for m in self.enemy.members:
+            if m.is_alive and m.assigned_building == building_index:
+                score += (config.AI_TARGET_SCORE_ENFORCER
+                          if m.member_class == MemberClass.ENFORCER
+                          else config.AI_TARGET_SCORE_DEFENDER)
+        return score
+
+    def _best_target(self, candidate_indices) -> int:
+        """Pick the highest-scoring building among candidates (ties broken
+        randomly to keep behavior varied). Returns None if no candidates."""
+        candidates = list(candidate_indices)
+        if not candidates:
+            return None
+        best = max(self._target_score(i) for i in candidates)
+        top = [i for i in candidates if self._target_score(i) == best]
+        return self.rng.choice(top)
+
     def _plan_attack(self, engine: BattleEngine):
         """Plan a coordinated attack wave based on current battle state."""
         self.order_queue = []
@@ -126,52 +159,23 @@ class BattleAI:
                   f"at bldg {best_slot + 1} (packs left: {self.empire.health_packs})")
     
     def _plan_opening(self, engine: BattleEngine):
-        """Opening phase: pick a target with weighted randomness, send assassins + snipers.
-        
-        Target weights (player building indices):
-        - Building 1 (index 0): 30% — front row
-        - Building 4 (index 3): 30% — front row
-        - Building 7 (index 6): 30% — front row
-        - Building 9 (index 8): 10% — backdoor (assassins only)
+        """Opening phase: focus the highest-VALUE building the AI can currently
+        reach (see target-score model above), then send the assault classes.
+
+        Reachability uses assassin visibility (the widest: front doors 1/4/7 plus
+        the backdoor 9), so the AI only ever scores buildings it can actually hit.
         """
-        # Weighted target selection
-        targets_weights = [
-            (0, 30),   # Building 1
-            (3, 30),   # Building 4
-            (6, 30),   # Building 7
-            (8, 10),   # Building 9 (backdoor)
+        # Candidate = every building this side can reach right now (assassin has
+        # the widest reach, so it defines "what the AI can see").
+        reachable = [
+            b.index for b in self.enemy.buildings
+            if engine.worthwhile_target(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
         ]
-        
-        # Filter to only undestroyed and reachable targets
-        valid_weighted = []
-        for target_idx, weight in targets_weights:
-            if self.enemy.buildings[target_idx].destroyed:
-                continue
-            # Backdoor (building 9) only reachable by assassins
-            if target_idx == 8:
-                if engine.worthwhile_target(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
-                    valid_weighted.append((target_idx, weight))
-            else:
-                if engine.worthwhile_target(target_idx, MemberClass.ASSASSIN, is_player=self.is_player):
-                    valid_weighted.append((target_idx, weight))
-        
-        if not valid_weighted:
-            # Fallback: any reachable building (incl. rubble slots that still
-            # hold a live member — worthwhile_target excludes truly-dead slots)
-            valid_targets = [
-                b.index for b in self.enemy.buildings
-                if engine.worthwhile_target(b.index, MemberClass.ASSASSIN, is_player=self.is_player)
-            ]
-            if not valid_targets:
-                self.phase = "cleanup"
-                return
-            self.current_target = self.rng.choice(valid_targets)
-        else:
-            # Weighted random choice
-            indices = [t[0] for t in valid_weighted]
-            weights = [t[1] for t in valid_weighted]
-            self.current_target = self.rng.choices(indices, weights=weights, k=1)[0]
-        
+        self.current_target = self._best_target(reachable)
+        if self.current_target is None:
+            self.phase = "cleanup"
+            return
+
         # Send assassins to engage defenders
         if self.empire.get_available_by_class(MemberClass.ASSASSIN):
             self.order_queue.append(Order(
@@ -188,7 +192,17 @@ class BattleAI:
                     target_building=self.current_target,
                     action=OrderAction.ATTACK,
                 ))
-        
+
+        # Send enforcers too — combat is all-ranged now, so enforcers fire like
+        # any other class. Batch them into the wave (front-door reachability).
+        if self.empire.get_available_by_class(MemberClass.ENFORCER):
+            if engine.worthwhile_target(self.current_target, MemberClass.ENFORCER, is_player=self.is_player):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.ENFORCER,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+
         self.phase = "assault"
         self.orders_issued += 1
     
@@ -254,7 +268,17 @@ class BattleAI:
                     target_building=sniper_target,
                     action=OrderAction.ATTACK,
                 ))
-        
+
+        # Keep enforcers firing on the target too (all-ranged: they contribute
+        # sustained damage like any class rather than idling on defense).
+        if self.empire.get_available_by_class(MemberClass.ENFORCER):
+            if engine.worthwhile_target(self.current_target, MemberClass.ENFORCER, is_player=self.is_player):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.ENFORCER,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+
         self.orders_issued += 1
     
     def _plan_push(self, engine: BattleEngine):
@@ -269,8 +293,9 @@ class BattleAI:
             self.phase = "cleanup"
             return
         
-        # Pick the next target (prefer ones we couldn't reach before)
-        self.current_target = self.rng.choice(valid_targets)
+        # Pick the highest-value reachable building (deeper buildings are now
+        # visible after the front row fell).
+        self.current_target = self._best_target(valid_targets)
         
         # Coordinated wave on new target
         if self.empire.get_available_by_class(MemberClass.ASSASSIN):
@@ -295,7 +320,15 @@ class BattleAI:
                     target_building=self.current_target,
                     action=OrderAction.ATTACK,
                 ))
-        
+
+        if self.empire.get_available_by_class(MemberClass.ENFORCER):
+            if engine.worthwhile_target(self.current_target, MemberClass.ENFORCER, is_player=self.is_player):
+                self.order_queue.append(Order(
+                    member_class=MemberClass.ENFORCER,
+                    target_building=self.current_target,
+                    action=OrderAction.ATTACK,
+                ))
+
         self.phase = "assault"
         self.orders_issued += 1
     
@@ -308,7 +341,7 @@ class BattleAI:
         if not valid_targets:
             return
         
-        target = self.rng.choice(valid_targets)
+        target = self._best_target(valid_targets)
         
         for cls in [MemberClass.ASSASSIN, MemberClass.SNIPER, MemberClass.DEMOLITIONIST]:
             if self.empire.get_available_by_class(cls):
