@@ -27,9 +27,33 @@ import sys
 
 RAW = os.path.join(os.path.dirname(__file__), "..", "data", "raw")
 
-STATE_FIPS = {"VA": "51", "NV": "32", "CA": "06", "NY": "36", "TX": "48"}
-STATE_NAME = {"VA": "Virginia", "NV": "Nevada", "CA": "California",
-              "NY": "New York", "TX": "Texas"}
+STATE_FIPS = {
+    "AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08",
+    "CT": "09", "DE": "10", "DC": "11", "FL": "12", "GA": "13", "HI": "15",
+    "ID": "16", "IL": "17", "IN": "18", "IA": "19", "KS": "20", "KY": "21",
+    "LA": "22", "ME": "23", "MD": "24", "MA": "25", "MI": "26", "MN": "27",
+    "MS": "28", "MO": "29", "MT": "30", "NE": "31", "NV": "32", "NH": "33",
+    "NJ": "34", "NM": "35", "NY": "36", "NC": "37", "ND": "38", "OH": "39",
+    "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45", "SD": "46",
+    "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53",
+    "WV": "54", "WI": "55", "WY": "56",
+}
+STATE_NAME = {
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
+    "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+    "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia",
+    "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana",
+    "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana",
+    "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan",
+    "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana",
+    "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey",
+    "NM": "New Mexico", "NY": "New York", "NC": "North Carolina",
+    "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
+    "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina",
+    "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
+    "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+    "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
+}
 
 # Reward range (money) mapped across the state's cities by GDP percentile.
 REWARD_MIN, REWARD_MAX = 150, 6000
@@ -205,7 +229,10 @@ def build(state_abbr: str) -> dict:
         difficulty = round(0.5 * g_p + 0.5 * h_p, 3)
 
         city_list = places.get(fips, [])
-        if not city_list:
+        # Counties with no incorporated places become one whole-county city, so
+        # they already reconcile exactly and get no remainder node below.
+        whole_county = not city_list
+        if whole_county:
             leaf = cname.replace(" County", "").strip()
             city_list = [(leaf, cpop)]
 
@@ -215,6 +242,21 @@ def build(state_abbr: str) -> dict:
             citygdp = int(cgdp * share) if (cgdp and share) else 0
             all_city_gdp.append(citygdp)
             cities_out.append((cityname, citypop, citygdp))
+
+        # The incorporated places above rarely cover the whole county: the
+        # unincorporated population (and the CDP/"Balance of" rows dropped in
+        # load_places) is left over. Capture it as a remainder city so a
+        # county's cities sum back to the county's population and GDP. GDP uses
+        # the already-rounded city slices so children reconcile exactly.
+        if not whole_county:
+            rem_pop = cpop - sum(cp for _, cp in city_list)
+            rem_gdp = (cgdp - sum(cg for _, _, cg in cities_out)) if cgdp else 0
+            if rem_pop > 0 or rem_gdp > 0:
+                rem_pop = max(rem_pop, 0)
+                rem_gdp = max(rem_gdp, 0)
+                rem_name = cname.replace(" County", "").strip() + " (unincorporated)"
+                all_city_gdp.append(rem_gdp)
+                cities_out.append((rem_name, rem_pop, rem_gdp))
 
         tmp_cities[cname] = cities_out
         counties[cname] = {

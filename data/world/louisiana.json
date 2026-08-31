@@ -1,24 +1,2895 @@
 {
   "country": "United States",
   "state": "Louisiana",
-  "state_fips": "00",
+  "state_fips": "22",
   "counties": {
-    "Louisiana County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Acadia Parish": {
+      "fips": "22001",
+      "gdp_thousands": 2067266,
+      "gdp_estimated": false,
+      "population": 56604,
+      "homicide_rate": 12.985416913,
+      "difficulty": 0.576,
       "cities": {
-        "Louisiana City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
+        "Crowley city": {
+          "population": 11216,
+          "gdp_thousands": 409625,
+          "crime_rate": 12.99,
+          "reward": 3745,
+          "difficulty": 0.576,
+          "underworld_power": 2185,
+          "police_power": 14665
+        },
+        "Rayne city": {
+          "population": 6983,
+          "gdp_thousands": 255030,
+          "crime_rate": 12.99,
+          "reward": 3228,
+          "difficulty": 0.576,
+          "underworld_power": 1360,
+          "police_power": 9130
+        },
+        "Church Point town": {
+          "population": 4032,
+          "gdp_thousands": 147254,
+          "crime_rate": 12.99,
+          "reward": 2476,
+          "difficulty": 0.576,
+          "underworld_power": 785,
+          "police_power": 5272
+        },
+        "Iota town": {
+          "population": 1257,
+          "gdp_thousands": 45907,
+          "crime_rate": 12.99,
+          "reward": 1090,
+          "difficulty": 0.576,
+          "underworld_power": 245,
+          "police_power": 1643
+        },
+        "Acadia Parish (unincorporated)": {
+          "population": 33116,
+          "gdp_thousands": 1209450,
+          "crime_rate": 12.99,
+          "reward": 4872,
+          "difficulty": 0.576,
+          "underworld_power": 6450,
+          "police_power": 43298
+        }
+      }
+    },
+    "Allen Parish": {
+      "fips": "22003",
+      "gdp_thousands": 1080471,
+      "gdp_estimated": false,
+      "population": 22501,
+      "homicide_rate": null,
+      "difficulty": 0.44,
+      "cities": {
+        "Oakdale city": {
+          "population": 6490,
+          "gdp_thousands": 311642,
+          "crime_rate": 3.0,
+          "reward": 3533,
+          "difficulty": 0.44,
+          "underworld_power": 292,
+          "police_power": 11157
+        },
+        "Kinder town": {
+          "population": 2092,
+          "gdp_thousands": 100455,
+          "crime_rate": 3.0,
+          "reward": 1983,
+          "difficulty": 0.44,
+          "underworld_power": 94,
+          "police_power": 3596
+        },
+        "Oberlin town": {
+          "population": 1287,
+          "gdp_thousands": 61800,
+          "crime_rate": 3.0,
+          "reward": 1536,
+          "difficulty": 0.44,
+          "underworld_power": 58,
+          "police_power": 2212
+        },
+        "Allen Parish (unincorporated)": {
+          "population": 12632,
+          "gdp_thousands": 606574,
+          "crime_rate": 3.0,
+          "reward": 4214,
+          "difficulty": 0.44,
+          "underworld_power": 568,
+          "police_power": 21715
+        }
+      }
+    },
+    "Ascension Parish": {
+      "fips": "22005",
+      "gdp_thousands": 12654433,
+      "gdp_estimated": false,
+      "population": 133534,
+      "homicide_rate": 6.8783675341,
+      "difficulty": 0.467,
+      "cities": {
+        "Gonzales city": {
+          "population": 13837,
+          "gdp_thousands": 1311271,
+          "crime_rate": 6.88,
+          "reward": 4990,
+          "difficulty": 0.467,
+          "underworld_power": 1428,
+          "police_power": 46944
+        },
+        "Donaldsonville city": {
+          "population": 6945,
+          "gdp_thousands": 658147,
+          "crime_rate": 6.88,
+          "reward": 4308,
+          "difficulty": 0.467,
+          "underworld_power": 717,
+          "police_power": 23562
+        },
+        "Sorrento town": {
+          "population": 1589,
+          "gdp_thousands": 150582,
+          "crime_rate": 6.88,
+          "reward": 2546,
+          "difficulty": 0.467,
+          "underworld_power": 164,
+          "police_power": 5391
+        },
+        "Ascension Parish (unincorporated)": {
+          "population": 111163,
+          "gdp_thousands": 10534433,
+          "crime_rate": 6.88,
+          "reward": 5836,
+          "difficulty": 0.467,
+          "underworld_power": 11469,
+          "police_power": 377133
+        }
+      }
+    },
+    "Assumption Parish": {
+      "fips": "22007",
+      "gdp_thousands": 734607,
+      "gdp_estimated": false,
+      "population": 20050,
+      "homicide_rate": 7.1167930437,
+      "difficulty": 0.179,
+      "cities": {
+        "Assumption Parish": {
+          "population": 20050,
+          "gdp_thousands": 734607,
+          "crime_rate": 7.12,
+          "reward": 4402,
+          "difficulty": 0.179,
+          "underworld_power": 2140,
+          "police_power": 26299
+        }
+      }
+    },
+    "Avoyelles Parish": {
+      "fips": "22009",
+      "gdp_thousands": 1177252,
+      "gdp_estimated": false,
+      "population": 38373,
+      "homicide_rate": 11.660447761,
+      "difficulty": 0.456,
+      "cities": {
+        "Marksville city": {
+          "population": 4805,
+          "gdp_thousands": 147413,
+          "crime_rate": 11.66,
+          "reward": 2499,
+          "difficulty": 0.456,
+          "underworld_power": 840,
+          "police_power": 5277
+        },
+        "Bunkie city": {
+          "population": 3183,
+          "gdp_thousands": 97651,
+          "crime_rate": 11.66,
+          "reward": 1959,
+          "difficulty": 0.456,
+          "underworld_power": 557,
+          "police_power": 3496
+        },
+        "Cottonport town": {
+          "population": 1951,
+          "gdp_thousands": 59855,
+          "crime_rate": 11.66,
+          "reward": 1489,
+          "difficulty": 0.456,
+          "underworld_power": 341,
+          "police_power": 2143
+        },
+        "Simmesport town": {
+          "population": 1410,
+          "gdp_thousands": 43257,
+          "crime_rate": 11.66,
+          "reward": 1043,
+          "difficulty": 0.456,
+          "underworld_power": 247,
+          "police_power": 1549
+        },
+        "Mansura town": {
+          "population": 1270,
+          "gdp_thousands": 38962,
+          "crime_rate": 11.66,
+          "reward": 996,
+          "difficulty": 0.456,
+          "underworld_power": 222,
+          "police_power": 1395
+        },
+        "Evergreen town": {
+          "population": 208,
+          "gdp_thousands": 6381,
+          "crime_rate": 11.66,
+          "reward": 197,
+          "difficulty": 0.456,
+          "underworld_power": 36,
+          "police_power": 228
+        },
+        "Avoyelles Parish (unincorporated)": {
+          "population": 25546,
+          "gdp_thousands": 783733,
+          "crime_rate": 11.66,
+          "reward": 4520,
+          "difficulty": 0.456,
+          "underworld_power": 4468,
+          "police_power": 28058
+        }
+      }
+    },
+    "Beauregard Parish": {
+      "fips": "22011",
+      "gdp_thousands": 1971627,
+      "gdp_estimated": false,
+      "population": 36695,
+      "homicide_rate": 7.3208698735,
+      "difficulty": 0.332,
+      "cities": {
+        "Merryville town": {
+          "population": 949,
+          "gdp_thousands": 50989,
+          "crime_rate": 7.32,
+          "reward": 1301,
+          "difficulty": 0.332,
+          "underworld_power": 104,
+          "police_power": 1825
+        },
+        "Beauregard Parish (unincorporated)": {
+          "population": 35746,
+          "gdp_thousands": 1920638,
+          "crime_rate": 7.32,
+          "reward": 5201,
+          "difficulty": 0.332,
+          "underworld_power": 3925,
+          "police_power": 68759
+        }
+      }
+    },
+    "Bienville Parish": {
+      "fips": "22013",
+      "gdp_thousands": 824636,
+      "gdp_estimated": false,
+      "population": 12412,
+      "homicide_rate": 14.957744372,
+      "difficulty": 0.523,
+      "cities": {
+        "Arcadia town": {
+          "population": 2579,
+          "gdp_thousands": 171345,
+          "crime_rate": 14.96,
+          "reward": 2687,
+          "difficulty": 0.523,
+          "underworld_power": 579,
+          "police_power": 6134
+        },
+        "Ringgold town": {
+          "population": 1317,
+          "gdp_thousands": 87499,
+          "crime_rate": 14.96,
+          "reward": 1842,
+          "difficulty": 0.523,
+          "underworld_power": 295,
+          "police_power": 3132
+        },
+        "Gibsland town": {
+          "population": 746,
+          "gdp_thousands": 49563,
+          "crime_rate": 14.96,
+          "reward": 1254,
+          "difficulty": 0.523,
+          "underworld_power": 167,
+          "police_power": 1774
+        },
+        "Mount Lebanon town": {
+          "population": 63,
+          "gdp_thousands": 4185,
+          "crime_rate": 14.96,
+          "reward": 150,
+          "difficulty": 0.523,
+          "underworld_power": 14,
+          "police_power": 150
+        },
+        "Bienville Parish (unincorporated)": {
+          "population": 7707,
+          "gdp_thousands": 512044,
+          "crime_rate": 14.96,
+          "reward": 4097,
+          "difficulty": 0.523,
+          "underworld_power": 1729,
+          "police_power": 18331
+        }
+      }
+    },
+    "Bossier Parish": {
+      "fips": "22015",
+      "gdp_thousands": 7656264,
+      "gdp_estimated": false,
+      "population": 131102,
+      "homicide_rate": 7.5322453174,
+      "difficulty": 0.501,
+      "cities": {
+        "Bossier City city": {
+          "population": 63218,
+          "gdp_thousands": 3691886,
+          "crime_rate": 7.53,
+          "reward": 5554,
+          "difficulty": 0.501,
+          "underworld_power": 7143,
+          "police_power": 132170
+        },
+        "Haughton town": {
+          "population": 4574,
+          "gdp_thousands": 267118,
+          "crime_rate": 7.53,
+          "reward": 3298,
+          "difficulty": 0.501,
+          "underworld_power": 517,
+          "police_power": 9563
+        },
+        "Benton town": {
+          "population": 2099,
+          "gdp_thousands": 122580,
+          "crime_rate": 7.53,
+          "reward": 2194,
+          "difficulty": 0.501,
+          "underworld_power": 237,
+          "police_power": 4388
+        },
+        "Plain Dealing town": {
+          "population": 876,
+          "gdp_thousands": 51157,
+          "crime_rate": 7.53,
+          "reward": 1325,
+          "difficulty": 0.501,
+          "underworld_power": 99,
+          "police_power": 1831
+        },
+        "Bossier Parish (unincorporated)": {
+          "population": 60335,
+          "gdp_thousands": 3523523,
+          "crime_rate": 7.53,
+          "reward": 5483,
+          "difficulty": 0.501,
+          "underworld_power": 6817,
+          "police_power": 126142
+        }
+      }
+    },
+    "Caddo Parish": {
+      "fips": "22017",
+      "gdp_thousands": 17942732,
+      "gdp_estimated": false,
+      "population": 224893,
+      "homicide_rate": 23.521262339,
+      "difficulty": 0.92,
+      "cities": {
+        "Blanchard town": {
+          "population": 3371,
+          "gdp_thousands": 268949,
+          "crime_rate": 23.52,
+          "reward": 3345,
+          "difficulty": 0.92,
+          "underworld_power": 1189,
+          "police_power": 9628
+        },
+        "Greenwood town": {
+          "population": 3091,
+          "gdp_thousands": 246610,
+          "crime_rate": 23.52,
+          "reward": 3157,
+          "difficulty": 0.92,
+          "underworld_power": 1091,
+          "police_power": 8829
+        },
+        "Vivian town": {
+          "population": 2922,
+          "gdp_thousands": 233127,
+          "crime_rate": 23.52,
+          "reward": 3087,
+          "difficulty": 0.92,
+          "underworld_power": 1031,
+          "police_power": 8346
+        },
+        "Oil City town": {
+          "population": 866,
+          "gdp_thousands": 69092,
+          "crime_rate": 23.52,
+          "reward": 1654,
+          "difficulty": 0.92,
+          "underworld_power": 306,
+          "police_power": 2473
+        },
+        "Mooringsport town": {
+          "population": 703,
+          "gdp_thousands": 56087,
+          "crime_rate": 23.52,
+          "reward": 1466,
+          "difficulty": 0.92,
+          "underworld_power": 248,
+          "police_power": 2008
+        },
+        "Caddo Parish (unincorporated)": {
+          "population": 213940,
+          "gdp_thousands": 17068867,
+          "crime_rate": 23.52,
+          "reward": 5906,
+          "difficulty": 0.92,
+          "underworld_power": 75482,
+          "police_power": 611065
+        }
+      }
+    },
+    "Calcasieu Parish": {
+      "fips": "22019",
+      "gdp_thousands": 18357421,
+      "gdp_estimated": false,
+      "population": 206861,
+      "homicide_rate": 7.621875913,
+      "difficulty": 0.558,
+      "cities": {
+        "Lake Charles city": {
+          "population": 81157,
+          "gdp_thousands": 7202098,
+          "crime_rate": 7.62,
+          "reward": 5765,
+          "difficulty": 0.558,
+          "underworld_power": 9279,
+          "police_power": 257835
+        },
+        "Sulphur city": {
+          "population": 20572,
+          "gdp_thousands": 1825616,
+          "crime_rate": 7.62,
+          "reward": 5178,
+          "difficulty": 0.558,
+          "underworld_power": 2352,
+          "police_power": 65357
+        },
+        "Westlake city": {
+          "population": 4735,
+          "gdp_thousands": 420197,
+          "crime_rate": 7.62,
+          "reward": 3815,
+          "difficulty": 0.558,
+          "underworld_power": 541,
+          "police_power": 15043
+        },
+        "Iowa town": {
+          "population": 3150,
+          "gdp_thousands": 279539,
+          "crime_rate": 7.62,
+          "reward": 3392,
+          "difficulty": 0.558,
+          "underworld_power": 360,
+          "police_power": 10007
+        },
+        "Vinton town": {
+          "population": 3108,
+          "gdp_thousands": 275812,
+          "crime_rate": 7.62,
+          "reward": 3369,
+          "difficulty": 0.558,
+          "underworld_power": 355,
+          "police_power": 9874
+        },
+        "DeQuincy city": {
+          "population": 2872,
+          "gdp_thousands": 254869,
+          "crime_rate": 7.62,
+          "reward": 3204,
+          "difficulty": 0.558,
+          "underworld_power": 328,
+          "police_power": 9124
+        },
+        "Calcasieu Parish (unincorporated)": {
+          "population": 91267,
+          "gdp_thousands": 8099290,
+          "crime_rate": 7.62,
+          "reward": 5789,
+          "difficulty": 0.558,
+          "underworld_power": 10434,
+          "police_power": 289955
+        }
+      }
+    },
+    "Caldwell Parish": {
+      "fips": "22021",
+      "gdp_thousands": 249316,
+      "gdp_estimated": false,
+      "population": 9393,
+      "homicide_rate": null,
+      "difficulty": 0.282,
+      "cities": {
+        "Columbia town": {
+          "population": 266,
+          "gdp_thousands": 7060,
+          "crime_rate": 3.0,
+          "reward": 220,
+          "difficulty": 0.282,
+          "underworld_power": 12,
+          "police_power": 253
+        },
+        "Caldwell Parish (unincorporated)": {
+          "population": 9127,
+          "gdp_thousands": 242256,
+          "crime_rate": 3.0,
+          "reward": 3134,
+          "difficulty": 0.282,
+          "underworld_power": 411,
+          "police_power": 8673
+        }
+      }
+    },
+    "Cameron Parish": {
+      "fips": "22023",
+      "gdp_thousands": 1056696,
+      "gdp_estimated": false,
+      "population": 4678,
+      "homicide_rate": null,
+      "difficulty": 0.425,
+      "cities": {
+        "Cameron Parish": {
+          "population": 4678,
+          "gdp_thousands": 1056696,
+          "crime_rate": 3.0,
+          "reward": 4755,
+          "difficulty": 0.425,
+          "underworld_power": 211,
+          "police_power": 37830
+        }
+      }
+    },
+    "Catahoula Parish": {
+      "fips": "22025",
+      "gdp_thousands": 235238,
+      "gdp_estimated": false,
+      "population": 8280,
+      "homicide_rate": null,
+      "difficulty": 0.266,
+      "cities": {
+        "Jonesville town": {
+          "population": 1562,
+          "gdp_thousands": 44377,
+          "crime_rate": 3.0,
+          "reward": 1066,
+          "difficulty": 0.266,
+          "underworld_power": 70,
+          "police_power": 1589
+        },
+        "Catahoula Parish (unincorporated)": {
+          "population": 6718,
+          "gdp_thousands": 190861,
+          "crime_rate": 3.0,
+          "reward": 2852,
+          "difficulty": 0.266,
+          "underworld_power": 302,
+          "police_power": 6833
+        }
+      }
+    },
+    "Claiborne Parish": {
+      "fips": "22027",
+      "gdp_thousands": 515610,
+      "gdp_estimated": false,
+      "population": 13537,
+      "homicide_rate": 9.1277520172,
+      "difficulty": 0.206,
+      "cities": {
+        "Homer town": {
+          "population": 2563,
+          "gdp_thousands": 97621,
+          "crime_rate": 9.13,
+          "reward": 1936,
+          "difficulty": 0.206,
+          "underworld_power": 351,
+          "police_power": 3495
+        },
+        "Haynesville town": {
+          "population": 1906,
+          "gdp_thousands": 72597,
+          "crime_rate": 9.13,
+          "reward": 1701,
+          "difficulty": 0.206,
+          "underworld_power": 261,
+          "police_power": 2599
+        },
+        "Claiborne Parish (unincorporated)": {
+          "population": 9068,
+          "gdp_thousands": 345392,
+          "crime_rate": 9.13,
+          "reward": 3604,
+          "difficulty": 0.206,
+          "underworld_power": 1242,
+          "police_power": 12365
+        }
+      }
+    },
+    "Concordia Parish": {
+      "fips": "22029",
+      "gdp_thousands": 715162,
+      "gdp_estimated": false,
+      "population": 17797,
+      "homicide_rate": 21.315849437,
+      "difficulty": 0.551,
+      "cities": {
+        "Vidalia town": {
+          "population": 3888,
+          "gdp_thousands": 156236,
+          "crime_rate": 21.32,
+          "reward": 2617,
+          "difficulty": 0.551,
+          "underworld_power": 1243,
+          "police_power": 5593
+        },
+        "Ferriday town": {
+          "population": 2995,
+          "gdp_thousands": 120352,
+          "crime_rate": 21.32,
+          "reward": 2147,
+          "difficulty": 0.551,
+          "underworld_power": 958,
+          "police_power": 4309
+        },
+        "Clayton town": {
+          "population": 545,
+          "gdp_thousands": 21900,
+          "crime_rate": 21.32,
+          "reward": 408,
+          "difficulty": 0.551,
+          "underworld_power": 174,
+          "police_power": 784
+        },
+        "Ridgecrest town": {
+          "population": 539,
+          "gdp_thousands": 21659,
+          "crime_rate": 21.32,
+          "reward": 385,
+          "difficulty": 0.551,
+          "underworld_power": 172,
+          "police_power": 775
+        },
+        "Concordia Parish (unincorporated)": {
+          "population": 9830,
+          "gdp_thousands": 395015,
+          "crime_rate": 21.32,
+          "reward": 3698,
+          "difficulty": 0.551,
+          "underworld_power": 3143,
+          "police_power": 14142
+        }
+      }
+    },
+    "De Soto Parish": {
+      "fips": "22031",
+      "gdp_thousands": 2894967,
+      "gdp_estimated": false,
+      "population": 27274,
+      "homicide_rate": 9.4236397238,
+      "difficulty": 0.477,
+      "cities": {
+        "Mansfield city": {
+          "population": 4545,
+          "gdp_thousands": 482423,
+          "crime_rate": 9.42,
+          "reward": 3980,
+          "difficulty": 0.477,
+          "underworld_power": 642,
+          "police_power": 17271
+        },
+        "Stonewall town": {
+          "population": 2525,
+          "gdp_thousands": 268013,
+          "crime_rate": 9.42,
+          "reward": 3322,
+          "difficulty": 0.477,
+          "underworld_power": 357,
+          "police_power": 9595
+        },
+        "Logansport town": {
+          "population": 1333,
+          "gdp_thousands": 141489,
+          "crime_rate": 9.42,
+          "reward": 2429,
+          "difficulty": 0.477,
+          "underworld_power": 188,
+          "police_power": 5065
+        },
+        "Keachi town": {
+          "population": 247,
+          "gdp_thousands": 26217,
+          "crime_rate": 9.42,
+          "reward": 526,
+          "difficulty": 0.477,
+          "underworld_power": 35,
+          "police_power": 939
+        },
+        "De Soto Parish (unincorporated)": {
+          "population": 18624,
+          "gdp_thousands": 1976825,
+          "crime_rate": 9.42,
+          "reward": 5225,
+          "difficulty": 0.477,
+          "underworld_power": 2633,
+          "police_power": 70770
+        }
+      }
+    },
+    "East Baton Rouge Parish": {
+      "fips": "22033",
+      "gdp_thousands": 47132325,
+      "gdp_estimated": false,
+      "population": 453022,
+      "homicide_rate": 24.565661444,
+      "difficulty": 0.97,
+      "cities": {
+        "Baton Rouge city": {
+          "population": 220907,
+          "gdp_thousands": 22983123,
+          "crime_rate": 24.57,
+          "reward": 5953,
+          "difficulty": 0.97,
+          "underworld_power": 81401,
+          "police_power": 822796
+        },
+        "Central city": {
+          "population": 30161,
+          "gdp_thousands": 3137944,
+          "crime_rate": 24.57,
+          "reward": 5460,
+          "difficulty": 0.97,
+          "underworld_power": 11114,
+          "police_power": 112338
+        },
+        "Zachary city": {
+          "population": 20370,
+          "gdp_thousands": 2119291,
+          "crime_rate": 24.57,
+          "reward": 5272,
+          "difficulty": 0.97,
+          "underworld_power": 7506,
+          "police_power": 75871
+        },
+        "Baker city": {
+          "population": 12147,
+          "gdp_thousands": 1263771,
+          "crime_rate": 24.57,
+          "reward": 4919,
+          "difficulty": 0.97,
+          "underworld_power": 4476,
+          "police_power": 45243
+        },
+        "East Baton Rouge Parish (unincorporated)": {
+          "population": 169437,
+          "gdp_thousands": 17628196,
+          "crime_rate": 24.57,
+          "reward": 5930,
+          "difficulty": 0.97,
+          "underworld_power": 62435,
+          "police_power": 631089
+        }
+      }
+    },
+    "East Carroll Parish": {
+      "fips": "22035",
+      "gdp_thousands": 165772,
+      "gdp_estimated": false,
+      "population": 6892,
+      "homicide_rate": null,
+      "difficulty": 0.258,
+      "cities": {
+        "Lake Providence town": {
+          "population": 3231,
+          "gdp_thousands": 77714,
+          "crime_rate": 3.0,
+          "reward": 1771,
+          "difficulty": 0.258,
+          "underworld_power": 145,
+          "police_power": 2782
+        },
+        "East Carroll Parish (unincorporated)": {
+          "population": 3661,
+          "gdp_thousands": 88058,
+          "crime_rate": 3.0,
+          "reward": 1865,
+          "difficulty": 0.258,
+          "underworld_power": 165,
+          "police_power": 3152
+        }
+      }
+    },
+    "East Feliciana Parish": {
+      "fips": "22037",
+      "gdp_thousands": 686600,
+      "gdp_estimated": false,
+      "population": 19112,
+      "homicide_rate": 16.242035865,
+      "difficulty": 0.515,
+      "cities": {
+        "Jackson town": {
+          "population": 3932,
+          "gdp_thousands": 141257,
+          "crime_rate": 16.24,
+          "reward": 2405,
+          "difficulty": 0.515,
+          "underworld_power": 958,
+          "police_power": 5057
+        },
+        "Clinton town": {
+          "population": 1297,
+          "gdp_thousands": 46594,
+          "crime_rate": 16.24,
+          "reward": 1113,
+          "difficulty": 0.515,
+          "underworld_power": 316,
+          "police_power": 1668
+        },
+        "Slaughter town": {
+          "population": 989,
+          "gdp_thousands": 35529,
+          "crime_rate": 16.24,
+          "reward": 925,
+          "difficulty": 0.515,
+          "underworld_power": 241,
+          "police_power": 1272
+        },
+        "East Feliciana Parish (unincorporated)": {
+          "population": 12894,
+          "gdp_thousands": 463220,
+          "crime_rate": 16.24,
+          "reward": 3886,
+          "difficulty": 0.515,
+          "underworld_power": 3141,
+          "police_power": 16583
+        }
+      }
+    },
+    "Evangeline Parish": {
+      "fips": "22039",
+      "gdp_thousands": 1176607,
+      "gdp_estimated": false,
+      "population": 31745,
+      "homicide_rate": 7.7091426149,
+      "difficulty": 0.298,
+      "cities": {
+        "Ville Platte city": {
+          "population": 6148,
+          "gdp_thousands": 227871,
+          "crime_rate": 7.71,
+          "reward": 3063,
+          "difficulty": 0.298,
+          "underworld_power": 711,
+          "police_power": 8158
+        },
+        "Mamou town": {
+          "population": 2817,
+          "gdp_thousands": 104410,
+          "crime_rate": 7.71,
+          "reward": 2053,
+          "difficulty": 0.298,
+          "underworld_power": 326,
+          "police_power": 3738
+        },
+        "Evangeline Parish (unincorporated)": {
+          "population": 22780,
+          "gdp_thousands": 844326,
+          "crime_rate": 7.71,
+          "reward": 4614,
+          "difficulty": 0.298,
+          "underworld_power": 2634,
+          "police_power": 30227
+        }
+      }
+    },
+    "Franklin Parish": {
+      "fips": "22041",
+      "gdp_thousands": 619082,
+      "gdp_estimated": false,
+      "population": 19107,
+      "homicide_rate": 12.094307138,
+      "difficulty": 0.339,
+      "cities": {
+        "Winnsboro city": {
+          "population": 4602,
+          "gdp_thousands": 149108,
+          "crime_rate": 12.09,
+          "reward": 2523,
+          "difficulty": 0.339,
+          "underworld_power": 835,
+          "police_power": 5338
+        },
+        "Wisner town": {
+          "population": 744,
+          "gdp_thousands": 24106,
+          "crime_rate": 12.09,
+          "reward": 479,
+          "difficulty": 0.339,
+          "underworld_power": 135,
+          "police_power": 863
+        },
+        "Franklin Parish (unincorporated)": {
+          "population": 13761,
+          "gdp_thousands": 445868,
+          "crime_rate": 12.09,
+          "reward": 3862,
+          "difficulty": 0.339,
+          "underworld_power": 2496,
+          "police_power": 15962
+        }
+      }
+    },
+    "Grant Parish": {
+      "fips": "22043",
+      "gdp_thousands": 575962,
+      "gdp_estimated": false,
+      "population": 22109,
+      "homicide_rate": null,
+      "difficulty": 0.313,
+      "cities": {
+        "Colfax town": {
+          "population": 1396,
+          "gdp_thousands": 36367,
+          "crime_rate": 3.0,
+          "reward": 949,
+          "difficulty": 0.313,
+          "underworld_power": 63,
+          "police_power": 1302
+        },
+        "Montgomery town": {
+          "population": 626,
+          "gdp_thousands": 16307,
+          "crime_rate": 3.0,
+          "reward": 314,
+          "difficulty": 0.313,
+          "underworld_power": 28,
+          "police_power": 584
+        },
+        "Pollock town": {
+          "population": 395,
+          "gdp_thousands": 10290,
+          "crime_rate": 3.0,
+          "reward": 244,
+          "difficulty": 0.313,
+          "underworld_power": 18,
+          "police_power": 368
+        },
+        "Grant Parish (unincorporated)": {
+          "population": 19692,
+          "gdp_thousands": 512998,
+          "crime_rate": 3.0,
+          "reward": 4120,
+          "difficulty": 0.313,
+          "underworld_power": 886,
+          "police_power": 18365
+        }
+      }
+    },
+    "Iberia Parish": {
+      "fips": "22045",
+      "gdp_thousands": 3822425,
+      "gdp_estimated": false,
+      "population": 67540,
+      "homicide_rate": 13.847385754,
+      "difficulty": 0.677,
+      "cities": {
+        "New Iberia city": {
+          "population": 26849,
+          "gdp_thousands": 1519518,
+          "crime_rate": 13.85,
+          "reward": 5084,
+          "difficulty": 0.677,
+          "underworld_power": 5577,
+          "police_power": 54399
+        },
+        "Jeanerette city": {
+          "population": 4557,
+          "gdp_thousands": 257903,
+          "crime_rate": 13.85,
+          "reward": 3251,
+          "difficulty": 0.677,
+          "underworld_power": 947,
+          "police_power": 9233
+        },
+        "Iberia Parish (unincorporated)": {
+          "population": 36134,
+          "gdp_thousands": 2045004,
+          "crime_rate": 13.85,
+          "reward": 5248,
+          "difficulty": 0.677,
+          "underworld_power": 7505,
+          "police_power": 73211
+        }
+      }
+    },
+    "Iberville Parish": {
+      "fips": "22047",
+      "gdp_thousands": 3436271,
+      "gdp_estimated": false,
+      "population": 29766,
+      "homicide_rate": 11.053729971,
+      "difficulty": 0.551,
+      "cities": {
+        "St. Gabriel city": {
+          "population": 6857,
+          "gdp_thousands": 791591,
+          "crime_rate": 11.05,
+          "reward": 4543,
+          "difficulty": 0.551,
+          "underworld_power": 1137,
+          "police_power": 28339
+        },
+        "Plaquemine city": {
+          "population": 5985,
+          "gdp_thousands": 690925,
+          "crime_rate": 11.05,
+          "reward": 4332,
+          "difficulty": 0.551,
+          "underworld_power": 992,
+          "police_power": 24735
+        },
+        "White Castle town": {
+          "population": 1612,
+          "gdp_thousands": 186093,
+          "crime_rate": 11.05,
+          "reward": 2805,
+          "difficulty": 0.551,
+          "underworld_power": 267,
+          "police_power": 6662
+        },
+        "Maringouin town": {
+          "population": 821,
+          "gdp_thousands": 94778,
+          "crime_rate": 11.05,
+          "reward": 1912,
+          "difficulty": 0.551,
+          "underworld_power": 136,
+          "police_power": 3393
+        },
+        "Iberville Parish (unincorporated)": {
+          "population": 14491,
+          "gdp_thousands": 1672884,
+          "crime_rate": 11.05,
+          "reward": 5107,
+          "difficulty": 0.551,
+          "underworld_power": 2403,
+          "police_power": 59889
+        }
+      }
+    },
+    "Jackson Parish": {
+      "fips": "22049",
+      "gdp_thousands": 603741,
+      "gdp_estimated": false,
+      "population": 14797,
+      "homicide_rate": null,
+      "difficulty": 0.321,
+      "cities": {
+        "Jonesboro town": {
+          "population": 4028,
+          "gdp_thousands": 164348,
+          "crime_rate": 3.0,
+          "reward": 2640,
+          "difficulty": 0.321,
+          "underworld_power": 181,
+          "police_power": 5884
+        },
+        "Chatham town": {
+          "population": 480,
+          "gdp_thousands": 19584,
+          "crime_rate": 3.0,
+          "reward": 338,
+          "difficulty": 0.321,
+          "underworld_power": 22,
+          "police_power": 701
+        },
+        "Eros town": {
+          "population": 134,
+          "gdp_thousands": 5467,
+          "crime_rate": 3.0,
+          "reward": 173,
+          "difficulty": 0.321,
+          "underworld_power": 6,
+          "police_power": 196
+        },
+        "Jackson Parish (unincorporated)": {
+          "population": 10155,
+          "gdp_thousands": 414342,
+          "crime_rate": 3.0,
+          "reward": 3792,
+          "difficulty": 0.321,
+          "underworld_power": 457,
+          "police_power": 14833
+        }
+      }
+    },
+    "Jefferson Parish": {
+      "fips": "22051",
+      "gdp_thousands": 31829666,
+      "gdp_estimated": false,
+      "population": 427253,
+      "homicide_rate": 14.419861701,
+      "difficulty": 0.832,
+      "cities": {
+        "Kenner city": {
+          "population": 64650,
+          "gdp_thousands": 4816321,
+          "crime_rate": 14.42,
+          "reward": 5648,
+          "difficulty": 0.832,
+          "underworld_power": 13984,
+          "police_power": 172424
+        },
+        "Gretna city": {
+          "population": 17185,
+          "gdp_thousands": 1280255,
+          "crime_rate": 14.42,
+          "reward": 4943,
+          "difficulty": 0.832,
+          "underworld_power": 3717,
+          "police_power": 45833
+        },
+        "Harahan city": {
+          "population": 8819,
+          "gdp_thousands": 657001,
+          "crime_rate": 14.42,
+          "reward": 4285,
+          "difficulty": 0.832,
+          "underworld_power": 1908,
+          "police_power": 23521
+        },
+        "Westwego city": {
+          "population": 8231,
+          "gdp_thousands": 613196,
+          "crime_rate": 14.42,
+          "reward": 4238,
+          "difficulty": 0.832,
+          "underworld_power": 1780,
+          "police_power": 21952
+        },
+        "Jean Lafitte town": {
+          "population": 1815,
+          "gdp_thousands": 135214,
+          "crime_rate": 14.42,
+          "reward": 2311,
+          "difficulty": 0.832,
+          "underworld_power": 393,
+          "police_power": 4841
+        },
+        "Grand Isle town": {
+          "population": 991,
+          "gdp_thousands": 73827,
+          "crime_rate": 14.42,
+          "reward": 1724,
+          "difficulty": 0.832,
+          "underworld_power": 214,
+          "police_power": 2643
+        },
+        "Jefferson Parish (unincorporated)": {
+          "population": 325562,
+          "gdp_thousands": 24253852,
+          "crime_rate": 14.42,
+          "reward": 5977,
+          "difficulty": 0.832,
+          "underworld_power": 70418,
+          "police_power": 868288
+        }
+      }
+    },
+    "Jefferson Davis Parish": {
+      "fips": "22053",
+      "gdp_thousands": 1045726,
+      "gdp_estimated": false,
+      "population": 31436,
+      "homicide_rate": 13.13215476,
+      "difficulty": 0.467,
+      "cities": {
+        "Jennings city": {
+          "population": 9280,
+          "gdp_thousands": 308701,
+          "crime_rate": 13.13,
+          "reward": 3510,
+          "difficulty": 0.467,
+          "underworld_power": 1828,
+          "police_power": 11051
+        },
+        "Welsh town": {
+          "population": 3275,
+          "gdp_thousands": 108943,
+          "crime_rate": 13.13,
+          "reward": 2100,
+          "difficulty": 0.467,
+          "underworld_power": 645,
+          "police_power": 3900
+        },
+        "Lake Arthur town": {
+          "population": 2564,
+          "gdp_thousands": 85292,
+          "crime_rate": 13.13,
+          "reward": 1818,
+          "difficulty": 0.467,
+          "underworld_power": 505,
+          "police_power": 3053
+        },
+        "Elton town": {
+          "population": 980,
+          "gdp_thousands": 32599,
+          "crime_rate": 13.13,
+          "reward": 737,
+          "difficulty": 0.467,
+          "underworld_power": 193,
+          "police_power": 1167
+        },
+        "Jefferson Davis Parish (unincorporated)": {
+          "population": 15337,
+          "gdp_thousands": 510191,
+          "crime_rate": 13.13,
+          "reward": 4073,
+          "difficulty": 0.467,
+          "underworld_power": 3021,
+          "police_power": 18265
+        }
+      }
+    },
+    "Lafayette Parish": {
+      "fips": "22055",
+      "gdp_thousands": 19778244,
+      "gdp_estimated": false,
+      "population": 254241,
+      "homicide_rate": 9.6951834329,
+      "difficulty": 0.666,
+      "cities": {
+        "Lafayette city": {
+          "population": 122280,
+          "gdp_thousands": 9512563,
+          "crime_rate": 9.7,
+          "reward": 5812,
+          "difficulty": 0.666,
+          "underworld_power": 17783,
+          "police_power": 340550
+        },
+        "Youngsville city": {
+          "population": 19038,
+          "gdp_thousands": 1481028,
+          "crime_rate": 9.7,
+          "reward": 5060,
+          "difficulty": 0.666,
+          "underworld_power": 2769,
+          "police_power": 53021
+        },
+        "Carencro city": {
+          "population": 12883,
+          "gdp_thousands": 1002210,
+          "crime_rate": 9.7,
+          "reward": 4661,
+          "difficulty": 0.666,
+          "underworld_power": 1874,
+          "police_power": 35879
+        },
+        "Scott city": {
+          "population": 9468,
+          "gdp_thousands": 736546,
+          "crime_rate": 9.7,
+          "reward": 4473,
+          "difficulty": 0.666,
+          "underworld_power": 1377,
+          "police_power": 26368
+        },
+        "Lafayette Parish (unincorporated)": {
+          "population": 90572,
+          "gdp_thousands": 7045897,
+          "crime_rate": 9.7,
+          "reward": 5742,
+          "difficulty": 0.666,
+          "underworld_power": 13172,
+          "police_power": 252243
+        }
+      }
+    },
+    "Lafourche Parish": {
+      "fips": "22057",
+      "gdp_thousands": 6287199,
+      "gdp_estimated": false,
+      "population": 95342,
+      "homicide_rate": 8.3104310489,
+      "difficulty": 0.519,
+      "cities": {
+        "Thibodaux city": {
+          "population": 15569,
+          "gdp_thousands": 1026676,
+          "crime_rate": 8.31,
+          "reward": 4731,
+          "difficulty": 0.519,
+          "underworld_power": 1941,
+          "police_power": 36755
+        },
+        "Lockport town": {
+          "population": 2351,
+          "gdp_thousands": 155033,
+          "crime_rate": 8.31,
+          "reward": 2593,
+          "difficulty": 0.519,
+          "underworld_power": 293,
+          "police_power": 5550
+        },
+        "Golden Meadow town": {
+          "population": 1634,
+          "gdp_thousands": 107751,
+          "crime_rate": 8.31,
+          "reward": 2077,
+          "difficulty": 0.519,
+          "underworld_power": 204,
+          "police_power": 3857
+        },
+        "Lafourche Parish (unincorporated)": {
+          "population": 75788,
+          "gdp_thousands": 4997739,
+          "crime_rate": 8.31,
+          "reward": 5695,
+          "difficulty": 0.519,
+          "underworld_power": 9447,
+          "police_power": 178919
+        }
+      }
+    },
+    "LaSalle Parish": {
+      "fips": "22059",
+      "gdp_thousands": 633715,
+      "gdp_estimated": false,
+      "population": 14702,
+      "homicide_rate": null,
+      "difficulty": 0.337,
+      "cities": {
+        "Jena town": {
+          "population": 4133,
+          "gdp_thousands": 178148,
+          "crime_rate": 3.0,
+          "reward": 2781,
+          "difficulty": 0.337,
+          "underworld_power": 186,
+          "police_power": 6378
+        },
+        "Olla town": {
+          "population": 1294,
+          "gdp_thousands": 55776,
+          "crime_rate": 3.0,
+          "reward": 1442,
+          "difficulty": 0.337,
+          "underworld_power": 58,
+          "police_power": 1997
+        },
+        "Urania town": {
+          "population": 1127,
+          "gdp_thousands": 48578,
+          "crime_rate": 3.0,
+          "reward": 1231,
+          "difficulty": 0.337,
+          "underworld_power": 51,
+          "police_power": 1739
+        },
+        "LaSalle Parish (unincorporated)": {
+          "population": 8148,
+          "gdp_thousands": 351213,
+          "crime_rate": 3.0,
+          "reward": 3627,
+          "difficulty": 0.337,
+          "underworld_power": 367,
+          "police_power": 12573
+        }
+      }
+    },
+    "Lincoln Parish": {
+      "fips": "22061",
+      "gdp_thousands": 2776596,
+      "gdp_estimated": false,
+      "population": 48243,
+      "homicide_rate": 6.9296937377,
+      "difficulty": 0.35,
+      "cities": {
+        "Ruston city": {
+          "population": 22330,
+          "gdp_thousands": 1285189,
+          "crime_rate": 6.93,
+          "reward": 4966,
+          "difficulty": 0.35,
+          "underworld_power": 2321,
+          "police_power": 46010
+        },
+        "Grambling city": {
+          "population": 5278,
+          "gdp_thousands": 303772,
+          "crime_rate": 6.93,
+          "reward": 3486,
+          "difficulty": 0.35,
+          "underworld_power": 549,
+          "police_power": 10875
+        },
+        "Dubach town": {
+          "population": 902,
+          "gdp_thousands": 51914,
+          "crime_rate": 6.93,
+          "reward": 1372,
+          "difficulty": 0.35,
+          "underworld_power": 94,
+          "police_power": 1859
+        },
+        "Vienna town": {
+          "population": 477,
+          "gdp_thousands": 27453,
+          "crime_rate": 6.93,
+          "reward": 573,
+          "difficulty": 0.35,
+          "underworld_power": 50,
+          "police_power": 983
+        },
+        "Lincoln Parish (unincorporated)": {
+          "population": 19256,
+          "gdp_thousands": 1108268,
+          "crime_rate": 6.93,
+          "reward": 4825,
+          "difficulty": 0.35,
+          "underworld_power": 2002,
+          "police_power": 39676
+        }
+      }
+    },
+    "Livingston Parish": {
+      "fips": "22063",
+      "gdp_thousands": 4247104,
+      "gdp_estimated": false,
+      "population": 152886,
+      "homicide_rate": 7.0988371091,
+      "difficulty": 0.431,
+      "cities": {
+        "Denham Springs city": {
+          "population": 9321,
+          "gdp_thousands": 258933,
+          "crime_rate": 7.1,
+          "reward": 3275,
+          "difficulty": 0.431,
+          "underworld_power": 993,
+          "police_power": 9270
+        },
+        "Walker town": {
+          "population": 6402,
+          "gdp_thousands": 177844,
+          "crime_rate": 7.1,
+          "reward": 2758,
+          "difficulty": 0.431,
+          "underworld_power": 682,
+          "police_power": 6367
+        },
+        "Livingston town": {
+          "population": 1980,
+          "gdp_thousands": 55003,
+          "crime_rate": 7.1,
+          "reward": 1419,
+          "difficulty": 0.431,
+          "underworld_power": 211,
+          "police_power": 1969
+        },
+        "Killian town": {
+          "population": 1253,
+          "gdp_thousands": 34807,
+          "crime_rate": 7.1,
+          "reward": 902,
+          "difficulty": 0.431,
+          "underworld_power": 133,
+          "police_power": 1246
+        },
+        "Albany town": {
+          "population": 1247,
+          "gdp_thousands": 34641,
+          "crime_rate": 7.1,
+          "reward": 878,
+          "difficulty": 0.431,
+          "underworld_power": 133,
+          "police_power": 1240
+        },
+        "Springfield town": {
+          "population": 456,
+          "gdp_thousands": 12667,
+          "crime_rate": 7.1,
+          "reward": 267,
+          "difficulty": 0.431,
+          "underworld_power": 49,
+          "police_power": 453
+        },
+        "Livingston Parish (unincorporated)": {
+          "population": 132227,
+          "gdp_thousands": 3673209,
+          "crime_rate": 7.1,
+          "reward": 5530,
+          "difficulty": 0.431,
+          "underworld_power": 14080,
+          "police_power": 131501
+        }
+      }
+    },
+    "Madison Parish": {
+      "fips": "22065",
+      "gdp_thousands": 463983,
+      "gdp_estimated": false,
+      "population": 9093,
+      "homicide_rate": 28.607094559,
+      "difficulty": 0.538,
+      "cities": {
+        "Tallulah city": {
+          "population": 5677,
+          "gdp_thousands": 289676,
+          "crime_rate": 28.61,
+          "reward": 3439,
+          "difficulty": 0.538,
+          "underworld_power": 2436,
+          "police_power": 10370
+        },
+        "Madison Parish (unincorporated)": {
+          "population": 3416,
+          "gdp_thousands": 174307,
+          "crime_rate": 28.61,
+          "reward": 2734,
+          "difficulty": 0.538,
+          "underworld_power": 1466,
+          "police_power": 6240
+        }
+      }
+    },
+    "Morehouse Parish": {
+      "fips": "22067",
+      "gdp_thousands": 754781,
+      "gdp_estimated": false,
+      "population": 23787,
+      "homicide_rate": 22.518591912,
+      "difficulty": 0.585,
+      "cities": {
+        "Bastrop city": {
+          "population": 8922,
+          "gdp_thousands": 283102,
+          "crime_rate": 22.52,
+          "reward": 3416,
+          "difficulty": 0.585,
+          "underworld_power": 3014,
+          "police_power": 10135
+        },
+        "Morehouse Parish (unincorporated)": {
+          "population": 14865,
+          "gdp_thousands": 471679,
+          "crime_rate": 22.52,
+          "reward": 3909,
+          "difficulty": 0.585,
+          "underworld_power": 5021,
+          "police_power": 16886
+        }
+      }
+    },
+    "Natchitoches Parish": {
+      "fips": "22069",
+      "gdp_thousands": 2046512,
+      "gdp_estimated": false,
+      "population": 35982,
+      "homicide_rate": 15.249572268,
+      "difficulty": 0.678,
+      "cities": {
+        "Natchitoches city": {
+          "population": 17165,
+          "gdp_thousands": 976276,
+          "crime_rate": 15.25,
+          "reward": 4637,
+          "difficulty": 0.678,
+          "underworld_power": 3926,
+          "police_power": 34951
+        },
+        "Campti town": {
+          "population": 873,
+          "gdp_thousands": 49652,
+          "crime_rate": 15.25,
+          "reward": 1278,
+          "difficulty": 0.678,
           "underworld_power": 200,
-          "police_power": 8000
+          "police_power": 1778
+        },
+        "Natchitoches Parish (unincorporated)": {
+          "population": 17944,
+          "gdp_thousands": 1020584,
+          "crime_rate": 15.25,
+          "reward": 4708,
+          "difficulty": 0.678,
+          "underworld_power": 4105,
+          "police_power": 36537
+        }
+      }
+    },
+    "Orleans Parish": {
+      "fips": "22071",
+      "gdp_thousands": 30835434,
+      "gdp_estimated": false,
+      "population": 362701,
+      "homicide_rate": 38.28066191,
+      "difficulty": 0.984,
+      "cities": {
+        "New Orleans city": {
+          "population": 362701,
+          "gdp_thousands": 30835434,
+          "crime_rate": 38.28,
+          "reward": 6000,
+          "difficulty": 0.984,
+          "underworld_power": 208267,
+          "police_power": 1103909
+        }
+      }
+    },
+    "Ouachita Parish": {
+      "fips": "22073",
+      "gdp_thousands": 9306880,
+      "gdp_estimated": false,
+      "population": 157874,
+      "homicide_rate": 15.15737489,
+      "difficulty": 0.819,
+      "cities": {
+        "Monroe city": {
+          "population": 46622,
+          "gdp_thousands": 2748428,
+          "crime_rate": 15.16,
+          "reward": 5436,
+          "difficulty": 0.819,
+          "underworld_power": 10600,
+          "police_power": 98394
+        },
+        "West Monroe city": {
+          "population": 12476,
+          "gdp_thousands": 735476,
+          "crime_rate": 15.16,
+          "reward": 4449,
+          "difficulty": 0.819,
+          "underworld_power": 2837,
+          "police_power": 26330
+        },
+        "Richwood town": {
+          "population": 3809,
+          "gdp_thousands": 224545,
+          "crime_rate": 15.16,
+          "reward": 3040,
+          "difficulty": 0.819,
+          "underworld_power": 866,
+          "police_power": 8039
+        },
+        "Sterlington town": {
+          "population": 2557,
+          "gdp_thousands": 150738,
+          "crime_rate": 15.16,
+          "reward": 2570,
+          "difficulty": 0.819,
+          "underworld_power": 581,
+          "police_power": 5396
+        },
+        "Ouachita Parish (unincorporated)": {
+          "population": 92410,
+          "gdp_thousands": 5447693,
+          "crime_rate": 15.16,
+          "reward": 5718,
+          "difficulty": 0.819,
+          "underworld_power": 21010,
+          "police_power": 195027
+        }
+      }
+    },
+    "Plaquemines Parish": {
+      "fips": "22075",
+      "gdp_thousands": 4006732,
+      "gdp_estimated": false,
+      "population": 22289,
+      "homicide_rate": null,
+      "difficulty": 0.615,
+      "cities": {
+        "Plaquemines Parish": {
+          "population": 22289,
+          "gdp_thousands": 4006732,
+          "crime_rate": 3.0,
+          "reward": 5577,
+          "difficulty": 0.615,
+          "underworld_power": 1003,
+          "police_power": 143441
+        }
+      }
+    },
+    "Pointe Coupee Parish": {
+      "fips": "22077",
+      "gdp_thousands": 1078567,
+      "gdp_estimated": false,
+      "population": 19845,
+      "homicide_rate": 14.451531534,
+      "difficulty": 0.533,
+      "cities": {
+        "New Roads city": {
+          "population": 4295,
+          "gdp_thousands": 233431,
+          "crime_rate": 14.45,
+          "reward": 3110,
+          "difficulty": 0.533,
+          "underworld_power": 931,
+          "police_power": 8357
+        },
+        "Livonia town": {
+          "population": 1161,
+          "gdp_thousands": 63099,
+          "crime_rate": 14.45,
+          "reward": 1583,
+          "difficulty": 0.533,
+          "underworld_power": 252,
+          "police_power": 2259
+        },
+        "Fordoche town": {
+          "population": 863,
+          "gdp_thousands": 46903,
+          "crime_rate": 14.45,
+          "reward": 1137,
+          "difficulty": 0.533,
+          "underworld_power": 187,
+          "police_power": 1679
+        },
+        "Pointe Coupee Parish (unincorporated)": {
+          "population": 13526,
+          "gdp_thousands": 735134,
+          "crime_rate": 14.45,
+          "reward": 4426,
+          "difficulty": 0.533,
+          "underworld_power": 2932,
+          "police_power": 26318
+        }
+      }
+    },
+    "Rapides Parish": {
+      "fips": "22079",
+      "gdp_thousands": 7414380,
+      "gdp_estimated": false,
+      "population": 125899,
+      "homicide_rate": 14.885447724,
+      "difficulty": 0.783,
+      "cities": {
+        "Alexandria city": {
+          "population": 43133,
+          "gdp_thousands": 2540166,
+          "crime_rate": 14.89,
+          "reward": 5413,
+          "difficulty": 0.783,
+          "underworld_power": 9631,
+          "police_power": 90938
+        },
+        "Pineville city": {
+          "population": 13966,
+          "gdp_thousands": 822478,
+          "crime_rate": 14.89,
+          "reward": 4590,
+          "difficulty": 0.783,
+          "underworld_power": 3118,
+          "police_power": 29445
+        },
+        "Ball town": {
+          "population": 3801,
+          "gdp_thousands": 223846,
+          "crime_rate": 14.89,
+          "reward": 2993,
+          "difficulty": 0.783,
+          "underworld_power": 849,
+          "police_power": 8014
+        },
+        "Woodworth town": {
+          "population": 1749,
+          "gdp_thousands": 103001,
+          "crime_rate": 14.89,
+          "reward": 2030,
+          "difficulty": 0.783,
+          "underworld_power": 391,
+          "police_power": 3687
+        },
+        "Glenmora town": {
+          "population": 1034,
+          "gdp_thousands": 60893,
+          "crime_rate": 14.89,
+          "reward": 1513,
+          "difficulty": 0.783,
+          "underworld_power": 231,
+          "police_power": 2180
+        },
+        "Boyce town": {
+          "population": 871,
+          "gdp_thousands": 51294,
+          "crime_rate": 14.89,
+          "reward": 1348,
+          "difficulty": 0.783,
+          "underworld_power": 194,
+          "police_power": 1836
+        },
+        "Lecompte town": {
+          "population": 823,
+          "gdp_thousands": 48467,
+          "crime_rate": 14.89,
+          "reward": 1207,
+          "difficulty": 0.783,
+          "underworld_power": 184,
+          "police_power": 1735
+        },
+        "Cheneyville town": {
+          "population": 441,
+          "gdp_thousands": 25971,
+          "crime_rate": 14.89,
+          "reward": 502,
+          "difficulty": 0.783,
+          "underworld_power": 98,
+          "police_power": 930
+        },
+        "Rapides Parish (unincorporated)": {
+          "population": 60081,
+          "gdp_thousands": 3538264,
+          "crime_rate": 14.89,
+          "reward": 5507,
+          "difficulty": 0.783,
+          "underworld_power": 13415,
+          "police_power": 126670
+        }
+      }
+    },
+    "Red River Parish": {
+      "fips": "22081",
+      "gdp_thousands": 990177,
+      "gdp_estimated": false,
+      "population": 7238,
+      "homicide_rate": null,
+      "difficulty": 0.409,
+      "cities": {
+        "Coushatta town": {
+          "population": 1640,
+          "gdp_thousands": 224356,
+          "crime_rate": 3.0,
+          "reward": 3016,
+          "difficulty": 0.409,
+          "underworld_power": 74,
+          "police_power": 8032
+        },
+        "Red River Parish (unincorporated)": {
+          "population": 5598,
+          "gdp_thousands": 765821,
+          "crime_rate": 3.0,
+          "reward": 4496,
+          "difficulty": 0.409,
+          "underworld_power": 252,
+          "police_power": 27416
+        }
+      }
+    },
+    "Richland Parish": {
+      "fips": "22083",
+      "gdp_thousands": 857358,
+      "gdp_estimated": false,
+      "population": 19643,
+      "homicide_rate": 11.307660233,
+      "difficulty": 0.371,
+      "cities": {
+        "Rayville town": {
+          "population": 3195,
+          "gdp_thousands": 139452,
+          "crime_rate": 11.31,
+          "reward": 2335,
+          "difficulty": 0.371,
+          "underworld_power": 542,
+          "police_power": 4992
+        },
+        "Delhi town": {
+          "population": 2534,
+          "gdp_thousands": 110601,
+          "crime_rate": 11.31,
+          "reward": 2123,
+          "difficulty": 0.371,
+          "underworld_power": 430,
+          "police_power": 3960
+        },
+        "Mangham town": {
+          "population": 607,
+          "gdp_thousands": 26493,
+          "crime_rate": 11.31,
+          "reward": 549,
+          "difficulty": 0.371,
+          "underworld_power": 103,
+          "police_power": 948
+        },
+        "Richland Parish (unincorporated)": {
+          "population": 13307,
+          "gdp_thousands": 580812,
+          "crime_rate": 11.31,
+          "reward": 4167,
+          "difficulty": 0.371,
+          "underworld_power": 2257,
+          "police_power": 20793
+        }
+      }
+    },
+    "Sabine Parish": {
+      "fips": "22085",
+      "gdp_thousands": 1249010,
+      "gdp_estimated": false,
+      "population": 21746,
+      "homicide_rate": 9.63652242,
+      "difficulty": 0.394,
+      "cities": {
+        "Many town": {
+          "population": 2470,
+          "gdp_thousands": 141867,
+          "crime_rate": 9.64,
+          "reward": 2452,
+          "difficulty": 0.394,
+          "underworld_power": 357,
+          "police_power": 5079
+        },
+        "Zwolle town": {
+          "population": 1598,
+          "gdp_thousands": 91783,
+          "crime_rate": 9.64,
+          "reward": 1889,
+          "difficulty": 0.394,
+          "underworld_power": 231,
+          "police_power": 3286
+        },
+        "Sabine Parish (unincorporated)": {
+          "population": 17678,
+          "gdp_thousands": 1015360,
+          "crime_rate": 9.64,
+          "reward": 4684,
+          "difficulty": 0.394,
+          "underworld_power": 2555,
+          "police_power": 36350
+        }
+      }
+    },
+    "St. Bernard Parish": {
+      "fips": "22087",
+      "gdp_thousands": 1743957,
+      "gdp_estimated": false,
+      "population": 44783,
+      "homicide_rate": 9.5925339142,
+      "difficulty": 0.408,
+      "cities": {
+        "St. Bernard Parish": {
+          "population": 44783,
+          "gdp_thousands": 1743957,
+          "crime_rate": 9.59,
+          "reward": 5131,
+          "difficulty": 0.408,
+          "underworld_power": 6444,
+          "police_power": 62434
+        }
+      }
+    },
+    "St. Charles Parish": {
+      "fips": "22089",
+      "gdp_thousands": 12724833,
+      "gdp_estimated": false,
+      "population": 50400,
+      "homicide_rate": 7.8435190895,
+      "difficulty": 0.564,
+      "cities": {
+        "St. Charles Parish": {
+          "population": 50400,
+          "gdp_thousands": 12724833,
+          "crime_rate": 7.84,
+          "reward": 5859,
+          "difficulty": 0.564,
+          "underworld_power": 5930,
+          "police_power": 455549
+        }
+      }
+    },
+    "St. Helena Parish": {
+      "fips": "22091",
+      "gdp_thousands": 264227,
+      "gdp_estimated": false,
+      "population": 10857,
+      "homicide_rate": 26.088508698,
+      "difficulty": 0.52,
+      "cities": {
+        "Greensburg town": {
+          "population": 624,
+          "gdp_thousands": 15186,
+          "crime_rate": 26.09,
+          "reward": 291,
+          "difficulty": 0.52,
+          "underworld_power": 244,
+          "police_power": 544
+        },
+        "St. Helena Parish (unincorporated)": {
+          "population": 10233,
+          "gdp_thousands": 249041,
+          "crime_rate": 26.09,
+          "reward": 3181,
+          "difficulty": 0.52,
+          "underworld_power": 4004,
+          "police_power": 8916
+        }
+      }
+    },
+    "St. James Parish": {
+      "fips": "22093",
+      "gdp_thousands": 3330047,
+      "gdp_estimated": false,
+      "population": 19110,
+      "homicide_rate": 15.636366109,
+      "difficulty": 0.743,
+      "cities": {
+        "Lutcher town": {
+          "population": 2883,
+          "gdp_thousands": 502382,
+          "crime_rate": 15.64,
+          "reward": 4050,
+          "difficulty": 0.743,
+          "underworld_power": 676,
+          "police_power": 17985
+        },
+        "Gramercy town": {
+          "population": 2719,
+          "gdp_thousands": 473804,
+          "crime_rate": 15.64,
+          "reward": 3956,
+          "difficulty": 0.743,
+          "underworld_power": 638,
+          "police_power": 16962
+        },
+        "St. James Parish (unincorporated)": {
+          "population": 13508,
+          "gdp_thousands": 2353861,
+          "crime_rate": 15.64,
+          "reward": 5389,
+          "difficulty": 0.743,
+          "underworld_power": 3168,
+          "police_power": 84268
+        }
+      }
+    },
+    "St. John the Baptist Parish": {
+      "fips": "22095",
+      "gdp_thousands": 4073478,
+      "gdp_estimated": false,
+      "population": 39694,
+      "homicide_rate": 20.575517126,
+      "difficulty": 0.803,
+      "cities": {
+        "St. John the Baptist Parish": {
+          "population": 39694,
+          "gdp_thousands": 4073478,
+          "crime_rate": 20.58,
+          "reward": 5601,
+          "difficulty": 0.803,
+          "underworld_power": 12251,
+          "police_power": 145831
+        }
+      }
+    },
+    "St. Landry Parish": {
+      "fips": "22097",
+      "gdp_thousands": 3177606,
+      "gdp_estimated": false,
+      "population": 80869,
+      "homicide_rate": 14.664603271,
+      "difficulty": 0.685,
+      "cities": {
+        "Opelousas city": {
+          "population": 15176,
+          "gdp_thousands": 596314,
+          "crime_rate": 14.66,
+          "reward": 4191,
+          "difficulty": 0.685,
+          "underworld_power": 3338,
+          "police_power": 21348
+        },
+        "Sunset town": {
+          "population": 3167,
+          "gdp_thousands": 124441,
+          "crime_rate": 14.66,
+          "reward": 2241,
+          "difficulty": 0.685,
+          "underworld_power": 697,
+          "police_power": 4455
+        },
+        "Port Barre town": {
+          "population": 1740,
+          "gdp_thousands": 68370,
+          "crime_rate": 14.66,
+          "reward": 1630,
+          "difficulty": 0.685,
+          "underworld_power": 383,
+          "police_power": 2448
+        },
+        "Leonville town": {
+          "population": 880,
+          "gdp_thousands": 34578,
+          "crime_rate": 14.66,
+          "reward": 855,
+          "difficulty": 0.685,
+          "underworld_power": 194,
+          "police_power": 1238
+        },
+        "Krotz Springs town": {
+          "population": 875,
+          "gdp_thousands": 34381,
+          "crime_rate": 14.66,
+          "reward": 784,
+          "difficulty": 0.685,
+          "underworld_power": 192,
+          "police_power": 1231
+        },
+        "Grand Coteau town": {
+          "population": 764,
+          "gdp_thousands": 30020,
+          "crime_rate": 14.66,
+          "reward": 643,
+          "difficulty": 0.685,
+          "underworld_power": 168,
+          "police_power": 1075
+        },
+        "Melville town": {
+          "population": 740,
+          "gdp_thousands": 29077,
+          "crime_rate": 14.66,
+          "reward": 620,
+          "difficulty": 0.685,
+          "underworld_power": 163,
+          "police_power": 1041
+        },
+        "Washington town": {
+          "population": 711,
+          "gdp_thousands": 27937,
+          "crime_rate": 14.66,
+          "reward": 596,
+          "difficulty": 0.685,
+          "underworld_power": 156,
+          "police_power": 1000
+        },
+        "St. Landry Parish (unincorporated)": {
+          "population": 56816,
+          "gdp_thousands": 2232488,
+          "crime_rate": 14.66,
+          "reward": 5366,
+          "difficulty": 0.685,
+          "underworld_power": 12498,
+          "police_power": 79923
+        }
+      }
+    },
+    "St. Martin Parish": {
+      "fips": "22099",
+      "gdp_thousands": 1972630,
+      "gdp_estimated": false,
+      "population": 51218,
+      "homicide_rate": 13.65246186,
+      "difficulty": 0.58,
+      "cities": {
+        "Breaux Bridge city": {
+          "population": 7582,
+          "gdp_thousands": 292016,
+          "crime_rate": 13.65,
+          "reward": 3463,
+          "difficulty": 0.58,
+          "underworld_power": 1553,
+          "police_power": 10454
+        },
+        "St. Martinville city": {
+          "population": 5229,
+          "gdp_thousands": 201391,
+          "crime_rate": 13.65,
+          "reward": 2899,
+          "difficulty": 0.58,
+          "underworld_power": 1071,
+          "police_power": 7210
+        },
+        "Henderson town": {
+          "population": 1605,
+          "gdp_thousands": 61815,
+          "crime_rate": 13.65,
+          "reward": 1560,
+          "difficulty": 0.58,
+          "underworld_power": 329,
+          "police_power": 2213
+        },
+        "St. Martin Parish (unincorporated)": {
+          "population": 36802,
+          "gdp_thousands": 1417408,
+          "crime_rate": 13.65,
+          "reward": 5037,
+          "difficulty": 0.58,
+          "underworld_power": 7537,
+          "police_power": 50743
+        }
+      }
+    },
+    "St. Mary Parish": {
+      "fips": "22101",
+      "gdp_thousands": 3527628,
+      "gdp_estimated": false,
+      "population": 46799,
+      "homicide_rate": 10.240072818,
+      "difficulty": 0.549,
+      "cities": {
+        "Franklin city": {
+          "population": 6284,
+          "gdp_thousands": 473677,
+          "crime_rate": 10.24,
+          "reward": 3933,
+          "difficulty": 0.549,
+          "underworld_power": 965,
+          "police_power": 16958
+        },
+        "Patterson city": {
+          "population": 5614,
+          "gdp_thousands": 423173,
+          "crime_rate": 10.24,
+          "reward": 3839,
+          "difficulty": 0.549,
+          "underworld_power": 862,
+          "police_power": 15150
+        },
+        "Berwick town": {
+          "population": 4495,
+          "gdp_thousands": 338825,
+          "crime_rate": 10.24,
+          "reward": 3580,
+          "difficulty": 0.549,
+          "underworld_power": 690,
+          "police_power": 12130
+        },
+        "Baldwin town": {
+          "population": 1665,
+          "gdp_thousands": 125504,
+          "crime_rate": 10.24,
+          "reward": 2288,
+          "difficulty": 0.549,
+          "underworld_power": 256,
+          "police_power": 4493
+        },
+        "St. Mary Parish (unincorporated)": {
+          "population": 28741,
+          "gdp_thousands": 2166449,
+          "crime_rate": 10.24,
+          "reward": 5319,
+          "difficulty": 0.549,
+          "underworld_power": 4415,
+          "police_power": 77559
+        }
+      }
+    },
+    "St. Tammany Parish": {
+      "fips": "22103",
+      "gdp_thousands": 17382382,
+      "gdp_estimated": false,
+      "population": 277615,
+      "homicide_rate": 5.4102367199,
+      "difficulty": 0.462,
+      "cities": {
+        "Slidell city": {
+          "population": 28440,
+          "gdp_thousands": 1780721,
+          "crime_rate": 5.41,
+          "reward": 5154,
+          "difficulty": 0.462,
+          "underworld_power": 2308,
+          "police_power": 63750
+        },
+        "Mandeville city": {
+          "population": 12973,
+          "gdp_thousands": 812281,
+          "crime_rate": 5.41,
+          "reward": 4567,
+          "difficulty": 0.462,
+          "underworld_power": 1053,
+          "police_power": 29080
+        },
+        "Covington city": {
+          "population": 11686,
+          "gdp_thousands": 731698,
+          "crime_rate": 5.41,
+          "reward": 4379,
+          "difficulty": 0.462,
+          "underworld_power": 948,
+          "police_power": 26195
+        },
+        "Abita Springs town": {
+          "population": 2752,
+          "gdp_thousands": 172311,
+          "crime_rate": 5.41,
+          "reward": 2711,
+          "difficulty": 0.462,
+          "underworld_power": 223,
+          "police_power": 6169
+        },
+        "Pearl River town": {
+          "population": 2647,
+          "gdp_thousands": 165737,
+          "crime_rate": 5.41,
+          "reward": 2664,
+          "difficulty": 0.462,
+          "underworld_power": 215,
+          "police_power": 5933
+        },
+        "Madisonville town": {
+          "population": 875,
+          "gdp_thousands": 54786,
+          "crime_rate": 5.41,
+          "reward": 1395,
+          "difficulty": 0.462,
+          "underworld_power": 71,
+          "police_power": 1961
+        },
+        "St. Tammany Parish (unincorporated)": {
+          "population": 218242,
+          "gdp_thousands": 13664848,
+          "crime_rate": 5.41,
+          "reward": 5883,
+          "difficulty": 0.462,
+          "underworld_power": 17711,
+          "police_power": 489202
+        }
+      }
+    },
+    "Tangipahoa Parish": {
+      "fips": "22105",
+      "gdp_thousands": 6435431,
+      "gdp_estimated": false,
+      "population": 139823,
+      "homicide_rate": 11.582030266,
+      "difficulty": 0.637,
+      "cities": {
+        "Hammond city": {
+          "population": 23426,
+          "gdp_thousands": 1078194,
+          "crime_rate": 11.58,
+          "reward": 4778,
+          "difficulty": 0.637,
+          "underworld_power": 4070,
+          "police_power": 38599
+        },
+        "Ponchatoula city": {
+          "population": 7735,
+          "gdp_thousands": 356007,
+          "crime_rate": 11.58,
+          "reward": 3651,
+          "difficulty": 0.637,
+          "underworld_power": 1344,
+          "police_power": 12745
+        },
+        "Amite City town": {
+          "population": 4086,
+          "gdp_thousands": 188060,
+          "crime_rate": 11.58,
+          "reward": 2828,
+          "difficulty": 0.637,
+          "underworld_power": 710,
+          "police_power": 6733
+        },
+        "Kentwood town": {
+          "population": 2195,
+          "gdp_thousands": 101026,
+          "crime_rate": 11.58,
+          "reward": 2006,
+          "difficulty": 0.637,
+          "underworld_power": 381,
+          "police_power": 3617
+        },
+        "Independence town": {
+          "population": 1653,
+          "gdp_thousands": 76080,
+          "crime_rate": 11.58,
+          "reward": 1748,
+          "difficulty": 0.637,
+          "underworld_power": 287,
+          "police_power": 2724
+        },
+        "Roseland town": {
+          "population": 892,
+          "gdp_thousands": 41054,
+          "crime_rate": 11.58,
+          "reward": 1019,
+          "difficulty": 0.637,
+          "underworld_power": 155,
+          "police_power": 1470
+        },
+        "Tangipahoa Parish (unincorporated)": {
+          "population": 99836,
+          "gdp_thousands": 4595010,
+          "crime_rate": 11.58,
+          "reward": 5624,
+          "difficulty": 0.637,
+          "underworld_power": 17345,
+          "police_power": 164501
+        }
+      }
+    },
+    "Tensas Parish": {
+      "fips": "22107",
+      "gdp_thousands": 160026,
+      "gdp_estimated": false,
+      "population": 3844,
+      "homicide_rate": null,
+      "difficulty": 0.25,
+      "cities": {
+        "Newellton town": {
+          "population": 828,
+          "gdp_thousands": 34469,
+          "crime_rate": 3.0,
+          "reward": 808,
+          "difficulty": 0.25,
+          "underworld_power": 37,
+          "police_power": 1234
+        },
+        "St. Joseph town": {
+          "population": 778,
+          "gdp_thousands": 32388,
+          "crime_rate": 3.0,
+          "reward": 714,
+          "difficulty": 0.25,
+          "underworld_power": 35,
+          "police_power": 1159
+        },
+        "Waterproof town": {
+          "population": 509,
+          "gdp_thousands": 21189,
+          "crime_rate": 3.0,
+          "reward": 361,
+          "difficulty": 0.25,
+          "underworld_power": 23,
+          "police_power": 759
+        },
+        "Tensas Parish (unincorporated)": {
+          "population": 1729,
+          "gdp_thousands": 71980,
+          "crime_rate": 3.0,
+          "reward": 1677,
+          "difficulty": 0.25,
+          "underworld_power": 78,
+          "police_power": 2577
+        }
+      }
+    },
+    "Terrebonne Parish": {
+      "fips": "22109",
+      "gdp_thousands": 7138689,
+      "gdp_estimated": false,
+      "population": 103864,
+      "homicide_rate": 11.548425757,
+      "difficulty": 0.635,
+      "cities": {
+        "Houma city": {
+          "population": 31671,
+          "gdp_thousands": 2176783,
+          "crime_rate": 11.55,
+          "reward": 5342,
+          "difficulty": 0.635,
+          "underworld_power": 5486,
+          "police_power": 77929
+        },
+        "Terrebonne Parish (unincorporated)": {
+          "population": 72193,
+          "gdp_thousands": 4961906,
+          "crime_rate": 11.55,
+          "reward": 5671,
+          "difficulty": 0.635,
+          "underworld_power": 12506,
+          "police_power": 177636
+        }
+      }
+    },
+    "Union Parish": {
+      "fips": "22111",
+      "gdp_thousands": 752209,
+      "gdp_estimated": false,
+      "population": 20617,
+      "homicide_rate": 9.0186428231,
+      "difficulty": 0.267,
+      "cities": {
+        "Farmerville town": {
+          "population": 3375,
+          "gdp_thousands": 123136,
+          "crime_rate": 9.02,
+          "reward": 2217,
+          "difficulty": 0.267,
+          "underworld_power": 457,
+          "police_power": 4408
+        },
+        "Bernice town": {
+          "population": 1304,
+          "gdp_thousands": 47576,
+          "crime_rate": 9.02,
+          "reward": 1160,
+          "difficulty": 0.267,
+          "underworld_power": 176,
+          "police_power": 1703
+        },
+        "Marion town": {
+          "population": 601,
+          "gdp_thousands": 21927,
+          "crime_rate": 9.02,
+          "reward": 432,
+          "difficulty": 0.267,
+          "underworld_power": 81,
+          "police_power": 785
+        },
+        "Union Parish (unincorporated)": {
+          "population": 15337,
+          "gdp_thousands": 559570,
+          "crime_rate": 9.02,
+          "reward": 4144,
+          "difficulty": 0.267,
+          "underworld_power": 2075,
+          "police_power": 20033
+        }
+      }
+    },
+    "Vermilion Parish": {
+      "fips": "22113",
+      "gdp_thousands": 1949915,
+      "gdp_estimated": false,
+      "population": 57641,
+      "homicide_rate": 6.0076080348,
+      "difficulty": 0.274,
+      "cities": {
+        "Abbeville city": {
+          "population": 10902,
+          "gdp_thousands": 368799,
+          "crime_rate": 6.01,
+          "reward": 3674,
+          "difficulty": 0.274,
+          "underworld_power": 982,
+          "police_power": 13203
+        },
+        "Kaplan city": {
+          "population": 4164,
+          "gdp_thousands": 140862,
+          "crime_rate": 6.01,
+          "reward": 2358,
+          "difficulty": 0.274,
+          "underworld_power": 375,
+          "police_power": 5043
+        },
+        "Erath town": {
+          "population": 1956,
+          "gdp_thousands": 66168,
+          "crime_rate": 6.01,
+          "reward": 1607,
+          "difficulty": 0.274,
+          "underworld_power": 176,
+          "police_power": 2369
+        },
+        "Gueydan town": {
+          "population": 1124,
+          "gdp_thousands": 38023,
+          "crime_rate": 6.01,
+          "reward": 972,
+          "difficulty": 0.274,
+          "underworld_power": 101,
+          "police_power": 1361
+        },
+        "Vermilion Parish (unincorporated)": {
+          "population": 39495,
+          "gdp_thousands": 1336063,
+          "crime_rate": 6.01,
+          "reward": 5013,
+          "difficulty": 0.274,
+          "underworld_power": 3559,
+          "police_power": 47831
+        }
+      }
+    },
+    "Vernon Parish": {
+      "fips": "22115",
+      "gdp_thousands": 2698392,
+      "gdp_estimated": false,
+      "population": 45819,
+      "homicide_rate": 7.8418160484,
+      "difficulty": 0.412,
+      "cities": {
+        "Leesville city": {
+          "population": 5339,
+          "gdp_thousands": 314426,
+          "crime_rate": 7.84,
+          "reward": 3557,
+          "difficulty": 0.412,
+          "underworld_power": 628,
+          "police_power": 11256
+        },
+        "New Llano town": {
+          "population": 2064,
+          "gdp_thousands": 121553,
+          "crime_rate": 7.84,
+          "reward": 2170,
+          "difficulty": 0.412,
+          "underworld_power": 243,
+          "police_power": 4352
+        },
+        "Rosepine town": {
+          "population": 1445,
+          "gdp_thousands": 85099,
+          "crime_rate": 7.84,
+          "reward": 1795,
+          "difficulty": 0.412,
+          "underworld_power": 170,
+          "police_power": 3047
+        },
+        "Hornbeck town": {
+          "population": 409,
+          "gdp_thousands": 24087,
+          "crime_rate": 7.84,
+          "reward": 455,
+          "difficulty": 0.412,
+          "underworld_power": 48,
+          "police_power": 862
+        },
+        "Vernon Parish (unincorporated)": {
+          "population": 36562,
+          "gdp_thousands": 2153227,
+          "crime_rate": 7.84,
+          "reward": 5295,
+          "difficulty": 0.412,
+          "underworld_power": 4301,
+          "police_power": 77086
+        }
+      }
+    },
+    "Washington Parish": {
+      "fips": "22117",
+      "gdp_thousands": 1771815,
+      "gdp_estimated": false,
+      "population": 45090,
+      "homicide_rate": 12.384054292,
+      "difficulty": 0.516,
+      "cities": {
+        "Bogalusa city": {
+          "population": 10367,
+          "gdp_thousands": 407372,
+          "crime_rate": 12.38,
+          "reward": 3721,
+          "difficulty": 0.516,
+          "underworld_power": 1926,
+          "police_power": 14584
+        },
+        "Franklinton town": {
+          "population": 3592,
+          "gdp_thousands": 141147,
+          "crime_rate": 12.38,
+          "reward": 2382,
+          "difficulty": 0.516,
+          "underworld_power": 667,
+          "police_power": 5053
+        },
+        "Washington Parish (unincorporated)": {
+          "population": 31131,
+          "gdp_thousands": 1223296,
+          "crime_rate": 12.38,
+          "reward": 4896,
+          "difficulty": 0.516,
+          "underworld_power": 5783,
+          "police_power": 43794
+        }
+      }
+    },
+    "Webster Parish": {
+      "fips": "22119",
+      "gdp_thousands": 1561494,
+      "gdp_estimated": false,
+      "population": 35184,
+      "homicide_rate": 5.1780126787,
+      "difficulty": 0.23,
+      "cities": {
+        "Minden city": {
+          "population": 11195,
+          "gdp_thousands": 496843,
+          "crime_rate": 5.18,
+          "reward": 4027,
+          "difficulty": 0.23,
+          "underworld_power": 870,
+          "police_power": 17787
+        },
+        "Springhill city": {
+          "population": 4485,
+          "gdp_thousands": 199047,
+          "crime_rate": 5.18,
+          "reward": 2875,
+          "difficulty": 0.23,
+          "underworld_power": 348,
+          "police_power": 7126
+        },
+        "Sibley town": {
+          "population": 1077,
+          "gdp_thousands": 47798,
+          "crime_rate": 5.18,
+          "reward": 1184,
+          "difficulty": 0.23,
+          "underworld_power": 84,
+          "police_power": 1711
+        },
+        "Cotton Valley town": {
+          "population": 747,
+          "gdp_thousands": 33152,
+          "crime_rate": 5.18,
+          "reward": 761,
+          "difficulty": 0.23,
+          "underworld_power": 58,
+          "police_power": 1187
+        },
+        "Cullen town": {
+          "population": 680,
+          "gdp_thousands": 30178,
+          "crime_rate": 5.18,
+          "reward": 690,
+          "difficulty": 0.23,
+          "underworld_power": 53,
+          "police_power": 1080
+        },
+        "Sarepta town": {
+          "population": 680,
+          "gdp_thousands": 30178,
+          "crime_rate": 5.18,
+          "reward": 690,
+          "difficulty": 0.23,
+          "underworld_power": 53,
+          "police_power": 1080
+        },
+        "Webster Parish (unincorporated)": {
+          "population": 16320,
+          "gdp_thousands": 724298,
+          "crime_rate": 5.18,
+          "reward": 4355,
+          "difficulty": 0.23,
+          "underworld_power": 1268,
+          "police_power": 25930
+        }
+      }
+    },
+    "West Baton Rouge Parish": {
+      "fips": "22121",
+      "gdp_thousands": 2340180,
+      "gdp_estimated": false,
+      "population": 28425,
+      "homicide_rate": 14.052079167,
+      "difficulty": 0.624,
+      "cities": {
+        "Addis town": {
+          "population": 7538,
+          "gdp_thousands": 620590,
+          "crime_rate": 14.05,
+          "reward": 4261,
+          "difficulty": 0.624,
+          "underworld_power": 1589,
+          "police_power": 22217
+        },
+        "Port Allen city": {
+          "population": 4991,
+          "gdp_thousands": 410900,
+          "crime_rate": 14.05,
+          "reward": 3768,
+          "difficulty": 0.624,
+          "underworld_power": 1052,
+          "police_power": 14710
+        },
+        "Brusly town": {
+          "population": 2591,
+          "gdp_thousands": 213312,
+          "crime_rate": 14.05,
+          "reward": 2969,
+          "difficulty": 0.624,
+          "underworld_power": 546,
+          "police_power": 7637
+        },
+        "West Baton Rouge Parish (unincorporated)": {
+          "population": 13305,
+          "gdp_thousands": 1095378,
+          "crime_rate": 14.05,
+          "reward": 4802,
+          "difficulty": 0.624,
+          "underworld_power": 2804,
+          "police_power": 39215
+        }
+      }
+    },
+    "West Carroll Parish": {
+      "fips": "22123",
+      "gdp_thousands": 236759,
+      "gdp_estimated": false,
+      "population": 9254,
+      "homicide_rate": null,
+      "difficulty": 0.274,
+      "cities": {
+        "Oak Grove town": {
+          "population": 1350,
+          "gdp_thousands": 34539,
+          "crime_rate": 3.0,
+          "reward": 831,
+          "difficulty": 0.274,
+          "underworld_power": 61,
+          "police_power": 1236
+        },
+        "West Carroll Parish (unincorporated)": {
+          "population": 7904,
+          "gdp_thousands": 202220,
+          "crime_rate": 3.0,
+          "reward": 2922,
+          "difficulty": 0.274,
+          "underworld_power": 356,
+          "police_power": 7239
+        }
+      }
+    },
+    "West Feliciana Parish": {
+      "fips": "22125",
+      "gdp_thousands": 1274432,
+      "gdp_estimated": false,
+      "population": 15155,
+      "homicide_rate": 12.951450562,
+      "difficulty": 0.502,
+      "cities": {
+        "St. Francisville town": {
+          "population": 1484,
+          "gdp_thousands": 124794,
+          "crime_rate": 12.95,
+          "reward": 2264,
+          "difficulty": 0.502,
+          "underworld_power": 288,
+          "police_power": 4468
+        },
+        "West Feliciana Parish (unincorporated)": {
+          "population": 13671,
+          "gdp_thousands": 1149638,
+          "crime_rate": 12.95,
+          "reward": 4849,
+          "difficulty": 0.502,
+          "underworld_power": 2656,
+          "police_power": 41157
+        }
+      }
+    },
+    "Winn Parish": {
+      "fips": "22127",
+      "gdp_thousands": 702165,
+      "gdp_estimated": false,
+      "population": 13405,
+      "homicide_rate": null,
+      "difficulty": 0.353,
+      "cities": {
+        "Winnfield city": {
+          "population": 3979,
+          "gdp_thousands": 208423,
+          "crime_rate": 3.0,
+          "reward": 2946,
+          "difficulty": 0.353,
+          "underworld_power": 179,
+          "police_power": 7462
+        },
+        "Winn Parish (unincorporated)": {
+          "population": 9426,
+          "gdp_thousands": 493742,
+          "crime_rate": 3.0,
+          "reward": 4003,
+          "difficulty": 0.353,
+          "underworld_power": 424,
+          "police_power": 17676
         }
       }
     }

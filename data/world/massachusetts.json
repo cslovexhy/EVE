@@ -1,24 +1,793 @@
 {
   "country": "United States",
   "state": "Massachusetts",
-  "state_fips": "00",
+  "state_fips": "25",
   "counties": {
-    "Massachusetts County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Barnstable County": {
+      "fips": "25001",
+      "gdp_thousands": 19298345,
+      "gdp_estimated": false,
+      "population": 232570,
+      "homicide_rate": 1.3209769153,
+      "difficulty": 0.303,
       "cities": {
-        "Massachusetts City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Barnstable Town city": {
+          "population": 49831,
+          "gdp_thousands": 4134909,
+          "crime_rate": 1.32,
+          "reward": 2951,
+          "difficulty": 0.303,
+          "underworld_power": 987,
+          "police_power": 148030
+        },
+        "Barnstable (unincorporated)": {
+          "population": 182739,
+          "gdp_thousands": 15163436,
+          "crime_rate": 1.32,
+          "reward": 5258,
+          "difficulty": 0.303,
+          "underworld_power": 3621,
+          "police_power": 542851
+        }
+      }
+    },
+    "Berkshire County": {
+      "fips": "25003",
+      "gdp_thousands": 9165163,
+      "gdp_estimated": false,
+      "population": 128726,
+      "homicide_rate": 2.5972148823,
+      "difficulty": 0.504,
+      "cities": {
+        "Pittsfield city": {
+          "population": 43121,
+          "gdp_thousands": 3070172,
+          "crime_rate": 2.6,
+          "reward": 2127,
+          "difficulty": 0.504,
+          "underworld_power": 1680,
+          "police_power": 109912
+        },
+        "North Adams city": {
+          "population": 12492,
+          "gdp_thousands": 889417,
+          "crime_rate": 2.6,
+          "reward": 315,
+          "difficulty": 0.504,
+          "underworld_power": 487,
+          "police_power": 31841
+        },
+        "Berkshire (unincorporated)": {
+          "population": 73113,
+          "gdp_thousands": 5205574,
+          "crime_rate": 2.6,
+          "reward": 3446,
+          "difficulty": 0.504,
+          "underworld_power": 2848,
+          "police_power": 186360
+        }
+      }
+    },
+    "Bristol County": {
+      "fips": "25005",
+      "gdp_thousands": 36041041,
+      "gdp_estimated": false,
+      "population": 588593,
+      "homicide_rate": 2.0492078041,
+      "difficulty": 0.603,
+      "cities": {
+        "New Bedford city": {
+          "population": 101318,
+          "gdp_thousands": 6203957,
+          "crime_rate": 2.05,
+          "reward": 3775,
+          "difficulty": 0.603,
+          "underworld_power": 3114,
+          "police_power": 222102
+        },
+        "Fall River city": {
+          "population": 94689,
+          "gdp_thousands": 5798047,
+          "crime_rate": 2.05,
+          "reward": 3528,
+          "difficulty": 0.603,
+          "underworld_power": 2911,
+          "police_power": 207570
+        },
+        "Taunton city": {
+          "population": 61936,
+          "gdp_thousands": 3792498,
+          "crime_rate": 2.05,
+          "reward": 2622,
+          "difficulty": 0.603,
+          "underworld_power": 1904,
+          "police_power": 135771
+        },
+        "Attleboro city": {
+          "population": 47085,
+          "gdp_thousands": 2883133,
+          "crime_rate": 2.05,
+          "reward": 1880,
+          "difficulty": 0.603,
+          "underworld_power": 1447,
+          "police_power": 103216
+        },
+        "North Attleborough Town city": {
+          "population": 31210,
+          "gdp_thousands": 1911067,
+          "crime_rate": 2.05,
+          "reward": 974,
+          "difficulty": 0.603,
+          "underworld_power": 959,
+          "police_power": 68416
+        },
+        "Bristol (unincorporated)": {
+          "population": 252355,
+          "gdp_thousands": 15452339,
+          "crime_rate": 2.05,
+          "reward": 5341,
+          "difficulty": 0.603,
+          "underworld_power": 7757,
+          "police_power": 553194
+        }
+      }
+    },
+    "Dukes County": {
+      "fips": "25007",
+      "gdp_thousands": 2109709,
+      "gdp_estimated": false,
+      "population": 21061,
+      "homicide_rate": null,
+      "difficulty": 0.316,
+      "cities": {
+        "Dukes": {
+          "population": 21061,
+          "gdp_thousands": 2109709,
+          "crime_rate": 3.0,
+          "reward": 1386,
+          "difficulty": 0.316,
+          "underworld_power": 948,
+          "police_power": 75528
+        }
+      }
+    },
+    "Essex County": {
+      "fips": "25009",
+      "gdp_thousands": 60732738,
+      "gdp_estimated": false,
+      "population": 823938,
+      "homicide_rate": 1.9571333433,
+      "difficulty": 0.624,
+      "cities": {
+        "Lynn city": {
+          "population": 103489,
+          "gdp_thousands": 7628207,
+          "crime_rate": 1.96,
+          "reward": 4270,
+          "difficulty": 0.624,
+          "underworld_power": 3038,
+          "police_power": 273090
+        },
+        "Lawrence city": {
+          "population": 89332,
+          "gdp_thousands": 6584690,
+          "crime_rate": 1.96,
+          "reward": 3940,
+          "difficulty": 0.624,
+          "underworld_power": 2623,
+          "police_power": 235732
+        },
+        "Haverhill city": {
+          "population": 68291,
+          "gdp_thousands": 5033751,
+          "crime_rate": 1.96,
+          "reward": 3281,
+          "difficulty": 0.624,
+          "underworld_power": 2005,
+          "police_power": 180208
+        },
+        "Peabody city": {
+          "population": 55418,
+          "gdp_thousands": 4084878,
+          "crime_rate": 1.96,
+          "reward": 2869,
+          "difficulty": 0.624,
+          "underworld_power": 1627,
+          "police_power": 146239
+        },
+        "Methuen city": {
+          "population": 54272,
+          "gdp_thousands": 4000406,
+          "crime_rate": 1.96,
+          "reward": 2787,
+          "difficulty": 0.624,
+          "underworld_power": 1593,
+          "police_power": 143215
+        },
+        "Salem city": {
+          "population": 45677,
+          "gdp_thousands": 3366866,
+          "crime_rate": 1.96,
+          "reward": 2292,
+          "difficulty": 0.624,
+          "underworld_power": 1341,
+          "police_power": 120534
+        },
+        "Beverly city": {
+          "population": 43223,
+          "gdp_thousands": 3185981,
+          "crime_rate": 1.96,
+          "reward": 2210,
+          "difficulty": 0.624,
+          "underworld_power": 1269,
+          "police_power": 114058
+        },
+        "Gloucester city": {
+          "population": 30491,
+          "gdp_thousands": 2247501,
+          "crime_rate": 1.96,
+          "reward": 1468,
+          "difficulty": 0.624,
+          "underworld_power": 895,
+          "police_power": 80461
+        },
+        "Newburyport city": {
+          "population": 19163,
+          "gdp_thousands": 1412510,
+          "crime_rate": 1.96,
+          "reward": 727,
+          "difficulty": 0.624,
+          "underworld_power": 563,
+          "police_power": 50568
+        },
+        "Amesbury city": {
+          "population": 17617,
+          "gdp_thousands": 1298554,
+          "crime_rate": 1.96,
+          "reward": 644,
+          "difficulty": 0.624,
+          "underworld_power": 517,
+          "police_power": 46488
+        },
+        "Essex (unincorporated)": {
+          "population": 296965,
+          "gdp_thousands": 21889394,
+          "crime_rate": 1.96,
+          "reward": 5588,
+          "difficulty": 0.624,
+          "underworld_power": 8718,
+          "police_power": 783640
+        }
+      }
+    },
+    "Franklin County": {
+      "fips": "25011",
+      "gdp_thousands": 3703873,
+      "gdp_estimated": false,
+      "population": 70871,
+      "homicide_rate": null,
+      "difficulty": 0.355,
+      "cities": {
+        "Greenfield city": {
+          "population": 17633,
+          "gdp_thousands": 921539,
+          "crime_rate": 3.0,
+          "reward": 397,
+          "difficulty": 0.355,
+          "underworld_power": 793,
+          "police_power": 32991
+        },
+        "Franklin (unincorporated)": {
+          "population": 53238,
+          "gdp_thousands": 2782334,
+          "crime_rate": 3.0,
+          "reward": 1798,
+          "difficulty": 0.355,
+          "underworld_power": 2396,
+          "police_power": 99608
+        }
+      }
+    },
+    "Hampden County": {
+      "fips": "25013",
+      "gdp_thousands": 30597888,
+      "gdp_estimated": false,
+      "population": 464151,
+      "homicide_rate": 5.2865476918,
+      "difficulty": 0.675,
+      "cities": {
+        "Springfield city": {
+          "population": 154888,
+          "gdp_thousands": 10210568,
+          "crime_rate": 5.29,
+          "reward": 4682,
+          "difficulty": 0.675,
+          "underworld_power": 12282,
+          "police_power": 365538
+        },
+        "Chicopee city": {
+          "population": 55381,
+          "gdp_thousands": 3650841,
+          "crime_rate": 5.29,
+          "reward": 2539,
+          "difficulty": 0.675,
+          "underworld_power": 4392,
+          "police_power": 130700
+        },
+        "Westfield city": {
+          "population": 40403,
+          "gdp_thousands": 2663457,
+          "crime_rate": 5.29,
+          "reward": 1715,
+          "difficulty": 0.675,
+          "underworld_power": 3204,
+          "police_power": 95352
+        },
+        "Holyoke city": {
+          "population": 37838,
+          "gdp_thousands": 2494366,
+          "crime_rate": 5.29,
+          "reward": 1551,
+          "difficulty": 0.675,
+          "underworld_power": 3000,
+          "police_power": 89298
+        },
+        "West Springfield Town city": {
+          "population": 29028,
+          "gdp_thousands": 1913591,
+          "crime_rate": 5.29,
+          "reward": 1056,
+          "difficulty": 0.675,
+          "underworld_power": 2302,
+          "police_power": 68507
+        },
+        "Agawam Town city": {
+          "population": 28749,
+          "gdp_thousands": 1895199,
+          "crime_rate": 5.29,
+          "reward": 892,
+          "difficulty": 0.675,
+          "underworld_power": 2280,
+          "police_power": 67848
+        },
+        "Palmer Town city": {
+          "population": 12388,
+          "gdp_thousands": 816645,
+          "crime_rate": 5.29,
+          "reward": 232,
+          "difficulty": 0.675,
+          "underworld_power": 982,
+          "police_power": 29236
+        },
+        "Hampden (unincorporated)": {
+          "population": 105476,
+          "gdp_thousands": 6953221,
+          "crime_rate": 5.29,
+          "reward": 4023,
+          "difficulty": 0.675,
+          "underworld_power": 8364,
+          "police_power": 248925
+        }
+      }
+    },
+    "Hampshire County": {
+      "fips": "25015",
+      "gdp_thousands": 10388690,
+      "gdp_estimated": false,
+      "population": 165399,
+      "homicide_rate": null,
+      "difficulty": 0.432,
+      "cities": {
+        "Amherst Town city": {
+          "population": 40989,
+          "gdp_thousands": 2574513,
+          "crime_rate": 3.0,
+          "reward": 1633,
+          "difficulty": 0.432,
+          "underworld_power": 1845,
+          "police_power": 92168
+        },
+        "Northampton city": {
+          "population": 31315,
+          "gdp_thousands": 1966891,
+          "crime_rate": 3.0,
+          "reward": 1139,
+          "difficulty": 0.432,
+          "underworld_power": 1409,
+          "police_power": 70415
+        },
+        "Easthampton city": {
+          "population": 16020,
+          "gdp_thousands": 1006214,
+          "crime_rate": 3.0,
+          "reward": 480,
+          "difficulty": 0.432,
+          "underworld_power": 721,
+          "police_power": 36022
+        },
+        "Hampshire (unincorporated)": {
+          "population": 77075,
+          "gdp_thousands": 4841072,
+          "crime_rate": 3.0,
+          "reward": 3199,
+          "difficulty": 0.432,
+          "underworld_power": 3468,
+          "police_power": 173310
+        }
+      }
+    },
+    "Middlesex County": {
+      "fips": "25017",
+      "gdp_thousands": 240665230,
+      "gdp_estimated": false,
+      "population": 1668956,
+      "homicide_rate": 0.9707532529,
+      "difficulty": 0.5,
+      "cities": {
+        "Cambridge city": {
+          "population": 121186,
+          "gdp_thousands": 17475150,
+          "crime_rate": 0.97,
+          "reward": 5506,
+          "difficulty": 0.5,
+          "underworld_power": 1765,
+          "police_power": 625610
+        },
+        "Lowell city": {
+          "population": 120418,
+          "gdp_thousands": 17364403,
+          "crime_rate": 0.97,
+          "reward": 5423,
+          "difficulty": 0.5,
+          "underworld_power": 1753,
+          "police_power": 621646
+        },
+        "Newton city": {
+          "population": 90700,
+          "gdp_thousands": 13079036,
+          "crime_rate": 0.97,
+          "reward": 5011,
+          "difficulty": 0.5,
+          "underworld_power": 1321,
+          "police_power": 468229
+        },
+        "Somerville city": {
+          "population": 82149,
+          "gdp_thousands": 11845973,
+          "crime_rate": 0.97,
+          "reward": 4929,
+          "difficulty": 0.5,
+          "underworld_power": 1196,
+          "police_power": 424086
+        },
+        "Framingham city": {
+          "population": 73361,
+          "gdp_thousands": 10578734,
+          "crime_rate": 0.97,
+          "reward": 4846,
+          "difficulty": 0.5,
+          "underworld_power": 1068,
+          "police_power": 378719
+        },
+        "Malden city": {
+          "population": 66693,
+          "gdp_thousands": 9617201,
+          "crime_rate": 0.97,
+          "reward": 4517,
+          "difficulty": 0.5,
+          "underworld_power": 971,
+          "police_power": 344296
+        },
+        "Waltham city": {
+          "population": 65849,
+          "gdp_thousands": 9495495,
+          "crime_rate": 0.97,
+          "reward": 4435,
+          "difficulty": 0.5,
+          "underworld_power": 959,
+          "police_power": 339939
+        },
+        "Medford city": {
+          "population": 59898,
+          "gdp_thousands": 8637355,
+          "crime_rate": 0.97,
+          "reward": 4352,
+          "difficulty": 0.5,
+          "underworld_power": 872,
+          "police_power": 309217
+        },
+        "Everett city": {
+          "population": 51825,
+          "gdp_thousands": 7473220,
+          "crime_rate": 0.97,
+          "reward": 4187,
+          "difficulty": 0.5,
+          "underworld_power": 755,
+          "police_power": 267541
+        },
+        "Woburn city": {
+          "population": 43895,
+          "gdp_thousands": 6329705,
+          "crime_rate": 0.97,
+          "reward": 3858,
+          "difficulty": 0.5,
+          "underworld_power": 639,
+          "police_power": 226603
+        },
+        "Marlborough city": {
+          "population": 42169,
+          "gdp_thousands": 6080814,
+          "crime_rate": 0.97,
+          "reward": 3611,
+          "difficulty": 0.5,
+          "underworld_power": 614,
+          "police_power": 217693
+        },
+        "Watertown city": {
+          "population": 35985,
+          "gdp_thousands": 5189075,
+          "crime_rate": 0.97,
+          "reward": 3363,
+          "difficulty": 0.5,
+          "underworld_power": 524,
+          "police_power": 185769
+        },
+        "Melrose city": {
+          "population": 29938,
+          "gdp_thousands": 4317091,
+          "crime_rate": 0.97,
+          "reward": 3034,
+          "difficulty": 0.5,
+          "underworld_power": 436,
+          "police_power": 154552
+        },
+        "Middlesex (unincorporated)": {
+          "population": 784890,
+          "gdp_thousands": 113181978,
+          "crime_rate": 0.97,
+          "reward": 5918,
+          "difficulty": 0.5,
+          "underworld_power": 11429,
+          "police_power": 4051915
+        }
+      }
+    },
+    "Nantucket County": {
+      "fips": "25019",
+      "gdp_thousands": 2107354,
+      "gdp_estimated": false,
+      "population": 14670,
+      "homicide_rate": null,
+      "difficulty": 0.278,
+      "cities": {
+        "Nantucket": {
+          "population": 14670,
+          "gdp_thousands": 2107354,
+          "crime_rate": 3.0,
+          "reward": 1304,
+          "difficulty": 0.278,
+          "underworld_power": 660,
+          "police_power": 75443
+        }
+      }
+    },
+    "Norfolk County": {
+      "fips": "25021",
+      "gdp_thousands": 75071231,
+      "gdp_estimated": false,
+      "population": 740754,
+      "homicide_rate": 1.2349170571,
+      "difficulty": 0.479,
+      "cities": {
+        "Quincy city": {
+          "population": 103434,
+          "gdp_thousands": 10482451,
+          "crime_rate": 1.23,
+          "reward": 4764,
+          "difficulty": 0.479,
+          "underworld_power": 1916,
+          "police_power": 375272
+        },
+        "Weymouth Town city": {
+          "population": 60159,
+          "gdp_thousands": 6096774,
+          "crime_rate": 1.23,
+          "reward": 3693,
+          "difficulty": 0.479,
+          "underworld_power": 1114,
+          "police_power": 218265
+        },
+        "Braintree Town city": {
+          "population": 39134,
+          "gdp_thousands": 3966009,
+          "crime_rate": 1.23,
+          "reward": 2704,
+          "difficulty": 0.479,
+          "underworld_power": 725,
+          "police_power": 141983
+        },
+        "Randolph Town city": {
+          "population": 35114,
+          "gdp_thousands": 3558605,
+          "crime_rate": 1.23,
+          "reward": 2457,
+          "difficulty": 0.479,
+          "underworld_power": 650,
+          "police_power": 127398
+        },
+        "Franklin Town city": {
+          "population": 33742,
+          "gdp_thousands": 3419560,
+          "crime_rate": 1.23,
+          "reward": 2375,
+          "difficulty": 0.479,
+          "underworld_power": 625,
+          "police_power": 122420
+        },
+        "Norfolk (unincorporated)": {
+          "population": 469171,
+          "gdp_thousands": 47547832,
+          "crime_rate": 1.23,
+          "reward": 5835,
+          "difficulty": 0.479,
+          "underworld_power": 8691,
+          "police_power": 1702212
+        }
+      }
+    },
+    "Plymouth County": {
+      "fips": "25023",
+      "gdp_thousands": 36916622,
+      "gdp_estimated": false,
+      "population": 542090,
+      "homicide_rate": 1.9256294401,
+      "difficulty": 0.53,
+      "cities": {
+        "Brockton city": {
+          "population": 105788,
+          "gdp_thousands": 7204219,
+          "crime_rate": 1.93,
+          "reward": 4105,
+          "difficulty": 0.53,
+          "underworld_power": 3056,
+          "police_power": 257911
+        },
+        "Bridgewater Town city": {
+          "population": 29167,
+          "gdp_thousands": 1986288,
+          "crime_rate": 1.93,
+          "reward": 1221,
+          "difficulty": 0.53,
+          "underworld_power": 842,
+          "police_power": 71109
+        },
+        "Plymouth (unincorporated)": {
+          "population": 407135,
+          "gdp_thousands": 27726115,
+          "crime_rate": 1.93,
+          "reward": 5670,
+          "difficulty": 0.53,
+          "underworld_power": 11760,
+          "police_power": 992595
+        }
+      }
+    },
+    "Suffolk County": {
+      "fips": "25025",
+      "gdp_thousands": 190778332,
+      "gdp_estimated": false,
+      "population": 793144,
+      "homicide_rate": 5.8979747761,
+      "difficulty": 0.962,
+      "cities": {
+        "Boston city": {
+          "population": 673458,
+          "gdp_thousands": 161989744,
+          "crime_rate": 5.9,
+          "reward": 6000,
+          "difficulty": 0.962,
+          "underworld_power": 59581,
+          "police_power": 5799233
+        },
+        "Revere city": {
+          "population": 60702,
+          "gdp_thousands": 14600912,
+          "crime_rate": 5.9,
+          "reward": 5094,
+          "difficulty": 0.962,
+          "underworld_power": 5370,
+          "police_power": 522713
+        },
+        "Chelsea city": {
+          "population": 40245,
+          "gdp_thousands": 9680302,
+          "crime_rate": 5.9,
+          "reward": 4599,
+          "difficulty": 0.962,
+          "underworld_power": 3560,
+          "police_power": 346555
+        },
+        "Winthrop Town city": {
+          "population": 18739,
+          "gdp_thousands": 4507372,
+          "crime_rate": 5.9,
+          "reward": 3116,
+          "difficulty": 0.962,
+          "underworld_power": 1658,
+          "police_power": 161364
+        },
+        "Suffolk (unincorporated)": {
+          "population": 0,
+          "gdp_thousands": 2,
+          "crime_rate": 5.9,
+          "reward": 150,
+          "difficulty": 0.962,
+          "underworld_power": 0,
+          "police_power": 0
+        }
+      }
+    },
+    "Worcester County": {
+      "fips": "25027",
+      "gdp_thousands": 60947229,
+      "gdp_estimated": false,
+      "population": 881248,
+      "homicide_rate": 1.7189898528,
+      "difficulty": 0.551,
+      "cities": {
+        "Worcester city": {
+          "population": 211286,
+          "gdp_thousands": 14612567,
+          "crime_rate": 1.72,
+          "reward": 5176,
+          "difficulty": 0.551,
+          "underworld_power": 5448,
+          "police_power": 523130
+        },
+        "Leominster city": {
+          "population": 44209,
+          "gdp_thousands": 3057500,
+          "crime_rate": 1.72,
+          "reward": 2045,
+          "difficulty": 0.551,
+          "underworld_power": 1140,
+          "police_power": 109458
+        },
+        "Fitchburg city": {
+          "population": 42145,
+          "gdp_thousands": 2914753,
+          "crime_rate": 1.72,
+          "reward": 1963,
+          "difficulty": 0.551,
+          "underworld_power": 1087,
+          "police_power": 104348
+        },
+        "Gardner city": {
+          "population": 21381,
+          "gdp_thousands": 1478712,
+          "crime_rate": 1.72,
+          "reward": 809,
+          "difficulty": 0.551,
+          "underworld_power": 551,
+          "police_power": 52938
+        },
+        "Southbridge Town city": {
+          "population": 18106,
+          "gdp_thousands": 1252213,
+          "crime_rate": 1.72,
+          "reward": 562,
+          "difficulty": 0.551,
+          "underworld_power": 467,
+          "police_power": 44829
+        },
+        "Worcester (unincorporated)": {
+          "population": 544121,
+          "gdp_thousands": 37631484,
+          "crime_rate": 1.72,
+          "reward": 5753,
+          "difficulty": 0.551,
+          "underworld_power": 14030,
+          "police_power": 1347207
         }
       }
     }

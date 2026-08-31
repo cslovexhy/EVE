@@ -1,24 +1,1118 @@
 {
   "country": "United States",
   "state": "New Mexico",
-  "state_fips": "00",
+  "state_fips": "35",
   "counties": {
-    "New Mexico County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Bernalillo County": {
+      "fips": "35001",
+      "gdp_thousands": 54831086,
+      "gdp_estimated": false,
+      "population": 671747,
+      "homicide_rate": 12.098749402,
+      "difficulty": 0.881,
       "cities": {
-        "New Mexico City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
+        "Albuquerque city": {
+          "population": 560326,
+          "gdp_thousands": 45736390,
+          "crime_rate": 12.1,
+          "reward": 6000,
+          "difficulty": 0.881,
+          "underworld_power": 101689,
+          "police_power": 1637363
+        },
+        "Bernalillo (unincorporated)": {
+          "population": 111421,
+          "gdp_thousands": 9094696,
+          "crime_rate": 12.1,
+          "reward": 5932,
+          "difficulty": 0.881,
+          "underworld_power": 20221,
+          "police_power": 325590
+        }
+      }
+    },
+    "Catron County": {
+      "fips": "35003",
+      "gdp_thousands": 144190,
+      "gdp_estimated": false,
+      "population": 3795,
+      "homicide_rate": null,
+      "difficulty": 0.293,
+      "cities": {
+        "Catron": {
+          "population": 3795,
+          "gdp_thousands": 144190,
+          "crime_rate": 3.0,
+          "reward": 2055,
+          "difficulty": 0.293,
+          "underworld_power": 171,
+          "police_power": 5162
+        }
+      }
+    },
+    "Chaves County": {
+      "fips": "35005",
+      "gdp_thousands": 2865638,
+      "gdp_estimated": false,
+      "population": 63697,
+      "homicide_rate": 16.499617209,
+      "difficulty": 0.804,
+      "cities": {
+        "Roswell city": {
+          "population": 47176,
+          "gdp_thousands": 2122381,
+          "crime_rate": 16.5,
+          "reward": 4912,
+          "difficulty": 0.804,
+          "underworld_power": 11676,
+          "police_power": 75981
+        },
+        "Dexter town": {
+          "population": 1055,
+          "gdp_thousands": 47462,
+          "crime_rate": 16.5,
+          "reward": 762,
+          "difficulty": 0.804,
+          "underworld_power": 261,
+          "police_power": 1699
+        },
+        "Hagerman town": {
+          "population": 961,
+          "gdp_thousands": 43234,
+          "crime_rate": 16.5,
+          "reward": 558,
+          "difficulty": 0.804,
+          "underworld_power": 238,
+          "police_power": 1548
+        },
+        "Lake Arthur town": {
+          "population": 375,
+          "gdp_thousands": 16870,
+          "crime_rate": 16.5,
+          "reward": 218,
+          "difficulty": 0.804,
+          "underworld_power": 93,
+          "police_power": 604
+        },
+        "Chaves (unincorporated)": {
+          "population": 14130,
+          "gdp_thousands": 635691,
+          "crime_rate": 16.5,
+          "reward": 3891,
+          "difficulty": 0.804,
+          "underworld_power": 3497,
+          "police_power": 22758
+        }
+      }
+    },
+    "Cibola County": {
+      "fips": "35006",
+      "gdp_thousands": 868066,
+      "gdp_estimated": false,
+      "population": 26686,
+      "homicide_rate": 10.602879742,
+      "difficulty": 0.505,
+      "cities": {
+        "Grants city": {
+          "population": 8880,
+          "gdp_thousands": 288856,
+          "crime_rate": 10.6,
+          "reward": 2735,
+          "difficulty": 0.505,
+          "underworld_power": 1412,
+          "police_power": 10341
+        },
+        "Cibola (unincorporated)": {
+          "population": 17806,
+          "gdp_thousands": 579210,
+          "crime_rate": 10.6,
+          "reward": 3755,
+          "difficulty": 0.505,
+          "underworld_power": 2832,
+          "police_power": 20736
+        }
+      }
+    },
+    "Colfax County": {
+      "fips": "35007",
+      "gdp_thousands": 623486,
+      "gdp_estimated": false,
+      "population": 12307,
+      "homicide_rate": 11.738742546,
+      "difficulty": 0.498,
+      "cities": {
+        "Raton city": {
+          "population": 6005,
+          "gdp_thousands": 304219,
+          "crime_rate": 11.74,
+          "reward": 2803,
+          "difficulty": 0.498,
+          "underworld_power": 1057,
+          "police_power": 10891
+        },
+        "Springer town": {
+          "population": 929,
+          "gdp_thousands": 47064,
+          "crime_rate": 11.74,
+          "reward": 626,
+          "difficulty": 0.498,
+          "underworld_power": 164,
+          "police_power": 1685
+        },
+        "Colfax (unincorporated)": {
+          "population": 5373,
+          "gdp_thousands": 272203,
+          "crime_rate": 11.74,
+          "reward": 2599,
+          "difficulty": 0.498,
+          "underworld_power": 946,
+          "police_power": 9745
+        }
+      }
+    },
+    "Curry County": {
+      "fips": "35009",
+      "gdp_thousands": 4317233,
+      "gdp_estimated": false,
+      "population": 47156,
+      "homicide_rate": 7.5215593928,
+      "difficulty": 0.51,
+      "cities": {
+        "Clovis city": {
+          "population": 37555,
+          "gdp_thousands": 3438240,
+          "crime_rate": 7.52,
+          "reward": 5252,
+          "difficulty": 0.51,
+          "underworld_power": 4237,
+          "police_power": 123089
+        },
+        "Texico city": {
+          "population": 926,
+          "gdp_thousands": 84777,
+          "crime_rate": 7.52,
+          "reward": 1238,
+          "difficulty": 0.51,
+          "underworld_power": 104,
+          "police_power": 3035
+        },
+        "Curry (unincorporated)": {
+          "population": 8675,
+          "gdp_thousands": 794216,
+          "crime_rate": 7.52,
+          "reward": 4231,
+          "difficulty": 0.51,
+          "underworld_power": 979,
+          "police_power": 28433
+        }
+      }
+    },
+    "De Baca County": {
+      "fips": "35011",
+      "gdp_thousands": 110871,
+      "gdp_estimated": false,
+      "population": 1657,
+      "homicide_rate": null,
+      "difficulty": 0.278,
+      "cities": {
+        "De Baca": {
+          "population": 1657,
+          "gdp_thousands": 110871,
+          "crime_rate": 3.0,
+          "reward": 1510,
+          "difficulty": 0.278,
+          "underworld_power": 75,
+          "police_power": 3969
+        }
+      }
+    },
+    "Do\u00f1a Ana County": {
+      "fips": "35013",
+      "gdp_thousands": 11315252,
+      "gdp_estimated": false,
+      "population": 229366,
+      "homicide_rate": 4.860209856,
+      "difficulty": 0.453,
+      "cities": {
+        "Las Cruces city": {
+          "population": 116998,
+          "gdp_thousands": 5771831,
+          "crime_rate": 4.86,
+          "reward": 5592,
+          "difficulty": 0.453,
+          "underworld_power": 8530,
+          "police_power": 206632
+        },
+        "Sunland Park city": {
+          "population": 18185,
+          "gdp_thousands": 897115,
+          "crime_rate": 4.86,
+          "reward": 4367,
+          "difficulty": 0.453,
+          "underworld_power": 1326,
+          "police_power": 32117
+        },
+        "Anthony city": {
+          "population": 8910,
+          "gdp_thousands": 439554,
+          "crime_rate": 4.86,
+          "reward": 3347,
+          "difficulty": 0.453,
+          "underworld_power": 650,
+          "police_power": 15736
+        },
+        "Mesilla town": {
+          "population": 1828,
+          "gdp_thousands": 90180,
+          "crime_rate": 4.86,
+          "reward": 1306,
+          "difficulty": 0.453,
+          "underworld_power": 133,
+          "police_power": 3228
+        },
+        "Do\u00f1a Ana (unincorporated)": {
+          "population": 83445,
+          "gdp_thousands": 4116572,
+          "crime_rate": 4.86,
+          "reward": 5456,
+          "difficulty": 0.453,
+          "underworld_power": 6083,
+          "police_power": 147373
+        }
+      }
+    },
+    "Eddy County": {
+      "fips": "35015",
+      "gdp_thousands": 11319034,
+      "gdp_estimated": false,
+      "population": 61436,
+      "homicide_rate": 12.503524278,
+      "difficulty": 0.874,
+      "cities": {
+        "Carlsbad city": {
+          "population": 31999,
+          "gdp_thousands": 5895529,
+          "crime_rate": 12.5,
+          "reward": 5796,
+          "difficulty": 0.874,
+          "underworld_power": 6002,
+          "police_power": 211060
+        },
+        "Artesia city": {
+          "population": 12550,
+          "gdp_thousands": 2312225,
+          "crime_rate": 12.5,
+          "reward": 4980,
+          "difficulty": 0.874,
+          "underworld_power": 2354,
+          "police_power": 82778
+        },
+        "Eddy (unincorporated)": {
+          "population": 16887,
+          "gdp_thousands": 3111280,
+          "crime_rate": 12.5,
+          "reward": 5184,
+          "difficulty": 0.874,
+          "underworld_power": 3167,
+          "police_power": 111384
+        }
+      }
+    },
+    "Grant County": {
+      "fips": "35017",
+      "gdp_thousands": 1406918,
+      "gdp_estimated": false,
+      "population": 27541,
+      "homicide_rate": 8.7712056796,
+      "difficulty": 0.448,
+      "cities": {
+        "Silver City town": {
+          "population": 9399,
+          "gdp_thousands": 480143,
+          "crime_rate": 8.77,
+          "reward": 3415,
+          "difficulty": 0.448,
+          "underworld_power": 1237,
+          "police_power": 17189
+        },
+        "Bayard city": {
+          "population": 2070,
+          "gdp_thousands": 105744,
+          "crime_rate": 8.77,
+          "reward": 1442,
+          "difficulty": 0.448,
+          "underworld_power": 272,
+          "police_power": 3786
+        },
+        "Hurley town": {
+          "population": 1232,
+          "gdp_thousands": 62936,
+          "crime_rate": 8.77,
+          "reward": 1034,
+          "difficulty": 0.448,
+          "underworld_power": 162,
+          "police_power": 2253
+        },
+        "Grant (unincorporated)": {
+          "population": 14840,
+          "gdp_thousands": 758095,
+          "crime_rate": 8.77,
+          "reward": 4163,
+          "difficulty": 0.448,
+          "underworld_power": 1952,
+          "police_power": 27140
+        }
+      }
+    },
+    "Guadalupe County": {
+      "fips": "35019",
+      "gdp_thousands": 277764,
+      "gdp_estimated": false,
+      "population": 4385,
+      "homicide_rate": null,
+      "difficulty": 0.356,
+      "cities": {
+        "Santa Rosa city": {
+          "population": 2824,
+          "gdp_thousands": 178883,
+          "crime_rate": 3.0,
+          "reward": 2327,
+          "difficulty": 0.356,
+          "underworld_power": 127,
+          "police_power": 6404
+        },
+        "Vaughn town": {
+          "population": 275,
+          "gdp_thousands": 17419,
+          "crime_rate": 3.0,
+          "reward": 286,
+          "difficulty": 0.356,
+          "underworld_power": 12,
+          "police_power": 624
+        },
+        "Guadalupe (unincorporated)": {
+          "population": 1286,
+          "gdp_thousands": 81462,
+          "crime_rate": 3.0,
+          "reward": 1170,
+          "difficulty": 0.356,
+          "underworld_power": 58,
+          "police_power": 2916
+        }
+      }
+    },
+    "Harding County": {
+      "fips": "35021",
+      "gdp_thousands": 47348,
+      "gdp_estimated": false,
+      "population": 635,
+      "homicide_rate": null,
+      "difficulty": 0.262,
+      "cities": {
+        "Harding": {
+          "population": 635,
+          "gdp_thousands": 47348,
+          "crime_rate": 3.0,
+          "reward": 694,
+          "difficulty": 0.262,
+          "underworld_power": 29,
+          "police_power": 1695
+        }
+      }
+    },
+    "Hidalgo County": {
+      "fips": "35023",
+      "gdp_thousands": 254901,
+      "gdp_estimated": false,
+      "population": 3966,
+      "homicide_rate": null,
+      "difficulty": 0.34,
+      "cities": {
+        "Lordsburg city": {
+          "population": 2203,
+          "gdp_thousands": 141590,
+          "crime_rate": 3.0,
+          "reward": 1987,
+          "difficulty": 0.34,
+          "underworld_power": 99,
+          "police_power": 5069
+        },
+        "Hidalgo (unincorporated)": {
+          "population": 1763,
+          "gdp_thousands": 113311,
+          "crime_rate": 3.0,
+          "reward": 1578,
+          "difficulty": 0.34,
+          "underworld_power": 79,
+          "police_power": 4057
+        }
+      }
+    },
+    "Lea County": {
+      "fips": "35025",
+      "gdp_thousands": 12857883,
+      "gdp_estimated": false,
+      "population": 75151,
+      "homicide_rate": 10.500744139,
+      "difficulty": 0.77,
+      "cities": {
+        "Hobbs city": {
+          "population": 41061,
+          "gdp_thousands": 7025289,
+          "crime_rate": 10.5,
+          "reward": 5864,
+          "difficulty": 0.77,
+          "underworld_power": 6468,
+          "police_power": 251505
+        },
+        "Lovington city": {
+          "population": 11693,
+          "gdp_thousands": 2000601,
+          "crime_rate": 10.5,
+          "reward": 4708,
+          "difficulty": 0.77,
+          "underworld_power": 1842,
+          "police_power": 71622
+        },
+        "Eunice city": {
+          "population": 3068,
+          "gdp_thousands": 524916,
+          "crime_rate": 10.5,
+          "reward": 3687,
+          "difficulty": 0.77,
+          "underworld_power": 483,
+          "police_power": 18792
+        },
+        "Jal city": {
+          "population": 2192,
+          "gdp_thousands": 375037,
+          "crime_rate": 10.5,
+          "reward": 3211,
+          "difficulty": 0.77,
+          "underworld_power": 345,
+          "police_power": 13426
+        },
+        "Tatum town": {
+          "population": 712,
+          "gdp_thousands": 121818,
+          "crime_rate": 10.5,
+          "reward": 1851,
+          "difficulty": 0.77,
+          "underworld_power": 112,
+          "police_power": 4361
+        },
+        "Lea (unincorporated)": {
+          "population": 16425,
+          "gdp_thousands": 2810222,
+          "crime_rate": 10.5,
+          "reward": 5116,
+          "difficulty": 0.77,
+          "underworld_power": 2587,
+          "police_power": 100606
+        }
+      }
+    },
+    "Lincoln County": {
+      "fips": "35027",
+      "gdp_thousands": 894191,
+      "gdp_estimated": false,
+      "population": 20025,
+      "homicide_rate": 7.2596862364,
+      "difficulty": 0.298,
+      "cities": {
+        "Ruidoso Downs city": {
+          "population": 2627,
+          "gdp_thousands": 117305,
+          "crime_rate": 7.26,
+          "reward": 1783,
+          "difficulty": 0.298,
+          "underworld_power": 286,
+          "police_power": 4200
+        },
+        "Carrizozo town": {
+          "population": 968,
+          "gdp_thousands": 43224,
+          "crime_rate": 7.26,
+          "reward": 490,
+          "difficulty": 0.298,
+          "underworld_power": 105,
+          "police_power": 1547
+        },
+        "Lincoln (unincorporated)": {
+          "population": 16430,
+          "gdp_thousands": 733662,
+          "crime_rate": 7.26,
+          "reward": 4095,
+          "difficulty": 0.298,
+          "underworld_power": 1789,
+          "police_power": 26265
+        }
+      }
+    },
+    "Los Alamos County": {
+      "fips": "35028",
+      "gdp_thousands": 3814572,
+      "gdp_estimated": false,
+      "population": 19675,
+      "homicide_rate": null,
+      "difficulty": 0.637,
+      "cities": {
+        "Los Alamos": {
+          "population": 19675,
+          "gdp_thousands": 3814572,
+          "crime_rate": 3.0,
+          "reward": 5388,
+          "difficulty": 0.637,
+          "underworld_power": 885,
+          "police_power": 136562
+        }
+      }
+    },
+    "Luna County": {
+      "fips": "35029",
+      "gdp_thousands": 1242018,
+      "gdp_estimated": false,
+      "population": 25878,
+      "homicide_rate": 9.403191208,
+      "difficulty": 0.44,
+      "cities": {
+        "Deming city": {
+          "population": 15272,
+          "gdp_thousands": 732981,
+          "crime_rate": 9.4,
+          "reward": 4027,
+          "difficulty": 0.44,
+          "underworld_power": 2154,
+          "police_power": 26241
+        },
+        "Luna (unincorporated)": {
+          "population": 10606,
+          "gdp_thousands": 509037,
+          "crime_rate": 9.4,
+          "reward": 3551,
+          "difficulty": 0.44,
+          "underworld_power": 1496,
+          "police_power": 18224
+        }
+      }
+    },
+    "McKinley County": {
+      "fips": "35031",
+      "gdp_thousands": 2893527,
+      "gdp_estimated": false,
+      "population": 68945,
+      "homicide_rate": 17.827197643,
+      "difficulty": 0.844,
+      "cities": {
+        "Gallup city": {
+          "population": 20339,
+          "gdp_thousands": 853599,
+          "crime_rate": 17.83,
+          "reward": 4299,
+          "difficulty": 0.844,
+          "underworld_power": 5439,
+          "police_power": 30559
+        },
+        "McKinley (unincorporated)": {
+          "population": 48606,
+          "gdp_thousands": 2039928,
+          "crime_rate": 17.83,
+          "reward": 4776,
+          "difficulty": 0.844,
+          "underworld_power": 12998,
+          "police_power": 73029
+        }
+      }
+    },
+    "Mora County": {
+      "fips": "35033",
+      "gdp_thousands": 161579,
+      "gdp_estimated": false,
+      "population": 4096,
+      "homicide_rate": null,
+      "difficulty": 0.309,
+      "cities": {
+        "Mora": {
+          "population": 4096,
+          "gdp_thousands": 161579,
+          "crime_rate": 3.0,
+          "reward": 2259,
+          "difficulty": 0.309,
+          "underworld_power": 184,
+          "police_power": 5785
+        }
+      }
+    },
+    "Otero County": {
+      "fips": "35035",
+      "gdp_thousands": 3794842,
+      "gdp_estimated": false,
+      "population": 69711,
+      "homicide_rate": 6.8615930904,
+      "difficulty": 0.431,
+      "cities": {
+        "Alamogordo city": {
+          "population": 31667,
+          "gdp_thousands": 1723849,
+          "crime_rate": 6.86,
+          "reward": 4572,
+          "difficulty": 0.431,
+          "underworld_power": 3259,
+          "police_power": 61714
+        },
+        "Otero (unincorporated)": {
+          "population": 38044,
+          "gdp_thousands": 2070993,
+          "crime_rate": 6.86,
+          "reward": 4844,
+          "difficulty": 0.431,
+          "underworld_power": 3916,
+          "police_power": 74142
+        }
+      }
+    },
+    "Quay County": {
+      "fips": "35037",
+      "gdp_thousands": 353624,
+      "gdp_estimated": false,
+      "population": 8403,
+      "homicide_rate": null,
+      "difficulty": 0.371,
+      "cities": {
+        "Tucumcari city": {
+          "population": 5058,
+          "gdp_thousands": 212856,
+          "crime_rate": 3.0,
+          "reward": 2395,
+          "difficulty": 0.371,
+          "underworld_power": 228,
+          "police_power": 7620
+        },
+        "Quay (unincorporated)": {
+          "population": 3345,
+          "gdp_thousands": 140768,
+          "crime_rate": 3.0,
+          "reward": 1919,
+          "difficulty": 0.371,
+          "underworld_power": 151,
+          "police_power": 5039
+        }
+      }
+    },
+    "Rio Arriba County": {
+      "fips": "35039",
+      "gdp_thousands": 1378990,
+      "gdp_estimated": false,
+      "population": 39955,
+      "homicide_rate": 13.440323149,
+      "difficulty": 0.694,
+      "cities": {
+        "Rio Arriba": {
+          "population": 39955,
+          "gdp_thousands": 1378990,
+          "crime_rate": 13.44,
+          "reward": 4503,
+          "difficulty": 0.694,
+          "underworld_power": 8055,
+          "police_power": 49368
+        }
+      }
+    },
+    "Roosevelt County": {
+      "fips": "35041",
+      "gdp_thousands": 949224,
+      "gdp_estimated": false,
+      "population": 18713,
+      "homicide_rate": 8.354789953,
+      "difficulty": 0.362,
+      "cities": {
+        "Portales city": {
+          "population": 11789,
+          "gdp_thousands": 598001,
+          "crime_rate": 8.35,
+          "reward": 3823,
+          "difficulty": 0.362,
+          "underworld_power": 1477,
+          "police_power": 21408
+        },
+        "Elida town": {
+          "population": 154,
+          "gdp_thousands": 7811,
+          "crime_rate": 8.35,
+          "reward": 150,
+          "difficulty": 0.362,
+          "underworld_power": 19,
+          "police_power": 280
+        },
+        "Roosevelt (unincorporated)": {
+          "population": 6770,
+          "gdp_thousands": 343412,
+          "crime_rate": 8.35,
+          "reward": 2939,
+          "difficulty": 0.362,
+          "underworld_power": 848,
+          "police_power": 12294
+        }
+      }
+    },
+    "Sandoval County": {
+      "fips": "35043",
+      "gdp_thousands": 6129161,
+      "gdp_estimated": false,
+      "population": 157757,
+      "homicide_rate": 6.1016055096,
+      "difficulty": 0.454,
+      "cities": {
+        "Bernalillo town": {
+          "population": 9159,
+          "gdp_thousands": 355844,
+          "crime_rate": 6.1,
+          "reward": 3075,
+          "difficulty": 0.454,
+          "underworld_power": 838,
+          "police_power": 12739
+        },
+        "Sandoval (unincorporated)": {
+          "population": 148598,
+          "gdp_thousands": 5773317,
+          "crime_rate": 6.1,
+          "reward": 5660,
+          "difficulty": 0.454,
+          "underworld_power": 13600,
+          "police_power": 206685
+        }
+      }
+    },
+    "San Juan County": {
+      "fips": "35045",
+      "gdp_thousands": 7042616,
+      "gdp_estimated": false,
+      "population": 120817,
+      "homicide_rate": 10.538049384,
+      "difficulty": 0.731,
+      "cities": {
+        "Farmington city": {
+          "population": 46262,
+          "gdp_thousands": 2696685,
+          "crime_rate": 10.54,
+          "reward": 5048,
+          "difficulty": 0.731,
+          "underworld_power": 7313,
+          "police_power": 96541
+        },
+        "Bloomfield city": {
+          "population": 7363,
+          "gdp_thousands": 429201,
+          "crime_rate": 10.54,
+          "reward": 3279,
+          "difficulty": 0.731,
+          "underworld_power": 1164,
+          "police_power": 15365
+        },
+        "Aztec city": {
+          "population": 6129,
+          "gdp_thousands": 357269,
+          "crime_rate": 10.54,
+          "reward": 3143,
+          "difficulty": 0.731,
+          "underworld_power": 969,
+          "police_power": 12790
+        },
+        "Kirtland town": {
+          "population": 574,
+          "gdp_thousands": 33459,
+          "crime_rate": 10.54,
+          "reward": 422,
+          "difficulty": 0.731,
+          "underworld_power": 91,
+          "police_power": 1198
+        },
+        "San Juan (unincorporated)": {
+          "population": 60489,
+          "gdp_thousands": 3526002,
+          "crime_rate": 10.54,
+          "reward": 5320,
+          "difficulty": 0.731,
+          "underworld_power": 9562,
+          "police_power": 126231
+        }
+      }
+    },
+    "San Miguel County": {
+      "fips": "35047",
+      "gdp_thousands": 1005021,
+      "gdp_estimated": false,
+      "population": 26428,
+      "homicide_rate": 14.535110078,
+      "difficulty": 0.687,
+      "cities": {
+        "Las Vegas city": {
+          "population": 12711,
+          "gdp_thousands": 483382,
+          "crime_rate": 14.54,
+          "reward": 3483,
+          "difficulty": 0.687,
+          "underworld_power": 2771,
+          "police_power": 17305
+        },
+        "San Miguel (unincorporated)": {
+          "population": 13717,
+          "gdp_thousands": 521639,
+          "crime_rate": 14.54,
+          "reward": 3619,
+          "difficulty": 0.687,
+          "underworld_power": 2991,
+          "police_power": 18675
+        }
+      }
+    },
+    "Santa Fe County": {
+      "fips": "35049",
+      "gdp_thousands": 10086593,
+      "gdp_estimated": false,
+      "population": 157765,
+      "homicide_rate": 5.219959607,
+      "difficulty": 0.461,
+      "cities": {
+        "Santa Fe city": {
+          "population": 90551,
+          "gdp_thousands": 5789313,
+          "crime_rate": 5.22,
+          "reward": 5728,
+          "difficulty": 0.461,
+          "underworld_power": 7090,
+          "police_power": 207257
+        },
+        "Santa Fe (unincorporated)": {
+          "population": 67214,
+          "gdp_thousands": 4297280,
+          "crime_rate": 5.22,
+          "reward": 5524,
+          "difficulty": 0.461,
+          "underworld_power": 5263,
+          "police_power": 153843
+        }
+      }
+    },
+    "Sierra County": {
+      "fips": "35051",
+      "gdp_thousands": 423002,
+      "gdp_estimated": false,
+      "population": 11389,
+      "homicide_rate": null,
+      "difficulty": 0.387,
+      "cities": {
+        "Truth or Consequences city": {
+          "population": 5942,
+          "gdp_thousands": 220693,
+          "crime_rate": 3.0,
+          "reward": 2463,
+          "difficulty": 0.387,
+          "underworld_power": 267,
+          "police_power": 7901
+        },
+        "Elephant Butte city": {
+          "population": 1439,
+          "gdp_thousands": 53446,
+          "crime_rate": 3.0,
+          "reward": 898,
+          "difficulty": 0.387,
+          "underworld_power": 65,
+          "police_power": 1913
+        },
+        "Sierra (unincorporated)": {
+          "population": 4008,
+          "gdp_thousands": 148863,
+          "crime_rate": 3.0,
+          "reward": 2191,
+          "difficulty": 0.387,
+          "underworld_power": 180,
+          "police_power": 5329
+        }
+      }
+    },
+    "Socorro County": {
+      "fips": "35053",
+      "gdp_thousands": 666152,
+      "gdp_estimated": false,
+      "population": 15967,
+      "homicide_rate": null,
+      "difficulty": 0.418,
+      "cities": {
+        "Socorro city": {
+          "population": 8348,
+          "gdp_thousands": 348283,
+          "crime_rate": 3.0,
+          "reward": 3007,
+          "difficulty": 0.418,
+          "underworld_power": 376,
+          "police_power": 12469
+        },
+        "Socorro (unincorporated)": {
+          "population": 7619,
+          "gdp_thousands": 317869,
+          "crime_rate": 3.0,
+          "reward": 2871,
+          "difficulty": 0.418,
+          "underworld_power": 343,
+          "police_power": 11380
+        }
+      }
+    },
+    "Taos County": {
+      "fips": "35055",
+      "gdp_thousands": 1520802,
+      "gdp_estimated": false,
+      "population": 34482,
+      "homicide_rate": 10.365334865,
+      "difficulty": 0.535,
+      "cities": {
+        "Taos town": {
+          "population": 6453,
+          "gdp_thousands": 284604,
+          "crime_rate": 10.37,
+          "reward": 2667,
+          "difficulty": 0.535,
+          "underworld_power": 1003,
+          "police_power": 10189
+        },
+        "Red River town": {
+          "population": 537,
+          "gdp_thousands": 23683,
+          "crime_rate": 10.37,
+          "reward": 354,
+          "difficulty": 0.535,
+          "underworld_power": 83,
+          "police_power": 848
+        },
+        "Taos (unincorporated)": {
+          "population": 27492,
+          "gdp_thousands": 1212515,
+          "crime_rate": 10.37,
+          "reward": 4435,
+          "difficulty": 0.535,
+          "underworld_power": 4274,
+          "police_power": 43408
+        }
+      }
+    },
+    "Torrance County": {
+      "fips": "35057",
+      "gdp_thousands": 881314,
+      "gdp_estimated": false,
+      "population": 15986,
+      "homicide_rate": 10.17218739,
+      "difficulty": 0.402,
+      "cities": {
+        "Moriarty city": {
+          "population": 2059,
+          "gdp_thousands": 113513,
+          "crime_rate": 10.17,
+          "reward": 1647,
+          "difficulty": 0.402,
+          "underworld_power": 314,
+          "police_power": 4064
+        },
+        "Estancia town": {
+          "population": 1314,
+          "gdp_thousands": 72441,
+          "crime_rate": 10.17,
+          "reward": 1102,
+          "difficulty": 0.402,
           "underworld_power": 200,
-          "police_power": 8000
+          "police_power": 2593
+        },
+        "Mountainair town": {
+          "population": 927,
+          "gdp_thousands": 51105,
+          "crime_rate": 10.17,
+          "reward": 830,
+          "difficulty": 0.402,
+          "underworld_power": 141,
+          "police_power": 1830
+        },
+        "Torrance (unincorporated)": {
+          "population": 11686,
+          "gdp_thousands": 644255,
+          "crime_rate": 10.17,
+          "reward": 3959,
+          "difficulty": 0.402,
+          "underworld_power": 1783,
+          "police_power": 23064
+        }
+      }
+    },
+    "Union County": {
+      "fips": "35059",
+      "gdp_thousands": 178447,
+      "gdp_estimated": false,
+      "population": 3926,
+      "homicide_rate": null,
+      "difficulty": 0.324,
+      "cities": {
+        "Clayton town": {
+          "population": 2559,
+          "gdp_thousands": 116313,
+          "crime_rate": 3.0,
+          "reward": 1715,
+          "difficulty": 0.324,
+          "underworld_power": 115,
+          "police_power": 4164
+        },
+        "Union (unincorporated)": {
+          "population": 1367,
+          "gdp_thousands": 62134,
+          "crime_rate": 3.0,
+          "reward": 966,
+          "difficulty": 0.324,
+          "underworld_power": 62,
+          "police_power": 2224
+        }
+      }
+    },
+    "Valencia County": {
+      "fips": "35061",
+      "gdp_thousands": 2429515,
+      "gdp_estimated": false,
+      "population": 80813,
+      "homicide_rate": 10.463163126,
+      "difficulty": 0.574,
+      "cities": {
+        "Belen city": {
+          "population": 7556,
+          "gdp_thousands": 227159,
+          "crime_rate": 10.46,
+          "reward": 2531,
+          "difficulty": 0.574,
+          "underworld_power": 1186,
+          "police_power": 8132
+        },
+        "Rio Communities city": {
+          "population": 4927,
+          "gdp_thousands": 148122,
+          "crime_rate": 10.46,
+          "reward": 2123,
+          "difficulty": 0.574,
+          "underworld_power": 773,
+          "police_power": 5303
+        },
+        "Peralta town": {
+          "population": 3470,
+          "gdp_thousands": 104320,
+          "crime_rate": 10.46,
+          "reward": 1374,
+          "difficulty": 0.574,
+          "underworld_power": 545,
+          "police_power": 3735
+        },
+        "Valencia (unincorporated)": {
+          "population": 64860,
+          "gdp_thousands": 1949914,
+          "crime_rate": 10.46,
+          "reward": 4640,
+          "difficulty": 0.574,
+          "underworld_power": 10180,
+          "police_power": 69807
         }
       }
     }

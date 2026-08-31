@@ -1,24 +1,347 @@
 {
   "country": "United States",
   "state": "Connecticut",
-  "state_fips": "00",
+  "state_fips": "09",
   "counties": {
-    "Connecticut County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Capitol Planning Region": {
+      "fips": "09110",
+      "gdp_thousands": 110914256,
+      "gdp_estimated": false,
+      "population": 991508,
+      "homicide_rate": null,
+      "difficulty": 0.75,
       "cities": {
-        "Connecticut City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Hartford city": {
+          "population": 122129,
+          "gdp_thousands": 13661863,
+          "crime_rate": 3.0,
+          "reward": 4267,
+          "difficulty": 0.75,
+          "underworld_power": 5496,
+          "police_power": 489095
+        },
+        "New Britain city": {
+          "population": 75871,
+          "gdp_thousands": 8487249,
+          "crime_rate": 3.0,
+          "reward": 3183,
+          "difficulty": 0.75,
+          "underworld_power": 3414,
+          "police_power": 303844
+        },
+        "Capitol Planning Region (unincorporated)": {
+          "population": 793508,
+          "gdp_thousands": 88765144,
+          "crime_rate": 3.0,
+          "reward": 6000,
+          "difficulty": 0.75,
+          "underworld_power": 35708,
+          "police_power": 3177792
+        }
+      }
+    },
+    "Greater Bridgeport Planning Region": {
+      "fips": "09120",
+      "gdp_thousands": 33929754,
+      "gdp_estimated": false,
+      "population": 335666,
+      "homicide_rate": null,
+      "difficulty": 0.562,
+      "cities": {
+        "Bridgeport city": {
+          "population": 151599,
+          "gdp_thousands": 15323913,
+          "crime_rate": 3.0,
+          "reward": 4700,
+          "difficulty": 0.562,
+          "underworld_power": 6822,
+          "police_power": 548596
+        },
+        "Greater Bridgeport Planning Region (unincorporated)": {
+          "population": 184067,
+          "gdp_thousands": 18605841,
+          "crime_rate": 3.0,
+          "reward": 5350,
+          "difficulty": 0.562,
+          "underworld_power": 8283,
+          "police_power": 666089
+        }
+      }
+    },
+    "Lower Connecticut River Valley Planning Region": {
+      "fips": "09130",
+      "gdp_thousands": 16096041,
+      "gdp_estimated": false,
+      "population": 177540,
+      "homicide_rate": null,
+      "difficulty": 0.375,
+      "cities": {
+        "Middletown city": {
+          "population": 48616,
+          "gdp_thousands": 4407599,
+          "crime_rate": 3.0,
+          "reward": 1667,
+          "difficulty": 0.375,
+          "underworld_power": 2188,
+          "police_power": 157792
+        },
+        "Lower Connecticut River Valley Planning Region (unincorporated)": {
+          "population": 128924,
+          "gdp_thousands": 11688442,
+          "crime_rate": 3.0,
+          "reward": 3833,
+          "difficulty": 0.375,
+          "underworld_power": 5802,
+          "police_power": 418446
+        }
+      }
+    },
+    "Naugatuck Valley Planning Region": {
+      "fips": "09140",
+      "gdp_thousands": 33434994,
+      "gdp_estimated": false,
+      "population": 462220,
+      "homicide_rate": null,
+      "difficulty": 0.5,
+      "cities": {
+        "Waterbury city": {
+          "population": 115908,
+          "gdp_thousands": 8384282,
+          "crime_rate": 3.0,
+          "reward": 2967,
+          "difficulty": 0.5,
+          "underworld_power": 5216,
+          "police_power": 300157
+        },
+        "Bristol city": {
+          "population": 62195,
+          "gdp_thousands": 4498917,
+          "crime_rate": 3.0,
+          "reward": 2100,
+          "difficulty": 0.5,
+          "underworld_power": 2799,
+          "police_power": 161061
+        },
+        "Shelton city": {
+          "population": 42805,
+          "gdp_thousands": 3096328,
+          "crime_rate": 3.0,
+          "reward": 1233,
+          "difficulty": 0.5,
+          "underworld_power": 1926,
+          "police_power": 110849
+        },
+        "Ansonia city": {
+          "population": 19195,
+          "gdp_thousands": 1388483,
+          "crime_rate": 3.0,
+          "reward": 583,
+          "difficulty": 0.5,
+          "underworld_power": 864,
+          "police_power": 49708
+        },
+        "Derby city": {
+          "population": 12915,
+          "gdp_thousands": 934215,
+          "crime_rate": 3.0,
+          "reward": 367,
+          "difficulty": 0.5,
+          "underworld_power": 581,
+          "police_power": 33445
+        },
+        "Naugatuck Valley Planning Region (unincorporated)": {
+          "population": 209202,
+          "gdp_thousands": 15132769,
+          "crime_rate": 3.0,
+          "reward": 4483,
+          "difficulty": 0.5,
+          "underworld_power": 9414,
+          "police_power": 541753
+        }
+      }
+    },
+    "Northeastern Connecticut Planning Region": {
+      "fips": "09150",
+      "gdp_thousands": 5430654,
+      "gdp_estimated": false,
+      "population": 97701,
+      "homicide_rate": null,
+      "difficulty": 0.25,
+      "cities": {
+        "Northeastern Connecticut Planning Region": {
+          "population": 97701,
+          "gdp_thousands": 5430654,
+          "crime_rate": 3.0,
+          "reward": 2750,
+          "difficulty": 0.25,
+          "underworld_power": 4397,
+          "police_power": 194417
+        }
+      }
+    },
+    "Northwest Hills Planning Region": {
+      "fips": "09160",
+      "gdp_thousands": 6465153,
+      "gdp_estimated": false,
+      "population": 114101,
+      "homicide_rate": null,
+      "difficulty": 0.312,
+      "cities": {
+        "Torrington city": {
+          "population": 35673,
+          "gdp_thousands": 2021291,
+          "crime_rate": 3.0,
+          "reward": 800,
+          "difficulty": 0.312,
+          "underworld_power": 1605,
+          "police_power": 72362
+        },
+        "Northwest Hills Planning Region (unincorporated)": {
+          "population": 78428,
+          "gdp_thousands": 4443862,
+          "crime_rate": 3.0,
+          "reward": 1883,
+          "difficulty": 0.312,
+          "underworld_power": 3529,
+          "police_power": 159090
+        }
+      }
+    },
+    "South Central Connecticut Planning Region": {
+      "fips": "09170",
+      "gdp_thousands": 50133476,
+      "gdp_estimated": false,
+      "population": 576718,
+      "homicide_rate": null,
+      "difficulty": 0.625,
+      "cities": {
+        "New Haven city": {
+          "population": 137562,
+          "gdp_thousands": 11958116,
+          "crime_rate": 3.0,
+          "reward": 4050,
+          "difficulty": 0.625,
+          "underworld_power": 6190,
+          "police_power": 428101
+        },
+        "Meriden city": {
+          "population": 60849,
+          "gdp_thousands": 5289538,
+          "crime_rate": 3.0,
+          "reward": 2533,
+          "difficulty": 0.625,
+          "underworld_power": 2738,
+          "police_power": 189365
+        },
+        "West Haven city": {
+          "population": 55379,
+          "gdp_thousands": 4814036,
+          "crime_rate": 3.0,
+          "reward": 2317,
+          "difficulty": 0.625,
+          "underworld_power": 2492,
+          "police_power": 172342
+        },
+        "South Central Connecticut Planning Region (unincorporated)": {
+          "population": 322928,
+          "gdp_thousands": 28071786,
+          "crime_rate": 3.0,
+          "reward": 5567,
+          "difficulty": 0.625,
+          "underworld_power": 14532,
+          "police_power": 1004970
+        }
+      }
+    },
+    "Southeastern Connecticut Planning Region": {
+      "fips": "09180",
+      "gdp_thousands": 24086923,
+      "gdp_estimated": false,
+      "population": 282602,
+      "homicide_rate": null,
+      "difficulty": 0.438,
+      "cities": {
+        "Norwich city": {
+          "population": 39993,
+          "gdp_thousands": 3408710,
+          "crime_rate": 3.0,
+          "reward": 1450,
+          "difficulty": 0.438,
+          "underworld_power": 1800,
+          "police_power": 122032
+        },
+        "New London city": {
+          "population": 28081,
+          "gdp_thousands": 2393418,
+          "crime_rate": 3.0,
+          "reward": 1017,
+          "difficulty": 0.438,
+          "underworld_power": 1264,
+          "police_power": 85684
+        },
+        "Groton city": {
+          "population": 10160,
+          "gdp_thousands": 865963,
+          "crime_rate": 3.0,
+          "reward": 150,
+          "difficulty": 0.438,
+          "underworld_power": 457,
+          "police_power": 31001
+        },
+        "Southeastern Connecticut Planning Region (unincorporated)": {
+          "population": 204368,
+          "gdp_thousands": 17418832,
+          "crime_rate": 3.0,
+          "reward": 5133,
+          "difficulty": 0.438,
+          "underworld_power": 9197,
+          "police_power": 623594
+        }
+      }
+    },
+    "Western Connecticut Planning Region": {
+      "fips": "09190",
+      "gdp_thousands": 76343680,
+      "gdp_estimated": false,
+      "population": 637013,
+      "homicide_rate": null,
+      "difficulty": 0.688,
+      "cities": {
+        "Stamford city": {
+          "population": 139134,
+          "gdp_thousands": 16674701,
+          "crime_rate": 3.0,
+          "reward": 4917,
+          "difficulty": 0.688,
+          "underworld_power": 6261,
+          "police_power": 596954
+        },
+        "Norwalk city": {
+          "population": 93661,
+          "gdp_thousands": 11224928,
+          "crime_rate": 3.0,
+          "reward": 3617,
+          "difficulty": 0.688,
+          "underworld_power": 4215,
+          "police_power": 401852
+        },
+        "Danbury city": {
+          "population": 88692,
+          "gdp_thousands": 10629412,
+          "crime_rate": 3.0,
+          "reward": 3400,
+          "difficulty": 0.688,
+          "underworld_power": 3991,
+          "police_power": 380533
+        },
+        "Western Connecticut Planning Region (unincorporated)": {
+          "population": 315526,
+          "gdp_thousands": 37814639,
+          "crime_rate": 3.0,
+          "reward": 5783,
+          "difficulty": 0.688,
+          "underworld_power": 14199,
+          "police_power": 1353764
         }
       }
     }

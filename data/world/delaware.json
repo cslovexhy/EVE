@@ -1,24 +1,521 @@
 {
   "country": "United States",
   "state": "Delaware",
-  "state_fips": "00",
+  "state_fips": "10",
   "counties": {
-    "Delaware County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Kent County": {
+      "fips": "10001",
+      "gdp_thousands": 11652246,
+      "gdp_estimated": false,
+      "population": 192690,
+      "homicide_rate": 6.0687751934,
+      "difficulty": 0.25,
       "cities": {
-        "Delaware City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Dover city": {
+          "population": 40191,
+          "gdp_thousands": 2430408,
+          "crime_rate": 6.07,
+          "reward": 5338,
+          "difficulty": 0.25,
+          "underworld_power": 3659,
+          "police_power": 87009
+        },
+        "Camden town": {
+          "population": 4191,
+          "gdp_thousands": 253435,
+          "crime_rate": 6.07,
+          "reward": 4013,
+          "difficulty": 0.25,
+          "underworld_power": 382,
+          "police_power": 9073
+        },
+        "Harrington city": {
+          "population": 3934,
+          "gdp_thousands": 237894,
+          "crime_rate": 6.07,
+          "reward": 3682,
+          "difficulty": 0.25,
+          "underworld_power": 358,
+          "police_power": 8517
+        },
+        "Cheswold town": {
+          "population": 2537,
+          "gdp_thousands": 153416,
+          "crime_rate": 6.07,
+          "reward": 3241,
+          "difficulty": 0.25,
+          "underworld_power": 231,
+          "police_power": 5492
+        },
+        "Wyoming town": {
+          "population": 1871,
+          "gdp_thousands": 113142,
+          "crime_rate": 6.07,
+          "reward": 2909,
+          "difficulty": 0.25,
+          "underworld_power": 170,
+          "police_power": 4050
+        },
+        "Felton town": {
+          "population": 1375,
+          "gdp_thousands": 83148,
+          "crime_rate": 6.07,
+          "reward": 2358,
+          "difficulty": 0.25,
+          "underworld_power": 125,
+          "police_power": 2977
+        },
+        "Frederica town": {
+          "population": 1131,
+          "gdp_thousands": 68393,
+          "crime_rate": 6.07,
+          "reward": 2137,
+          "difficulty": 0.25,
+          "underworld_power": 103,
+          "police_power": 2448
+        },
+        "Houston town": {
+          "population": 404,
+          "gdp_thousands": 24430,
+          "crime_rate": 6.07,
+          "reward": 1475,
+          "difficulty": 0.25,
+          "underworld_power": 37,
+          "police_power": 875
+        },
+        "Magnolia town": {
+          "population": 289,
+          "gdp_thousands": 17476,
+          "crime_rate": 6.07,
+          "reward": 1143,
+          "difficulty": 0.25,
+          "underworld_power": 26,
+          "police_power": 626
+        },
+        "Bowers town": {
+          "population": 285,
+          "gdp_thousands": 17234,
+          "crime_rate": 6.07,
+          "reward": 1033,
+          "difficulty": 0.25,
+          "underworld_power": 26,
+          "police_power": 617
+        },
+        "Kenton town": {
+          "population": 223,
+          "gdp_thousands": 13485,
+          "crime_rate": 6.07,
+          "reward": 812,
+          "difficulty": 0.25,
+          "underworld_power": 20,
+          "police_power": 483
+        },
+        "Little Creek town": {
+          "population": 203,
+          "gdp_thousands": 12275,
+          "crime_rate": 6.07,
+          "reward": 702,
+          "difficulty": 0.25,
+          "underworld_power": 18,
+          "police_power": 439
+        },
+        "Woodside town": {
+          "population": 198,
+          "gdp_thousands": 11973,
+          "crime_rate": 6.07,
+          "reward": 592,
+          "difficulty": 0.25,
+          "underworld_power": 18,
+          "police_power": 429
+        },
+        "Leipsic town": {
+          "population": 187,
+          "gdp_thousands": 11308,
+          "crime_rate": 6.07,
+          "reward": 481,
+          "difficulty": 0.25,
+          "underworld_power": 17,
+          "police_power": 405
+        },
+        "Viola town": {
+          "population": 145,
+          "gdp_thousands": 8768,
+          "crime_rate": 6.07,
+          "reward": 371,
+          "difficulty": 0.25,
+          "underworld_power": 13,
+          "police_power": 314
+        },
+        "Farmington town": {
+          "population": 100,
+          "gdp_thousands": 6047,
+          "crime_rate": 6.07,
+          "reward": 260,
+          "difficulty": 0.25,
+          "underworld_power": 9,
+          "police_power": 216
+        },
+        "Hartly town": {
+          "population": 78,
+          "gdp_thousands": 4716,
+          "crime_rate": 6.07,
+          "reward": 150,
+          "difficulty": 0.25,
+          "underworld_power": 7,
+          "police_power": 169
+        },
+        "Kent (unincorporated)": {
+          "population": 135348,
+          "gdp_thousands": 8184698,
+          "crime_rate": 6.07,
+          "reward": 5669,
+          "difficulty": 0.25,
+          "underworld_power": 12321,
+          "police_power": 293012
+        }
+      }
+    },
+    "New Castle County": {
+      "fips": "10003",
+      "gdp_thousands": 75963832,
+      "gdp_estimated": false,
+      "population": 588093,
+      "homicide_rate": 9.1722409262,
+      "difficulty": 1.0,
+      "cities": {
+        "Wilmington city": {
+          "population": 73176,
+          "gdp_thousands": 9452126,
+          "crime_rate": 9.17,
+          "reward": 5779,
+          "difficulty": 1.0,
+          "underworld_power": 10068,
+          "police_power": 338386
+        },
+        "Newark city": {
+          "population": 30506,
+          "gdp_thousands": 3940452,
+          "crime_rate": 9.17,
+          "reward": 5558,
+          "difficulty": 1.0,
+          "underworld_power": 4197,
+          "police_power": 141068
+        },
+        "Middletown town": {
+          "population": 25686,
+          "gdp_thousands": 3317854,
+          "crime_rate": 9.17,
+          "reward": 5448,
+          "difficulty": 1.0,
+          "underworld_power": 3534,
+          "police_power": 118779
+        },
+        "Elsmere town": {
+          "population": 6234,
+          "gdp_thousands": 805244,
+          "crime_rate": 9.17,
+          "reward": 5227,
+          "difficulty": 1.0,
+          "underworld_power": 858,
+          "police_power": 28828
+        },
+        "New Castle city": {
+          "population": 5715,
+          "gdp_thousands": 738205,
+          "crime_rate": 9.17,
+          "reward": 5007,
+          "difficulty": 1.0,
+          "underworld_power": 786,
+          "police_power": 26428
+        },
+        "Townsend town": {
+          "population": 2941,
+          "gdp_thousands": 379888,
+          "crime_rate": 9.17,
+          "reward": 4675,
+          "difficulty": 1.0,
+          "underworld_power": 405,
+          "police_power": 13600
+        },
+        "Delaware City city": {
+          "population": 1933,
+          "gdp_thousands": 249685,
+          "crime_rate": 9.17,
+          "reward": 3792,
+          "difficulty": 1.0,
+          "underworld_power": 266,
+          "police_power": 8939
+        },
+        "Bellefonte town": {
+          "population": 1249,
+          "gdp_thousands": 161333,
+          "crime_rate": 9.17,
+          "reward": 3351,
+          "difficulty": 1.0,
+          "underworld_power": 172,
+          "police_power": 5776
+        },
+        "Newport town": {
+          "population": 909,
+          "gdp_thousands": 117415,
+          "crime_rate": 9.17,
+          "reward": 3130,
+          "difficulty": 1.0,
+          "underworld_power": 125,
+          "police_power": 4203
+        },
+        "Odessa town": {
+          "population": 366,
+          "gdp_thousands": 47276,
+          "crime_rate": 9.17,
+          "reward": 1916,
+          "difficulty": 1.0,
+          "underworld_power": 50,
+          "police_power": 1692
+        },
+        "New Castle (unincorporated)": {
+          "population": 439378,
+          "gdp_thousands": 56754354,
+          "crime_rate": 9.17,
+          "reward": 6000,
+          "difficulty": 1.0,
+          "underworld_power": 60451,
+          "police_power": 2031806
+        }
+      }
+    },
+    "Sussex County": {
+      "fips": "10005",
+      "gdp_thousands": 23355694,
+      "gdp_estimated": false,
+      "population": 271134,
+      "homicide_rate": 3.0981468125,
+      "difficulty": 0.25,
+      "cities": {
+        "Seaford city": {
+          "population": 8952,
+          "gdp_thousands": 771132,
+          "crime_rate": 3.1,
+          "reward": 5117,
+          "difficulty": 0.25,
+          "underworld_power": 416,
+          "police_power": 27607
+        },
+        "Georgetown town": {
+          "population": 8098,
+          "gdp_thousands": 697568,
+          "crime_rate": 3.1,
+          "reward": 4896,
+          "difficulty": 0.25,
+          "underworld_power": 376,
+          "police_power": 24973
+        },
+        "Millsboro town": {
+          "population": 7864,
+          "gdp_thousands": 677411,
+          "crime_rate": 3.1,
+          "reward": 4786,
+          "difficulty": 0.25,
+          "underworld_power": 365,
+          "police_power": 24251
+        },
+        "Laurel town": {
+          "population": 4395,
+          "gdp_thousands": 378588,
+          "crime_rate": 3.1,
+          "reward": 4565,
+          "difficulty": 0.25,
+          "underworld_power": 204,
+          "police_power": 13553
+        },
+        "Milton town": {
+          "population": 3773,
+          "gdp_thousands": 325009,
+          "crime_rate": 3.1,
+          "reward": 4455,
+          "difficulty": 0.25,
+          "underworld_power": 175,
+          "police_power": 11635
+        },
+        "Lewes city": {
+          "population": 3702,
+          "gdp_thousands": 318893,
+          "crime_rate": 3.1,
+          "reward": 4344,
+          "difficulty": 0.25,
+          "underworld_power": 172,
+          "police_power": 11416
+        },
+        "Selbyville town": {
+          "population": 3285,
+          "gdp_thousands": 282972,
+          "crime_rate": 3.1,
+          "reward": 4234,
+          "difficulty": 0.25,
+          "underworld_power": 153,
+          "police_power": 10130
+        },
+        "Ocean View town": {
+          "population": 3023,
+          "gdp_thousands": 260403,
+          "crime_rate": 3.1,
+          "reward": 4124,
+          "difficulty": 0.25,
+          "underworld_power": 140,
+          "police_power": 9322
+        },
+        "Bridgeville town": {
+          "population": 2909,
+          "gdp_thousands": 250583,
+          "crime_rate": 3.1,
+          "reward": 3903,
+          "difficulty": 0.25,
+          "underworld_power": 135,
+          "police_power": 8971
+        },
+        "Delmar town": {
+          "population": 2278,
+          "gdp_thousands": 196228,
+          "crime_rate": 3.1,
+          "reward": 3572,
+          "difficulty": 0.25,
+          "underworld_power": 106,
+          "police_power": 7025
+        },
+        "Millville town": {
+          "population": 2108,
+          "gdp_thousands": 181584,
+          "crime_rate": 3.1,
+          "reward": 3461,
+          "difficulty": 0.25,
+          "underworld_power": 98,
+          "police_power": 6501
+        },
+        "Blades town": {
+          "population": 1330,
+          "gdp_thousands": 114567,
+          "crime_rate": 3.1,
+          "reward": 3020,
+          "difficulty": 0.25,
+          "underworld_power": 62,
+          "police_power": 4101
+        },
+        "Rehoboth Beach city": {
+          "population": 1257,
+          "gdp_thousands": 108278,
+          "crime_rate": 3.1,
+          "reward": 2799,
+          "difficulty": 0.25,
+          "underworld_power": 58,
+          "police_power": 3876
+        },
+        "Greenwood town": {
+          "population": 1123,
+          "gdp_thousands": 96736,
+          "crime_rate": 3.1,
+          "reward": 2689,
+          "difficulty": 0.25,
+          "underworld_power": 52,
+          "police_power": 3463
+        },
+        "Bethany Beach town": {
+          "population": 1083,
+          "gdp_thousands": 93290,
+          "crime_rate": 3.1,
+          "reward": 2578,
+          "difficulty": 0.25,
+          "underworld_power": 50,
+          "police_power": 3340
+        },
+        "Dagsboro town": {
+          "population": 988,
+          "gdp_thousands": 85107,
+          "crime_rate": 3.1,
+          "reward": 2468,
+          "difficulty": 0.25,
+          "underworld_power": 46,
+          "police_power": 3047
+        },
+        "Frankford town": {
+          "population": 905,
+          "gdp_thousands": 77957,
+          "crime_rate": 3.1,
+          "reward": 2247,
+          "difficulty": 0.25,
+          "underworld_power": 42,
+          "police_power": 2791
+        },
+        "Ellendale town": {
+          "population": 556,
+          "gdp_thousands": 47894,
+          "crime_rate": 3.1,
+          "reward": 2026,
+          "difficulty": 0.25,
+          "underworld_power": 26,
+          "police_power": 1715
+        },
+        "South Bethany town": {
+          "population": 520,
+          "gdp_thousands": 44793,
+          "crime_rate": 3.1,
+          "reward": 1806,
+          "difficulty": 0.25,
+          "underworld_power": 24,
+          "police_power": 1604
+        },
+        "Dewey Beach town": {
+          "population": 405,
+          "gdp_thousands": 34887,
+          "crime_rate": 3.1,
+          "reward": 1695,
+          "difficulty": 0.25,
+          "underworld_power": 19,
+          "police_power": 1249
+        },
+        "Fenwick Island town": {
+          "population": 389,
+          "gdp_thousands": 33508,
+          "crime_rate": 3.1,
+          "reward": 1585,
+          "difficulty": 0.25,
+          "underworld_power": 18,
+          "police_power": 1200
+        },
+        "Bethel town": {
+          "population": 267,
+          "gdp_thousands": 22999,
+          "crime_rate": 3.1,
+          "reward": 1364,
+          "difficulty": 0.25,
+          "underworld_power": 12,
+          "police_power": 823
+        },
+        "Slaughter Beach town": {
+          "population": 247,
+          "gdp_thousands": 21276,
+          "crime_rate": 3.1,
+          "reward": 1254,
+          "difficulty": 0.25,
+          "underworld_power": 11,
+          "police_power": 762
+        },
+        "Henlopen Acres town": {
+          "population": 158,
+          "gdp_thousands": 13610,
+          "crime_rate": 3.1,
+          "reward": 923,
+          "difficulty": 0.25,
+          "underworld_power": 7,
+          "police_power": 487
+        },
+        "Sussex (unincorporated)": {
+          "population": 211519,
+          "gdp_thousands": 18220421,
+          "crime_rate": 3.1,
+          "reward": 5890,
+          "difficulty": 0.25,
+          "underworld_power": 9830,
+          "police_power": 652291
         }
       }
     }

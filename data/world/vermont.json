@@ -1,24 +1,361 @@
 {
   "country": "United States",
   "state": "Vermont",
-  "state_fips": "00",
+  "state_fips": "50",
   "counties": {
-    "Vermont County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Addison County": {
+      "fips": "50001",
+      "gdp_thousands": 2305446,
+      "gdp_estimated": false,
+      "population": 38047,
+      "homicide_rate": null,
+      "difficulty": 0.731,
       "cities": {
-        "Vermont City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Vergennes city": {
+          "population": 2582,
+          "gdp_thousands": 156455,
+          "crime_rate": 3.0,
+          "reward": 150,
+          "difficulty": 0.731,
+          "underworld_power": 116,
+          "police_power": 5601
+        },
+        "Addison (unincorporated)": {
+          "population": 35465,
+          "gdp_thousands": 2148991,
+          "crime_rate": 3.0,
+          "reward": 3965,
+          "difficulty": 0.731,
+          "underworld_power": 1596,
+          "police_power": 76934
+        }
+      }
+    },
+    "Bennington County": {
+      "fips": "50003",
+      "gdp_thousands": 2382540,
+      "gdp_estimated": false,
+      "population": 37039,
+      "homicide_rate": null,
+      "difficulty": 0.769,
+      "cities": {
+        "Bennington": {
+          "population": 37039,
+          "gdp_thousands": 2382540,
+          "crime_rate": 3.0,
+          "reward": 4220,
+          "difficulty": 0.769,
+          "underworld_power": 1667,
+          "police_power": 85295
+        }
+      }
+    },
+    "Caledonia County": {
+      "fips": "50005",
+      "gdp_thousands": 1640810,
+      "gdp_estimated": false,
+      "population": 30535,
+      "homicide_rate": null,
+      "difficulty": 0.654,
+      "cities": {
+        "Caledonia": {
+          "population": 30535,
+          "gdp_thousands": 1640810,
+          "crime_rate": 3.0,
+          "reward": 3202,
+          "difficulty": 0.654,
+          "underworld_power": 1374,
+          "police_power": 58741
+        }
+      }
+    },
+    "Chittenden County": {
+      "fips": "50007",
+      "gdp_thousands": 16403520,
+      "gdp_estimated": false,
+      "population": 170851,
+      "homicide_rate": 1.5695821947,
+      "difficulty": 0.5,
+      "cities": {
+        "Burlington city": {
+          "population": 44432,
+          "gdp_thousands": 4265946,
+          "crime_rate": 1.57,
+          "reward": 5746,
+          "difficulty": 0.5,
+          "underworld_power": 1046,
+          "police_power": 152721
+        },
+        "South Burlington city": {
+          "population": 21713,
+          "gdp_thousands": 2084679,
+          "crime_rate": 1.57,
+          "reward": 3711,
+          "difficulty": 0.5,
+          "underworld_power": 511,
+          "police_power": 74632
+        },
+        "Essex Junction city": {
+          "population": 10787,
+          "gdp_thousands": 1035667,
+          "crime_rate": 1.57,
+          "reward": 2439,
+          "difficulty": 0.5,
+          "underworld_power": 254,
+          "police_power": 37077
+        },
+        "Winooski city": {
+          "population": 8370,
+          "gdp_thousands": 803609,
+          "crime_rate": 1.57,
+          "reward": 1930,
+          "difficulty": 0.5,
+          "underworld_power": 197,
+          "police_power": 28769
+        },
+        "Chittenden (unincorporated)": {
+          "population": 85549,
+          "gdp_thousands": 8213619,
+          "crime_rate": 1.57,
+          "reward": 6000,
+          "difficulty": 0.5,
+          "underworld_power": 2014,
+          "police_power": 294048
+        }
+      }
+    },
+    "Essex County": {
+      "fips": "50009",
+      "gdp_thousands": 182879,
+      "gdp_estimated": false,
+      "population": 6037,
+      "homicide_rate": null,
+      "difficulty": 0.5,
+      "cities": {
+        "Essex": {
+          "population": 6037,
+          "gdp_thousands": 182879,
+          "crime_rate": 3.0,
+          "reward": 404,
+          "difficulty": 0.5,
+          "underworld_power": 272,
+          "police_power": 6547
+        }
+      }
+    },
+    "Franklin County": {
+      "fips": "50011",
+      "gdp_thousands": 2856214,
+      "gdp_estimated": false,
+      "population": 51066,
+      "homicide_rate": null,
+      "difficulty": 0.808,
+      "cities": {
+        "St. Albans city": {
+          "population": 7031,
+          "gdp_thousands": 393256,
+          "crime_rate": 3.0,
+          "reward": 1167,
+          "difficulty": 0.808,
+          "underworld_power": 316,
+          "police_power": 14079
+        },
+        "Franklin (unincorporated)": {
+          "population": 44035,
+          "gdp_thousands": 2462958,
+          "crime_rate": 3.0,
+          "reward": 4474,
+          "difficulty": 0.808,
+          "underworld_power": 1982,
+          "police_power": 88174
+        }
+      }
+    },
+    "Grand Isle County": {
+      "fips": "50013",
+      "gdp_thousands": 264956,
+      "gdp_estimated": false,
+      "population": 7528,
+      "homicide_rate": null,
+      "difficulty": 0.538,
+      "cities": {
+        "Grand Isle": {
+          "population": 7528,
+          "gdp_thousands": 264956,
+          "crime_rate": 3.0,
+          "reward": 913,
+          "difficulty": 0.538,
+          "underworld_power": 339,
+          "police_power": 9485
+        }
+      }
+    },
+    "Lamoille County": {
+      "fips": "50015",
+      "gdp_thousands": 1653776,
+      "gdp_estimated": false,
+      "population": 26248,
+      "homicide_rate": null,
+      "difficulty": 0.692,
+      "cities": {
+        "Lamoille": {
+          "population": 26248,
+          "gdp_thousands": 1653776,
+          "crime_rate": 3.0,
+          "reward": 3457,
+          "difficulty": 0.692,
+          "underworld_power": 1181,
+          "police_power": 59205
+        }
+      }
+    },
+    "Orange County": {
+      "fips": "50017",
+      "gdp_thousands": 1188034,
+      "gdp_estimated": false,
+      "population": 30050,
+      "homicide_rate": null,
+      "difficulty": 0.577,
+      "cities": {
+        "Orange": {
+          "population": 30050,
+          "gdp_thousands": 1188034,
+          "crime_rate": 3.0,
+          "reward": 2693,
+          "difficulty": 0.577,
+          "underworld_power": 1352,
+          "police_power": 42532
+        }
+      }
+    },
+    "Orleans County": {
+      "fips": "50019",
+      "gdp_thousands": 1562643,
+      "gdp_estimated": false,
+      "population": 27726,
+      "homicide_rate": null,
+      "difficulty": 0.615,
+      "cities": {
+        "Newport city": {
+          "population": 4333,
+          "gdp_thousands": 244208,
+          "crime_rate": 3.0,
+          "reward": 659,
+          "difficulty": 0.615,
+          "underworld_power": 195,
+          "police_power": 8743
+        },
+        "Orleans (unincorporated)": {
+          "population": 23393,
+          "gdp_thousands": 1318435,
+          "crime_rate": 3.0,
+          "reward": 2948,
+          "difficulty": 0.615,
+          "underworld_power": 1053,
+          "police_power": 47200
+        }
+      }
+    },
+    "Rutland County": {
+      "fips": "50021",
+      "gdp_thousands": 3787056,
+      "gdp_estimated": false,
+      "population": 60198,
+      "homicide_rate": null,
+      "difficulty": 0.923,
+      "cities": {
+        "Rutland city": {
+          "population": 15565,
+          "gdp_thousands": 979194,
+          "crime_rate": 3.0,
+          "reward": 2185,
+          "difficulty": 0.923,
+          "underworld_power": 700,
+          "police_power": 35055
+        },
+        "Rutland (unincorporated)": {
+          "population": 44633,
+          "gdp_thousands": 2807862,
+          "crime_rate": 3.0,
+          "reward": 4728,
+          "difficulty": 0.923,
+          "underworld_power": 2008,
+          "police_power": 100521
+        }
+      }
+    },
+    "Washington County": {
+      "fips": "50023",
+      "gdp_thousands": 5191179,
+      "gdp_estimated": false,
+      "population": 59844,
+      "homicide_rate": 2.9250314441,
+      "difficulty": 0.962,
+      "cities": {
+        "Barre city": {
+          "population": 8304,
+          "gdp_thousands": 720332,
+          "crime_rate": 2.93,
+          "reward": 1676,
+          "difficulty": 0.962,
+          "underworld_power": 364,
+          "police_power": 25788
+        },
+        "Montpelier city": {
+          "population": 7915,
+          "gdp_thousands": 686588,
+          "crime_rate": 2.93,
+          "reward": 1422,
+          "difficulty": 0.962,
+          "underworld_power": 347,
+          "police_power": 24580
+        },
+        "Washington (unincorporated)": {
+          "population": 43625,
+          "gdp_thousands": 3784259,
+          "crime_rate": 2.93,
+          "reward": 5491,
+          "difficulty": 0.962,
+          "underworld_power": 1914,
+          "police_power": 135476
+        }
+      }
+    },
+    "Windham County": {
+      "fips": "50025",
+      "gdp_thousands": 3097732,
+      "gdp_estimated": false,
+      "population": 45627,
+      "homicide_rate": null,
+      "difficulty": 0.846,
+      "cities": {
+        "Windham": {
+          "population": 45627,
+          "gdp_thousands": 3097732,
+          "crime_rate": 3.0,
+          "reward": 4983,
+          "difficulty": 0.846,
+          "underworld_power": 2053,
+          "police_power": 110899
+        }
+      }
+    },
+    "Windsor County": {
+      "fips": "50027",
+      "gdp_thousands": 3759287,
+      "gdp_estimated": false,
+      "population": 57697,
+      "homicide_rate": null,
+      "difficulty": 0.885,
+      "cities": {
+        "Windsor": {
+          "population": 57697,
+          "gdp_thousands": 3759287,
+          "crime_rate": 3.0,
+          "reward": 5237,
+          "difficulty": 0.885,
+          "underworld_power": 2596,
+          "police_power": 134582
         }
       }
     }

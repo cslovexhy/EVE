@@ -1,24 +1,312 @@
 {
   "country": "United States",
   "state": "New Hampshire",
-  "state_fips": "00",
+  "state_fips": "33",
   "counties": {
-    "New Hampshire County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Belknap County": {
+      "fips": "33001",
+      "gdp_thousands": 4295767,
+      "gdp_estimated": false,
+      "population": 65257,
+      "homicide_rate": null,
+      "difficulty": 0.467,
       "cities": {
-        "New Hampshire City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Laconia city": {
+          "population": 17310,
+          "gdp_thousands": 1139490,
+          "crime_rate": 3.0,
+          "reward": 1214,
+          "difficulty": 0.467,
+          "underworld_power": 779,
+          "police_power": 40794
+        },
+        "Belknap (unincorporated)": {
+          "population": 47947,
+          "gdp_thousands": 3156277,
+          "crime_rate": 3.0,
+          "reward": 3341,
+          "difficulty": 0.467,
+          "underworld_power": 2158,
+          "police_power": 112995
+        }
+      }
+    },
+    "Carroll County": {
+      "fips": "33003",
+      "gdp_thousands": 3405270,
+      "gdp_estimated": false,
+      "population": 52580,
+      "homicide_rate": null,
+      "difficulty": 0.411,
+      "cities": {
+        "Carroll": {
+          "population": 52580,
+          "gdp_thousands": 3405270,
+          "crime_rate": 3.0,
+          "reward": 3873,
+          "difficulty": 0.411,
+          "underworld_power": 2366,
+          "police_power": 121909
+        }
+      }
+    },
+    "Cheshire County": {
+      "fips": "33005",
+      "gdp_thousands": 5175191,
+      "gdp_estimated": false,
+      "population": 78078,
+      "homicide_rate": 1.873438021,
+      "difficulty": 0.722,
+      "cities": {
+        "Keene city": {
+          "population": 23036,
+          "gdp_thousands": 1526879,
+          "crime_rate": 1.87,
+          "reward": 1745,
+          "difficulty": 0.722,
+          "underworld_power": 647,
+          "police_power": 54662
+        },
+        "Cheshire (unincorporated)": {
+          "population": 55042,
+          "gdp_thousands": 3648312,
+          "crime_rate": 1.87,
+          "reward": 4139,
+          "difficulty": 0.722,
+          "underworld_power": 1547,
+          "police_power": 130610
+        }
+      }
+    },
+    "Coos County": {
+      "fips": "33007",
+      "gdp_thousands": 1816037,
+      "gdp_estimated": false,
+      "population": 31094,
+      "homicide_rate": null,
+      "difficulty": 0.3,
+      "cities": {
+        "Berlin city": {
+          "population": 9248,
+          "gdp_thousands": 540127,
+          "crime_rate": 3.0,
+          "reward": 150,
+          "difficulty": 0.3,
+          "underworld_power": 416,
+          "police_power": 19337
+        },
+        "Coos (unincorporated)": {
+          "population": 21846,
+          "gdp_thousands": 1275910,
+          "crime_rate": 3.0,
+          "reward": 1480,
+          "difficulty": 0.3,
+          "underworld_power": 983,
+          "police_power": 45678
+        }
+      }
+    },
+    "Grafton County": {
+      "fips": "33009",
+      "gdp_thousands": 9869257,
+      "gdp_estimated": false,
+      "population": 93045,
+      "homicide_rate": 1.586903602,
+      "difficulty": 0.533,
+      "cities": {
+        "Lebanon city": {
+          "population": 15389,
+          "gdp_thousands": 1632306,
+          "crime_rate": 1.59,
+          "reward": 2277,
+          "difficulty": 0.533,
+          "underworld_power": 366,
+          "police_power": 58437
+        },
+        "Grafton (unincorporated)": {
+          "population": 77656,
+          "gdp_thousands": 8236951,
+          "crime_rate": 1.59,
+          "reward": 4936,
+          "difficulty": 0.533,
+          "underworld_power": 1848,
+          "police_power": 294883
+        }
+      }
+    },
+    "Hillsborough County": {
+      "fips": "33011",
+      "gdp_thousands": 38132657,
+      "gdp_estimated": false,
+      "population": 430462,
+      "homicide_rate": 1.7246005997,
+      "difficulty": 0.9,
+      "cities": {
+        "Manchester city": {
+          "population": 116386,
+          "gdp_thousands": 10310102,
+          "crime_rate": 1.72,
+          "reward": 5468,
+          "difficulty": 0.9,
+          "underworld_power": 3011,
+          "police_power": 369102
+        },
+        "Nashua city": {
+          "population": 91851,
+          "gdp_thousands": 8136659,
+          "crime_rate": 1.72,
+          "reward": 4670,
+          "difficulty": 0.9,
+          "underworld_power": 2376,
+          "police_power": 291292
+        },
+        "Hillsborough (unincorporated)": {
+          "population": 222225,
+          "gdp_thousands": 19685896,
+          "crime_rate": 1.72,
+          "reward": 5734,
+          "difficulty": 0.9,
+          "underworld_power": 5749,
+          "police_power": 704755
+        }
+      }
+    },
+    "Merrimack County": {
+      "fips": "33013",
+      "gdp_thousands": 13792335,
+      "gdp_estimated": false,
+      "population": 157869,
+      "homicide_rate": 1.7042630246,
+      "difficulty": 0.689,
+      "cities": {
+        "Concord city": {
+          "population": 44674,
+          "gdp_thousands": 3902975,
+          "crime_rate": 1.7,
+          "reward": 4405,
+          "difficulty": 0.689,
+          "underworld_power": 1142,
+          "police_power": 139727
+        },
+        "Franklin city": {
+          "population": 8823,
+          "gdp_thousands": 770827,
+          "crime_rate": 1.7,
+          "reward": 948,
+          "difficulty": 0.689,
+          "underworld_power": 226,
+          "police_power": 27596
+        },
+        "Merrimack (unincorporated)": {
+          "population": 104372,
+          "gdp_thousands": 9118533,
+          "crime_rate": 1.7,
+          "reward": 5202,
+          "difficulty": 0.689,
+          "underworld_power": 2668,
+          "police_power": 326443
+        }
+      }
+    },
+    "Rockingham County": {
+      "fips": "33015",
+      "gdp_thousands": 32665586,
+      "gdp_estimated": false,
+      "population": 322433,
+      "homicide_rate": 0.7412245957,
+      "difficulty": 0.444,
+      "cities": {
+        "Portsmouth city": {
+          "population": 22938,
+          "gdp_thousands": 2323841,
+          "crime_rate": 0.74,
+          "reward": 3075,
+          "difficulty": 0.444,
+          "underworld_power": 255,
+          "police_power": 83194
+        },
+        "Rockingham (unincorporated)": {
+          "population": 299495,
+          "gdp_thousands": 30341745,
+          "crime_rate": 0.74,
+          "reward": 6000,
+          "difficulty": 0.444,
+          "underworld_power": 3330,
+          "police_power": 1086234
+        }
+      }
+    },
+    "Strafford County": {
+      "fips": "33017",
+      "gdp_thousands": 7984267,
+      "gdp_estimated": false,
+      "population": 134202,
+      "homicide_rate": 1.5426351293,
+      "difficulty": 0.378,
+      "cities": {
+        "Dover city": {
+          "population": 33909,
+          "gdp_thousands": 2017395,
+          "crime_rate": 1.54,
+          "reward": 2809,
+          "difficulty": 0.378,
+          "underworld_power": 785,
+          "police_power": 72223
+        },
+        "Rochester city": {
+          "population": 33598,
+          "gdp_thousands": 1998892,
+          "crime_rate": 1.54,
+          "reward": 2543,
+          "difficulty": 0.378,
+          "underworld_power": 777,
+          "police_power": 71560
+        },
+        "Somersworth city": {
+          "population": 12218,
+          "gdp_thousands": 726902,
+          "crime_rate": 1.54,
+          "reward": 682,
+          "difficulty": 0.378,
+          "underworld_power": 283,
+          "police_power": 26023
+        },
+        "Strafford (unincorporated)": {
+          "population": 54477,
+          "gdp_thousands": 3241078,
+          "crime_rate": 1.54,
+          "reward": 3607,
+          "difficulty": 0.378,
+          "underworld_power": 1261,
+          "police_power": 116031
+        }
+      }
+    },
+    "Sullivan County": {
+      "fips": "33019",
+      "gdp_thousands": 2200275,
+      "gdp_estimated": false,
+      "population": 44012,
+      "homicide_rate": null,
+      "difficulty": 0.356,
+      "cities": {
+        "Claremont city": {
+          "population": 13105,
+          "gdp_thousands": 655153,
+          "crime_rate": 3.0,
+          "reward": 416,
+          "difficulty": 0.356,
+          "underworld_power": 590,
+          "police_power": 23454
+        },
+        "Sullivan (unincorporated)": {
+          "population": 30907,
+          "gdp_thousands": 1545122,
+          "crime_rate": 3.0,
+          "reward": 2011,
+          "difficulty": 0.356,
+          "underworld_power": 1391,
+          "police_power": 55315
         }
       }
     }

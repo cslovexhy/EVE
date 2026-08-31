@@ -1,24 +1,516 @@
 {
   "country": "United States",
   "state": "Maine",
-  "state_fips": "00",
+  "state_fips": "23",
   "counties": {
-    "Maine County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Androscoggin County": {
+      "fips": "23001",
+      "gdp_thousands": 7049945,
+      "gdp_estimated": false,
+      "population": 115272,
+      "homicide_rate": 1.5836566632,
+      "difficulty": 0.742,
       "cities": {
-        "Maine City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Lewiston city": {
+          "population": 38772,
+          "gdp_thousands": 2371265,
+          "crime_rate": 1.58,
+          "reward": 4307,
+          "difficulty": 0.742,
+          "underworld_power": 921,
+          "police_power": 84891
+        },
+        "Auburn city": {
+          "population": 25200,
+          "gdp_thousands": 1541212,
+          "crime_rate": 1.58,
+          "reward": 3229,
+          "difficulty": 0.742,
+          "underworld_power": 599,
+          "police_power": 55175
+        },
+        "Androscoggin (unincorporated)": {
+          "population": 51300,
+          "gdp_thousands": 3137468,
+          "crime_rate": 1.58,
+          "reward": 5230,
+          "difficulty": 0.742,
+          "underworld_power": 1219,
+          "police_power": 112321
+        }
+      }
+    },
+    "Aroostook County": {
+      "fips": "23003",
+      "gdp_thousands": 3669941,
+      "gdp_estimated": false,
+      "population": 66776,
+      "homicide_rate": null,
+      "difficulty": 0.55,
+      "cities": {
+        "Presque Isle city": {
+          "population": 8728,
+          "gdp_thousands": 479681,
+          "crime_rate": 3.0,
+          "reward": 1382,
+          "difficulty": 0.55,
+          "underworld_power": 393,
+          "police_power": 17173
+        },
+        "Caribou city": {
+          "population": 7328,
+          "gdp_thousands": 402739,
+          "crime_rate": 3.0,
+          "reward": 766,
+          "difficulty": 0.55,
+          "underworld_power": 330,
+          "police_power": 14418
+        },
+        "Aroostook (unincorporated)": {
+          "population": 50720,
+          "gdp_thousands": 2787521,
+          "crime_rate": 3.0,
+          "reward": 4768,
+          "difficulty": 0.55,
+          "underworld_power": 2282,
+          "police_power": 99793
+        }
+      }
+    },
+    "Cumberland County": {
+      "fips": "23005",
+      "gdp_thousands": 34616097,
+      "gdp_estimated": false,
+      "population": 313809,
+      "homicide_rate": 0.967857454,
+      "difficulty": 0.5,
+      "cities": {
+        "Portland city": {
+          "population": 69568,
+          "gdp_thousands": 7674007,
+          "crime_rate": 0.97,
+          "reward": 5692,
+          "difficulty": 0.5,
+          "underworld_power": 1010,
+          "police_power": 274729
+        },
+        "South Portland city": {
+          "population": 26994,
+          "gdp_thousands": 2977693,
+          "crime_rate": 0.97,
+          "reward": 4922,
+          "difficulty": 0.5,
+          "underworld_power": 392,
+          "police_power": 106601
+        },
+        "Westbrook city": {
+          "population": 21386,
+          "gdp_thousands": 2359077,
+          "crime_rate": 0.97,
+          "reward": 3999,
+          "difficulty": 0.5,
+          "underworld_power": 310,
+          "police_power": 84455
+        },
+        "Cumberland (unincorporated)": {
+          "population": 195861,
+          "gdp_thousands": 21605320,
+          "crime_rate": 0.97,
+          "reward": 6000,
+          "difficulty": 0.5,
+          "underworld_power": 2843,
+          "police_power": 773470
+        }
+      }
+    },
+    "Franklin County": {
+      "fips": "23007",
+      "gdp_thousands": 1509130,
+      "gdp_estimated": false,
+      "population": 30902,
+      "homicide_rate": null,
+      "difficulty": 0.317,
+      "cities": {
+        "Franklin": {
+          "population": 30902,
+          "gdp_thousands": 1509130,
+          "crime_rate": 3.0,
+          "reward": 3075,
+          "difficulty": 0.317,
+          "underworld_power": 1391,
+          "police_power": 54027
+        }
+      }
+    },
+    "Hancock County": {
+      "fips": "23009",
+      "gdp_thousands": 3681186,
+      "gdp_estimated": false,
+      "population": 56946,
+      "homicide_rate": null,
+      "difficulty": 0.583,
+      "cities": {
+        "Ellsworth city": {
+          "population": 8822,
+          "gdp_thousands": 570284,
+          "crime_rate": 3.0,
+          "reward": 1536,
+          "difficulty": 0.583,
+          "underworld_power": 397,
+          "police_power": 20416
+        },
+        "Hancock (unincorporated)": {
+          "population": 48124,
+          "gdp_thousands": 3110902,
+          "crime_rate": 3.0,
+          "reward": 5076,
+          "difficulty": 0.583,
+          "underworld_power": 2166,
+          "police_power": 111370
+        }
+      }
+    },
+    "Kennebec County": {
+      "fips": "23011",
+      "gdp_thousands": 8569210,
+      "gdp_estimated": false,
+      "population": 128461,
+      "homicide_rate": 1.9901755569,
+      "difficulty": 0.9,
+      "cities": {
+        "Augusta city": {
+          "population": 19168,
+          "gdp_thousands": 1278634,
+          "crime_rate": 1.99,
+          "reward": 2459,
+          "difficulty": 0.9,
+          "underworld_power": 572,
+          "police_power": 45775
+        },
+        "Waterville city": {
+          "population": 17336,
+          "gdp_thousands": 1156427,
+          "crime_rate": 1.99,
+          "reward": 2151,
+          "difficulty": 0.9,
+          "underworld_power": 518,
+          "police_power": 41400
+        },
+        "Gardiner city": {
+          "population": 6160,
+          "gdp_thousands": 410913,
+          "crime_rate": 1.99,
+          "reward": 920,
+          "difficulty": 0.9,
+          "underworld_power": 184,
+          "police_power": 14711
+        },
+        "Hallowell city": {
+          "population": 2619,
+          "gdp_thousands": 174704,
+          "crime_rate": 1.99,
+          "reward": 458,
+          "difficulty": 0.9,
+          "underworld_power": 78,
+          "police_power": 6254
+        },
+        "Kennebec (unincorporated)": {
+          "population": 83178,
+          "gdp_thousands": 5548532,
+          "crime_rate": 1.99,
+          "reward": 5384,
+          "difficulty": 0.9,
+          "underworld_power": 2483,
+          "police_power": 198637
+        }
+      }
+    },
+    "Knox County": {
+      "fips": "23013",
+      "gdp_thousands": 2632648,
+      "gdp_estimated": false,
+      "population": 40981,
+      "homicide_rate": null,
+      "difficulty": 0.483,
+      "cities": {
+        "Rockland city": {
+          "population": 7060,
+          "gdp_thousands": 453539,
+          "crime_rate": 3.0,
+          "reward": 1074,
+          "difficulty": 0.483,
+          "underworld_power": 318,
+          "police_power": 16237
+        },
+        "Knox (unincorporated)": {
+          "population": 33921,
+          "gdp_thousands": 2179109,
+          "crime_rate": 3.0,
+          "reward": 3845,
+          "difficulty": 0.483,
+          "underworld_power": 1526,
+          "police_power": 78012
+        }
+      }
+    },
+    "Lincoln County": {
+      "fips": "23015",
+      "gdp_thousands": 1810924,
+      "gdp_estimated": false,
+      "population": 36491,
+      "homicide_rate": null,
+      "difficulty": 0.35,
+      "cities": {
+        "Lincoln": {
+          "population": 36491,
+          "gdp_thousands": 1810924,
+          "crime_rate": 3.0,
+          "reward": 3537,
+          "difficulty": 0.35,
+          "underworld_power": 1642,
+          "police_power": 64831
+        }
+      }
+    },
+    "Oxford County": {
+      "fips": "23017",
+      "gdp_thousands": 2576674,
+      "gdp_estimated": false,
+      "population": 60039,
+      "homicide_rate": null,
+      "difficulty": 0.45,
+      "cities": {
+        "Oxford": {
+          "population": 60039,
+          "gdp_thousands": 2576674,
+          "crime_rate": 3.0,
+          "reward": 4614,
+          "difficulty": 0.45,
+          "underworld_power": 2702,
+          "police_power": 92245
+        }
+      }
+    },
+    "Penobscot County": {
+      "fips": "23019",
+      "gdp_thousands": 9643476,
+      "gdp_estimated": false,
+      "population": 156840,
+      "homicide_rate": 1.4096167816,
+      "difficulty": 0.683,
+      "cities": {
+        "Bangor city": {
+          "population": 32446,
+          "gdp_thousands": 1994977,
+          "crime_rate": 1.41,
+          "reward": 3691,
+          "difficulty": 0.683,
+          "underworld_power": 686,
+          "police_power": 71420
+        },
+        "Brewer city": {
+          "population": 9629,
+          "gdp_thousands": 592049,
+          "crime_rate": 1.41,
+          "reward": 1689,
+          "difficulty": 0.683,
+          "underworld_power": 204,
+          "police_power": 21195
+        },
+        "Old Town city": {
+          "population": 7511,
+          "gdp_thousands": 461821,
+          "crime_rate": 1.41,
+          "reward": 1228,
+          "difficulty": 0.683,
+          "underworld_power": 159,
+          "police_power": 16533
+        },
+        "Penobscot (unincorporated)": {
+          "population": 107254,
+          "gdp_thousands": 6594629,
+          "crime_rate": 1.41,
+          "reward": 5538,
+          "difficulty": 0.683,
+          "underworld_power": 2268,
+          "police_power": 236088
+        }
+      }
+    },
+    "Piscataquis County": {
+      "fips": "23021",
+      "gdp_thousands": 765706,
+      "gdp_estimated": false,
+      "population": 17432,
+      "homicide_rate": null,
+      "difficulty": 0.25,
+      "cities": {
+        "Piscataquis": {
+          "population": 17432,
+          "gdp_thousands": 765706,
+          "crime_rate": 3.0,
+          "reward": 1997,
+          "difficulty": 0.25,
+          "underworld_power": 784,
+          "police_power": 27412
+        }
+      }
+    },
+    "Sagadahoc County": {
+      "fips": "23023",
+      "gdp_thousands": 3087937,
+      "gdp_estimated": false,
+      "population": 37582,
+      "homicide_rate": null,
+      "difficulty": 0.517,
+      "cities": {
+        "Bath city": {
+          "population": 8817,
+          "gdp_thousands": 724451,
+          "crime_rate": 3.0,
+          "reward": 1843,
+          "difficulty": 0.517,
+          "underworld_power": 397,
+          "police_power": 25935
+        },
+        "Sagadahoc (unincorporated)": {
+          "population": 28765,
+          "gdp_thousands": 2363486,
+          "crime_rate": 3.0,
+          "reward": 4153,
+          "difficulty": 0.517,
+          "underworld_power": 1294,
+          "police_power": 84613
+        }
+      }
+    },
+    "Somerset County": {
+      "fips": "23025",
+      "gdp_thousands": 2438935,
+      "gdp_estimated": false,
+      "population": 51338,
+      "homicide_rate": null,
+      "difficulty": 0.417,
+      "cities": {
+        "Somerset": {
+          "population": 51338,
+          "gdp_thousands": 2438935,
+          "crime_rate": 3.0,
+          "reward": 4461,
+          "difficulty": 0.417,
+          "underworld_power": 2310,
+          "police_power": 87314
+        }
+      }
+    },
+    "Waldo County": {
+      "fips": "23027",
+      "gdp_thousands": 1998173,
+      "gdp_estimated": false,
+      "population": 40617,
+      "homicide_rate": null,
+      "difficulty": 0.383,
+      "cities": {
+        "Belfast city": {
+          "population": 6993,
+          "gdp_thousands": 344024,
+          "crime_rate": 3.0,
+          "reward": 612,
+          "difficulty": 0.383,
+          "underworld_power": 315,
+          "police_power": 12316
+        },
+        "Waldo (unincorporated)": {
+          "population": 33624,
+          "gdp_thousands": 1654149,
+          "crime_rate": 3.0,
+          "reward": 3383,
+          "difficulty": 0.383,
+          "underworld_power": 1513,
+          "police_power": 59219
+        }
+      }
+    },
+    "Washington County": {
+      "fips": "23029",
+      "gdp_thousands": 1474205,
+      "gdp_estimated": false,
+      "population": 31383,
+      "homicide_rate": null,
+      "difficulty": 0.283,
+      "cities": {
+        "Calais city": {
+          "population": 3105,
+          "gdp_thousands": 145856,
+          "crime_rate": 3.0,
+          "reward": 304,
+          "difficulty": 0.283,
+          "underworld_power": 140,
+          "police_power": 5222
+        },
+        "Eastport city": {
+          "population": 1292,
+          "gdp_thousands": 60691,
+          "crime_rate": 3.0,
+          "reward": 150,
+          "difficulty": 0.283,
+          "underworld_power": 58,
+          "police_power": 2173
+        },
+        "Washington (unincorporated)": {
+          "population": 26986,
+          "gdp_thousands": 1267658,
+          "crime_rate": 3.0,
+          "reward": 2305,
+          "difficulty": 0.283,
+          "underworld_power": 1214,
+          "police_power": 45382
+        }
+      }
+    },
+    "York County": {
+      "fips": "23031",
+      "gdp_thousands": 13649896,
+      "gdp_estimated": false,
+      "population": 220143,
+      "homicide_rate": 0.9687039433,
+      "difficulty": 0.592,
+      "cities": {
+        "Sanford city": {
+          "population": 22497,
+          "gdp_thousands": 1394919,
+          "crime_rate": 0.97,
+          "reward": 2921,
+          "difficulty": 0.592,
+          "underworld_power": 327,
+          "police_power": 49938
+        },
+        "Biddeford city": {
+          "population": 22370,
+          "gdp_thousands": 1387044,
+          "crime_rate": 0.97,
+          "reward": 2767,
+          "difficulty": 0.592,
+          "underworld_power": 325,
+          "police_power": 49656
+        },
+        "Saco city": {
+          "population": 21064,
+          "gdp_thousands": 1306066,
+          "crime_rate": 0.97,
+          "reward": 2613,
+          "difficulty": 0.592,
+          "underworld_power": 306,
+          "police_power": 46757
+        },
+        "York (unincorporated)": {
+          "population": 154212,
+          "gdp_thousands": 9561867,
+          "crime_rate": 0.97,
+          "reward": 5846,
+          "difficulty": 0.592,
+          "underworld_power": 2241,
+          "police_power": 342315
         }
       }
     }

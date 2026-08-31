@@ -1,24 +1,1773 @@
 {
   "country": "United States",
   "state": "Pennsylvania",
-  "state_fips": "00",
+  "state_fips": "42",
   "counties": {
-    "Pennsylvania County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Adams County": {
+      "fips": "42001",
+      "gdp_thousands": 4729052,
+      "gdp_estimated": false,
+      "population": 107914,
+      "homicide_rate": 2.362751911,
+      "difficulty": 0.435,
       "cities": {
-        "Pennsylvania City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Adams": {
+          "population": 107914,
+          "gdp_thousands": 4729052,
+          "crime_rate": 2.36,
+          "reward": 4308,
+          "difficulty": 0.435,
+          "underworld_power": 3825,
+          "police_power": 169300
+        }
+      }
+    },
+    "Allegheny County": {
+      "fips": "42003",
+      "gdp_thousands": 132891899,
+      "gdp_estimated": false,
+      "population": 1231814,
+      "homicide_rate": 8.5018750255,
+      "difficulty": 0.948,
+      "cities": {
+        "Pittsburgh city": {
+          "population": 307668,
+          "gdp_thousands": 33192174,
+          "crime_rate": 8.5,
+          "reward": 5662,
+          "difficulty": 0.948,
+          "underworld_power": 39236,
+          "police_power": 1188280
+        },
+        "McKeesport city": {
+          "population": 17119,
+          "gdp_thousands": 1846850,
+          "crime_rate": 8.5,
+          "reward": 2761,
+          "difficulty": 0.948,
+          "underworld_power": 2183,
+          "police_power": 66117
+        },
+        "Clairton city": {
+          "population": 5945,
+          "gdp_thousands": 641364,
+          "crime_rate": 8.5,
+          "reward": 1552,
+          "difficulty": 0.948,
+          "underworld_power": 758,
+          "police_power": 22961
+        },
+        "Duquesne city": {
+          "population": 5074,
+          "gdp_thousands": 547398,
+          "crime_rate": 8.5,
+          "reward": 1359,
+          "difficulty": 0.948,
+          "underworld_power": 647,
+          "police_power": 19597
+        },
+        "Allegheny (unincorporated)": {
+          "population": 896008,
+          "gdp_thousands": 96664113,
+          "crime_rate": 8.5,
+          "reward": 5903,
+          "difficulty": 0.948,
+          "underworld_power": 114266,
+          "police_power": 3460575
+        }
+      }
+    },
+    "Armstrong County": {
+      "fips": "42005",
+      "gdp_thousands": 2797574,
+      "gdp_estimated": false,
+      "population": 63679,
+      "homicide_rate": 2.8357469903,
+      "difficulty": 0.389,
+      "cities": {
+        "Parker city": {
+          "population": 678,
+          "gdp_thousands": 29786,
+          "crime_rate": 2.84,
+          "reward": 150,
+          "difficulty": 0.389,
+          "underworld_power": 29,
+          "police_power": 1066
+        },
+        "Armstrong (unincorporated)": {
+          "population": 63001,
+          "gdp_thousands": 2767788,
+          "crime_rate": 2.84,
+          "reward": 3583,
+          "difficulty": 0.389,
+          "underworld_power": 2680,
+          "police_power": 99087
+        }
+      }
+    },
+    "Beaver County": {
+      "fips": "42007",
+      "gdp_thousands": 8032503,
+      "gdp_estimated": false,
+      "population": 165540,
+      "homicide_rate": 4.0506416389,
+      "difficulty": 0.681,
+      "cities": {
+        "Aliquippa city": {
+          "population": 9003,
+          "gdp_thousands": 436852,
+          "crime_rate": 4.05,
+          "reward": 1069,
+          "difficulty": 0.681,
+          "underworld_power": 547,
+          "police_power": 15639
+        },
+        "Beaver Falls city": {
+          "population": 8757,
+          "gdp_thousands": 424916,
+          "crime_rate": 4.05,
+          "reward": 1020,
+          "difficulty": 0.681,
+          "underworld_power": 532,
+          "police_power": 15212
+        },
+        "Beaver (unincorporated)": {
+          "population": 147780,
+          "gdp_thousands": 7170735,
+          "crime_rate": 4.05,
+          "reward": 4840,
+          "difficulty": 0.681,
+          "underworld_power": 8979,
+          "police_power": 256712
+        }
+      }
+    },
+    "Bedford County": {
+      "fips": "42009",
+      "gdp_thousands": 2040603,
+      "gdp_estimated": false,
+      "population": 47643,
+      "homicide_rate": 2.9697119082,
+      "difficulty": 0.336,
+      "cities": {
+        "Bedford": {
+          "population": 47643,
+          "gdp_thousands": 2040603,
+          "crime_rate": 2.97,
+          "reward": 3099,
+          "difficulty": 0.336,
+          "underworld_power": 2122,
+          "police_power": 73054
+        }
+      }
+    },
+    "Berks County": {
+      "fips": "42011",
+      "gdp_thousands": 26580119,
+      "gdp_estimated": false,
+      "population": 439117,
+      "homicide_rate": 4.0481532937,
+      "difficulty": 0.769,
+      "cities": {
+        "Reading city": {
+          "population": 96000,
+          "gdp_thousands": 5810960,
+          "crime_rate": 4.05,
+          "reward": 4598,
+          "difficulty": 0.769,
+          "underworld_power": 5829,
+          "police_power": 208032
+        },
+        "Berks (unincorporated)": {
+          "population": 343117,
+          "gdp_thousands": 20769159,
+          "crime_rate": 4.05,
+          "reward": 5420,
+          "difficulty": 0.769,
+          "underworld_power": 20835,
+          "police_power": 743536
+        }
+      }
+    },
+    "Blair County": {
+      "fips": "42013",
+      "gdp_thousands": 8000149,
+      "gdp_estimated": false,
+      "population": 120269,
+      "homicide_rate": 1.8587468561,
+      "difficulty": 0.385,
+      "cities": {
+        "Altoona city": {
+          "population": 42719,
+          "gdp_thousands": 2841616,
+          "crime_rate": 1.86,
+          "reward": 3776,
+          "difficulty": 0.385,
+          "underworld_power": 1191,
+          "police_power": 101730
+        },
+        "Blair (unincorporated)": {
+          "population": 77550,
+          "gdp_thousands": 5158533,
+          "crime_rate": 1.86,
+          "reward": 4453,
+          "difficulty": 0.385,
+          "underworld_power": 2162,
+          "police_power": 184675
+        }
+      }
+    },
+    "Bradford County": {
+      "fips": "42015",
+      "gdp_thousands": 6798065,
+      "gdp_estimated": false,
+      "population": 59699,
+      "homicide_rate": 2.8290343798,
+      "difficulty": 0.492,
+      "cities": {
+        "Bradford": {
+          "population": 59699,
+          "gdp_thousands": 6798065,
+          "crime_rate": 2.83,
+          "reward": 4791,
+          "difficulty": 0.492,
+          "underworld_power": 2533,
+          "police_power": 243371
+        }
+      }
+    },
+    "Bucks County": {
+      "fips": "42017",
+      "gdp_thousands": 48826773,
+      "gdp_estimated": false,
+      "population": 650131,
+      "homicide_rate": 1.835628738,
+      "difficulty": 0.514,
+      "cities": {
+        "Bucks": {
+          "population": 650131,
+          "gdp_thousands": 48826773,
+          "crime_rate": 1.84,
+          "reward": 5807,
+          "difficulty": 0.514,
+          "underworld_power": 17901,
+          "police_power": 1747998
+        }
+      }
+    },
+    "Butler County": {
+      "fips": "42019",
+      "gdp_thousands": 14517627,
+      "gdp_estimated": false,
+      "population": 199341,
+      "homicide_rate": 0.9849066839,
+      "difficulty": 0.371,
+      "cities": {
+        "Butler city": {
+          "population": 13010,
+          "gdp_thousands": 947493,
+          "crime_rate": 0.98,
+          "reward": 2036,
+          "difficulty": 0.371,
+          "underworld_power": 192,
+          "police_power": 33920
+        },
+        "Butler (unincorporated)": {
+          "population": 186331,
+          "gdp_thousands": 13570134,
+          "crime_rate": 0.98,
+          "reward": 5178,
+          "difficulty": 0.371,
+          "underworld_power": 2753,
+          "police_power": 485811
+        }
+      }
+    },
+    "Cambria County": {
+      "fips": "42021",
+      "gdp_thousands": 6208141,
+      "gdp_estimated": false,
+      "population": 130108,
+      "homicide_rate": 4.7467091281,
+      "difficulty": 0.688,
+      "cities": {
+        "Johnstown city": {
+          "population": 17853,
+          "gdp_thousands": 851861,
+          "crime_rate": 4.75,
+          "reward": 1987,
+          "difficulty": 0.688,
+          "underworld_power": 1271,
+          "police_power": 30497
+        },
+        "Cambria (unincorporated)": {
+          "population": 112255,
+          "gdp_thousands": 5356280,
+          "crime_rate": 4.75,
+          "reward": 4550,
+          "difficulty": 0.688,
+          "underworld_power": 7993,
+          "police_power": 191755
+        }
+      }
+    },
+    "Cameron County": {
+      "fips": "42023",
+      "gdp_thousands": 267928,
+      "gdp_estimated": false,
+      "population": 4348,
+      "homicide_rate": null,
+      "difficulty": 0.256,
+      "cities": {
+        "Cameron": {
+          "population": 4348,
+          "gdp_thousands": 267928,
+          "crime_rate": 3.0,
+          "reward": 392,
+          "difficulty": 0.256,
+          "underworld_power": 196,
+          "police_power": 9592
+        }
+      }
+    },
+    "Carbon County": {
+      "fips": "42025",
+      "gdp_thousands": 2798297,
+      "gdp_estimated": false,
+      "population": 65743,
+      "homicide_rate": 3.3384597237,
+      "difficulty": 0.441,
+      "cities": {
+        "Carbon": {
+          "population": 65743,
+          "gdp_thousands": 2798297,
+          "crime_rate": 3.34,
+          "reward": 3728,
+          "difficulty": 0.441,
+          "underworld_power": 3292,
+          "police_power": 100179
+        }
+      }
+    },
+    "Centre County": {
+      "fips": "42027",
+      "gdp_thousands": 11249015,
+      "gdp_estimated": false,
+      "population": 159805,
+      "homicide_rate": 1.1515461278,
+      "difficulty": 0.367,
+      "cities": {
+        "Centre": {
+          "population": 159805,
+          "gdp_thousands": 11249015,
+          "crime_rate": 1.15,
+          "reward": 5130,
+          "difficulty": 0.367,
+          "underworld_power": 2760,
+          "police_power": 402715
+        }
+      }
+    },
+    "Chester County": {
+      "fips": "42029",
+      "gdp_thousands": 60160228,
+      "gdp_estimated": false,
+      "population": 560745,
+      "homicide_rate": 1.610267722,
+      "difficulty": 0.511,
+      "cities": {
+        "Coatesville city": {
+          "population": 13390,
+          "gdp_thousands": 1436562,
+          "crime_rate": 1.61,
+          "reward": 2471,
+          "difficulty": 0.511,
+          "underworld_power": 323,
+          "police_power": 51429
+        },
+        "Chester (unincorporated)": {
+          "population": 547355,
+          "gdp_thousands": 58723666,
+          "crime_rate": 1.61,
+          "reward": 5855,
+          "difficulty": 0.511,
+          "underworld_power": 13221,
+          "police_power": 2102307
+        }
+      }
+    },
+    "Clarion County": {
+      "fips": "42031",
+      "gdp_thousands": 1431875,
+      "gdp_estimated": false,
+      "population": 36855,
+      "homicide_rate": null,
+      "difficulty": 0.309,
+      "cities": {
+        "Clarion": {
+          "population": 36855,
+          "gdp_thousands": 1431875,
+          "crime_rate": 3.0,
+          "reward": 2422,
+          "difficulty": 0.309,
+          "underworld_power": 1658,
+          "police_power": 51261
+        }
+      }
+    },
+    "Clearfield County": {
+      "fips": "42033",
+      "gdp_thousands": 4033114,
+      "gdp_estimated": false,
+      "population": 78132,
+      "homicide_rate": 1.9691664339,
+      "difficulty": 0.316,
+      "cities": {
+        "DuBois city": {
+          "population": 7302,
+          "gdp_thousands": 376923,
+          "crime_rate": 1.97,
+          "reward": 779,
+          "difficulty": 0.316,
+          "underworld_power": 216,
+          "police_power": 13494
+        },
+        "Clearfield (unincorporated)": {
+          "population": 70830,
+          "gdp_thousands": 3656191,
+          "crime_rate": 1.97,
+          "reward": 3969,
+          "difficulty": 0.316,
+          "underworld_power": 2092,
+          "police_power": 130892
+        }
+      }
+    },
+    "Clinton County": {
+      "fips": "42035",
+      "gdp_thousands": 1963098,
+      "gdp_estimated": false,
+      "population": 37865,
+      "homicide_rate": null,
+      "difficulty": 0.354,
+      "cities": {
+        "Lock Haven city": {
+          "population": 8531,
+          "gdp_thousands": 442286,
+          "crime_rate": 3.0,
+          "reward": 1117,
+          "difficulty": 0.354,
+          "underworld_power": 384,
+          "police_power": 15834
+        },
+        "Clinton (unincorporated)": {
+          "population": 29334,
+          "gdp_thousands": 1520812,
+          "crime_rate": 3.0,
+          "reward": 2616,
+          "difficulty": 0.354,
+          "underworld_power": 1320,
+          "police_power": 54445
+        }
+      }
+    },
+    "Columbia County": {
+      "fips": "42037",
+      "gdp_thousands": 3276472,
+      "gdp_estimated": false,
+      "population": 66012,
+      "homicide_rate": 3.7024292292,
+      "difficulty": 0.49,
+      "cities": {
+        "Bloomsburg town": {
+          "population": 13286,
+          "gdp_thousands": 659443,
+          "crime_rate": 3.7,
+          "reward": 1697,
+          "difficulty": 0.49,
+          "underworld_power": 738,
+          "police_power": 23608
+        },
+        "Columbia (unincorporated)": {
+          "population": 52726,
+          "gdp_thousands": 2617029,
+          "crime_rate": 3.7,
+          "reward": 3438,
+          "difficulty": 0.49,
+          "underworld_power": 2928,
+          "police_power": 93690
+        }
+      }
+    },
+    "Crawford County": {
+      "fips": "42039",
+      "gdp_thousands": 3664748,
+      "gdp_estimated": false,
+      "population": 82089,
+      "homicide_rate": 3.3577328588,
+      "difficulty": 0.475,
+      "cities": {
+        "Meadville city": {
+          "population": 12347,
+          "gdp_thousands": 551214,
+          "crime_rate": 3.36,
+          "reward": 1407,
+          "difficulty": 0.475,
+          "underworld_power": 622,
+          "police_power": 19733
+        },
+        "Titusville city": {
+          "population": 5155,
+          "gdp_thousands": 230137,
+          "crime_rate": 3.36,
+          "reward": 247,
+          "difficulty": 0.475,
+          "underworld_power": 260,
+          "police_power": 8239
+        },
+        "Crawford (unincorporated)": {
+          "population": 64587,
+          "gdp_thousands": 2883397,
+          "crime_rate": 3.36,
+          "reward": 3824,
+          "difficulty": 0.475,
+          "underworld_power": 3253,
+          "police_power": 103226
+        }
+      }
+    },
+    "Cumberland County": {
+      "fips": "42041",
+      "gdp_thousands": 23098142,
+      "gdp_estimated": false,
+      "population": 275516,
+      "homicide_rate": 1.5267356864,
+      "difficulty": 0.439,
+      "cities": {
+        "Cumberland": {
+          "population": 275516,
+          "gdp_thousands": 23098142,
+          "crime_rate": 1.53,
+          "reward": 5517,
+          "difficulty": 0.439,
+          "underworld_power": 6310,
+          "police_power": 826913
+        }
+      }
+    },
+    "Dauphin County": {
+      "fips": "42043",
+      "gdp_thousands": 28909442,
+      "gdp_estimated": false,
+      "population": 293029,
+      "homicide_rate": 7.0434483078,
+      "difficulty": 0.873,
+      "cities": {
+        "Harrisburg city": {
+          "population": 50649,
+          "gdp_thousands": 4996892,
+          "crime_rate": 7.04,
+          "reward": 4405,
+          "difficulty": 0.873,
+          "underworld_power": 5351,
+          "police_power": 178889
+        },
+        "Dauphin (unincorporated)": {
+          "population": 242380,
+          "gdp_thousands": 23912550,
+          "crime_rate": 7.04,
+          "reward": 5565,
+          "difficulty": 0.873,
+          "underworld_power": 25608,
+          "police_power": 856069
+        }
+      }
+    },
+    "Delaware County": {
+      "fips": "42045",
+      "gdp_thousands": 42607881,
+      "gdp_estimated": false,
+      "population": 584882,
+      "homicide_rate": 8.09769299,
+      "difficulty": 0.907,
+      "cities": {
+        "Chester city": {
+          "population": 34052,
+          "gdp_thousands": 2480643,
+          "crime_rate": 8.1,
+          "reward": 3293,
+          "difficulty": 0.907,
+          "underworld_power": 4136,
+          "police_power": 88807
+        },
+        "Delaware (unincorporated)": {
+          "population": 550830,
+          "gdp_thousands": 40127238,
+          "crime_rate": 8.1,
+          "reward": 5758,
+          "difficulty": 0.907,
+          "underworld_power": 66907,
+          "police_power": 1436555
+        }
+      }
+    },
+    "Elk County": {
+      "fips": "42047",
+      "gdp_thousands": 1830032,
+      "gdp_estimated": false,
+      "population": 30124,
+      "homicide_rate": null,
+      "difficulty": 0.331,
+      "cities": {
+        "St. Marys city": {
+          "population": 12361,
+          "gdp_thousands": 750930,
+          "crime_rate": 3.0,
+          "reward": 1794,
+          "difficulty": 0.331,
+          "underworld_power": 556,
+          "police_power": 26883
+        },
+        "Elk (unincorporated)": {
+          "population": 17763,
+          "gdp_thousands": 1079102,
+          "crime_rate": 3.0,
+          "reward": 2229,
+          "difficulty": 0.331,
+          "underworld_power": 799,
+          "police_power": 38632
+        }
+      }
+    },
+    "Erie County": {
+      "fips": "42049",
+      "gdp_thousands": 15023861,
+      "gdp_estimated": false,
+      "population": 267750,
+      "homicide_rate": 4.6121134014,
+      "difficulty": 0.757,
+      "cities": {
+        "Erie city": {
+          "population": 92940,
+          "gdp_thousands": 5215005,
+          "crime_rate": 4.61,
+          "reward": 4501,
+          "difficulty": 0.757,
+          "underworld_power": 6430,
+          "police_power": 186697
+        },
+        "Corry city": {
+          "population": 6065,
+          "gdp_thousands": 340316,
+          "crime_rate": 4.61,
+          "reward": 585,
+          "difficulty": 0.757,
+          "underworld_power": 420,
+          "police_power": 12183
+        },
+        "Erie (unincorporated)": {
+          "population": 168745,
+          "gdp_thousands": 9468540,
+          "crime_rate": 4.61,
+          "reward": 4985,
+          "difficulty": 0.757,
+          "underworld_power": 11674,
+          "police_power": 338974
+        }
+      }
+    },
+    "Fayette County": {
+      "fips": "42051",
+      "gdp_thousands": 5442345,
+      "gdp_estimated": false,
+      "population": 123941,
+      "homicide_rate": 5.1499117393,
+      "difficulty": 0.684,
+      "cities": {
+        "Uniontown city": {
+          "population": 9554,
+          "gdp_thousands": 419523,
+          "crime_rate": 5.15,
+          "reward": 875,
+          "difficulty": 0.684,
+          "underworld_power": 738,
+          "police_power": 15019
+        },
+        "Connellsville city": {
+          "population": 6682,
+          "gdp_thousands": 293411,
+          "crime_rate": 5.15,
+          "reward": 488,
+          "difficulty": 0.684,
+          "underworld_power": 516,
+          "police_power": 10504
+        },
+        "Fayette (unincorporated)": {
+          "population": 107705,
+          "gdp_thousands": 4729411,
+          "crime_rate": 5.15,
+          "reward": 4356,
+          "difficulty": 0.684,
+          "underworld_power": 8320,
+          "police_power": 169313
+        }
+      }
+    },
+    "Forest County": {
+      "fips": "42053",
+      "gdp_thousands": 269719,
+      "gdp_estimated": false,
+      "population": 6601,
+      "homicide_rate": null,
+      "difficulty": 0.263,
+      "cities": {
+        "Forest": {
+          "population": 6601,
+          "gdp_thousands": 269719,
+          "crime_rate": 3.0,
+          "reward": 440,
+          "difficulty": 0.263,
+          "underworld_power": 297,
+          "police_power": 9656
+        }
+      }
+    },
+    "Franklin County": {
+      "fips": "42055",
+      "gdp_thousands": 8378505,
+      "gdp_estimated": false,
+      "population": 159285,
+      "homicide_rate": 1.8458511266,
+      "difficulty": 0.396,
+      "cities": {
+        "Franklin": {
+          "population": 159285,
+          "gdp_thousands": 8378505,
+          "crime_rate": 1.85,
+          "reward": 4936,
+          "difficulty": 0.396,
+          "underworld_power": 4410,
+          "police_power": 299950
+        }
+      }
+    },
+    "Fulton County": {
+      "fips": "42057",
+      "gdp_thousands": 831103,
+      "gdp_estimated": false,
+      "population": 14452,
+      "homicide_rate": null,
+      "difficulty": 0.278,
+      "cities": {
+        "Fulton": {
+          "population": 14452,
+          "gdp_thousands": 831103,
+          "crime_rate": 3.0,
+          "reward": 1939,
+          "difficulty": 0.278,
+          "underworld_power": 650,
+          "police_power": 29753
+        }
+      }
+    },
+    "Greene County": {
+      "fips": "42059",
+      "gdp_thousands": 4624079,
+      "gdp_estimated": false,
+      "population": 33960,
+      "homicide_rate": null,
+      "difficulty": 0.506,
+      "cities": {
+        "Greene": {
+          "population": 33960,
+          "gdp_thousands": 4624079,
+          "crime_rate": 3.0,
+          "reward": 4211,
+          "difficulty": 0.506,
+          "underworld_power": 1528,
+          "police_power": 165542
+        }
+      }
+    },
+    "Huntingdon County": {
+      "fips": "42061",
+      "gdp_thousands": 1677126,
+      "gdp_estimated": false,
+      "population": 43359,
+      "homicide_rate": null,
+      "difficulty": 0.316,
+      "cities": {
+        "Huntingdon": {
+          "population": 43359,
+          "gdp_thousands": 1677126,
+          "crime_rate": 3.0,
+          "reward": 2664,
+          "difficulty": 0.316,
+          "underworld_power": 1951,
+          "police_power": 60041
+        }
+      }
+    },
+    "Indiana County": {
+      "fips": "42063",
+      "gdp_thousands": 4202047,
+      "gdp_estimated": false,
+      "population": 82953,
+      "homicide_rate": 2.0222208366,
+      "difficulty": 0.342,
+      "cities": {
+        "Indiana": {
+          "population": 82953,
+          "gdp_thousands": 4202047,
+          "crime_rate": 2.02,
+          "reward": 4163,
+          "difficulty": 0.342,
+          "underworld_power": 2516,
+          "police_power": 150433
+        }
+      }
+    },
+    "Jefferson County": {
+      "fips": "42065",
+      "gdp_thousands": 1883344,
+      "gdp_estimated": false,
+      "population": 43367,
+      "homicide_rate": null,
+      "difficulty": 0.346,
+      "cities": {
+        "Jefferson": {
+          "population": 43367,
+          "gdp_thousands": 1883344,
+          "crime_rate": 3.0,
+          "reward": 2906,
+          "difficulty": 0.346,
+          "underworld_power": 1952,
+          "police_power": 67424
+        }
+      }
+    },
+    "Juniata County": {
+      "fips": "42067",
+      "gdp_thousands": 1025353,
+      "gdp_estimated": false,
+      "population": 23395,
+      "homicide_rate": null,
+      "difficulty": 0.286,
+      "cities": {
+        "Juniata": {
+          "population": 23395,
+          "gdp_thousands": 1025353,
+          "crime_rate": 3.0,
+          "reward": 2084,
+          "difficulty": 0.286,
+          "underworld_power": 1053,
+          "police_power": 36708
+        }
+      }
+    },
+    "Lackawanna County": {
+      "fips": "42069",
+      "gdp_thousands": 13421381,
+      "gdp_estimated": false,
+      "population": 216859,
+      "homicide_rate": 2.1634514623,
+      "difficulty": 0.508,
+      "cities": {
+        "Scranton city": {
+          "population": 75905,
+          "gdp_thousands": 4697752,
+          "crime_rate": 2.16,
+          "reward": 4260,
+          "difficulty": 0.508,
+          "underworld_power": 2463,
+          "police_power": 168180
+        },
+        "Carbondale city": {
+          "population": 8805,
+          "gdp_thousands": 544940,
+          "crime_rate": 2.16,
+          "reward": 1310,
+          "difficulty": 0.508,
+          "underworld_power": 286,
+          "police_power": 19509
+        },
+        "Lackawanna (unincorporated)": {
+          "population": 132149,
+          "gdp_thousands": 8178689,
+          "crime_rate": 2.16,
+          "reward": 4888,
+          "difficulty": 0.508,
+          "underworld_power": 4288,
+          "police_power": 292797
+        }
+      }
+    },
+    "Lancaster County": {
+      "fips": "42071",
+      "gdp_thousands": 39951127,
+      "gdp_estimated": false,
+      "population": 563293,
+      "homicide_rate": 2.2589063951,
+      "difficulty": 0.621,
+      "cities": {
+        "Lancaster city": {
+          "population": 58441,
+          "gdp_thousands": 4144883,
+          "crime_rate": 2.26,
+          "reward": 4114,
+          "difficulty": 0.621,
+          "underworld_power": 1980,
+          "police_power": 148387
+        },
+        "Lancaster (unincorporated)": {
+          "population": 504852,
+          "gdp_thousands": 35806244,
+          "crime_rate": 2.26,
+          "reward": 5710,
+          "difficulty": 0.621,
+          "underworld_power": 17106,
+          "police_power": 1281864
+        }
+      }
+    },
+    "Lawrence County": {
+      "fips": "42073",
+      "gdp_thousands": 4199654,
+      "gdp_estimated": false,
+      "population": 84233,
+      "homicide_rate": 5.2916965014,
+      "difficulty": 0.657,
+      "cities": {
+        "New Castle city": {
+          "population": 21332,
+          "gdp_thousands": 1063562,
+          "crime_rate": 5.29,
+          "reward": 2132,
+          "difficulty": 0.657,
+          "underworld_power": 1693,
+          "police_power": 38076
+        },
+        "Lawrence (unincorporated)": {
+          "population": 62901,
+          "gdp_thousands": 3136092,
+          "crime_rate": 5.29,
+          "reward": 3921,
+          "difficulty": 0.657,
+          "underworld_power": 4993,
+          "police_power": 112272
+        }
+      }
+    },
+    "Lebanon County": {
+      "fips": "42075",
+      "gdp_thousands": 8097401,
+      "gdp_estimated": false,
+      "population": 145319,
+      "homicide_rate": 2.1342612966,
+      "difficulty": 0.456,
+      "cities": {
+        "Lebanon city": {
+          "population": 26456,
+          "gdp_thousands": 1474169,
+          "crime_rate": 2.13,
+          "reward": 2519,
+          "difficulty": 0.456,
+          "underworld_power": 847,
+          "police_power": 52775
+        },
+        "Lebanon (unincorporated)": {
+          "population": 118863,
+          "gdp_thousands": 6623232,
+          "crime_rate": 2.13,
+          "reward": 4743,
+          "difficulty": 0.456,
+          "underworld_power": 3805,
+          "police_power": 237112
+        }
+      }
+    },
+    "Lehigh County": {
+      "fips": "42077",
+      "gdp_thousands": 31738508,
+      "gdp_estimated": false,
+      "population": 385655,
+      "homicide_rate": 3.6906318167,
+      "difficulty": 0.714,
+      "cities": {
+        "Allentown city": {
+          "population": 127138,
+          "gdp_thousands": 10463161,
+          "crime_rate": 3.69,
+          "reward": 5081,
+          "difficulty": 0.714,
+          "underworld_power": 7038,
+          "police_power": 374581
+        },
+        "Lehigh (unincorporated)": {
+          "population": 258517,
+          "gdp_thousands": 21275347,
+          "crime_rate": 3.69,
+          "reward": 5468,
+          "difficulty": 0.714,
+          "underworld_power": 14311,
+          "police_power": 761657
+        }
+      }
+    },
+    "Luzerne County": {
+      "fips": "42079",
+      "gdp_thousands": 20580464,
+      "gdp_estimated": false,
+      "population": 331379,
+      "homicide_rate": 3.9008677413,
+      "difficulty": 0.702,
+      "cities": {
+        "Wilkes-Barre city": {
+          "population": 44661,
+          "gdp_thousands": 2773694,
+          "crime_rate": 3.9,
+          "reward": 3631,
+          "difficulty": 0.702,
+          "underworld_power": 2613,
+          "police_power": 99298
+        },
+        "Hazleton city": {
+          "population": 30354,
+          "gdp_thousands": 1885150,
+          "crime_rate": 3.9,
+          "reward": 2954,
+          "difficulty": 0.702,
+          "underworld_power": 1776,
+          "police_power": 67488
+        },
+        "Nanticoke city": {
+          "population": 10730,
+          "gdp_thousands": 666392,
+          "crime_rate": 3.9,
+          "reward": 1745,
+          "difficulty": 0.702,
+          "underworld_power": 628,
+          "police_power": 23857
+        },
+        "Pittston city": {
+          "population": 7743,
+          "gdp_thousands": 480883,
+          "crime_rate": 3.9,
+          "reward": 1214,
+          "difficulty": 0.702,
+          "underworld_power": 453,
+          "police_power": 17216
+        },
+        "Luzerne (unincorporated)": {
+          "population": 237891,
+          "gdp_thousands": 14774345,
+          "crime_rate": 3.9,
+          "reward": 5226,
+          "difficulty": 0.702,
+          "underworld_power": 13920,
+          "police_power": 528922
+        }
+      }
+    },
+    "Lycoming County": {
+      "fips": "42081",
+      "gdp_thousands": 7698456,
+      "gdp_estimated": false,
+      "population": 113236,
+      "homicide_rate": 9.6380836986,
+      "difficulty": 0.777,
+      "cities": {
+        "Williamsport city": {
+          "population": 27628,
+          "gdp_thousands": 1878315,
+          "crime_rate": 9.64,
+          "reward": 2857,
+          "difficulty": 0.777,
+          "underworld_power": 3994,
+          "police_power": 67244
+        },
+        "Lycoming (unincorporated)": {
+          "population": 85608,
+          "gdp_thousands": 5820141,
+          "crime_rate": 9.64,
+          "reward": 4646,
+          "difficulty": 0.777,
+          "underworld_power": 12376,
+          "police_power": 208361
+        }
+      }
+    },
+    "McKean County": {
+      "fips": "42083",
+      "gdp_thousands": 2212470,
+      "gdp_estimated": false,
+      "population": 39478,
+      "homicide_rate": null,
+      "difficulty": 0.399,
+      "cities": {
+        "Bradford city": {
+          "population": 7538,
+          "gdp_thousands": 422452,
+          "crime_rate": 3.0,
+          "reward": 972,
+          "difficulty": 0.399,
+          "underworld_power": 339,
+          "police_power": 15124
+        },
+        "McKean (unincorporated)": {
+          "population": 31940,
+          "gdp_thousands": 1790018,
+          "crime_rate": 3.0,
+          "reward": 2712,
+          "difficulty": 0.399,
+          "underworld_power": 1437,
+          "police_power": 64083
+        }
+      }
+    },
+    "Mercer County": {
+      "fips": "42085",
+      "gdp_thousands": 5514791,
+      "gdp_estimated": false,
+      "population": 108140,
+      "homicide_rate": 3.9870305754,
+      "difficulty": 0.614,
+      "cities": {
+        "Hermitage city": {
+          "population": 15839,
+          "gdp_thousands": 807737,
+          "crime_rate": 3.99,
+          "reward": 1890,
+          "difficulty": 0.614,
+          "underworld_power": 947,
+          "police_power": 28917
+        },
+        "Sharon city": {
+          "population": 12744,
+          "gdp_thousands": 649902,
+          "crime_rate": 3.99,
+          "reward": 1600,
+          "difficulty": 0.614,
+          "underworld_power": 762,
+          "police_power": 23266
+        },
+        "Farrell city": {
+          "population": 4142,
+          "gdp_thousands": 211228,
+          "crime_rate": 3.99,
+          "reward": 198,
+          "difficulty": 0.614,
+          "underworld_power": 248,
+          "police_power": 7562
+        },
+        "Mercer (unincorporated)": {
+          "population": 75415,
+          "gdp_thousands": 3845924,
+          "crime_rate": 3.99,
+          "reward": 4018,
+          "difficulty": 0.614,
+          "underworld_power": 4510,
+          "police_power": 137684
+        }
+      }
+    },
+    "Mifflin County": {
+      "fips": "42087",
+      "gdp_thousands": 2340397,
+      "gdp_estimated": false,
+      "population": 45935,
+      "homicide_rate": null,
+      "difficulty": 0.407,
+      "cities": {
+        "Mifflin": {
+          "population": 45935,
+          "gdp_thousands": 2340397,
+          "crime_rate": 3.0,
+          "reward": 3244,
+          "difficulty": 0.407,
+          "underworld_power": 2067,
+          "police_power": 83786
+        }
+      }
+    },
+    "Monroe County": {
+      "fips": "42089",
+      "gdp_thousands": 9563316,
+      "gdp_estimated": false,
+      "population": 166523,
+      "homicide_rate": 3.9839084006,
+      "difficulty": 0.671,
+      "cities": {
+        "Monroe": {
+          "population": 166523,
+          "gdp_thousands": 9563316,
+          "crime_rate": 3.98,
+          "reward": 5033,
+          "difficulty": 0.671,
+          "underworld_power": 9951,
+          "police_power": 342367
+        }
+      }
+    },
+    "Montgomery County": {
+      "fips": "42091",
+      "gdp_thousands": 110422372,
+      "gdp_estimated": false,
+      "population": 879190,
+      "homicide_rate": 2.0614908358,
+      "difficulty": 0.596,
+      "cities": {
+        "Montgomery": {
+          "population": 879190,
+          "gdp_thousands": 110422372,
+          "crime_rate": 2.06,
+          "reward": 5952,
+          "difficulty": 0.596,
+          "underworld_power": 27187,
+          "police_power": 3953121
+        }
+      }
+    },
+    "Montour County": {
+      "fips": "42093",
+      "gdp_thousands": 2784723,
+      "gdp_estimated": false,
+      "population": 18115,
+      "homicide_rate": 12.522403362,
+      "difficulty": 0.671,
+      "cities": {
+        "Montour": {
+          "population": 18115,
+          "gdp_thousands": 2784723,
+          "crime_rate": 12.52,
+          "reward": 3679,
+          "difficulty": 0.671,
+          "underworld_power": 3403,
+          "police_power": 99693
+        }
+      }
+    },
+    "Northampton County": {
+      "fips": "42095",
+      "gdp_thousands": 20981619,
+      "gdp_estimated": false,
+      "population": 322989,
+      "homicide_rate": 2.1534330404,
+      "difficulty": 0.542,
+      "cities": {
+        "Easton city": {
+          "population": 30432,
+          "gdp_thousands": 1976886,
+          "crime_rate": 2.15,
+          "reward": 3002,
+          "difficulty": 0.542,
+          "underworld_power": 983,
+          "police_power": 70773
+        },
+        "Northampton (unincorporated)": {
+          "population": 292557,
+          "gdp_thousands": 19004733,
+          "crime_rate": 2.15,
+          "reward": 5371,
+          "difficulty": 0.542,
+          "underworld_power": 9450,
+          "police_power": 680369
+        }
+      }
+    },
+    "Northumberland County": {
+      "fips": "42097",
+      "gdp_thousands": 4733247,
+      "gdp_estimated": false,
+      "population": 90027,
+      "homicide_rate": 4.0544797323,
+      "difficulty": 0.632,
+      "cities": {
+        "Sunbury city": {
+          "population": 9549,
+          "gdp_thousands": 502046,
+          "crime_rate": 4.05,
+          "reward": 1262,
+          "difficulty": 0.632,
+          "underworld_power": 581,
+          "police_power": 17973
+        },
+        "Shamokin city": {
+          "population": 6787,
+          "gdp_thousands": 356832,
+          "crime_rate": 4.05,
+          "reward": 633,
+          "difficulty": 0.632,
+          "underworld_power": 413,
+          "police_power": 12775
+        },
+        "Northumberland (unincorporated)": {
+          "population": 73691,
+          "gdp_thousands": 3874369,
+          "crime_rate": 4.05,
+          "reward": 4066,
+          "difficulty": 0.632,
+          "underworld_power": 4482,
+          "police_power": 138702
+        }
+      }
+    },
+    "Perry County": {
+      "fips": "42099",
+      "gdp_thousands": 1361626,
+      "gdp_estimated": false,
+      "population": 46816,
+      "homicide_rate": null,
+      "difficulty": 0.301,
+      "cities": {
+        "Perry": {
+          "population": 46816,
+          "gdp_thousands": 1361626,
+          "crime_rate": 3.0,
+          "reward": 2374,
+          "difficulty": 0.301,
+          "underworld_power": 2107,
+          "police_power": 48746
+        }
+      }
+    },
+    "Philadelphia County": {
+      "fips": "42101",
+      "gdp_thousands": 134988949,
+      "gdp_estimated": false,
+      "population": 1573916,
+      "homicide_rate": 23.914956242,
+      "difficulty": 1.0,
+      "cities": {
+        "Philadelphia city": {
+          "population": 1573916,
+          "gdp_thousands": 134988949,
+          "crime_rate": 23.91,
+          "reward": 6000,
+          "difficulty": 1.0,
+          "underworld_power": 564602,
+          "police_power": 4832604
+        }
+      }
+    },
+    "Pike County": {
+      "fips": "42103",
+      "gdp_thousands": 2003244,
+      "gdp_estimated": false,
+      "population": 62376,
+      "homicide_rate": 3.0382208179,
+      "difficulty": 0.339,
+      "cities": {
+        "Pike": {
+          "population": 62376,
+          "gdp_thousands": 2003244,
+          "crime_rate": 3.04,
+          "reward": 3051,
+          "difficulty": 0.339,
+          "underworld_power": 2843,
+          "police_power": 71716
+        }
+      }
+    },
+    "Potter County": {
+      "fips": "42105",
+      "gdp_thousands": 1064567,
+      "gdp_estimated": false,
+      "population": 15993,
+      "homicide_rate": null,
+      "difficulty": 0.293,
+      "cities": {
+        "Potter": {
+          "population": 15993,
+          "gdp_thousands": 1064567,
+          "crime_rate": 3.0,
+          "reward": 2181,
+          "difficulty": 0.293,
+          "underworld_power": 720,
+          "police_power": 38111
+        }
+      }
+    },
+    "Schuylkill County": {
+      "fips": "42107",
+      "gdp_thousands": 6491898,
+      "gdp_estimated": false,
+      "population": 144523,
+      "homicide_rate": 10.720035747,
+      "difficulty": 0.773,
+      "cities": {
+        "Pottsville city": {
+          "population": 13404,
+          "gdp_thousands": 602100,
+          "crime_rate": 10.72,
+          "reward": 1455,
+          "difficulty": 0.773,
+          "underworld_power": 2155,
+          "police_power": 21555
+        },
+        "Schuylkill (unincorporated)": {
+          "population": 131119,
+          "gdp_thousands": 5889798,
+          "crime_rate": 10.72,
+          "reward": 4695,
+          "difficulty": 0.773,
+          "underworld_power": 21084,
+          "police_power": 210855
+        }
+      }
+    },
+    "Snyder County": {
+      "fips": "42109",
+      "gdp_thousands": 2202182,
+      "gdp_estimated": false,
+      "population": 39627,
+      "homicide_rate": null,
+      "difficulty": 0.392,
+      "cities": {
+        "Snyder": {
+          "population": 39627,
+          "gdp_thousands": 2202182,
+          "crime_rate": 3.0,
+          "reward": 3196,
+          "difficulty": 0.392,
+          "underworld_power": 1783,
+          "police_power": 78838
+        }
+      }
+    },
+    "Somerset County": {
+      "fips": "42111",
+      "gdp_thousands": 3037840,
+      "gdp_estimated": false,
+      "population": 72134,
+      "homicide_rate": 1.9266857537,
+      "difficulty": 0.282,
+      "cities": {
+        "Somerset": {
+          "population": 72134,
+          "gdp_thousands": 3037840,
+          "crime_rate": 1.93,
+          "reward": 3873,
+          "difficulty": 0.282,
+          "underworld_power": 2085,
+          "police_power": 108755
+        }
+      }
+    },
+    "Sullivan County": {
+      "fips": "42113",
+      "gdp_thousands": 326937,
+      "gdp_estimated": false,
+      "population": 5927,
+      "homicide_rate": null,
+      "difficulty": 0.271,
+      "cities": {
+        "Sullivan": {
+          "population": 5927,
+          "gdp_thousands": 326937,
+          "crime_rate": 3.0,
+          "reward": 537,
+          "difficulty": 0.271,
+          "underworld_power": 267,
+          "police_power": 11704
+        }
+      }
+    },
+    "Susquehanna County": {
+      "fips": "42115",
+      "gdp_thousands": 2615998,
+      "gdp_estimated": false,
+      "population": 38100,
+      "homicide_rate": 3.8893308583,
+      "difficulty": 0.456,
+      "cities": {
+        "Susquehanna": {
+          "population": 38100,
+          "gdp_thousands": 2615998,
+          "crime_rate": 3.89,
+          "reward": 3389,
+          "difficulty": 0.456,
+          "underworld_power": 2223,
+          "police_power": 93653
+        }
+      }
+    },
+    "Tioga County": {
+      "fips": "42117",
+      "gdp_thousands": 2073907,
+      "gdp_estimated": false,
+      "population": 40698,
+      "homicide_rate": null,
+      "difficulty": 0.377,
+      "cities": {
+        "Tioga": {
+          "population": 40698,
+          "gdp_thousands": 2073907,
+          "crime_rate": 3.0,
+          "reward": 3148,
+          "difficulty": 0.377,
+          "underworld_power": 1831,
+          "police_power": 74246
+        }
+      }
+    },
+    "Union County": {
+      "fips": "42119",
+      "gdp_thousands": 2510482,
+      "gdp_estimated": false,
+      "population": 42159,
+      "homicide_rate": null,
+      "difficulty": 0.415,
+      "cities": {
+        "Union": {
+          "population": 42159,
+          "gdp_thousands": 2510482,
+          "crime_rate": 3.0,
+          "reward": 3341,
+          "difficulty": 0.415,
+          "underworld_power": 1897,
+          "police_power": 89875
+        }
+      }
+    },
+    "Venango County": {
+      "fips": "42121",
+      "gdp_thousands": 2149235,
+      "gdp_estimated": false,
+      "population": 49476,
+      "homicide_rate": null,
+      "difficulty": 0.384,
+      "cities": {
+        "Oil City city": {
+          "population": 9368,
+          "gdp_thousands": 406945,
+          "crime_rate": 3.0,
+          "reward": 827,
+          "difficulty": 0.384,
+          "underworld_power": 422,
+          "police_power": 14569
+        },
+        "Franklin city": {
+          "population": 5933,
+          "gdp_thousands": 257729,
+          "crime_rate": 3.0,
+          "reward": 343,
+          "difficulty": 0.384,
+          "underworld_power": 267,
+          "police_power": 9227
+        },
+        "Venango (unincorporated)": {
+          "population": 34175,
+          "gdp_thousands": 1484561,
+          "crime_rate": 3.0,
+          "reward": 2567,
+          "difficulty": 0.384,
+          "underworld_power": 1538,
+          "police_power": 53147
+        }
+      }
+    },
+    "Warren County": {
+      "fips": "42123",
+      "gdp_thousands": 1726084,
+      "gdp_estimated": false,
+      "population": 37373,
+      "homicide_rate": null,
+      "difficulty": 0.324,
+      "cities": {
+        "Warren city": {
+          "population": 9125,
+          "gdp_thousands": 421441,
+          "crime_rate": 3.0,
+          "reward": 924,
+          "difficulty": 0.324,
+          "underworld_power": 411,
+          "police_power": 15088
+        },
+        "Warren (unincorporated)": {
+          "population": 28248,
+          "gdp_thousands": 1304643,
+          "crime_rate": 3.0,
+          "reward": 2326,
+          "difficulty": 0.324,
+          "underworld_power": 1271,
+          "police_power": 46706
+        }
+      }
+    },
+    "Washington County": {
+      "fips": "42125",
+      "gdp_thousands": 18671970,
+      "gdp_estimated": false,
+      "population": 210434,
+      "homicide_rate": 2.9573101957,
+      "difficulty": 0.597,
+      "cities": {
+        "Washington city": {
+          "population": 13334,
+          "gdp_thousands": 1183136,
+          "crime_rate": 2.96,
+          "reward": 2277,
+          "difficulty": 0.597,
+          "underworld_power": 591,
+          "police_power": 42356
+        },
+        "Monongahela city": {
+          "population": 4072,
+          "gdp_thousands": 361311,
+          "crime_rate": 2.96,
+          "reward": 682,
+          "difficulty": 0.597,
+          "underworld_power": 181,
+          "police_power": 12935
+        },
+        "Washington (unincorporated)": {
+          "population": 193028,
+          "gdp_thousands": 17127523,
+          "crime_rate": 2.96,
+          "reward": 5323,
+          "difficulty": 0.597,
+          "underworld_power": 8563,
+          "police_power": 613165
+        }
+      }
+    },
+    "Wayne County": {
+      "fips": "42127",
+      "gdp_thousands": 2652215,
+      "gdp_estimated": false,
+      "population": 51419,
+      "homicide_rate": 3.9068604469,
+      "difficulty": 0.485,
+      "cities": {
+        "Wayne": {
+          "population": 51419,
+          "gdp_thousands": 2652215,
+          "crime_rate": 3.91,
+          "reward": 3486,
+          "difficulty": 0.485,
+          "underworld_power": 3013,
+          "police_power": 94949
+        }
+      }
+    },
+    "Westmoreland County": {
+      "fips": "42129",
+      "gdp_thousands": 19387551,
+      "gdp_estimated": false,
+      "population": 350935,
+      "homicide_rate": 2.2306084086,
+      "difficulty": 0.549,
+      "cities": {
+        "Greensburg city": {
+          "population": 14586,
+          "gdp_thousands": 805809,
+          "crime_rate": 2.23,
+          "reward": 1842,
+          "difficulty": 0.549,
+          "underworld_power": 488,
+          "police_power": 28848
+        },
+        "New Kensington city": {
+          "population": 11877,
+          "gdp_thousands": 656149,
+          "crime_rate": 2.23,
+          "reward": 1649,
+          "difficulty": 0.549,
+          "underworld_power": 397,
+          "police_power": 23490
+        },
+        "Lower Burrell city": {
+          "population": 11542,
+          "gdp_thousands": 637642,
+          "crime_rate": 2.23,
+          "reward": 1504,
+          "difficulty": 0.549,
+          "underworld_power": 386,
+          "police_power": 22828
+        },
+        "Jeannette city": {
+          "population": 8566,
+          "gdp_thousands": 473232,
+          "crime_rate": 2.23,
+          "reward": 1165,
+          "difficulty": 0.549,
+          "underworld_power": 287,
+          "police_power": 16942
+        },
+        "Monessen city": {
+          "population": 6704,
+          "gdp_thousands": 370365,
+          "crime_rate": 2.23,
+          "reward": 730,
+          "difficulty": 0.549,
+          "underworld_power": 224,
+          "police_power": 13259
+        },
+        "Arnold city": {
+          "population": 4657,
+          "gdp_thousands": 257277,
+          "crime_rate": 2.23,
+          "reward": 295,
+          "difficulty": 0.549,
+          "underworld_power": 156,
+          "police_power": 9211
+        },
+        "Westmoreland (unincorporated)": {
+          "population": 293003,
+          "gdp_thousands": 16187077,
+          "crime_rate": 2.23,
+          "reward": 5275,
+          "difficulty": 0.549,
+          "underworld_power": 9804,
+          "police_power": 579497
+        }
+      }
+    },
+    "Wyoming County": {
+      "fips": "42131",
+      "gdp_thousands": 1865587,
+      "gdp_estimated": false,
+      "population": 25771,
+      "homicide_rate": null,
+      "difficulty": 0.339,
+      "cities": {
+        "Wyoming": {
+          "population": 25771,
+          "gdp_thousands": 1865587,
+          "crime_rate": 3.0,
+          "reward": 2809,
+          "difficulty": 0.339,
+          "underworld_power": 1160,
+          "police_power": 66788
+        }
+      }
+    },
+    "York County": {
+      "fips": "42133",
+      "gdp_thousands": 28433485,
+      "gdp_estimated": false,
+      "population": 471240,
+      "homicide_rate": 4.7464866442,
+      "difficulty": 0.821,
+      "cities": {
+        "York city": {
+          "population": 45241,
+          "gdp_thousands": 2729732,
+          "crime_rate": 4.75,
+          "reward": 3534,
+          "difficulty": 0.821,
+          "underworld_power": 3221,
+          "police_power": 97724
+        },
+        "York (unincorporated)": {
+          "population": 425999,
+          "gdp_thousands": 25703753,
+          "crime_rate": 4.75,
+          "reward": 5613,
+          "difficulty": 0.821,
+          "underworld_power": 30330,
+          "police_power": 920194
         }
       }
     }

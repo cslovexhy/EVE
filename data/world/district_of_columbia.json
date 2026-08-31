@@ -1,24 +1,24 @@
 {
   "country": "United States",
   "state": "District of Columbia",
-  "state_fips": "00",
+  "state_fips": "11",
   "counties": {
-    "District of Columbia County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "District of Columbia": {
+      "fips": "11001",
+      "gdp_thousands": 184297673,
+      "gdp_estimated": false,
+      "population": 702250,
+      "homicide_rate": 22.321244037,
+      "difficulty": 0.5,
       "cities": {
-        "District of Columbia City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Washington city": {
+          "population": 702250,
+          "gdp_thousands": 184297673,
+          "crime_rate": 22.32,
+          "reward": 3075,
+          "difficulty": 0.5,
+          "underworld_power": 235126,
+          "police_power": 6597857
         }
       }
     }

@@ -1,24 +1,5436 @@
 {
   "country": "United States",
   "state": "California",
-  "state_fips": "00",
+  "state_fips": "06",
   "counties": {
-    "California County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Alameda County": {
+      "fips": "06001",
+      "gdp_thousands": 182539223,
+      "gdp_estimated": false,
+      "population": 1649060,
+      "homicide_rate": 6.5183258939,
+      "difficulty": 0.76,
       "cities": {
-        "California City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Oakland city": {
+          "population": 443554,
+          "gdp_thousands": 49098275,
+          "crime_rate": 6.52,
+          "reward": 5924,
+          "difficulty": 0.76,
+          "underworld_power": 43368,
+          "police_power": 1757718
+        },
+        "Fremont city": {
+          "population": 228192,
+          "gdp_thousands": 25259232,
+          "crime_rate": 6.52,
+          "reward": 5783,
+          "difficulty": 0.76,
+          "underworld_power": 22311,
+          "police_power": 904281
+        },
+        "Hayward city": {
+          "population": 158440,
+          "gdp_thousands": 17538182,
+          "crime_rate": 6.52,
+          "reward": 5619,
+          "difficulty": 0.76,
+          "underworld_power": 15491,
+          "police_power": 627867
+        },
+        "Berkeley city": {
+          "population": 121749,
+          "gdp_thousands": 13476749,
+          "crime_rate": 6.52,
+          "reward": 5380,
+          "difficulty": 0.76,
+          "underworld_power": 11904,
+          "police_power": 482468
+        },
+        "San Leandro city": {
+          "population": 86571,
+          "gdp_thousands": 9582794,
+          "crime_rate": 6.52,
+          "reward": 4945,
+          "difficulty": 0.76,
+          "underworld_power": 8464,
+          "police_power": 343064
+        },
+        "Livermore city": {
+          "population": 84867,
+          "gdp_thousands": 9394173,
+          "crime_rate": 6.52,
+          "reward": 4913,
+          "difficulty": 0.76,
+          "underworld_power": 8298,
+          "police_power": 336311
+        },
+        "Alameda city": {
+          "population": 78795,
+          "gdp_thousands": 8722046,
+          "crime_rate": 6.52,
+          "reward": 4750,
+          "difficulty": 0.76,
+          "underworld_power": 7704,
+          "police_power": 312249
+        },
+        "Pleasanton city": {
+          "population": 75664,
+          "gdp_thousands": 8375467,
+          "crime_rate": 6.52,
+          "reward": 4663,
+          "difficulty": 0.76,
+          "underworld_power": 7398,
+          "police_power": 299842
+        },
+        "Dublin city": {
+          "population": 70544,
+          "gdp_thousands": 7808719,
+          "crime_rate": 6.52,
+          "reward": 4597,
+          "difficulty": 0.76,
+          "underworld_power": 6897,
+          "police_power": 279552
+        },
+        "Union City city": {
+          "population": 66196,
+          "gdp_thousands": 7327426,
+          "crime_rate": 6.52,
+          "reward": 4510,
+          "difficulty": 0.76,
+          "underworld_power": 6472,
+          "police_power": 262322
+        },
+        "Newark city": {
+          "population": 46254,
+          "gdp_thousands": 5119989,
+          "crime_rate": 6.52,
+          "reward": 3945,
+          "difficulty": 0.76,
+          "underworld_power": 4522,
+          "police_power": 183296
+        },
+        "Albany city": {
+          "population": 19439,
+          "gdp_thousands": 2151759,
+          "crime_rate": 6.52,
+          "reward": 2727,
+          "difficulty": 0.76,
+          "underworld_power": 1901,
+          "police_power": 77033
+        },
+        "Emeryville city": {
+          "population": 13912,
+          "gdp_thousands": 1539959,
+          "crime_rate": 6.52,
+          "reward": 2238,
+          "difficulty": 0.76,
+          "underworld_power": 1360,
+          "police_power": 55131
+        },
+        "Piedmont city": {
+          "population": 10816,
+          "gdp_thousands": 1197254,
+          "crime_rate": 6.52,
+          "reward": 1857,
+          "difficulty": 0.76,
+          "underworld_power": 1058,
+          "police_power": 42862
+        },
+        "Alameda (unincorporated)": {
+          "population": 144067,
+          "gdp_thousands": 15947199,
+          "crime_rate": 6.52,
+          "reward": 5554,
+          "difficulty": 0.76,
+          "underworld_power": 14086,
+          "police_power": 570910
+        }
+      }
+    },
+    "Alpine County": {
+      "fips": "06003",
+      "gdp_thousands": 146275,
+      "gdp_estimated": false,
+      "population": 1099,
+      "homicide_rate": null,
+      "difficulty": 0.259,
+      "cities": {
+        "Alpine": {
+          "population": 1099,
+          "gdp_thousands": 146275,
+          "crime_rate": 3.0,
+          "reward": 444,
+          "difficulty": 0.259,
+          "underworld_power": 49,
+          "police_power": 5237
+        }
+      }
+    },
+    "Amador County": {
+      "fips": "06005",
+      "gdp_thousands": 2112319,
+      "gdp_estimated": false,
+      "population": 42026,
+      "homicide_rate": 6.9473137663,
+      "difficulty": 0.468,
+      "cities": {
+        "Ione city": {
+          "population": 9411,
+          "gdp_thousands": 473017,
+          "crime_rate": 6.95,
+          "reward": 944,
+          "difficulty": 0.468,
+          "underworld_power": 981,
+          "police_power": 16934
+        },
+        "Jackson city": {
+          "population": 5079,
+          "gdp_thousands": 255281,
+          "crime_rate": 6.95,
+          "reward": 618,
+          "difficulty": 0.468,
+          "underworld_power": 529,
+          "police_power": 9139
+        },
+        "Sutter Creek city": {
+          "population": 2709,
+          "gdp_thousands": 136160,
+          "crime_rate": 6.95,
+          "reward": 400,
+          "difficulty": 0.468,
+          "underworld_power": 282,
+          "police_power": 4875
+        },
+        "Plymouth city": {
+          "population": 1137,
+          "gdp_thousands": 57148,
+          "crime_rate": 6.95,
+          "reward": 280,
+          "difficulty": 0.468,
+          "underworld_power": 118,
+          "police_power": 2046
+        },
+        "Amador City city": {
+          "population": 205,
+          "gdp_thousands": 10303,
+          "crime_rate": 6.95,
+          "reward": 150,
+          "difficulty": 0.468,
+          "underworld_power": 21,
+          "police_power": 369
+        },
+        "Amador (unincorporated)": {
+          "population": 23485,
+          "gdp_thousands": 1180410,
+          "crime_rate": 6.95,
+          "reward": 1846,
+          "difficulty": 0.468,
+          "underworld_power": 2447,
+          "police_power": 42259
+        }
+      }
+    },
+    "Butte County": {
+      "fips": "06007",
+      "gdp_thousands": 12901012,
+      "gdp_estimated": false,
+      "population": 208334,
+      "homicide_rate": 3.9277196561,
+      "difficulty": 0.433,
+      "cities": {
+        "Chico city": {
+          "population": 102911,
+          "gdp_thousands": 6372728,
+          "crime_rate": 3.93,
+          "reward": 4347,
+          "difficulty": 0.433,
+          "underworld_power": 6063,
+          "police_power": 228144
+        },
+        "Oroville city": {
+          "population": 19712,
+          "gdp_thousands": 1220658,
+          "crime_rate": 3.93,
+          "reward": 1879,
+          "difficulty": 0.433,
+          "underworld_power": 1161,
+          "police_power": 43700
+        },
+        "Paradise town": {
+          "population": 9114,
+          "gdp_thousands": 564381,
+          "crime_rate": 3.93,
+          "reward": 1074,
+          "difficulty": 0.433,
+          "underworld_power": 537,
+          "police_power": 20205
+        },
+        "Gridley city": {
+          "population": 7355,
+          "gdp_thousands": 455455,
+          "crime_rate": 3.93,
+          "reward": 889,
+          "difficulty": 0.433,
+          "underworld_power": 433,
+          "police_power": 16305
+        },
+        "Biggs city": {
+          "population": 1941,
+          "gdp_thousands": 120195,
+          "crime_rate": 3.93,
+          "reward": 389,
+          "difficulty": 0.433,
+          "underworld_power": 114,
+          "police_power": 4303
+        },
+        "Butte (unincorporated)": {
+          "population": 67301,
+          "gdp_thousands": 4167595,
+          "crime_rate": 3.93,
+          "reward": 3695,
+          "difficulty": 0.433,
+          "underworld_power": 3965,
+          "police_power": 149200
+        }
+      }
+    },
+    "Calaveras County": {
+      "fips": "06009",
+      "gdp_thousands": 2074294,
+      "gdp_estimated": false,
+      "population": 46505,
+      "homicide_rate": 5.0046136282,
+      "difficulty": 0.334,
+      "cities": {
+        "Angels city": {
+          "population": 3728,
+          "gdp_thousands": 166282,
+          "crime_rate": 5.0,
+          "reward": 487,
+          "difficulty": 0.334,
+          "underworld_power": 280,
+          "police_power": 5953
+        },
+        "Calaveras (unincorporated)": {
+          "population": 42777,
+          "gdp_thousands": 1908012,
+          "crime_rate": 5.0,
+          "reward": 2531,
+          "difficulty": 0.334,
+          "underworld_power": 3211,
+          "police_power": 68307
+        }
+      }
+    },
+    "Colusa County": {
+      "fips": "06011",
+      "gdp_thousands": 2009841,
+      "gdp_estimated": false,
+      "population": 22074,
+      "homicide_rate": null,
+      "difficulty": 0.346,
+      "cities": {
+        "Colusa city": {
+          "population": 6589,
+          "gdp_thousands": 599929,
+          "crime_rate": 3.0,
+          "reward": 1129,
+          "difficulty": 0.346,
+          "underworld_power": 297,
+          "police_power": 21477
+        },
+        "Williams city": {
+          "population": 5598,
+          "gdp_thousands": 509698,
+          "crime_rate": 3.0,
+          "reward": 976,
+          "difficulty": 0.346,
+          "underworld_power": 252,
+          "police_power": 18247
+        },
+        "Colusa (unincorporated)": {
+          "population": 9887,
+          "gdp_thousands": 900214,
+          "crime_rate": 3.0,
+          "reward": 1564,
+          "difficulty": 0.346,
+          "underworld_power": 445,
+          "police_power": 32228
+        }
+      }
+    },
+    "Contra Costa County": {
+      "fips": "06013",
+      "gdp_thousands": 96579110,
+      "gdp_estimated": false,
+      "population": 1172607,
+      "homicide_rate": 5.7806363135,
+      "difficulty": 0.673,
+      "cities": {
+        "Concord city": {
+          "population": 124016,
+          "gdp_thousands": 10214295,
+          "crime_rate": 5.78,
+          "reward": 5097,
+          "difficulty": 0.673,
+          "underworld_power": 10753,
+          "police_power": 365672
+        },
+        "Antioch city": {
+          "population": 118453,
+          "gdp_thousands": 9756112,
+          "crime_rate": 5.78,
+          "reward": 5011,
+          "difficulty": 0.673,
+          "underworld_power": 10271,
+          "police_power": 349269
+        },
+        "Richmond city": {
+          "population": 115353,
+          "gdp_thousands": 9500787,
+          "crime_rate": 5.78,
+          "reward": 4924,
+          "difficulty": 0.673,
+          "underworld_power": 10002,
+          "police_power": 340128
+        },
+        "San Ramon city": {
+          "population": 85924,
+          "gdp_thousands": 7076934,
+          "crime_rate": 5.78,
+          "reward": 4467,
+          "difficulty": 0.673,
+          "underworld_power": 7450,
+          "police_power": 253354
+        },
+        "Pittsburg city": {
+          "population": 77131,
+          "gdp_thousands": 6352719,
+          "crime_rate": 5.78,
+          "reward": 4325,
+          "difficulty": 0.673,
+          "underworld_power": 6688,
+          "police_power": 227427
+        },
+        "Walnut Creek city": {
+          "population": 70817,
+          "gdp_thousands": 5832681,
+          "crime_rate": 5.78,
+          "reward": 4119,
+          "difficulty": 0.673,
+          "underworld_power": 6141,
+          "police_power": 208810
+        },
+        "Brentwood city": {
+          "population": 66286,
+          "gdp_thousands": 5459495,
+          "crime_rate": 5.78,
+          "reward": 4032,
+          "difficulty": 0.673,
+          "underworld_power": 5748,
+          "police_power": 195450
+        },
+        "Oakley city": {
+          "population": 47158,
+          "gdp_thousands": 3884061,
+          "crime_rate": 5.78,
+          "reward": 3543,
+          "difficulty": 0.673,
+          "underworld_power": 4089,
+          "police_power": 139049
+        },
+        "Danville town": {
+          "population": 43410,
+          "gdp_thousands": 3575365,
+          "crime_rate": 5.78,
+          "reward": 3390,
+          "difficulty": 0.673,
+          "underworld_power": 3764,
+          "police_power": 127998
+        },
+        "Martinez city": {
+          "population": 37006,
+          "gdp_thousands": 3047915,
+          "crime_rate": 5.78,
+          "reward": 3195,
+          "difficulty": 0.673,
+          "underworld_power": 3209,
+          "police_power": 109115
+        },
+        "Pleasant Hill city": {
+          "population": 34169,
+          "gdp_thousands": 2814252,
+          "crime_rate": 5.78,
+          "reward": 3108,
+          "difficulty": 0.673,
+          "underworld_power": 2963,
+          "police_power": 100750
+        },
+        "San Pablo city": {
+          "population": 31562,
+          "gdp_thousands": 2599532,
+          "crime_rate": 5.78,
+          "reward": 2999,
+          "difficulty": 0.673,
+          "underworld_power": 2737,
+          "police_power": 93063
+        },
+        "Hercules city": {
+          "population": 26499,
+          "gdp_thousands": 2182529,
+          "crime_rate": 5.78,
+          "reward": 2760,
+          "difficulty": 0.673,
+          "underworld_power": 2298,
+          "police_power": 78135
+        },
+        "El Cerrito city": {
+          "population": 26409,
+          "gdp_thousands": 2175117,
+          "crime_rate": 5.78,
+          "reward": 2738,
+          "difficulty": 0.673,
+          "underworld_power": 2290,
+          "police_power": 77869
+        },
+        "Lafayette city": {
+          "population": 25371,
+          "gdp_thousands": 2089624,
+          "crime_rate": 5.78,
+          "reward": 2684,
+          "difficulty": 0.673,
+          "underworld_power": 2200,
+          "police_power": 74809
+        },
+        "Orinda city": {
+          "population": 19573,
+          "gdp_thousands": 1612085,
+          "crime_rate": 5.78,
+          "reward": 2325,
+          "difficulty": 0.673,
+          "underworld_power": 1697,
+          "police_power": 57713
+        },
+        "Pinole city": {
+          "population": 18663,
+          "gdp_thousands": 1537135,
+          "crime_rate": 5.78,
+          "reward": 2227,
+          "difficulty": 0.673,
+          "underworld_power": 1618,
+          "police_power": 55029
+        },
+        "Moraga town": {
+          "population": 16698,
+          "gdp_thousands": 1375292,
+          "crime_rate": 5.78,
+          "reward": 2107,
+          "difficulty": 0.673,
+          "underworld_power": 1448,
+          "police_power": 49235
+        },
+        "Clayton city": {
+          "population": 10933,
+          "gdp_thousands": 900471,
+          "crime_rate": 5.78,
+          "reward": 1574,
+          "difficulty": 0.673,
+          "underworld_power": 948,
+          "police_power": 32237
+        },
+        "Contra Costa (unincorporated)": {
+          "population": 177176,
+          "gdp_thousands": 14592709,
+          "crime_rate": 5.78,
+          "reward": 5478,
+          "difficulty": 0.673,
+          "underworld_power": 15363,
+          "police_power": 522419
+        }
+      }
+    },
+    "Del Norte County": {
+      "fips": "06015",
+      "gdp_thousands": 1088160,
+      "gdp_estimated": false,
+      "population": 27009,
+      "homicide_rate": 10.310766502,
+      "difficulty": 0.533,
+      "cities": {
+        "Crescent City city": {
+          "population": 6209,
+          "gdp_thousands": 250153,
+          "crime_rate": 10.31,
+          "reward": 596,
+          "difficulty": 0.533,
+          "underworld_power": 960,
+          "police_power": 8955
+        },
+        "Del Norte (unincorporated)": {
+          "population": 20800,
+          "gdp_thousands": 838007,
+          "crime_rate": 10.31,
+          "reward": 1487,
+          "difficulty": 0.533,
+          "underworld_power": 3217,
+          "police_power": 30001
+        }
+      }
+    },
+    "El Dorado County": {
+      "fips": "06017",
+      "gdp_thousands": 11555433,
+      "gdp_estimated": false,
+      "population": 192823,
+      "homicide_rate": 2.5588324499,
+      "difficulty": 0.322,
+      "cities": {
+        "South Lake Tahoe city": {
+          "population": 21225,
+          "gdp_thousands": 1271964,
+          "crime_rate": 2.56,
+          "reward": 1955,
+          "difficulty": 0.322,
+          "underworld_power": 815,
+          "police_power": 45536
+        },
+        "Placerville city": {
+          "population": 10695,
+          "gdp_thousands": 640926,
+          "crime_rate": 2.56,
+          "reward": 1205,
+          "difficulty": 0.322,
+          "underworld_power": 411,
+          "police_power": 22945
+        },
+        "El Dorado (unincorporated)": {
+          "population": 160903,
+          "gdp_thousands": 9642543,
+          "crime_rate": 2.56,
+          "reward": 4967,
+          "difficulty": 0.322,
+          "underworld_power": 6176,
+          "police_power": 345203
+        }
+      }
+    },
+    "Fresno County": {
+      "fips": "06019",
+      "gdp_thousands": 64216914,
+      "gdp_estimated": false,
+      "population": 1024125,
+      "homicide_rate": 8.0983528411,
+      "difficulty": 0.843,
+      "cities": {
+        "Fresno city": {
+          "population": 550105,
+          "gdp_thousands": 34493880,
+          "crime_rate": 8.1,
+          "reward": 5848,
+          "difficulty": 0.843,
+          "underworld_power": 66824,
+          "police_power": 1234881
+        },
+        "Clovis city": {
+          "population": 127993,
+          "gdp_thousands": 8025695,
+          "crime_rate": 8.1,
+          "reward": 4619,
+          "difficulty": 0.843,
+          "underworld_power": 15548,
+          "police_power": 287320
+        },
+        "Sanger city": {
+          "population": 26649,
+          "gdp_thousands": 1671003,
+          "crime_rate": 8.1,
+          "reward": 2357,
+          "difficulty": 0.843,
+          "underworld_power": 3237,
+          "police_power": 59822
+        },
+        "Reedley city": {
+          "population": 26138,
+          "gdp_thousands": 1638961,
+          "crime_rate": 8.1,
+          "reward": 2336,
+          "difficulty": 0.843,
+          "underworld_power": 3175,
+          "police_power": 58675
+        },
+        "Selma city": {
+          "population": 24505,
+          "gdp_thousands": 1536565,
+          "crime_rate": 8.1,
+          "reward": 2216,
+          "difficulty": 0.843,
+          "underworld_power": 2977,
+          "police_power": 55009
+        },
+        "Kerman city": {
+          "population": 17497,
+          "gdp_thousands": 1097134,
+          "crime_rate": 8.1,
+          "reward": 1814,
+          "difficulty": 0.843,
+          "underworld_power": 2125,
+          "police_power": 39277
+        },
+        "Coalinga city": {
+          "population": 16722,
+          "gdp_thousands": 1048539,
+          "crime_rate": 8.1,
+          "reward": 1727,
+          "difficulty": 0.843,
+          "underworld_power": 2031,
+          "police_power": 37538
+        },
+        "Parlier city": {
+          "population": 14429,
+          "gdp_thousands": 904758,
+          "crime_rate": 8.1,
+          "reward": 1596,
+          "difficulty": 0.843,
+          "underworld_power": 1753,
+          "police_power": 32390
+        },
+        "Kingsburg city": {
+          "population": 13128,
+          "gdp_thousands": 823180,
+          "crime_rate": 8.1,
+          "reward": 1466,
+          "difficulty": 0.843,
+          "underworld_power": 1595,
+          "police_power": 29470
+        },
+        "Mendota city": {
+          "population": 12623,
+          "gdp_thousands": 791514,
+          "crime_rate": 8.1,
+          "reward": 1411,
+          "difficulty": 0.843,
+          "underworld_power": 1533,
+          "police_power": 28336
+        },
+        "Orange Cove city": {
+          "population": 9708,
+          "gdp_thousands": 608732,
+          "crime_rate": 8.1,
+          "reward": 1161,
+          "difficulty": 0.843,
+          "underworld_power": 1179,
+          "police_power": 21793
+        },
+        "Firebaugh city": {
+          "population": 8424,
+          "gdp_thousands": 528219,
+          "crime_rate": 8.1,
+          "reward": 987,
+          "difficulty": 0.843,
+          "underworld_power": 1023,
+          "police_power": 18910
+        },
+        "Fowler city": {
+          "population": 7470,
+          "gdp_thousands": 468400,
+          "crime_rate": 8.1,
+          "reward": 922,
+          "difficulty": 0.843,
+          "underworld_power": 907,
+          "police_power": 16769
+        },
+        "Huron city": {
+          "population": 6737,
+          "gdp_thousands": 422438,
+          "crime_rate": 8.1,
+          "reward": 846,
+          "difficulty": 0.843,
+          "underworld_power": 818,
+          "police_power": 15123
+        },
+        "San Joaquin city": {
+          "population": 3679,
+          "gdp_thousands": 230688,
+          "crime_rate": 8.1,
+          "reward": 585,
+          "difficulty": 0.843,
+          "underworld_power": 447,
+          "police_power": 8259
+        },
+        "Fresno (unincorporated)": {
+          "population": 158318,
+          "gdp_thousands": 9927208,
+          "crime_rate": 8.1,
+          "reward": 5032,
+          "difficulty": 0.843,
+          "underworld_power": 19232,
+          "police_power": 355394
+        }
+      }
+    },
+    "Glenn County": {
+      "fips": "06021",
+      "gdp_thousands": 1468090,
+      "gdp_estimated": false,
+      "population": 28304,
+      "homicide_rate": 8.092087961,
+      "difficulty": 0.49,
+      "cities": {
+        "Orland city": {
+          "population": 8605,
+          "gdp_thousands": 446329,
+          "crime_rate": 8.09,
+          "reward": 868,
+          "difficulty": 0.49,
+          "underworld_power": 1044,
+          "police_power": 15979
+        },
+        "Willows city": {
+          "population": 6079,
+          "gdp_thousands": 315309,
+          "crime_rate": 8.09,
+          "reward": 726,
+          "difficulty": 0.49,
+          "underworld_power": 738,
+          "police_power": 11288
+        },
+        "Glenn (unincorporated)": {
+          "population": 13620,
+          "gdp_thousands": 706452,
+          "crime_rate": 8.09,
+          "reward": 1303,
+          "difficulty": 0.49,
+          "underworld_power": 1653,
+          "police_power": 25291
+        }
+      }
+    },
+    "Humboldt County": {
+      "fips": "06023",
+      "gdp_thousands": 7590512,
+      "gdp_estimated": false,
+      "population": 132380,
+      "homicide_rate": 8.0853052203,
+      "difficulty": 0.629,
+      "cities": {
+        "Eureka city": {
+          "population": 25412,
+          "gdp_thousands": 1457093,
+          "crime_rate": 8.09,
+          "reward": 2162,
+          "difficulty": 0.629,
+          "underworld_power": 3082,
+          "police_power": 52164
+        },
+        "Arcata city": {
+          "population": 18748,
+          "gdp_thousands": 1074988,
+          "crime_rate": 8.09,
+          "reward": 1781,
+          "difficulty": 0.629,
+          "underworld_power": 2274,
+          "police_power": 38485
+        },
+        "Fortuna city": {
+          "population": 12114,
+          "gdp_thousands": 694602,
+          "crime_rate": 8.09,
+          "reward": 1292,
+          "difficulty": 0.629,
+          "underworld_power": 1469,
+          "police_power": 24867
+        },
+        "Rio Dell city": {
+          "population": 3259,
+          "gdp_thousands": 186867,
+          "crime_rate": 8.09,
+          "reward": 531,
+          "difficulty": 0.629,
+          "underworld_power": 395,
+          "police_power": 6690
+        },
+        "Ferndale city": {
+          "population": 1361,
+          "gdp_thousands": 78038,
+          "crime_rate": 8.09,
+          "reward": 335,
+          "difficulty": 0.629,
+          "underworld_power": 165,
+          "police_power": 2794
+        },
+        "Blue Lake city": {
+          "population": 1159,
+          "gdp_thousands": 66455,
+          "crime_rate": 8.09,
+          "reward": 313,
+          "difficulty": 0.629,
+          "underworld_power": 141,
+          "police_power": 2379
+        },
+        "Trinidad city": {
+          "population": 321,
+          "gdp_thousands": 18405,
+          "crime_rate": 8.09,
+          "reward": 161,
+          "difficulty": 0.629,
+          "underworld_power": 39,
+          "police_power": 659
+        },
+        "Humboldt (unincorporated)": {
+          "population": 70006,
+          "gdp_thousands": 4014064,
+          "crime_rate": 8.09,
+          "reward": 3608,
+          "difficulty": 0.629,
+          "underworld_power": 8490,
+          "police_power": 143703
+        }
+      }
+    },
+    "Imperial County": {
+      "fips": "06025",
+      "gdp_thousands": 12907423,
+      "gdp_estimated": false,
+      "population": 181724,
+      "homicide_rate": 4.5775114753,
+      "difficulty": 0.463,
+      "cities": {
+        "El Centro city": {
+          "population": 44230,
+          "gdp_thousands": 3141551,
+          "crime_rate": 4.58,
+          "reward": 3227,
+          "difficulty": 0.463,
+          "underworld_power": 3037,
+          "police_power": 112468
+        },
+        "Calexico city": {
+          "population": 38744,
+          "gdp_thousands": 2751894,
+          "crime_rate": 4.58,
+          "reward": 3053,
+          "difficulty": 0.463,
+          "underworld_power": 2660,
+          "police_power": 98518
+        },
+        "Brawley city": {
+          "population": 28188,
+          "gdp_thousands": 2002126,
+          "crime_rate": 4.58,
+          "reward": 2618,
+          "difficulty": 0.463,
+          "underworld_power": 1935,
+          "police_power": 71676
+        },
+        "Imperial city": {
+          "population": 22102,
+          "gdp_thousands": 1569852,
+          "crime_rate": 4.58,
+          "reward": 2281,
+          "difficulty": 0.463,
+          "underworld_power": 1518,
+          "police_power": 56201
+        },
+        "Calipatria city": {
+          "population": 6522,
+          "gdp_thousands": 463242,
+          "crime_rate": 4.58,
+          "reward": 900,
+          "difficulty": 0.463,
+          "underworld_power": 448,
+          "police_power": 16584
+        },
+        "Holtville city": {
+          "population": 5612,
+          "gdp_thousands": 398606,
+          "crime_rate": 4.58,
+          "reward": 802,
+          "difficulty": 0.463,
+          "underworld_power": 385,
+          "police_power": 14270
+        },
+        "Westmorland city": {
+          "population": 2045,
+          "gdp_thousands": 145251,
+          "crime_rate": 4.58,
+          "reward": 433,
+          "difficulty": 0.463,
+          "underworld_power": 140,
+          "police_power": 5200
+        },
+        "Imperial (unincorporated)": {
+          "population": 34281,
+          "gdp_thousands": 2434901,
+          "crime_rate": 4.58,
+          "reward": 2923,
+          "difficulty": 0.463,
+          "underworld_power": 2354,
+          "police_power": 87169
+        }
+      }
+    },
+    "Inyo County": {
+      "fips": "06027",
+      "gdp_thousands": 1555469,
+      "gdp_estimated": false,
+      "population": 18485,
+      "homicide_rate": null,
+      "difficulty": 0.329,
+      "cities": {
+        "Bishop city": {
+          "population": 3746,
+          "gdp_thousands": 315217,
+          "crime_rate": 3.0,
+          "reward": 715,
+          "difficulty": 0.329,
+          "underworld_power": 169,
+          "police_power": 11285
+        },
+        "Inyo (unincorporated)": {
+          "population": 14739,
+          "gdp_thousands": 1240252,
+          "crime_rate": 3.0,
+          "reward": 1912,
+          "difficulty": 0.329,
+          "underworld_power": 663,
+          "police_power": 44401
+        }
+      }
+    },
+    "Kern County": {
+      "fips": "06029",
+      "gdp_thousands": 63069657,
+      "gdp_estimated": false,
+      "population": 922529,
+      "homicide_rate": 11.472121788,
+      "difficulty": 0.886,
+      "cities": {
+        "Bakersfield city": {
+          "population": 417468,
+          "gdp_thousands": 28540635,
+          "crime_rate": 11.47,
+          "reward": 5804,
+          "difficulty": 0.886,
+          "underworld_power": 71839,
+          "police_power": 1021755
+        },
+        "Delano city": {
+          "population": 53198,
+          "gdp_thousands": 3636936,
+          "crime_rate": 11.47,
+          "reward": 3434,
+          "difficulty": 0.886,
+          "underworld_power": 9154,
+          "police_power": 130202
+        },
+        "Ridgecrest city": {
+          "population": 28373,
+          "gdp_thousands": 1939749,
+          "crime_rate": 11.47,
+          "reward": 2575,
+          "difficulty": 0.886,
+          "underworld_power": 4882,
+          "police_power": 69443
+        },
+        "Wasco city": {
+          "population": 27409,
+          "gdp_thousands": 1873844,
+          "crime_rate": 11.47,
+          "reward": 2510,
+          "difficulty": 0.886,
+          "underworld_power": 4717,
+          "police_power": 67084
+        },
+        "Shafter city": {
+          "population": 22754,
+          "gdp_thousands": 1555600,
+          "crime_rate": 11.47,
+          "reward": 2259,
+          "difficulty": 0.886,
+          "underworld_power": 3916,
+          "police_power": 55690
+        },
+        "Arvin city": {
+          "population": 19661,
+          "gdp_thousands": 1344144,
+          "crime_rate": 11.47,
+          "reward": 2042,
+          "difficulty": 0.886,
+          "underworld_power": 3383,
+          "police_power": 48120
+        },
+        "McFarland city": {
+          "population": 14365,
+          "gdp_thousands": 982078,
+          "crime_rate": 11.47,
+          "reward": 1672,
+          "difficulty": 0.886,
+          "underworld_power": 2472,
+          "police_power": 35158
+        },
+        "California City city": {
+          "population": 13174,
+          "gdp_thousands": 900654,
+          "crime_rate": 11.47,
+          "reward": 1585,
+          "difficulty": 0.886,
+          "underworld_power": 2267,
+          "police_power": 32243
+        },
+        "Tehachapi city": {
+          "population": 11114,
+          "gdp_thousands": 759820,
+          "crime_rate": 11.47,
+          "reward": 1379,
+          "difficulty": 0.886,
+          "underworld_power": 1913,
+          "police_power": 27202
+        },
+        "Taft city": {
+          "population": 6988,
+          "gdp_thousands": 477741,
+          "crime_rate": 11.47,
+          "reward": 955,
+          "difficulty": 0.886,
+          "underworld_power": 1203,
+          "police_power": 17103
+        },
+        "Maricopa city": {
+          "population": 1012,
+          "gdp_thousands": 69186,
+          "crime_rate": 11.47,
+          "reward": 324,
+          "difficulty": 0.886,
+          "underworld_power": 174,
+          "police_power": 2477
+        },
+        "Kern (unincorporated)": {
+          "population": 307013,
+          "gdp_thousands": 20989270,
+          "crime_rate": 11.47,
+          "reward": 5728,
+          "difficulty": 0.886,
+          "underworld_power": 52831,
+          "police_power": 751416
+        }
+      }
+    },
+    "Kings County": {
+      "fips": "06031",
+      "gdp_thousands": 9220195,
+      "gdp_estimated": false,
+      "population": 154913,
+      "homicide_rate": 6.6899590311,
+      "difficulty": 0.563,
+      "cities": {
+        "Hanford city": {
+          "population": 60594,
+          "gdp_thousands": 3606466,
+          "crime_rate": 6.69,
+          "reward": 3412,
+          "difficulty": 0.563,
+          "underworld_power": 6081,
+          "police_power": 129111
+        },
+        "Lemoore city": {
+          "population": 27057,
+          "gdp_thousands": 1610393,
+          "crime_rate": 6.69,
+          "reward": 2314,
+          "difficulty": 0.563,
+          "underworld_power": 2715,
+          "police_power": 57652
+        },
+        "Corcoran city": {
+          "population": 22627,
+          "gdp_thousands": 1346725,
+          "crime_rate": 6.69,
+          "reward": 2053,
+          "difficulty": 0.563,
+          "underworld_power": 2271,
+          "police_power": 48213
+        },
+        "Avenal city": {
+          "population": 14108,
+          "gdp_thousands": 839687,
+          "crime_rate": 6.69,
+          "reward": 1498,
+          "difficulty": 0.563,
+          "underworld_power": 1416,
+          "police_power": 30061
+        },
+        "Kings (unincorporated)": {
+          "population": 30527,
+          "gdp_thousands": 1816924,
+          "crime_rate": 6.69,
+          "reward": 2444,
+          "difficulty": 0.563,
+          "underworld_power": 3063,
+          "police_power": 65046
+        }
+      }
+    },
+    "Lake County": {
+      "fips": "06033",
+      "gdp_thousands": 2694949,
+      "gdp_estimated": false,
+      "population": 67764,
+      "homicide_rate": 9.6710523424,
+      "difficulty": 0.611,
+      "cities": {
+        "Clearlake city": {
+          "population": 16636,
+          "gdp_thousands": 661607,
+          "crime_rate": 9.67,
+          "reward": 1248,
+          "difficulty": 0.611,
+          "underworld_power": 2413,
+          "police_power": 23686
+        },
+        "Lakeport city": {
+          "population": 5104,
+          "gdp_thousands": 202984,
+          "crime_rate": 9.67,
+          "reward": 552,
+          "difficulty": 0.611,
+          "underworld_power": 740,
+          "police_power": 7267
+        },
+        "Lake (unincorporated)": {
+          "population": 46024,
+          "gdp_thousands": 1830358,
+          "crime_rate": 9.67,
+          "reward": 2466,
+          "difficulty": 0.611,
+          "underworld_power": 6677,
+          "police_power": 65527
+        }
+      }
+    },
+    "Lassen County": {
+      "fips": "06035",
+      "gdp_thousands": 1470539,
+      "gdp_estimated": false,
+      "population": 28340,
+      "homicide_rate": 5.9652729342,
+      "difficulty": 0.332,
+      "cities": {
+        "Susanville city": {
+          "population": 12359,
+          "gdp_thousands": 641298,
+          "crime_rate": 5.97,
+          "reward": 1216,
+          "difficulty": 0.332,
+          "underworld_power": 1106,
+          "police_power": 22958
+        },
+        "Lassen (unincorporated)": {
+          "population": 15981,
+          "gdp_thousands": 829241,
+          "crime_rate": 5.97,
+          "reward": 1477,
+          "difficulty": 0.332,
+          "underworld_power": 1430,
+          "police_power": 29687
+        }
+      }
+    },
+    "Los Angeles County": {
+      "fips": "06037",
+      "gdp_thousands": 1002965029,
+      "gdp_estimated": false,
+      "population": 9757179,
+      "homicide_rate": 6.2793965795,
+      "difficulty": 0.792,
+      "cities": {
+        "Los Angeles city": {
+          "population": 3878704,
+          "gdp_thousands": 398701763,
+          "crime_rate": 6.28,
+          "reward": 6000,
+          "difficulty": 0.792,
+          "underworld_power": 365339,
+          "police_power": 14273523
+        },
+        "Long Beach city": {
+          "population": 450901,
+          "gdp_thousands": 46349250,
+          "crime_rate": 6.28,
+          "reward": 5913,
+          "difficulty": 0.792,
+          "underworld_power": 42471,
+          "police_power": 1659303
+        },
+        "Santa Clarita city": {
+          "population": 229159,
+          "gdp_thousands": 23555831,
+          "crime_rate": 6.28,
+          "reward": 5761,
+          "difficulty": 0.792,
+          "underworld_power": 21585,
+          "police_power": 843299
+        },
+        "Glendale city": {
+          "population": 187823,
+          "gdp_thousands": 19306799,
+          "crime_rate": 6.28,
+          "reward": 5696,
+          "difficulty": 0.792,
+          "underworld_power": 17691,
+          "police_power": 691183
+        },
+        "Lancaster city": {
+          "population": 167426,
+          "gdp_thousands": 17210140,
+          "crime_rate": 6.28,
+          "reward": 5598,
+          "difficulty": 0.792,
+          "underworld_power": 15770,
+          "police_power": 616123
+        },
+        "Palmdale city": {
+          "population": 162536,
+          "gdp_thousands": 16707485,
+          "crime_rate": 6.28,
+          "reward": 5565,
+          "difficulty": 0.792,
+          "underworld_power": 15309,
+          "police_power": 598128
+        },
+        "Pomona city": {
+          "population": 147966,
+          "gdp_thousands": 15209798,
+          "crime_rate": 6.28,
+          "reward": 5500,
+          "difficulty": 0.792,
+          "underworld_power": 13937,
+          "police_power": 544511
+        },
+        "Torrance city": {
+          "population": 139576,
+          "gdp_thousands": 14347368,
+          "crime_rate": 6.28,
+          "reward": 5445,
+          "difficulty": 0.792,
+          "underworld_power": 13147,
+          "police_power": 513636
+        },
+        "Pasadena city": {
+          "population": 137195,
+          "gdp_thousands": 14102619,
+          "crime_rate": 6.28,
+          "reward": 5424,
+          "difficulty": 0.792,
+          "underworld_power": 12923,
+          "police_power": 504874
+        },
+        "Downey city": {
+          "population": 109368,
+          "gdp_thousands": 11242212,
+          "crime_rate": 6.28,
+          "reward": 5271,
+          "difficulty": 0.792,
+          "underworld_power": 10301,
+          "police_power": 402471
+        },
+        "West Covina city": {
+          "population": 106920,
+          "gdp_thousands": 10990576,
+          "crime_rate": 6.28,
+          "reward": 5250,
+          "difficulty": 0.792,
+          "underworld_power": 10071,
+          "police_power": 393463
+        },
+        "El Monte city": {
+          "population": 104639,
+          "gdp_thousands": 10756106,
+          "crime_rate": 6.28,
+          "reward": 5228,
+          "difficulty": 0.792,
+          "underworld_power": 9856,
+          "police_power": 385069
+        },
+        "Burbank city": {
+          "population": 103533,
+          "gdp_thousands": 10642418,
+          "crime_rate": 6.28,
+          "reward": 5206,
+          "difficulty": 0.792,
+          "underworld_power": 9752,
+          "police_power": 380999
+        },
+        "Inglewood city": {
+          "population": 102774,
+          "gdp_thousands": 10564398,
+          "crime_rate": 6.28,
+          "reward": 5195,
+          "difficulty": 0.792,
+          "underworld_power": 9680,
+          "police_power": 378205
+        },
+        "Norwalk city": {
+          "population": 98230,
+          "gdp_thousands": 10097309,
+          "crime_rate": 6.28,
+          "reward": 5065,
+          "difficulty": 0.792,
+          "underworld_power": 9252,
+          "police_power": 361484
+        },
+        "Carson city": {
+          "population": 91358,
+          "gdp_thousands": 9390919,
+          "crime_rate": 6.28,
+          "reward": 4902,
+          "difficulty": 0.792,
+          "underworld_power": 8605,
+          "police_power": 336195
+        },
+        "Compton city": {
+          "population": 91129,
+          "gdp_thousands": 9367379,
+          "crime_rate": 6.28,
+          "reward": 4891,
+          "difficulty": 0.792,
+          "underworld_power": 8584,
+          "police_power": 335352
+        },
+        "South Gate city": {
+          "population": 90805,
+          "gdp_thousands": 9334074,
+          "crime_rate": 6.28,
+          "reward": 4880,
+          "difficulty": 0.792,
+          "underworld_power": 8553,
+          "police_power": 334160
+        },
+        "Santa Monica city": {
+          "population": 90729,
+          "gdp_thousands": 9326262,
+          "crime_rate": 6.28,
+          "reward": 4869,
+          "difficulty": 0.792,
+          "underworld_power": 8546,
+          "police_power": 333880
+        },
+        "Whittier city": {
+          "population": 85589,
+          "gdp_thousands": 8797909,
+          "crime_rate": 6.28,
+          "reward": 4782,
+          "difficulty": 0.792,
+          "underworld_power": 8062,
+          "police_power": 314965
+        },
+        "Hawthorne city": {
+          "population": 83633,
+          "gdp_thousands": 8596846,
+          "crime_rate": 6.28,
+          "reward": 4706,
+          "difficulty": 0.792,
+          "underworld_power": 7877,
+          "police_power": 307767
+        },
+        "Alhambra city": {
+          "population": 80279,
+          "gdp_thousands": 8252080,
+          "crime_rate": 6.28,
+          "reward": 4652,
+          "difficulty": 0.792,
+          "underworld_power": 7562,
+          "police_power": 295424
+        },
+        "Lakewood city": {
+          "population": 78494,
+          "gdp_thousands": 8068596,
+          "crime_rate": 6.28,
+          "reward": 4630,
+          "difficulty": 0.792,
+          "underworld_power": 7393,
+          "police_power": 288856
+        },
+        "Bellflower city": {
+          "population": 75716,
+          "gdp_thousands": 7783038,
+          "crime_rate": 6.28,
+          "reward": 4586,
+          "difficulty": 0.792,
+          "underworld_power": 7132,
+          "police_power": 278633
+        },
+        "Baldwin Park city": {
+          "population": 69247,
+          "gdp_thousands": 7118073,
+          "crime_rate": 6.28,
+          "reward": 4478,
+          "difficulty": 0.792,
+          "underworld_power": 6522,
+          "police_power": 254827
+        },
+        "Redondo Beach city": {
+          "population": 68075,
+          "gdp_thousands": 6997600,
+          "crime_rate": 6.28,
+          "reward": 4423,
+          "difficulty": 0.792,
+          "underworld_power": 6412,
+          "police_power": 250514
+        },
+        "Lynwood city": {
+          "population": 63596,
+          "gdp_thousands": 6537193,
+          "crime_rate": 6.28,
+          "reward": 4369,
+          "difficulty": 0.792,
+          "underworld_power": 5990,
+          "police_power": 234032
+        },
+        "Montebello city": {
+          "population": 60617,
+          "gdp_thousands": 6230974,
+          "crime_rate": 6.28,
+          "reward": 4293,
+          "difficulty": 0.792,
+          "underworld_power": 5710,
+          "police_power": 223069
+        },
+        "Pico Rivera city": {
+          "population": 59363,
+          "gdp_thousands": 6102072,
+          "crime_rate": 6.28,
+          "reward": 4228,
+          "difficulty": 0.792,
+          "underworld_power": 5591,
+          "police_power": 218454
+        },
+        "Gardena city": {
+          "population": 58921,
+          "gdp_thousands": 6056638,
+          "crime_rate": 6.28,
+          "reward": 4217,
+          "difficulty": 0.792,
+          "underworld_power": 5550,
+          "police_power": 216828
+        },
+        "Monterey Park city": {
+          "population": 57996,
+          "gdp_thousands": 5961555,
+          "crime_rate": 6.28,
+          "reward": 4184,
+          "difficulty": 0.792,
+          "underworld_power": 5463,
+          "police_power": 213424
+        },
+        "Arcadia city": {
+          "population": 54472,
+          "gdp_thousands": 5599314,
+          "crime_rate": 6.28,
+          "reward": 4064,
+          "difficulty": 0.792,
+          "underworld_power": 5131,
+          "police_power": 200455
+        },
+        "Diamond Bar city": {
+          "population": 52292,
+          "gdp_thousands": 5375226,
+          "crime_rate": 6.28,
+          "reward": 4021,
+          "difficulty": 0.792,
+          "underworld_power": 4925,
+          "police_power": 192433
+        },
+        "Huntington Park city": {
+          "population": 52166,
+          "gdp_thousands": 5362274,
+          "crime_rate": 6.28,
+          "reward": 3999,
+          "difficulty": 0.792,
+          "underworld_power": 4914,
+          "police_power": 191969
+        },
+        "Paramount city": {
+          "population": 51169,
+          "gdp_thousands": 5259790,
+          "crime_rate": 6.28,
+          "reward": 3978,
+          "difficulty": 0.792,
+          "underworld_power": 4820,
+          "police_power": 188300
+        },
+        "Glendora city": {
+          "population": 50101,
+          "gdp_thousands": 5150008,
+          "crime_rate": 6.28,
+          "reward": 3967,
+          "difficulty": 0.792,
+          "underworld_power": 4719,
+          "police_power": 184370
+        },
+        "Rosemead city": {
+          "population": 49582,
+          "gdp_thousands": 5096658,
+          "crime_rate": 6.28,
+          "reward": 3923,
+          "difficulty": 0.792,
+          "underworld_power": 4670,
+          "police_power": 182460
+        },
+        "Covina city": {
+          "population": 49245,
+          "gdp_thousands": 5062017,
+          "crime_rate": 6.28,
+          "reward": 3912,
+          "difficulty": 0.792,
+          "underworld_power": 4638,
+          "police_power": 181220
+        },
+        "Azusa city": {
+          "population": 48383,
+          "gdp_thousands": 4973410,
+          "crime_rate": 6.28,
+          "reward": 3880,
+          "difficulty": 0.792,
+          "underworld_power": 4557,
+          "police_power": 178048
+        },
+        "Cerritos city": {
+          "population": 46851,
+          "gdp_thousands": 4815932,
+          "crime_rate": 6.28,
+          "reward": 3814,
+          "difficulty": 0.792,
+          "underworld_power": 4413,
+          "police_power": 172410
+        },
+        "La Mirada city": {
+          "population": 46367,
+          "gdp_thousands": 4766180,
+          "crime_rate": 6.28,
+          "reward": 3804,
+          "difficulty": 0.792,
+          "underworld_power": 4367,
+          "police_power": 170629
+        },
+        "Rancho Palos Verdes city": {
+          "population": 40064,
+          "gdp_thousands": 4118279,
+          "crime_rate": 6.28,
+          "reward": 3640,
+          "difficulty": 0.792,
+          "underworld_power": 3774,
+          "police_power": 147434
+        },
+        "Culver City city": {
+          "population": 39883,
+          "gdp_thousands": 4099674,
+          "crime_rate": 6.28,
+          "reward": 3630,
+          "difficulty": 0.792,
+          "underworld_power": 3757,
+          "police_power": 146768
+        },
+        "San Gabriel city": {
+          "population": 37926,
+          "gdp_thousands": 3898509,
+          "crime_rate": 6.28,
+          "reward": 3564,
+          "difficulty": 0.792,
+          "underworld_power": 3572,
+          "police_power": 139567
+        },
+        "Monrovia city": {
+          "population": 37787,
+          "gdp_thousands": 3884220,
+          "crime_rate": 6.28,
+          "reward": 3553,
+          "difficulty": 0.792,
+          "underworld_power": 3559,
+          "police_power": 139055
+        },
+        "Bell Gardens city": {
+          "population": 37565,
+          "gdp_thousands": 3861401,
+          "crime_rate": 6.28,
+          "reward": 3532,
+          "difficulty": 0.792,
+          "underworld_power": 3538,
+          "police_power": 138238
+        },
+        "La Puente city": {
+          "population": 36670,
+          "gdp_thousands": 3769401,
+          "crime_rate": 6.28,
+          "reward": 3510,
+          "difficulty": 0.792,
+          "underworld_power": 3454,
+          "police_power": 134945
+        },
+        "Claremont city": {
+          "population": 36139,
+          "gdp_thousands": 3714818,
+          "crime_rate": 6.28,
+          "reward": 3488,
+          "difficulty": 0.792,
+          "underworld_power": 3404,
+          "police_power": 132990
+        },
+        "Temple City city": {
+          "population": 34989,
+          "gdp_thousands": 3596607,
+          "crime_rate": 6.28,
+          "reward": 3401,
+          "difficulty": 0.792,
+          "underworld_power": 3296,
+          "police_power": 128759
+        },
+        "West Hollywood city": {
+          "population": 34371,
+          "gdp_thousands": 3533081,
+          "crime_rate": 6.28,
+          "reward": 3379,
+          "difficulty": 0.792,
+          "underworld_power": 3237,
+          "police_power": 126484
+        },
+        "Manhattan Beach city": {
+          "population": 33453,
+          "gdp_thousands": 3438718,
+          "crime_rate": 6.28,
+          "reward": 3358,
+          "difficulty": 0.792,
+          "underworld_power": 3151,
+          "police_power": 123106
+        },
+        "San Dimas city": {
+          "population": 33226,
+          "gdp_thousands": 3415384,
+          "crime_rate": 6.28,
+          "reward": 3347,
+          "difficulty": 0.792,
+          "underworld_power": 3130,
+          "police_power": 122271
+        },
+        "Bell city": {
+          "population": 31930,
+          "gdp_thousands": 3282165,
+          "crime_rate": 6.28,
+          "reward": 3282,
+          "difficulty": 0.792,
+          "underworld_power": 3008,
+          "police_power": 117502
+        },
+        "Beverly Hills city": {
+          "population": 31027,
+          "gdp_thousands": 3189343,
+          "crime_rate": 6.28,
+          "reward": 3249,
+          "difficulty": 0.792,
+          "underworld_power": 2922,
+          "police_power": 114178
+        },
+        "La Verne city": {
+          "population": 30192,
+          "gdp_thousands": 3103511,
+          "crime_rate": 6.28,
+          "reward": 3216,
+          "difficulty": 0.792,
+          "underworld_power": 2844,
+          "police_power": 111106
+        },
+        "Lawndale city": {
+          "population": 30160,
+          "gdp_thousands": 3100222,
+          "crime_rate": 6.28,
+          "reward": 3205,
+          "difficulty": 0.792,
+          "underworld_power": 2841,
+          "police_power": 110988
+        },
+        "Walnut city": {
+          "population": 27250,
+          "gdp_thousands": 2801096,
+          "crime_rate": 6.28,
+          "reward": 3086,
+          "difficulty": 0.792,
+          "underworld_power": 2567,
+          "police_power": 100279
+        },
+        "South Pasadena city": {
+          "population": 25656,
+          "gdp_thousands": 2637244,
+          "crime_rate": 6.28,
+          "reward": 3010,
+          "difficulty": 0.792,
+          "underworld_power": 2417,
+          "police_power": 94413
+        },
+        "Maywood city": {
+          "population": 23838,
+          "gdp_thousands": 2450368,
+          "crime_rate": 6.28,
+          "reward": 2934,
+          "difficulty": 0.792,
+          "underworld_power": 2245,
+          "police_power": 87723
+        },
+        "Duarte city": {
+          "population": 23493,
+          "gdp_thousands": 2414904,
+          "crime_rate": 6.28,
+          "reward": 2901,
+          "difficulty": 0.792,
+          "underworld_power": 2213,
+          "police_power": 86454
+        },
+        "San Fernando city": {
+          "population": 23488,
+          "gdp_thousands": 2414390,
+          "crime_rate": 6.28,
+          "reward": 2890,
+          "difficulty": 0.792,
+          "underworld_power": 2212,
+          "police_power": 86435
+        },
+        "Calabasas city": {
+          "population": 22256,
+          "gdp_thousands": 2287750,
+          "crime_rate": 6.28,
+          "reward": 2814,
+          "difficulty": 0.792,
+          "underworld_power": 2096,
+          "police_power": 81901
+        },
+        "Cudahy city": {
+          "population": 21694,
+          "gdp_thousands": 2229980,
+          "crime_rate": 6.28,
+          "reward": 2781,
+          "difficulty": 0.792,
+          "underworld_power": 2043,
+          "police_power": 79833
+        },
+        "Lomita city": {
+          "population": 19841,
+          "gdp_thousands": 2039506,
+          "crime_rate": 6.28,
+          "reward": 2662,
+          "difficulty": 0.792,
+          "underworld_power": 1869,
+          "police_power": 73014
+        },
+        "La Ca\u00f1ada Flintridge city": {
+          "population": 19621,
+          "gdp_thousands": 2016892,
+          "crime_rate": 6.28,
+          "reward": 2640,
+          "difficulty": 0.792,
+          "underworld_power": 1848,
+          "police_power": 72205
+        },
+        "Agoura Hills city": {
+          "population": 19429,
+          "gdp_thousands": 1997155,
+          "crime_rate": 6.28,
+          "reward": 2597,
+          "difficulty": 0.792,
+          "underworld_power": 1830,
+          "police_power": 71498
+        },
+        "South El Monte city": {
+          "population": 19121,
+          "gdp_thousands": 1965495,
+          "crime_rate": 6.28,
+          "reward": 2586,
+          "difficulty": 0.792,
+          "underworld_power": 1801,
+          "police_power": 70365
+        },
+        "Hermosa Beach city": {
+          "population": 18687,
+          "gdp_thousands": 1920883,
+          "crime_rate": 6.28,
+          "reward": 2564,
+          "difficulty": 0.792,
+          "underworld_power": 1760,
+          "police_power": 68768
+        },
+        "Santa Fe Springs city": {
+          "population": 18683,
+          "gdp_thousands": 1920472,
+          "crime_rate": 6.28,
+          "reward": 2553,
+          "difficulty": 0.792,
+          "underworld_power": 1760,
+          "police_power": 68753
+        },
+        "El Segundo city": {
+          "population": 16544,
+          "gdp_thousands": 1700599,
+          "crime_rate": 6.28,
+          "reward": 2390,
+          "difficulty": 0.792,
+          "underworld_power": 1558,
+          "police_power": 60881
+        },
+        "Artesia city": {
+          "population": 15662,
+          "gdp_thousands": 1609936,
+          "crime_rate": 6.28,
+          "reward": 2303,
+          "difficulty": 0.792,
+          "underworld_power": 1475,
+          "police_power": 57636
+        },
+        "Hawaiian Gardens city": {
+          "population": 13457,
+          "gdp_thousands": 1383278,
+          "crime_rate": 6.28,
+          "reward": 2118,
+          "difficulty": 0.792,
+          "underworld_power": 1268,
+          "police_power": 49521
+        },
+        "Palos Verdes Estates city": {
+          "population": 12668,
+          "gdp_thousands": 1302175,
+          "crime_rate": 6.28,
+          "reward": 1988,
+          "difficulty": 0.792,
+          "underworld_power": 1193,
+          "police_power": 46618
+        },
+        "San Marino city": {
+          "population": 12105,
+          "gdp_thousands": 1244303,
+          "crime_rate": 6.28,
+          "reward": 1922,
+          "difficulty": 0.792,
+          "underworld_power": 1140,
+          "police_power": 44546
+        },
+        "Commerce city": {
+          "population": 11882,
+          "gdp_thousands": 1221380,
+          "crime_rate": 6.28,
+          "reward": 1890,
+          "difficulty": 0.792,
+          "underworld_power": 1119,
+          "police_power": 43725
+        },
+        "Signal Hill city": {
+          "population": 11279,
+          "gdp_thousands": 1159396,
+          "crime_rate": 6.28,
+          "reward": 1835,
+          "difficulty": 0.792,
+          "underworld_power": 1062,
+          "police_power": 41506
+        },
+        "Sierra Madre city": {
+          "population": 10775,
+          "gdp_thousands": 1107589,
+          "crime_rate": 6.28,
+          "reward": 1825,
+          "difficulty": 0.792,
+          "underworld_power": 1015,
+          "police_power": 39652
+        },
+        "Malibu city": {
+          "population": 10298,
+          "gdp_thousands": 1058557,
+          "crime_rate": 6.28,
+          "reward": 1759,
+          "difficulty": 0.792,
+          "underworld_power": 970,
+          "police_power": 37896
+        },
+        "Rolling Hills Estates city": {
+          "population": 8007,
+          "gdp_thousands": 823059,
+          "crime_rate": 6.28,
+          "reward": 1455,
+          "difficulty": 0.792,
+          "underworld_power": 754,
+          "police_power": 29466
+        },
+        "Westlake Village city": {
+          "population": 7593,
+          "gdp_thousands": 780503,
+          "crime_rate": 6.28,
+          "reward": 1400,
+          "difficulty": 0.792,
+          "underworld_power": 715,
+          "police_power": 27942
+        },
+        "La Habra Heights city": {
+          "population": 5382,
+          "gdp_thousands": 553229,
+          "crime_rate": 6.28,
+          "reward": 1053,
+          "difficulty": 0.792,
+          "underworld_power": 507,
+          "police_power": 19806
+        },
+        "Avalon city": {
+          "population": 3267,
+          "gdp_thousands": 335823,
+          "crime_rate": 6.28,
+          "reward": 748,
+          "difficulty": 0.792,
+          "underworld_power": 308,
+          "police_power": 12022
+        },
+        "Hidden Hills city": {
+          "population": 1689,
+          "gdp_thousands": 173616,
+          "crime_rate": 6.28,
+          "reward": 520,
+          "difficulty": 0.792,
+          "underworld_power": 159,
+          "police_power": 6215
+        },
+        "Rolling Hills city": {
+          "population": 1645,
+          "gdp_thousands": 169093,
+          "crime_rate": 6.28,
+          "reward": 498,
+          "difficulty": 0.792,
+          "underworld_power": 155,
+          "police_power": 6054
+        },
+        "Irwindale city": {
+          "population": 1459,
+          "gdp_thousands": 149974,
+          "crime_rate": 6.28,
+          "reward": 454,
+          "difficulty": 0.792,
+          "underworld_power": 137,
+          "police_power": 5369
+        },
+        "Bradbury city": {
+          "population": 883,
+          "gdp_thousands": 90765,
+          "crime_rate": 6.28,
+          "reward": 357,
+          "difficulty": 0.792,
+          "underworld_power": 83,
+          "police_power": 3249
+        },
+        "Industry city": {
+          "population": 256,
+          "gdp_thousands": 26314,
+          "crime_rate": 6.28,
+          "reward": 204,
+          "difficulty": 0.792,
+          "underworld_power": 24,
+          "police_power": 942
+        },
+        "Vernon city": {
+          "population": 211,
+          "gdp_thousands": 21689,
+          "crime_rate": 6.28,
+          "reward": 183,
+          "difficulty": 0.792,
+          "underworld_power": 20,
+          "police_power": 776
+        },
+        "Los Angeles (unincorporated)": {
+          "population": 970753,
+          "gdp_thousands": 99786194,
+          "crime_rate": 6.28,
+          "reward": 5957,
+          "difficulty": 0.792,
+          "underworld_power": 91436,
+          "police_power": 3572346
+        }
+      }
+    },
+    "Madera County": {
+      "fips": "06039",
+      "gdp_thousands": 8846190,
+      "gdp_estimated": false,
+      "population": 165432,
+      "homicide_rate": 6.5528712042,
+      "difficulty": 0.533,
+      "cities": {
+        "Madera city": {
+          "population": 69094,
+          "gdp_thousands": 3694682,
+          "crime_rate": 6.55,
+          "reward": 3477,
+          "difficulty": 0.533,
+          "underworld_power": 6791,
+          "police_power": 132270
+        },
+        "Chowchilla city": {
+          "population": 19191,
+          "gdp_thousands": 1026205,
+          "crime_rate": 6.55,
+          "reward": 1694,
+          "difficulty": 0.533,
+          "underworld_power": 1886,
+          "police_power": 36738
+        },
+        "Madera (unincorporated)": {
+          "population": 77147,
+          "gdp_thousands": 4125303,
+          "crime_rate": 6.55,
+          "reward": 3673,
+          "difficulty": 0.533,
+          "underworld_power": 7583,
+          "police_power": 147686
+        }
+      }
+    },
+    "Marin County": {
+      "fips": "06041",
+      "gdp_thousands": 36853590,
+      "gdp_estimated": false,
+      "population": 256400,
+      "homicide_rate": 1.9242854166,
+      "difficulty": 0.365,
+      "cities": {
+        "San Rafael city": {
+          "population": 59961,
+          "gdp_thousands": 8618479,
+          "crime_rate": 1.92,
+          "reward": 4739,
+          "difficulty": 0.365,
+          "underworld_power": 1731,
+          "police_power": 308542
+        },
+        "Novato city": {
+          "population": 52311,
+          "gdp_thousands": 7518908,
+          "crime_rate": 1.92,
+          "reward": 4554,
+          "difficulty": 0.365,
+          "underworld_power": 1510,
+          "police_power": 269177
+        },
+        "Mill Valley city": {
+          "population": 13904,
+          "gdp_thousands": 1998487,
+          "crime_rate": 1.92,
+          "reward": 2607,
+          "difficulty": 0.365,
+          "underworld_power": 401,
+          "police_power": 71546
+        },
+        "Larkspur city": {
+          "population": 12807,
+          "gdp_thousands": 1840810,
+          "crime_rate": 1.92,
+          "reward": 2477,
+          "difficulty": 0.365,
+          "underworld_power": 370,
+          "police_power": 65901
+        },
+        "San Anselmo town": {
+          "population": 12645,
+          "gdp_thousands": 1817525,
+          "crime_rate": 1.92,
+          "reward": 2455,
+          "difficulty": 0.365,
+          "underworld_power": 365,
+          "police_power": 65067
+        },
+        "Corte Madera town": {
+          "population": 10006,
+          "gdp_thousands": 1438209,
+          "crime_rate": 1.92,
+          "reward": 2140,
+          "difficulty": 0.365,
+          "underworld_power": 289,
+          "police_power": 51488
+        },
+        "Tiburon town": {
+          "population": 8933,
+          "gdp_thousands": 1283982,
+          "crime_rate": 1.92,
+          "reward": 1966,
+          "difficulty": 0.365,
+          "underworld_power": 258,
+          "police_power": 45967
+        },
+        "Fairfax town": {
+          "population": 7476,
+          "gdp_thousands": 1074560,
+          "crime_rate": 1.92,
+          "reward": 1770,
+          "difficulty": 0.365,
+          "underworld_power": 216,
+          "police_power": 38469
+        },
+        "Sausalito city": {
+          "population": 7075,
+          "gdp_thousands": 1016923,
+          "crime_rate": 1.92,
+          "reward": 1683,
+          "difficulty": 0.365,
+          "underworld_power": 204,
+          "police_power": 36406
+        },
+        "Ross town": {
+          "population": 2297,
+          "gdp_thousands": 330158,
+          "crime_rate": 1.92,
+          "reward": 737,
+          "difficulty": 0.365,
+          "underworld_power": 66,
+          "police_power": 11820
+        },
+        "Belvedere city": {
+          "population": 2080,
+          "gdp_thousands": 298968,
+          "crime_rate": 1.92,
+          "reward": 683,
+          "difficulty": 0.365,
+          "underworld_power": 60,
+          "police_power": 10703
+        },
+        "Marin (unincorporated)": {
+          "population": 66905,
+          "gdp_thousands": 9616581,
+          "crime_rate": 1.92,
+          "reward": 4956,
+          "difficulty": 0.365,
+          "underworld_power": 1931,
+          "police_power": 344274
+        }
+      }
+    },
+    "Mariposa County": {
+      "fips": "06043",
+      "gdp_thousands": 1035723,
+      "gdp_estimated": false,
+      "population": 17048,
+      "homicide_rate": null,
+      "difficulty": 0.285,
+      "cities": {
+        "Mariposa": {
+          "population": 17048,
+          "gdp_thousands": 1035723,
+          "crime_rate": 3.0,
+          "reward": 1705,
+          "difficulty": 0.285,
+          "underworld_power": 767,
+          "police_power": 37079
+        }
+      }
+    },
+    "Mendocino County": {
+      "fips": "06045",
+      "gdp_thousands": 4692543,
+      "gdp_estimated": false,
+      "population": 89175,
+      "homicide_rate": 6.6664932294,
+      "difficulty": 0.509,
+      "cities": {
+        "Ukiah city": {
+          "population": 16067,
+          "gdp_thousands": 845473,
+          "crime_rate": 6.67,
+          "reward": 1509,
+          "difficulty": 0.509,
+          "underworld_power": 1607,
+          "police_power": 30268
+        },
+        "Fort Bragg city": {
+          "population": 7117,
+          "gdp_thousands": 374508,
+          "crime_rate": 6.67,
+          "reward": 781,
+          "difficulty": 0.509,
+          "underworld_power": 712,
+          "police_power": 13407
+        },
+        "Willits city": {
+          "population": 4844,
+          "gdp_thousands": 254899,
+          "crime_rate": 6.67,
+          "reward": 607,
+          "difficulty": 0.509,
+          "underworld_power": 484,
+          "police_power": 9125
+        },
+        "Point Arena city": {
+          "population": 449,
+          "gdp_thousands": 23627,
+          "crime_rate": 6.67,
+          "reward": 193,
+          "difficulty": 0.509,
+          "underworld_power": 45,
+          "police_power": 846
+        },
+        "Mendocino (unincorporated)": {
+          "population": 60698,
+          "gdp_thousands": 3194036,
+          "crime_rate": 6.67,
+          "reward": 3260,
+          "difficulty": 0.509,
+          "underworld_power": 6070,
+          "police_power": 114346
+        }
+      }
+    },
+    "Merced County": {
+      "fips": "06047",
+      "gdp_thousands": 13282268,
+      "gdp_estimated": false,
+      "population": 296774,
+      "homicide_rate": 7.8321208242,
+      "difficulty": 0.669,
+      "cities": {
+        "Merced city": {
+          "population": 96073,
+          "gdp_thousands": 4299794,
+          "crime_rate": 7.83,
+          "reward": 3717,
+          "difficulty": 0.669,
+          "underworld_power": 11287,
+          "police_power": 153933
+        },
+        "Los Banos city": {
+          "population": 48684,
+          "gdp_thousands": 2178876,
+          "crime_rate": 7.83,
+          "reward": 2749,
+          "difficulty": 0.669,
+          "underworld_power": 5719,
+          "police_power": 78004
+        },
+        "Atwater city": {
+          "population": 32248,
+          "gdp_thousands": 1443275,
+          "crime_rate": 7.83,
+          "reward": 2151,
+          "difficulty": 0.669,
+          "underworld_power": 3789,
+          "police_power": 51669
+        },
+        "Livingston city": {
+          "population": 14767,
+          "gdp_thousands": 660904,
+          "crime_rate": 7.83,
+          "reward": 1237,
+          "difficulty": 0.669,
+          "underworld_power": 1735,
+          "police_power": 23660
+        },
+        "Gustine city": {
+          "population": 6138,
+          "gdp_thousands": 274709,
+          "crime_rate": 7.83,
+          "reward": 661,
+          "difficulty": 0.669,
+          "underworld_power": 721,
+          "police_power": 9835
+        },
+        "Dos Palos city": {
+          "population": 5759,
+          "gdp_thousands": 257746,
+          "crime_rate": 7.83,
+          "reward": 628,
+          "difficulty": 0.669,
+          "underworld_power": 677,
+          "police_power": 9227
+        },
+        "Merced (unincorporated)": {
+          "population": 93105,
+          "gdp_thousands": 4166964,
+          "crime_rate": 7.83,
+          "reward": 3684,
+          "difficulty": 0.669,
+          "underworld_power": 10938,
+          "police_power": 149177
+        }
+      }
+    },
+    "Modoc County": {
+      "fips": "06049",
+      "gdp_thousands": 687654,
+      "gdp_estimated": false,
+      "population": 8491,
+      "homicide_rate": null,
+      "difficulty": 0.276,
+      "cities": {
+        "Alturas city": {
+          "population": 2652,
+          "gdp_thousands": 214775,
+          "crime_rate": 3.0,
+          "reward": 574,
+          "difficulty": 0.276,
+          "underworld_power": 119,
+          "police_power": 7689
+        },
+        "Modoc (unincorporated)": {
+          "population": 5839,
+          "gdp_thousands": 472879,
+          "crime_rate": 3.0,
+          "reward": 933,
+          "difficulty": 0.276,
+          "underworld_power": 263,
+          "police_power": 16929
+        }
+      }
+    },
+    "Mono County": {
+      "fips": "06051",
+      "gdp_thousands": 1564588,
+      "gdp_estimated": false,
+      "population": 12991,
+      "homicide_rate": null,
+      "difficulty": 0.338,
+      "cities": {
+        "Mammoth Lakes town": {
+          "population": 7124,
+          "gdp_thousands": 857988,
+          "crime_rate": 3.0,
+          "reward": 1542,
+          "difficulty": 0.338,
+          "underworld_power": 321,
+          "police_power": 30716
+        },
+        "Mono (unincorporated)": {
+          "population": 5867,
+          "gdp_thousands": 706600,
+          "crime_rate": 3.0,
+          "reward": 1313,
+          "difficulty": 0.338,
+          "underworld_power": 264,
+          "police_power": 25296
+        }
+      }
+    },
+    "Monterey County": {
+      "fips": "06053",
+      "gdp_thousands": 38345355,
+      "gdp_estimated": false,
+      "population": 436251,
+      "homicide_rate": 8.4402791138,
+      "difficulty": 0.809,
+      "cities": {
+        "Salinas city": {
+          "population": 160783,
+          "gdp_thousands": 14132417,
+          "crime_rate": 8.44,
+          "reward": 5435,
+          "difficulty": 0.809,
+          "underworld_power": 20356,
+          "police_power": 505941
+        },
+        "Seaside city": {
+          "population": 31524,
+          "gdp_thousands": 2770879,
+          "crime_rate": 8.44,
+          "reward": 3064,
+          "difficulty": 0.809,
+          "underworld_power": 3991,
+          "police_power": 99197
+        },
+        "Monterey city": {
+          "population": 29015,
+          "gdp_thousands": 2550344,
+          "crime_rate": 8.44,
+          "reward": 2966,
+          "difficulty": 0.809,
+          "underworld_power": 3673,
+          "police_power": 91302
+        },
+        "Soledad city": {
+          "population": 26345,
+          "gdp_thousands": 2315658,
+          "crime_rate": 8.44,
+          "reward": 2825,
+          "difficulty": 0.809,
+          "underworld_power": 3335,
+          "police_power": 82901
+        },
+        "Marina city": {
+          "population": 23047,
+          "gdp_thousands": 2025772,
+          "crime_rate": 8.44,
+          "reward": 2651,
+          "difficulty": 0.809,
+          "underworld_power": 2918,
+          "police_power": 72523
+        },
+        "Greenfield city": {
+          "population": 21042,
+          "gdp_thousands": 1849538,
+          "crime_rate": 8.44,
+          "reward": 2488,
+          "difficulty": 0.809,
+          "underworld_power": 2664,
+          "police_power": 66213
+        },
+        "Pacific Grove city": {
+          "population": 14851,
+          "gdp_thousands": 1305365,
+          "crime_rate": 8.44,
+          "reward": 1999,
+          "difficulty": 0.809,
+          "underworld_power": 1880,
+          "police_power": 46732
+        },
+        "King City city": {
+          "population": 13920,
+          "gdp_thousands": 1223532,
+          "crime_rate": 8.44,
+          "reward": 1901,
+          "difficulty": 0.809,
+          "underworld_power": 1762,
+          "police_power": 43802
+        },
+        "Gonzales city": {
+          "population": 8431,
+          "gdp_thousands": 741063,
+          "crime_rate": 8.44,
+          "reward": 1368,
+          "difficulty": 0.809,
+          "underworld_power": 1067,
+          "police_power": 26530
+        },
+        "Carmel-by-the-Sea city": {
+          "population": 3124,
+          "gdp_thousands": 274591,
+          "crime_rate": 8.44,
+          "reward": 650,
+          "difficulty": 0.809,
+          "underworld_power": 396,
+          "police_power": 9830
+        },
+        "Del Rey Oaks city": {
+          "population": 1553,
+          "gdp_thousands": 136504,
+          "crime_rate": 8.44,
+          "reward": 411,
+          "difficulty": 0.809,
+          "underworld_power": 197,
+          "police_power": 4887
+        },
+        "Sand City city": {
+          "population": 328,
+          "gdp_thousands": 28830,
+          "crime_rate": 8.44,
+          "reward": 215,
+          "difficulty": 0.809,
+          "underworld_power": 42,
+          "police_power": 1032
+        },
+        "Monterey (unincorporated)": {
+          "population": 102288,
+          "gdp_thousands": 8990862,
+          "crime_rate": 8.44,
+          "reward": 4793,
+          "difficulty": 0.809,
+          "underworld_power": 12950,
+          "police_power": 321873
+        }
+      }
+    },
+    "Napa County": {
+      "fips": "06055",
+      "gdp_thousands": 14591893,
+      "gdp_estimated": false,
+      "population": 132727,
+      "homicide_rate": 1.4360034792,
+      "difficulty": 0.272,
+      "cities": {
+        "Napa city": {
+          "population": 76921,
+          "gdp_thousands": 8456629,
+          "crime_rate": 1.44,
+          "reward": 4673,
+          "difficulty": 0.272,
+          "underworld_power": 1657,
+          "police_power": 302747
+        },
+        "American Canyon city": {
+          "population": 21742,
+          "gdp_thousands": 2390296,
+          "crime_rate": 1.44,
+          "reward": 2868,
+          "difficulty": 0.272,
+          "underworld_power": 468,
+          "police_power": 85573
+        },
+        "St. Helena city": {
+          "population": 5257,
+          "gdp_thousands": 577950,
+          "crime_rate": 1.44,
+          "reward": 1085,
+          "difficulty": 0.272,
+          "underworld_power": 113,
+          "police_power": 20691
+        },
+        "Calistoga city": {
+          "population": 5022,
+          "gdp_thousands": 552114,
+          "crime_rate": 1.44,
+          "reward": 1042,
+          "difficulty": 0.272,
+          "underworld_power": 108,
+          "police_power": 19766
+        },
+        "Yountville city": {
+          "population": 3280,
+          "gdp_thousands": 360600,
+          "crime_rate": 1.44,
+          "reward": 759,
+          "difficulty": 0.272,
+          "underworld_power": 71,
+          "police_power": 12909
+        },
+        "Napa (unincorporated)": {
+          "population": 20505,
+          "gdp_thousands": 2254304,
+          "crime_rate": 1.44,
+          "reward": 2803,
+          "difficulty": 0.272,
+          "underworld_power": 442,
+          "police_power": 80704
+        }
+      }
+    },
+    "Nevada County": {
+      "fips": "06057",
+      "gdp_thousands": 6221340,
+      "gdp_estimated": false,
+      "population": 102195,
+      "homicide_rate": 2.8557476204,
+      "difficulty": 0.297,
+      "cities": {
+        "Truckee town": {
+          "population": 17240,
+          "gdp_thousands": 1049522,
+          "crime_rate": 2.86,
+          "reward": 1738,
+          "difficulty": 0.297,
+          "underworld_power": 738,
+          "police_power": 37573
+        },
+        "Grass Valley city": {
+          "population": 14085,
+          "gdp_thousands": 857454,
+          "crime_rate": 2.86,
+          "reward": 1531,
+          "difficulty": 0.297,
+          "underworld_power": 603,
+          "police_power": 30697
+        },
+        "Nevada City city": {
+          "population": 3195,
+          "gdp_thousands": 194502,
+          "crime_rate": 2.86,
+          "reward": 541,
+          "difficulty": 0.297,
+          "underworld_power": 137,
+          "police_power": 6963
+        },
+        "Nevada (unincorporated)": {
+          "population": 67675,
+          "gdp_thousands": 4119862,
+          "crime_rate": 2.86,
+          "reward": 3651,
+          "difficulty": 0.297,
+          "underworld_power": 2899,
+          "police_power": 147491
+        }
+      }
+    },
+    "Orange County": {
+      "fips": "06059",
+      "gdp_thousands": 351752654,
+      "gdp_estimated": false,
+      "population": 3170435,
+      "homicide_rate": 2.2178201716,
+      "difficulty": 0.535,
+      "cities": {
+        "Anaheim city": {
+          "population": 344561,
+          "gdp_thousands": 38228270,
+          "crime_rate": 2.22,
+          "reward": 5891,
+          "difficulty": 0.535,
+          "underworld_power": 11463,
+          "police_power": 1368572
+        },
+        "Irvine city": {
+          "population": 318683,
+          "gdp_thousands": 35357164,
+          "crime_rate": 2.22,
+          "reward": 5870,
+          "difficulty": 0.535,
+          "underworld_power": 10602,
+          "police_power": 1265786
+        },
+        "Santa Ana city": {
+          "population": 316184,
+          "gdp_thousands": 35079905,
+          "crime_rate": 2.22,
+          "reward": 5859,
+          "difficulty": 0.535,
+          "underworld_power": 10519,
+          "police_power": 1255861
+        },
+        "Huntington Beach city": {
+          "population": 193151,
+          "gdp_thousands": 21429670,
+          "crime_rate": 2.22,
+          "reward": 5739,
+          "difficulty": 0.535,
+          "underworld_power": 6426,
+          "police_power": 767182
+        },
+        "Garden Grove city": {
+          "population": 172361,
+          "gdp_thousands": 19123066,
+          "crime_rate": 2.22,
+          "reward": 5685,
+          "difficulty": 0.535,
+          "underworld_power": 5734,
+          "police_power": 684606
+        },
+        "Fullerton city": {
+          "population": 140054,
+          "gdp_thousands": 15538677,
+          "crime_rate": 2.22,
+          "reward": 5543,
+          "difficulty": 0.535,
+          "underworld_power": 4659,
+          "police_power": 556285
+        },
+        "Orange city": {
+          "population": 137941,
+          "gdp_thousands": 15304244,
+          "crime_rate": 2.22,
+          "reward": 5511,
+          "difficulty": 0.535,
+          "underworld_power": 4589,
+          "police_power": 547892
+        },
+        "Costa Mesa city": {
+          "population": 109131,
+          "gdp_thousands": 12107839,
+          "crime_rate": 2.22,
+          "reward": 5315,
+          "difficulty": 0.535,
+          "underworld_power": 3630,
+          "police_power": 433461
+        },
+        "Mission Viejo city": {
+          "population": 91601,
+          "gdp_thousands": 10162925,
+          "crime_rate": 2.22,
+          "reward": 5087,
+          "difficulty": 0.535,
+          "underworld_power": 3047,
+          "police_power": 363833
+        },
+        "Westminster city": {
+          "population": 89537,
+          "gdp_thousands": 9933929,
+          "crime_rate": 2.22,
+          "reward": 5043,
+          "difficulty": 0.535,
+          "underworld_power": 2979,
+          "police_power": 355635
+        },
+        "Lake Forest city": {
+          "population": 87159,
+          "gdp_thousands": 9670095,
+          "crime_rate": 2.22,
+          "reward": 4989,
+          "difficulty": 0.535,
+          "underworld_power": 2900,
+          "police_power": 346189
+        },
+        "Newport Beach city": {
+          "population": 82970,
+          "gdp_thousands": 9205335,
+          "crime_rate": 2.22,
+          "reward": 4847,
+          "difficulty": 0.535,
+          "underworld_power": 2760,
+          "police_power": 329551
+        },
+        "Buena Park city": {
+          "population": 82611,
+          "gdp_thousands": 9165505,
+          "crime_rate": 2.22,
+          "reward": 4826,
+          "difficulty": 0.535,
+          "underworld_power": 2748,
+          "police_power": 328125
+        },
+        "Tustin city": {
+          "population": 78863,
+          "gdp_thousands": 8749673,
+          "crime_rate": 2.22,
+          "reward": 4760,
+          "difficulty": 0.535,
+          "underworld_power": 2624,
+          "police_power": 313238
+        },
+        "Yorba Linda city": {
+          "population": 66489,
+          "gdp_thousands": 7376805,
+          "crime_rate": 2.22,
+          "reward": 4521,
+          "difficulty": 0.535,
+          "underworld_power": 2212,
+          "police_power": 264090
+        },
+        "Laguna Niguel city": {
+          "population": 64185,
+          "gdp_thousands": 7121181,
+          "crime_rate": 2.22,
+          "reward": 4489,
+          "difficulty": 0.535,
+          "underworld_power": 2135,
+          "police_power": 254938
+        },
+        "San Clemente city": {
+          "population": 62627,
+          "gdp_thousands": 6948325,
+          "crime_rate": 2.22,
+          "reward": 4412,
+          "difficulty": 0.535,
+          "underworld_power": 2083,
+          "police_power": 248750
+        },
+        "La Habra city": {
+          "population": 61391,
+          "gdp_thousands": 6811193,
+          "crime_rate": 2.22,
+          "reward": 4380,
+          "difficulty": 0.535,
+          "underworld_power": 2042,
+          "police_power": 243841
+        },
+        "Fountain Valley city": {
+          "population": 56036,
+          "gdp_thousands": 6217068,
+          "crime_rate": 2.22,
+          "reward": 4282,
+          "difficulty": 0.535,
+          "underworld_power": 1864,
+          "police_power": 222571
+        },
+        "Placentia city": {
+          "population": 53395,
+          "gdp_thousands": 5924055,
+          "crime_rate": 2.22,
+          "reward": 4151,
+          "difficulty": 0.535,
+          "underworld_power": 1776,
+          "police_power": 212081
+        },
+        "Aliso Viejo city": {
+          "population": 50457,
+          "gdp_thousands": 5598091,
+          "crime_rate": 2.22,
+          "reward": 4054,
+          "difficulty": 0.535,
+          "underworld_power": 1679,
+          "police_power": 200412
+        },
+        "Cypress city": {
+          "population": 49286,
+          "gdp_thousands": 5468171,
+          "crime_rate": 2.22,
+          "reward": 4043,
+          "difficulty": 0.535,
+          "underworld_power": 1640,
+          "police_power": 195761
+        },
+        "Brea city": {
+          "population": 47844,
+          "gdp_thousands": 5308184,
+          "crime_rate": 2.22,
+          "reward": 3988,
+          "difficulty": 0.535,
+          "underworld_power": 1592,
+          "police_power": 190033
+        },
+        "Rancho Santa Margarita city": {
+          "population": 46353,
+          "gdp_thousands": 5142761,
+          "crime_rate": 2.22,
+          "reward": 3956,
+          "difficulty": 0.535,
+          "underworld_power": 1542,
+          "police_power": 184111
+        },
+        "Stanton city": {
+          "population": 41188,
+          "gdp_thousands": 4569716,
+          "crime_rate": 2.22,
+          "reward": 3771,
+          "difficulty": 0.535,
+          "underworld_power": 1370,
+          "police_power": 163596
+        },
+        "San Juan Capistrano city": {
+          "population": 35469,
+          "gdp_thousands": 3935206,
+          "crime_rate": 2.22,
+          "reward": 3597,
+          "difficulty": 0.535,
+          "underworld_power": 1180,
+          "police_power": 140880
+        },
+        "Dana Point city": {
+          "population": 32585,
+          "gdp_thousands": 3615232,
+          "crime_rate": 2.22,
+          "reward": 3423,
+          "difficulty": 0.535,
+          "underworld_power": 1084,
+          "police_power": 129425
+        },
+        "Laguna Hills city": {
+          "population": 30378,
+          "gdp_thousands": 3370370,
+          "crime_rate": 2.22,
+          "reward": 3325,
+          "difficulty": 0.535,
+          "underworld_power": 1011,
+          "police_power": 120659
+        },
+        "Seal Beach city": {
+          "population": 24421,
+          "gdp_thousands": 2709455,
+          "crime_rate": 2.22,
+          "reward": 3032,
+          "difficulty": 0.535,
+          "underworld_power": 812,
+          "police_power": 96998
+        },
+        "Laguna Beach city": {
+          "population": 22564,
+          "gdp_thousands": 2503425,
+          "crime_rate": 2.22,
+          "reward": 2955,
+          "difficulty": 0.535,
+          "underworld_power": 751,
+          "police_power": 89623
+        },
+        "Laguna Woods city": {
+          "population": 17058,
+          "gdp_thousands": 1892546,
+          "crime_rate": 2.22,
+          "reward": 2520,
+          "difficulty": 0.535,
+          "underworld_power": 567,
+          "police_power": 67753
+        },
+        "La Palma city": {
+          "population": 15092,
+          "gdp_thousands": 1674423,
+          "crime_rate": 2.22,
+          "reward": 2368,
+          "difficulty": 0.535,
+          "underworld_power": 502,
+          "police_power": 59944
+        },
+        "Los Alamitos city": {
+          "population": 11846,
+          "gdp_thousands": 1314287,
+          "crime_rate": 2.22,
+          "reward": 2009,
+          "difficulty": 0.535,
+          "underworld_power": 394,
+          "police_power": 47051
+        },
+        "Villa Park city": {
+          "population": 5698,
+          "gdp_thousands": 632180,
+          "crime_rate": 2.22,
+          "reward": 1183,
+          "difficulty": 0.535,
+          "underworld_power": 190,
+          "police_power": 22632
+        },
+        "Orange (unincorporated)": {
+          "population": 131266,
+          "gdp_thousands": 14563683,
+          "crime_rate": 2.22,
+          "reward": 5467,
+          "difficulty": 0.535,
+          "underworld_power": 4367,
+          "police_power": 521380
+        }
+      }
+    },
+    "Placer County": {
+      "fips": "06061",
+      "gdp_thousands": 34304249,
+      "gdp_estimated": false,
+      "population": 433822,
+      "homicide_rate": 1.8189649653,
+      "difficulty": 0.345,
+      "cities": {
+        "Roseville city": {
+          "population": 163304,
+          "gdp_thousands": 12913178,
+          "crime_rate": 1.82,
+          "reward": 5358,
+          "difficulty": 0.345,
+          "underworld_power": 4456,
+          "police_power": 462292
+        },
+        "Rocklin city": {
+          "population": 75129,
+          "gdp_thousands": 5940786,
+          "crime_rate": 1.82,
+          "reward": 4162,
+          "difficulty": 0.345,
+          "underworld_power": 2050,
+          "police_power": 212680
+        },
+        "Lincoln city": {
+          "population": 56268,
+          "gdp_thousands": 4449362,
+          "crime_rate": 1.82,
+          "reward": 3760,
+          "difficulty": 0.345,
+          "underworld_power": 1535,
+          "police_power": 159287
+        },
+        "Auburn city": {
+          "population": 13780,
+          "gdp_thousands": 1089646,
+          "crime_rate": 1.82,
+          "reward": 1792,
+          "difficulty": 0.345,
+          "underworld_power": 376,
+          "police_power": 39009
+        },
+        "Loomis town": {
+          "population": 6939,
+          "gdp_thousands": 548697,
+          "crime_rate": 1.82,
+          "reward": 1020,
+          "difficulty": 0.345,
+          "underworld_power": 189,
+          "police_power": 19643
+        },
+        "Colfax city": {
+          "population": 2058,
+          "gdp_thousands": 162735,
+          "crime_rate": 1.82,
+          "reward": 465,
+          "difficulty": 0.345,
+          "underworld_power": 56,
+          "police_power": 5826
+        },
+        "Placer (unincorporated)": {
+          "population": 116344,
+          "gdp_thousands": 9199845,
+          "crime_rate": 1.82,
+          "reward": 4837,
+          "difficulty": 0.345,
+          "underworld_power": 3174,
+          "police_power": 329354
+        }
+      }
+    },
+    "Plumas County": {
+      "fips": "06063",
+      "gdp_thousands": 1481503,
+      "gdp_estimated": false,
+      "population": 18834,
+      "homicide_rate": null,
+      "difficulty": 0.32,
+      "cities": {
+        "Portola city": {
+          "population": 2086,
+          "gdp_thousands": 164087,
+          "crime_rate": 3.0,
+          "reward": 476,
+          "difficulty": 0.32,
+          "underworld_power": 94,
+          "police_power": 5874
+        },
+        "Plumas (unincorporated)": {
+          "population": 16748,
+          "gdp_thousands": 1317416,
+          "crime_rate": 3.0,
+          "reward": 2020,
+          "difficulty": 0.32,
+          "underworld_power": 754,
+          "police_power": 47163
+        }
+      }
+    },
+    "Riverside County": {
+      "fips": "06065",
+      "gdp_thousands": 134756586,
+      "gdp_estimated": false,
+      "population": 2529933,
+      "homicide_rate": 4.5537447509,
+      "difficulty": 0.619,
+      "cities": {
+        "Riverside city": {
+          "population": 323757,
+          "gdp_thousands": 17244878,
+          "crime_rate": 4.55,
+          "reward": 5609,
+          "difficulty": 0.619,
+          "underworld_power": 22115,
+          "police_power": 617367
+        },
+        "Moreno Valley city": {
+          "population": 213919,
+          "gdp_thousands": 11394370,
+          "crime_rate": 4.55,
+          "reward": 5282,
+          "difficulty": 0.619,
+          "underworld_power": 14612,
+          "police_power": 407918
+        },
+        "Corona city": {
+          "population": 161540,
+          "gdp_thousands": 8604409,
+          "crime_rate": 4.55,
+          "reward": 4717,
+          "difficulty": 0.619,
+          "underworld_power": 11034,
+          "police_power": 308038
+        },
+        "Menifee city": {
+          "population": 117041,
+          "gdp_thousands": 6234175,
+          "crime_rate": 4.55,
+          "reward": 4304,
+          "difficulty": 0.619,
+          "underworld_power": 7995,
+          "police_power": 223183
+        },
+        "Murrieta city": {
+          "population": 112539,
+          "gdp_thousands": 5994376,
+          "crime_rate": 4.55,
+          "reward": 4206,
+          "difficulty": 0.619,
+          "underworld_power": 7687,
+          "police_power": 214599
+        },
+        "Temecula city": {
+          "population": 112431,
+          "gdp_thousands": 5988624,
+          "crime_rate": 4.55,
+          "reward": 4195,
+          "difficulty": 0.619,
+          "underworld_power": 7680,
+          "police_power": 214393
+        },
+        "Jurupa Valley city": {
+          "population": 108154,
+          "gdp_thousands": 5760810,
+          "crime_rate": 4.55,
+          "reward": 4097,
+          "difficulty": 0.619,
+          "underworld_power": 7388,
+          "police_power": 206237
+        },
+        "Indio city": {
+          "population": 94275,
+          "gdp_thousands": 5021546,
+          "crime_rate": 4.55,
+          "reward": 3891,
+          "difficulty": 0.619,
+          "underworld_power": 6440,
+          "police_power": 179771
+        },
+        "Hemet city": {
+          "population": 92912,
+          "gdp_thousands": 4948946,
+          "crime_rate": 4.55,
+          "reward": 3847,
+          "difficulty": 0.619,
+          "underworld_power": 6346,
+          "police_power": 177172
+        },
+        "Perris city": {
+          "population": 83032,
+          "gdp_thousands": 4422689,
+          "crime_rate": 4.55,
+          "reward": 3749,
+          "difficulty": 0.619,
+          "underworld_power": 5672,
+          "police_power": 158332
+        },
+        "Lake Elsinore city": {
+          "population": 73595,
+          "gdp_thousands": 3920029,
+          "crime_rate": 4.55,
+          "reward": 3586,
+          "difficulty": 0.619,
+          "underworld_power": 5027,
+          "police_power": 140337
+        },
+        "Eastvale city": {
+          "population": 70751,
+          "gdp_thousands": 3768543,
+          "crime_rate": 4.55,
+          "reward": 3499,
+          "difficulty": 0.619,
+          "underworld_power": 4833,
+          "police_power": 134914
+        },
+        "Beaumont city": {
+          "population": 59502,
+          "gdp_thousands": 3169367,
+          "crime_rate": 4.55,
+          "reward": 3238,
+          "difficulty": 0.619,
+          "underworld_power": 4064,
+          "police_power": 113463
+        },
+        "San Jacinto city": {
+          "population": 55515,
+          "gdp_thousands": 2956999,
+          "crime_rate": 4.55,
+          "reward": 3151,
+          "difficulty": 0.619,
+          "underworld_power": 3792,
+          "police_power": 105861
+        },
+        "Palm Desert city": {
+          "population": 53147,
+          "gdp_thousands": 2830868,
+          "crime_rate": 4.55,
+          "reward": 3118,
+          "difficulty": 0.619,
+          "underworld_power": 3630,
+          "police_power": 101345
+        },
+        "Cathedral City city": {
+          "population": 52517,
+          "gdp_thousands": 2797311,
+          "crime_rate": 4.55,
+          "reward": 3075,
+          "difficulty": 0.619,
+          "underworld_power": 3587,
+          "police_power": 100144
+        },
+        "Palm Springs city": {
+          "population": 45453,
+          "gdp_thousands": 2421048,
+          "crime_rate": 4.55,
+          "reward": 2912,
+          "difficulty": 0.619,
+          "underworld_power": 3105,
+          "police_power": 86674
+        },
+        "Coachella city": {
+          "population": 45165,
+          "gdp_thousands": 2405708,
+          "crime_rate": 4.55,
+          "reward": 2879,
+          "difficulty": 0.619,
+          "underworld_power": 3085,
+          "police_power": 86124
+        },
+        "La Quinta city": {
+          "population": 39907,
+          "gdp_thousands": 2125641,
+          "crime_rate": 4.55,
+          "reward": 2705,
+          "difficulty": 0.619,
+          "underworld_power": 2726,
+          "police_power": 76098
+        },
+        "Wildomar city": {
+          "population": 37736,
+          "gdp_thousands": 2010003,
+          "crime_rate": 4.55,
+          "reward": 2629,
+          "difficulty": 0.619,
+          "underworld_power": 2578,
+          "police_power": 71958
+        },
+        "Desert Hot Springs city": {
+          "population": 33917,
+          "gdp_thousands": 1806585,
+          "crime_rate": 4.55,
+          "reward": 2423,
+          "difficulty": 0.619,
+          "underworld_power": 2317,
+          "police_power": 64676
+        },
+        "Banning city": {
+          "population": 31929,
+          "gdp_thousands": 1700694,
+          "crime_rate": 4.55,
+          "reward": 2401,
+          "difficulty": 0.619,
+          "underworld_power": 2181,
+          "police_power": 60885
+        },
+        "Norco city": {
+          "population": 25400,
+          "gdp_thousands": 1352928,
+          "crime_rate": 4.55,
+          "reward": 2064,
+          "difficulty": 0.619,
+          "underworld_power": 1735,
+          "police_power": 48435
+        },
+        "Rancho Mirage city": {
+          "population": 18001,
+          "gdp_thousands": 958821,
+          "crime_rate": 4.55,
+          "reward": 1661,
+          "difficulty": 0.619,
+          "underworld_power": 1230,
+          "police_power": 34326
+        },
+        "Blythe city": {
+          "population": 17320,
+          "gdp_thousands": 922547,
+          "crime_rate": 4.55,
+          "reward": 1629,
+          "difficulty": 0.619,
+          "underworld_power": 1183,
+          "police_power": 33027
+        },
+        "Canyon Lake city": {
+          "population": 11161,
+          "gdp_thousands": 594489,
+          "crime_rate": 4.55,
+          "reward": 1107,
+          "difficulty": 0.619,
+          "underworld_power": 762,
+          "police_power": 21283
+        },
+        "Calimesa city": {
+          "population": 11150,
+          "gdp_thousands": 593903,
+          "crime_rate": 4.55,
+          "reward": 1096,
+          "difficulty": 0.619,
+          "underworld_power": 762,
+          "police_power": 21262
+        },
+        "Indian Wells city": {
+          "population": 4989,
+          "gdp_thousands": 265738,
+          "crime_rate": 4.55,
+          "reward": 639,
+          "difficulty": 0.619,
+          "underworld_power": 341,
+          "police_power": 9513
+        },
+        "Riverside (unincorporated)": {
+          "population": 423178,
+          "gdp_thousands": 22540541,
+          "crime_rate": 4.55,
+          "reward": 5750,
+          "difficulty": 0.619,
+          "underworld_power": 28906,
+          "police_power": 806951
+        }
+      }
+    },
+    "Sacramento County": {
+      "fips": "06067",
+      "gdp_thousands": 135538141,
+      "gdp_estimated": false,
+      "population": 1611231,
+      "homicide_rate": 6.4055560551,
+      "difficulty": 0.732,
+      "cities": {
+        "Sacramento city": {
+          "population": 535798,
+          "gdp_thousands": 45071789,
+          "crime_rate": 6.41,
+          "reward": 5902,
+          "difficulty": 0.732,
+          "underworld_power": 51481,
+          "police_power": 1613570
+        },
+        "Elk Grove city": {
+          "population": 182797,
+          "gdp_thousands": 15377041,
+          "crime_rate": 6.41,
+          "reward": 5522,
+          "difficulty": 0.732,
+          "underworld_power": 17564,
+          "police_power": 550498
+        },
+        "Folsom city": {
+          "population": 88091,
+          "gdp_thousands": 7410290,
+          "crime_rate": 6.41,
+          "reward": 4532,
+          "difficulty": 0.732,
+          "underworld_power": 8464,
+          "police_power": 265288
+        },
+        "Citrus Heights city": {
+          "population": 86909,
+          "gdp_thousands": 7310860,
+          "crime_rate": 6.41,
+          "reward": 4499,
+          "difficulty": 0.732,
+          "underworld_power": 8351,
+          "police_power": 261729
+        },
+        "Rancho Cordova city": {
+          "population": 84113,
+          "gdp_thousands": 7075658,
+          "crime_rate": 6.41,
+          "reward": 4456,
+          "difficulty": 0.732,
+          "underworld_power": 8082,
+          "police_power": 253309
+        },
+        "Galt city": {
+          "population": 26589,
+          "gdp_thousands": 2236689,
+          "crime_rate": 6.41,
+          "reward": 2792,
+          "difficulty": 0.732,
+          "underworld_power": 2555,
+          "police_power": 80073
+        },
+        "Isleton city": {
+          "population": 781,
+          "gdp_thousands": 65698,
+          "crime_rate": 6.41,
+          "reward": 302,
+          "difficulty": 0.732,
+          "underworld_power": 75,
+          "police_power": 2352
+        },
+        "Sacramento (unincorporated)": {
+          "population": 606153,
+          "gdp_thousands": 50990116,
+          "crime_rate": 6.41,
+          "reward": 5946,
+          "difficulty": 0.732,
+          "underworld_power": 58241,
+          "police_power": 1825446
+        }
+      }
+    },
+    "San Benito County": {
+      "fips": "06069",
+      "gdp_thousands": 3284723,
+      "gdp_estimated": false,
+      "population": 69159,
+      "homicide_rate": 3.4594654434,
+      "difficulty": 0.305,
+      "cities": {
+        "Hollister city": {
+          "population": 45033,
+          "gdp_thousands": 2138852,
+          "crime_rate": 3.46,
+          "reward": 2716,
+          "difficulty": 0.305,
+          "underworld_power": 2337,
+          "police_power": 76571
+        },
+        "San Juan Bautista city": {
+          "population": 2118,
+          "gdp_thousands": 100594,
+          "crime_rate": 3.46,
+          "reward": 378,
+          "difficulty": 0.305,
+          "underworld_power": 110,
+          "police_power": 3601
+        },
+        "San Benito (unincorporated)": {
+          "population": 22008,
+          "gdp_thousands": 1045277,
+          "crime_rate": 3.46,
+          "reward": 1716,
+          "difficulty": 0.305,
+          "underworld_power": 1142,
+          "police_power": 37421
+        }
+      }
+    },
+    "San Bernardino County": {
+      "fips": "06071",
+      "gdp_thousands": 137913905,
+      "gdp_estimated": false,
+      "population": 2214281,
+      "homicide_rate": 7.0245034468,
+      "difficulty": 0.803,
+      "cities": {
+        "San Bernardino city": {
+          "population": 224775,
+          "gdp_thousands": 13999848,
+          "crime_rate": 7.02,
+          "reward": 5413,
+          "difficulty": 0.803,
+          "underworld_power": 23684,
+          "police_power": 501195
+        },
+        "Fontana city": {
+          "population": 218455,
+          "gdp_thousands": 13606214,
+          "crime_rate": 7.02,
+          "reward": 5391,
+          "difficulty": 0.803,
+          "underworld_power": 23018,
+          "police_power": 487102
+        },
+        "Ontario city": {
+          "population": 185285,
+          "gdp_thousands": 11540259,
+          "crime_rate": 7.02,
+          "reward": 5304,
+          "difficulty": 0.803,
+          "underworld_power": 19523,
+          "police_power": 413141
+        },
+        "Rancho Cucamonga city": {
+          "population": 176675,
+          "gdp_thousands": 11003995,
+          "crime_rate": 7.02,
+          "reward": 5261,
+          "difficulty": 0.803,
+          "underworld_power": 18616,
+          "police_power": 393943
+        },
+        "Victorville city": {
+          "population": 140721,
+          "gdp_thousands": 8764643,
+          "crime_rate": 7.02,
+          "reward": 4771,
+          "difficulty": 0.803,
+          "underworld_power": 14827,
+          "police_power": 313774
+        },
+        "Rialto city": {
+          "population": 104918,
+          "gdp_thousands": 6534695,
+          "crime_rate": 7.02,
+          "reward": 4358,
+          "difficulty": 0.803,
+          "underworld_power": 11055,
+          "police_power": 233942
+        },
+        "Hesperia city": {
+          "population": 101836,
+          "gdp_thousands": 6342736,
+          "crime_rate": 7.02,
+          "reward": 4315,
+          "difficulty": 0.803,
+          "underworld_power": 10730,
+          "police_power": 227070
+        },
+        "Chino city": {
+          "population": 94010,
+          "gdp_thousands": 5855303,
+          "crime_rate": 7.02,
+          "reward": 4130,
+          "difficulty": 0.803,
+          "underworld_power": 9906,
+          "police_power": 209620
+        },
+        "Upland city": {
+          "population": 79684,
+          "gdp_thousands": 4963024,
+          "crime_rate": 7.02,
+          "reward": 3858,
+          "difficulty": 0.803,
+          "underworld_power": 8396,
+          "police_power": 177676
+        },
+        "Chino Hills city": {
+          "population": 77418,
+          "gdp_thousands": 4821889,
+          "crime_rate": 7.02,
+          "reward": 3825,
+          "difficulty": 0.803,
+          "underworld_power": 8157,
+          "police_power": 172624
+        },
+        "Apple Valley town": {
+          "population": 75029,
+          "gdp_thousands": 4673093,
+          "crime_rate": 7.02,
+          "reward": 3793,
+          "difficulty": 0.803,
+          "underworld_power": 7906,
+          "police_power": 167297
+        },
+        "Redlands city": {
+          "population": 74279,
+          "gdp_thousands": 4626380,
+          "crime_rate": 7.02,
+          "reward": 3782,
+          "difficulty": 0.803,
+          "underworld_power": 7827,
+          "police_power": 165624
+        },
+        "Highland city": {
+          "population": 56499,
+          "gdp_thousands": 3518974,
+          "crime_rate": 7.02,
+          "reward": 3369,
+          "difficulty": 0.803,
+          "underworld_power": 5953,
+          "police_power": 125979
+        },
+        "Yucaipa city": {
+          "population": 54465,
+          "gdp_thousands": 3392288,
+          "crime_rate": 7.02,
+          "reward": 3336,
+          "difficulty": 0.803,
+          "underworld_power": 5739,
+          "police_power": 121444
+        },
+        "Colton city": {
+          "population": 53528,
+          "gdp_thousands": 3333928,
+          "crime_rate": 7.02,
+          "reward": 3303,
+          "difficulty": 0.803,
+          "underworld_power": 5640,
+          "police_power": 119355
+        },
+        "Adelanto city": {
+          "population": 37941,
+          "gdp_thousands": 2363110,
+          "crime_rate": 7.02,
+          "reward": 2858,
+          "difficulty": 0.803,
+          "underworld_power": 3998,
+          "police_power": 84599
+        },
+        "Montclair city": {
+          "population": 37650,
+          "gdp_thousands": 2344986,
+          "crime_rate": 7.02,
+          "reward": 2847,
+          "difficulty": 0.803,
+          "underworld_power": 3967,
+          "police_power": 83950
+        },
+        "Twentynine Palms city": {
+          "population": 26563,
+          "gdp_thousands": 1654445,
+          "crime_rate": 7.02,
+          "reward": 2346,
+          "difficulty": 0.803,
+          "underworld_power": 2799,
+          "police_power": 59229
+        },
+        "Loma Linda city": {
+          "population": 25197,
+          "gdp_thousands": 1569365,
+          "crime_rate": 7.02,
+          "reward": 2270,
+          "difficulty": 0.803,
+          "underworld_power": 2655,
+          "police_power": 56183
+        },
+        "Barstow city": {
+          "population": 24897,
+          "gdp_thousands": 1550680,
+          "crime_rate": 7.02,
+          "reward": 2249,
+          "difficulty": 0.803,
+          "underworld_power": 2623,
+          "police_power": 55514
+        },
+        "Yucca Valley town": {
+          "population": 21858,
+          "gdp_thousands": 1361399,
+          "crime_rate": 7.02,
+          "reward": 2086,
+          "difficulty": 0.803,
+          "underworld_power": 2303,
+          "police_power": 48738
+        },
+        "Grand Terrace city": {
+          "population": 12979,
+          "gdp_thousands": 808381,
+          "crime_rate": 7.02,
+          "reward": 1422,
+          "difficulty": 0.803,
+          "underworld_power": 1368,
+          "police_power": 28940
+        },
+        "Big Bear Lake city": {
+          "population": 5044,
+          "gdp_thousands": 314159,
+          "crime_rate": 7.02,
+          "reward": 705,
+          "difficulty": 0.803,
+          "underworld_power": 531,
+          "police_power": 11247
+        },
+        "Needles city": {
+          "population": 4839,
+          "gdp_thousands": 301391,
+          "crime_rate": 7.02,
+          "reward": 694,
+          "difficulty": 0.803,
+          "underworld_power": 510,
+          "police_power": 10790
+        },
+        "San Bernardino (unincorporated)": {
+          "population": 299736,
+          "gdp_thousands": 18668720,
+          "crime_rate": 7.02,
+          "reward": 5663,
+          "difficulty": 0.803,
+          "underworld_power": 31582,
+          "police_power": 668340
+        }
+      }
+    },
+    "San Diego County": {
+      "fips": "06073",
+      "gdp_thousands": 331867565,
+      "gdp_estimated": false,
+      "population": 3298799,
+      "homicide_rate": 2.8939832454,
+      "difficulty": 0.588,
+      "cities": {
+        "San Diego city": {
+          "population": 1404452,
+          "gdp_thousands": 141291441,
+          "crime_rate": 2.89,
+          "reward": 5967,
+          "difficulty": 0.588,
+          "underworld_power": 60967,
+          "police_power": 5058234
+        },
+        "Chula Vista city": {
+          "population": 278546,
+          "gdp_thousands": 28022435,
+          "crime_rate": 2.89,
+          "reward": 5793,
+          "difficulty": 0.588,
+          "underworld_power": 12092,
+          "police_power": 1003203
+        },
+        "Oceanside city": {
+          "population": 170941,
+          "gdp_thousands": 17197099,
+          "crime_rate": 2.89,
+          "reward": 5587,
+          "difficulty": 0.588,
+          "underworld_power": 7421,
+          "police_power": 615656
+        },
+        "Escondido city": {
+          "population": 148847,
+          "gdp_thousands": 14974386,
+          "crime_rate": 2.89,
+          "reward": 5489,
+          "difficulty": 0.588,
+          "underworld_power": 6461,
+          "police_power": 536083
+        },
+        "Carlsbad city": {
+          "population": 113575,
+          "gdp_thousands": 11425933,
+          "crime_rate": 2.89,
+          "reward": 5293,
+          "difficulty": 0.588,
+          "underworld_power": 4930,
+          "police_power": 409048
+        },
+        "El Cajon city": {
+          "population": 103291,
+          "gdp_thousands": 10391337,
+          "crime_rate": 2.89,
+          "reward": 5152,
+          "difficulty": 0.588,
+          "underworld_power": 4484,
+          "police_power": 372010
+        },
+        "Vista city": {
+          "population": 99322,
+          "gdp_thousands": 9992045,
+          "crime_rate": 2.89,
+          "reward": 5054,
+          "difficulty": 0.588,
+          "underworld_power": 4312,
+          "police_power": 357715
+        },
+        "San Marcos city": {
+          "population": 96620,
+          "gdp_thousands": 9720217,
+          "crime_rate": 2.89,
+          "reward": 5000,
+          "difficulty": 0.588,
+          "underworld_power": 4194,
+          "police_power": 347984
+        },
+        "Encinitas city": {
+          "population": 61137,
+          "gdp_thousands": 6150537,
+          "crime_rate": 2.89,
+          "reward": 4271,
+          "difficulty": 0.588,
+          "underworld_power": 2654,
+          "police_power": 220189
+        },
+        "La Mesa city": {
+          "population": 60767,
+          "gdp_thousands": 6113314,
+          "crime_rate": 2.89,
+          "reward": 4249,
+          "difficulty": 0.588,
+          "underworld_power": 2638,
+          "police_power": 218857
+        },
+        "Santee city": {
+          "population": 59104,
+          "gdp_thousands": 5946012,
+          "crime_rate": 2.89,
+          "reward": 4173,
+          "difficulty": 0.588,
+          "underworld_power": 2566,
+          "police_power": 212867
+        },
+        "National City city": {
+          "population": 58460,
+          "gdp_thousands": 5881224,
+          "crime_rate": 2.89,
+          "reward": 4141,
+          "difficulty": 0.588,
+          "underworld_power": 2538,
+          "police_power": 210548
+        },
+        "Poway city": {
+          "population": 49435,
+          "gdp_thousands": 4973286,
+          "crime_rate": 2.89,
+          "reward": 3869,
+          "difficulty": 0.588,
+          "underworld_power": 2146,
+          "police_power": 178044
+        },
+        "Lemon Grove city": {
+          "population": 27867,
+          "gdp_thousands": 2803491,
+          "crime_rate": 2.89,
+          "reward": 3097,
+          "difficulty": 0.588,
+          "underworld_power": 1210,
+          "police_power": 100365
+        },
+        "Imperial Beach city": {
+          "population": 25568,
+          "gdp_thousands": 2572205,
+          "crime_rate": 2.89,
+          "reward": 2977,
+          "difficulty": 0.588,
+          "underworld_power": 1110,
+          "police_power": 92085
+        },
+        "Coronado city": {
+          "population": 18031,
+          "gdp_thousands": 1813964,
+          "crime_rate": 2.89,
+          "reward": 2433,
+          "difficulty": 0.588,
+          "underworld_power": 783,
+          "police_power": 64940
+        },
+        "Solana Beach city": {
+          "population": 12868,
+          "gdp_thousands": 1294553,
+          "crime_rate": 2.89,
+          "reward": 1977,
+          "difficulty": 0.588,
+          "underworld_power": 559,
+          "police_power": 46345
+        },
+        "Del Mar city": {
+          "population": 3902,
+          "gdp_thousands": 392551,
+          "crime_rate": 2.89,
+          "reward": 792,
+          "difficulty": 0.588,
+          "underworld_power": 169,
+          "police_power": 14053
+        },
+        "San Diego (unincorporated)": {
+          "population": 506066,
+          "gdp_thousands": 50911535,
+          "crime_rate": 2.89,
+          "reward": 5935,
+          "difficulty": 0.588,
+          "underworld_power": 21968,
+          "police_power": 1822633
+        }
+      }
+    },
+    "San Francisco County": {
+      "fips": "06075",
+      "gdp_thousands": 268321762,
+      "gdp_estimated": false,
+      "population": 827526,
+      "homicide_rate": 4.9120390616,
+      "difficulty": 0.684,
+      "cities": {
+        "San Francisco city": {
+          "population": 827526,
+          "gdp_thousands": 268321762,
+          "crime_rate": 4.91,
+          "reward": 5989,
+          "difficulty": 0.684,
+          "underworld_power": 60973,
+          "police_power": 9605919
+        }
+      }
+    },
+    "San Joaquin County": {
+      "fips": "06077",
+      "gdp_thousands": 46521159,
+      "gdp_estimated": false,
+      "population": 816108,
+      "homicide_rate": 9.5501138434,
+      "difficulty": 0.846,
+      "cities": {
+        "Stockton city": {
+          "population": 324975,
+          "gdp_thousands": 18524770,
+          "crime_rate": 9.55,
+          "reward": 5652,
+          "difficulty": 0.846,
+          "underworld_power": 46553,
+          "police_power": 663187
+        },
+        "Tracy city": {
+          "population": 100136,
+          "gdp_thousands": 5708120,
+          "crime_rate": 9.55,
+          "reward": 4075,
+          "difficulty": 0.846,
+          "underworld_power": 14345,
+          "police_power": 204351
+        },
+        "Manteca city": {
+          "population": 94292,
+          "gdp_thousands": 5374990,
+          "crime_rate": 9.55,
+          "reward": 4010,
+          "difficulty": 0.846,
+          "underworld_power": 13507,
+          "police_power": 192425
+        },
+        "Lodi city": {
+          "population": 68642,
+          "gdp_thousands": 3912846,
+          "crime_rate": 9.55,
+          "reward": 3575,
+          "difficulty": 0.846,
+          "underworld_power": 9833,
+          "police_power": 140080
+        },
+        "Lathrop city": {
+          "population": 40860,
+          "gdp_thousands": 2329170,
+          "crime_rate": 9.55,
+          "reward": 2836,
+          "difficulty": 0.846,
+          "underworld_power": 5853,
+          "police_power": 83384
+        },
+        "Ripon city": {
+          "population": 16252,
+          "gdp_thousands": 926423,
+          "crime_rate": 9.55,
+          "reward": 1640,
+          "difficulty": 0.846,
+          "underworld_power": 2328,
+          "police_power": 33166
+        },
+        "Escalon city": {
+          "population": 7453,
+          "gdp_thousands": 424848,
+          "crime_rate": 9.55,
+          "reward": 857,
+          "difficulty": 0.846,
+          "underworld_power": 1068,
+          "police_power": 15210
+        },
+        "San Joaquin (unincorporated)": {
+          "population": 163498,
+          "gdp_thousands": 9319992,
+          "crime_rate": 9.55,
+          "reward": 4858,
+          "difficulty": 0.846,
+          "underworld_power": 23421,
+          "police_power": 333656
+        }
+      }
+    },
+    "San Luis Obispo County": {
+      "fips": "06079",
+      "gdp_thousands": 24505477,
+      "gdp_estimated": false,
+      "population": 281843,
+      "homicide_rate": 1.7674785958,
+      "difficulty": 0.309,
+      "cities": {
+        "San Luis Obispo city": {
+          "population": 49729,
+          "gdp_thousands": 4323800,
+          "crime_rate": 1.77,
+          "reward": 3727,
+          "difficulty": 0.309,
+          "underworld_power": 1318,
+          "police_power": 154792
+        },
+        "El Paso de Robles (Paso Robles) city": {
+          "population": 31568,
+          "gdp_thousands": 2744751,
+          "crime_rate": 1.77,
+          "reward": 3042,
+          "difficulty": 0.309,
+          "underworld_power": 837,
+          "police_power": 98262
+        },
+        "Atascadero city": {
+          "population": 29743,
+          "gdp_thousands": 2586072,
+          "crime_rate": 1.77,
+          "reward": 2988,
+          "difficulty": 0.309,
+          "underworld_power": 789,
+          "police_power": 92581
+        },
+        "Arroyo Grande city": {
+          "population": 18249,
+          "gdp_thousands": 1586700,
+          "crime_rate": 1.77,
+          "reward": 2292,
+          "difficulty": 0.309,
+          "underworld_power": 484,
+          "police_power": 56804
+        },
+        "Grover Beach city": {
+          "population": 12534,
+          "gdp_thousands": 1089796,
+          "crime_rate": 1.77,
+          "reward": 1803,
+          "difficulty": 0.309,
+          "underworld_power": 332,
+          "police_power": 39015
+        },
+        "Morro Bay city": {
+          "population": 10591,
+          "gdp_thousands": 920858,
+          "crime_rate": 1.77,
+          "reward": 1618,
+          "difficulty": 0.309,
+          "underworld_power": 281,
+          "police_power": 32967
+        },
+        "Pismo Beach city": {
+          "population": 7984,
+          "gdp_thousands": 694186,
+          "crime_rate": 1.77,
+          "reward": 1281,
+          "difficulty": 0.309,
+          "underworld_power": 212,
+          "police_power": 24852
+        },
+        "San Luis Obispo (unincorporated)": {
+          "population": 121445,
+          "gdp_thousands": 10559314,
+          "crime_rate": 1.77,
+          "reward": 5184,
+          "difficulty": 0.309,
+          "underworld_power": 3220,
+          "police_power": 378023
+        }
+      }
+    },
+    "San Mateo County": {
+      "fips": "06081",
+      "gdp_thousands": 217017754,
+      "gdp_estimated": false,
+      "population": 742893,
+      "homicide_rate": 2.1186218234,
+      "difficulty": 0.498,
+      "cities": {
+        "San Mateo city": {
+          "population": 103006,
+          "gdp_thousands": 30090646,
+          "crime_rate": 2.12,
+          "reward": 5826,
+          "difficulty": 0.498,
+          "underworld_power": 3273,
+          "police_power": 1077245
+        },
+        "Daly City city": {
+          "population": 101418,
+          "gdp_thousands": 29626751,
+          "crime_rate": 2.12,
+          "reward": 5815,
+          "difficulty": 0.498,
+          "underworld_power": 3223,
+          "police_power": 1060638
+        },
+        "Redwood City city": {
+          "population": 82982,
+          "gdp_thousands": 24241131,
+          "crime_rate": 2.12,
+          "reward": 5772,
+          "difficulty": 0.498,
+          "underworld_power": 2637,
+          "police_power": 867832
+        },
+        "South San Francisco city": {
+          "population": 64660,
+          "gdp_thousands": 18888814,
+          "crime_rate": 2.12,
+          "reward": 5674,
+          "difficulty": 0.498,
+          "underworld_power": 2055,
+          "police_power": 676220
+        },
+        "San Bruno city": {
+          "population": 42035,
+          "gdp_thousands": 12279482,
+          "crime_rate": 2.12,
+          "reward": 5326,
+          "difficulty": 0.498,
+          "underworld_power": 1336,
+          "police_power": 439605
+        },
+        "Pacifica city": {
+          "population": 37056,
+          "gdp_thousands": 10824990,
+          "crime_rate": 2.12,
+          "reward": 5239,
+          "difficulty": 0.498,
+          "underworld_power": 1178,
+          "police_power": 387535
+        },
+        "Menlo Park city": {
+          "population": 33040,
+          "gdp_thousands": 9651816,
+          "crime_rate": 2.12,
+          "reward": 4978,
+          "difficulty": 0.498,
+          "underworld_power": 1050,
+          "police_power": 345535
+        },
+        "Foster City city": {
+          "population": 32657,
+          "gdp_thousands": 9539932,
+          "crime_rate": 2.12,
+          "reward": 4934,
+          "difficulty": 0.498,
+          "underworld_power": 1038,
+          "police_power": 341530
+        },
+        "Burlingame city": {
+          "population": 30885,
+          "gdp_thousands": 9022286,
+          "crime_rate": 2.12,
+          "reward": 4804,
+          "difficulty": 0.498,
+          "underworld_power": 982,
+          "police_power": 322998
+        },
+        "San Carlos city": {
+          "population": 29403,
+          "gdp_thousands": 8589356,
+          "crime_rate": 2.12,
+          "reward": 4695,
+          "difficulty": 0.498,
+          "underworld_power": 934,
+          "police_power": 307499
+        },
+        "East Palo Alto city": {
+          "population": 29296,
+          "gdp_thousands": 8558099,
+          "crime_rate": 2.12,
+          "reward": 4684,
+          "difficulty": 0.498,
+          "underworld_power": 931,
+          "police_power": 306380
+        },
+        "Belmont city": {
+          "population": 27132,
+          "gdp_thousands": 7925940,
+          "crime_rate": 2.12,
+          "reward": 4608,
+          "difficulty": 0.498,
+          "underworld_power": 862,
+          "police_power": 283749
+        },
+        "Millbrae city": {
+          "population": 23321,
+          "gdp_thousands": 6812651,
+          "crime_rate": 2.12,
+          "reward": 4391,
+          "difficulty": 0.498,
+          "underworld_power": 741,
+          "police_power": 243893
+        },
+        "Half Moon Bay city": {
+          "population": 11324,
+          "gdp_thousands": 3308025,
+          "crime_rate": 2.12,
+          "reward": 3292,
+          "difficulty": 0.498,
+          "underworld_power": 360,
+          "police_power": 118427
+        },
+        "Hillsborough town": {
+          "population": 11171,
+          "gdp_thousands": 3263330,
+          "crime_rate": 2.12,
+          "reward": 3271,
+          "difficulty": 0.498,
+          "underworld_power": 355,
+          "police_power": 116827
+        },
+        "Atherton town": {
+          "population": 7022,
+          "gdp_thousands": 2051303,
+          "crime_rate": 2.12,
+          "reward": 2673,
+          "difficulty": 0.498,
+          "underworld_power": 223,
+          "police_power": 73437
+        },
+        "Woodside town": {
+          "population": 5123,
+          "gdp_thousands": 1496557,
+          "crime_rate": 2.12,
+          "reward": 2194,
+          "difficulty": 0.498,
+          "underworld_power": 163,
+          "police_power": 53577
+        },
+        "Brisbane city": {
+          "population": 4667,
+          "gdp_thousands": 1363348,
+          "crime_rate": 2.12,
+          "reward": 2096,
+          "difficulty": 0.498,
+          "underworld_power": 148,
+          "police_power": 48808
+        },
+        "Portola Valley town": {
+          "population": 4282,
+          "gdp_thousands": 1250880,
+          "crime_rate": 2.12,
+          "reward": 1933,
+          "difficulty": 0.498,
+          "underworld_power": 136,
+          "police_power": 44782
+        },
+        "Colma town": {
+          "population": 1428,
+          "gdp_thousands": 417154,
+          "crime_rate": 2.12,
+          "reward": 835,
+          "difficulty": 0.498,
+          "underworld_power": 45,
+          "police_power": 14934
+        },
+        "San Mateo (unincorporated)": {
+          "population": 60985,
+          "gdp_thousands": 17815263,
+          "crime_rate": 2.12,
+          "reward": 5630,
+          "difficulty": 0.498,
+          "underworld_power": 1938,
+          "police_power": 637786
+        }
+      }
+    },
+    "Santa Barbara County": {
+      "fips": "06083",
+      "gdp_thousands": 41424520,
+      "gdp_estimated": false,
+      "population": 444500,
+      "homicide_rate": 3.7779875237,
+      "difficulty": 0.535,
+      "cities": {
+        "Santa Maria city": {
+          "population": 111346,
+          "gdp_thousands": 10376725,
+          "crime_rate": 3.78,
+          "reward": 5141,
+          "difficulty": 0.535,
+          "underworld_power": 6310,
+          "police_power": 371487
+        },
+        "Santa Barbara city": {
+          "population": 87291,
+          "gdp_thousands": 8134955,
+          "crime_rate": 3.78,
+          "reward": 4641,
+          "difficulty": 0.535,
+          "underworld_power": 4947,
+          "police_power": 291231
+        },
+        "Lompoc city": {
+          "population": 43594,
+          "gdp_thousands": 4062678,
+          "crime_rate": 3.78,
+          "reward": 3619,
+          "difficulty": 0.535,
+          "underworld_power": 2470,
+          "police_power": 145444
+        },
+        "Goleta city": {
+          "population": 32611,
+          "gdp_thousands": 3039133,
+          "crime_rate": 3.78,
+          "reward": 3184,
+          "difficulty": 0.535,
+          "underworld_power": 1848,
+          "police_power": 108801
+        },
+        "Carpinteria city": {
+          "population": 12876,
+          "gdp_thousands": 1199959,
+          "crime_rate": 3.78,
+          "reward": 1868,
+          "difficulty": 0.535,
+          "underworld_power": 730,
+          "police_power": 42959
+        },
+        "Guadalupe city": {
+          "population": 8735,
+          "gdp_thousands": 814045,
+          "crime_rate": 3.78,
+          "reward": 1444,
+          "difficulty": 0.535,
+          "underworld_power": 495,
+          "police_power": 29143
+        },
+        "Solvang city": {
+          "population": 5988,
+          "gdp_thousands": 558042,
+          "crime_rate": 3.78,
+          "reward": 1063,
+          "difficulty": 0.535,
+          "underworld_power": 339,
+          "police_power": 19978
+        },
+        "Buellton city": {
+          "population": 5023,
+          "gdp_thousands": 468111,
+          "crime_rate": 3.78,
+          "reward": 911,
+          "difficulty": 0.535,
+          "underworld_power": 285,
+          "police_power": 16758
+        },
+        "Santa Barbara (unincorporated)": {
+          "population": 137036,
+          "gdp_thousands": 12770872,
+          "crime_rate": 3.78,
+          "reward": 5348,
+          "difficulty": 0.535,
+          "underworld_power": 7766,
+          "police_power": 457197
+        }
+      }
+    },
+    "Santa Clara County": {
+      "fips": "06085",
+      "gdp_thousands": 438483301,
+      "gdp_estimated": false,
+      "population": 1926325,
+      "homicide_rate": 2.4565207002,
+      "difficulty": 0.564,
+      "cities": {
+        "San Jose city": {
+          "population": 997368,
+          "gdp_thousands": 227027740,
+          "crime_rate": 2.46,
+          "reward": 5978,
+          "difficulty": 0.564,
+          "underworld_power": 36751,
+          "police_power": 8127593
+        },
+        "Sunnyvale city": {
+          "population": 156792,
+          "gdp_thousands": 35690069,
+          "crime_rate": 2.46,
+          "reward": 5880,
+          "difficulty": 0.564,
+          "underworld_power": 5777,
+          "police_power": 1277704
+        },
+        "Santa Clara city": {
+          "population": 133132,
+          "gdp_thousands": 30304418,
+          "crime_rate": 2.46,
+          "reward": 5837,
+          "difficulty": 0.564,
+          "underworld_power": 4906,
+          "police_power": 1084898
+        },
+        "Mountain View city": {
+          "population": 87316,
+          "gdp_thousands": 19875466,
+          "crime_rate": 2.46,
+          "reward": 5706,
+          "difficulty": 0.564,
+          "underworld_power": 3217,
+          "police_power": 711542
+        },
+        "Milpitas city": {
+          "population": 79746,
+          "gdp_thousands": 18152331,
+          "crime_rate": 2.46,
+          "reward": 5641,
+          "difficulty": 0.564,
+          "underworld_power": 2938,
+          "police_power": 649853
+        },
+        "Palo Alto city": {
+          "population": 67658,
+          "gdp_thousands": 15400777,
+          "crime_rate": 2.46,
+          "reward": 5532,
+          "difficulty": 0.564,
+          "underworld_power": 2493,
+          "police_power": 551348
+        },
+        "Gilroy city": {
+          "population": 60390,
+          "gdp_thousands": 13746385,
+          "crime_rate": 2.46,
+          "reward": 5402,
+          "difficulty": 0.564,
+          "underworld_power": 2225,
+          "police_power": 492121
+        },
+        "Cupertino city": {
+          "population": 58710,
+          "gdp_thousands": 13363972,
+          "crime_rate": 2.46,
+          "reward": 5369,
+          "difficulty": 0.564,
+          "underworld_power": 2163,
+          "police_power": 478430
+        },
+        "Morgan Hill city": {
+          "population": 45952,
+          "gdp_thousands": 10459909,
+          "crime_rate": 2.46,
+          "reward": 5163,
+          "difficulty": 0.564,
+          "underworld_power": 1693,
+          "police_power": 374465
+        },
+        "Campbell city": {
+          "population": 42895,
+          "gdp_thousands": 9764053,
+          "crime_rate": 2.46,
+          "reward": 5021,
+          "difficulty": 0.564,
+          "underworld_power": 1581,
+          "police_power": 349553
+        },
+        "Los Gatos town": {
+          "population": 32952,
+          "gdp_thousands": 7500760,
+          "crime_rate": 2.46,
+          "reward": 4543,
+          "difficulty": 0.564,
+          "underworld_power": 1214,
+          "police_power": 268527
+        },
+        "Los Altos city": {
+          "population": 30864,
+          "gdp_thousands": 7025475,
+          "crime_rate": 2.46,
+          "reward": 4434,
+          "difficulty": 0.564,
+          "underworld_power": 1137,
+          "police_power": 251512
+        },
+        "Saratoga city": {
+          "population": 30486,
+          "gdp_thousands": 6939432,
+          "crime_rate": 2.46,
+          "reward": 4402,
+          "difficulty": 0.564,
+          "underworld_power": 1123,
+          "police_power": 248432
+        },
+        "Los Altos Hills town": {
+          "population": 8435,
+          "gdp_thousands": 1920032,
+          "crime_rate": 2.46,
+          "reward": 2542,
+          "difficulty": 0.564,
+          "underworld_power": 311,
+          "police_power": 68737
+        },
+        "Monte Sereno city": {
+          "population": 3563,
+          "gdp_thousands": 811034,
+          "crime_rate": 2.46,
+          "reward": 1433,
+          "difficulty": 0.564,
+          "underworld_power": 131,
+          "police_power": 29035
+        },
+        "Santa Clara (unincorporated)": {
+          "population": 90066,
+          "gdp_thousands": 20501448,
+          "crime_rate": 2.46,
+          "reward": 5717,
+          "difficulty": 0.564,
+          "underworld_power": 3319,
+          "police_power": 733952
+        }
+      }
+    },
+    "Santa Cruz County": {
+      "fips": "06087",
+      "gdp_thousands": 21092114,
+      "gdp_estimated": false,
+      "population": 262406,
+      "homicide_rate": 3.2462415591,
+      "difficulty": 0.425,
+      "cities": {
+        "Santa Cruz city": {
+          "population": 62581,
+          "gdp_thousands": 5030241,
+          "crime_rate": 3.25,
+          "reward": 3901,
+          "difficulty": 0.425,
+          "underworld_power": 3047,
+          "police_power": 180083
+        },
+        "Watsonville city": {
+          "population": 51320,
+          "gdp_thousands": 4125085,
+          "crime_rate": 3.25,
+          "reward": 3662,
+          "difficulty": 0.425,
+          "underworld_power": 2499,
+          "police_power": 147678
+        },
+        "Scotts Valley city": {
+          "population": 11828,
+          "gdp_thousands": 950731,
+          "crime_rate": 3.25,
+          "reward": 1651,
+          "difficulty": 0.425,
+          "underworld_power": 576,
+          "police_power": 34036
+        },
+        "Capitola city": {
+          "population": 9503,
+          "gdp_thousands": 763848,
+          "crime_rate": 3.25,
+          "reward": 1390,
+          "difficulty": 0.425,
+          "underworld_power": 463,
+          "police_power": 27346
+        },
+        "Santa Cruz (unincorporated)": {
+          "population": 127174,
+          "gdp_thousands": 10222209,
+          "crime_rate": 3.25,
+          "reward": 5108,
+          "difficulty": 0.425,
+          "underworld_power": 6193,
+          "police_power": 365955
+        }
+      }
+    },
+    "Shasta County": {
+      "fips": "06089",
+      "gdp_thousands": 11869690,
+      "gdp_estimated": false,
+      "population": 181121,
+      "homicide_rate": 5.6332619522,
+      "difficulty": 0.487,
+      "cities": {
+        "Redding city": {
+          "population": 93502,
+          "gdp_thousands": 6127614,
+          "crime_rate": 5.63,
+          "reward": 4260,
+          "difficulty": 0.487,
+          "underworld_power": 7901,
+          "police_power": 219369
+        },
+        "Anderson city": {
+          "population": 11171,
+          "gdp_thousands": 732086,
+          "crime_rate": 5.63,
+          "reward": 1357,
+          "difficulty": 0.487,
+          "underworld_power": 944,
+          "police_power": 26209
+        },
+        "Shasta Lake city": {
+          "population": 10244,
+          "gdp_thousands": 671336,
+          "crime_rate": 5.63,
+          "reward": 1270,
+          "difficulty": 0.487,
+          "underworld_power": 866,
+          "police_power": 24034
+        },
+        "Shasta (unincorporated)": {
+          "population": 66204,
+          "gdp_thousands": 4338654,
+          "crime_rate": 5.63,
+          "reward": 3738,
+          "difficulty": 0.487,
+          "underworld_power": 5594,
+          "police_power": 155324
+        }
+      }
+    },
+    "Sierra County": {
+      "fips": "06091",
+      "gdp_thousands": 127150,
+      "gdp_estimated": false,
+      "population": 3113,
+      "homicide_rate": null,
+      "difficulty": 0.25,
+      "cities": {
+        "Loyalton city": {
+          "population": 712,
+          "gdp_thousands": 29081,
+          "crime_rate": 3.0,
+          "reward": 226,
+          "difficulty": 0.25,
+          "underworld_power": 32,
+          "police_power": 1041
+        },
+        "Sierra (unincorporated)": {
+          "population": 2401,
+          "gdp_thousands": 98069,
+          "crime_rate": 3.0,
+          "reward": 367,
+          "difficulty": 0.25,
+          "underworld_power": 108,
+          "police_power": 3511
+        }
+      }
+    },
+    "Siskiyou County": {
+      "fips": "06093",
+      "gdp_thousands": 2303711,
+      "gdp_estimated": false,
+      "population": 42498,
+      "homicide_rate": 7.1981049353,
+      "difficulty": 0.498,
+      "cities": {
+        "Yreka city": {
+          "population": 7686,
+          "gdp_thousands": 416638,
+          "crime_rate": 7.2,
+          "reward": 824,
+          "difficulty": 0.498,
+          "underworld_power": 830,
+          "police_power": 14916
+        },
+        "Mount Shasta city": {
+          "population": 3124,
+          "gdp_thousands": 169344,
+          "crime_rate": 7.2,
+          "reward": 509,
+          "difficulty": 0.498,
+          "underworld_power": 337,
+          "police_power": 6063
+        },
+        "Weed city": {
+          "population": 2633,
+          "gdp_thousands": 142728,
+          "crime_rate": 7.2,
+          "reward": 422,
+          "difficulty": 0.498,
+          "underworld_power": 284,
+          "police_power": 5110
+        },
+        "Dunsmuir city": {
+          "population": 1618,
+          "gdp_thousands": 87707,
+          "crime_rate": 7.2,
+          "reward": 346,
+          "difficulty": 0.498,
+          "underworld_power": 175,
+          "police_power": 3140
+        },
+        "Montague city": {
+          "population": 1170,
+          "gdp_thousands": 63422,
+          "crime_rate": 7.2,
+          "reward": 291,
+          "difficulty": 0.498,
+          "underworld_power": 126,
+          "police_power": 2271
+        },
+        "Tulelake city": {
+          "population": 857,
+          "gdp_thousands": 46455,
+          "crime_rate": 7.2,
+          "reward": 270,
+          "difficulty": 0.498,
+          "underworld_power": 93,
+          "police_power": 1663
+        },
+        "Dorris city": {
+          "population": 817,
+          "gdp_thousands": 44287,
+          "crime_rate": 7.2,
+          "reward": 259,
+          "difficulty": 0.498,
+          "underworld_power": 88,
+          "police_power": 1585
+        },
+        "Fort Jones city": {
+          "population": 669,
+          "gdp_thousands": 36264,
+          "crime_rate": 7.2,
+          "reward": 248,
+          "difficulty": 0.498,
+          "underworld_power": 72,
+          "police_power": 1298
+        },
+        "Etna city": {
+          "population": 643,
+          "gdp_thousands": 34855,
+          "crime_rate": 7.2,
+          "reward": 237,
+          "difficulty": 0.498,
+          "underworld_power": 69,
+          "police_power": 1248
+        },
+        "Siskiyou (unincorporated)": {
+          "population": 23281,
+          "gdp_thousands": 1262011,
+          "crime_rate": 7.2,
+          "reward": 1944,
+          "difficulty": 0.498,
+          "underworld_power": 2514,
+          "police_power": 45180
+        }
+      }
+    },
+    "Solano County": {
+      "fips": "06095",
+      "gdp_thousands": 37694901,
+      "gdp_estimated": false,
+      "population": 455101,
+      "homicide_rate": 7.8018121394,
+      "difficulty": 0.738,
+      "cities": {
+        "Vallejo city": {
+          "population": 123475,
+          "gdp_thousands": 10227131,
+          "crime_rate": 7.8,
+          "reward": 5119,
+          "difficulty": 0.738,
+          "underworld_power": 14450,
+          "police_power": 366131
+        },
+        "Fairfield city": {
+          "population": 122646,
+          "gdp_thousands": 10158467,
+          "crime_rate": 7.8,
+          "reward": 5076,
+          "difficulty": 0.738,
+          "underworld_power": 14353,
+          "police_power": 363673
+        },
+        "Vacaville city": {
+          "population": 103994,
+          "gdp_thousands": 8613568,
+          "crime_rate": 7.8,
+          "reward": 4728,
+          "difficulty": 0.738,
+          "underworld_power": 12170,
+          "police_power": 308366
+        },
+        "Suisun City city": {
+          "population": 29614,
+          "gdp_thousands": 2452855,
+          "crime_rate": 7.8,
+          "reward": 2945,
+          "difficulty": 0.738,
+          "underworld_power": 3466,
+          "police_power": 87812
+        },
+        "Benicia city": {
+          "population": 26477,
+          "gdp_thousands": 2193025,
+          "crime_rate": 7.8,
+          "reward": 2771,
+          "difficulty": 0.738,
+          "underworld_power": 3099,
+          "police_power": 78510
+        },
+        "Dixon city": {
+          "population": 20296,
+          "gdp_thousands": 1681067,
+          "crime_rate": 7.8,
+          "reward": 2379,
+          "difficulty": 0.738,
+          "underworld_power": 2375,
+          "police_power": 60182
+        },
+        "Rio Vista city": {
+          "population": 10248,
+          "gdp_thousands": 848816,
+          "crime_rate": 7.8,
+          "reward": 1520,
+          "difficulty": 0.738,
+          "underworld_power": 1199,
+          "police_power": 30388
+        },
+        "Solano (unincorporated)": {
+          "population": 18351,
+          "gdp_thousands": 1519972,
+          "crime_rate": 7.8,
+          "reward": 2205,
+          "difficulty": 0.738,
+          "underworld_power": 2148,
+          "police_power": 54415
+        }
+      }
+    },
+    "Sonoma County": {
+      "fips": "06097",
+      "gdp_thousands": 39448025,
+      "gdp_estimated": false,
+      "population": 485375,
+      "homicide_rate": 2.2704953157,
+      "difficulty": 0.422,
+      "cities": {
+        "Santa Rosa city": {
+          "population": 177524,
+          "gdp_thousands": 14427960,
+          "crime_rate": 2.27,
+          "reward": 5456,
+          "difficulty": 0.422,
+          "underworld_power": 6046,
+          "police_power": 516521
+        },
+        "Petaluma city": {
+          "population": 59393,
+          "gdp_thousands": 4827064,
+          "crime_rate": 2.27,
+          "reward": 3836,
+          "difficulty": 0.422,
+          "underworld_power": 2023,
+          "police_power": 172809
+        },
+        "Rohnert Park city": {
+          "population": 44894,
+          "gdp_thousands": 3648683,
+          "crime_rate": 2.27,
+          "reward": 3456,
+          "difficulty": 0.422,
+          "underworld_power": 1529,
+          "police_power": 130623
+        },
+        "Windsor town": {
+          "population": 25846,
+          "gdp_thousands": 2100589,
+          "crime_rate": 2.27,
+          "reward": 2694,
+          "difficulty": 0.422,
+          "underworld_power": 880,
+          "police_power": 75201
+        },
+        "Healdsburg city": {
+          "population": 11231,
+          "gdp_thousands": 912780,
+          "crime_rate": 2.27,
+          "reward": 1607,
+          "difficulty": 0.422,
+          "underworld_power": 382,
+          "police_power": 32678
+        },
+        "Sonoma city": {
+          "population": 10606,
+          "gdp_thousands": 861984,
+          "crime_rate": 2.27,
+          "reward": 1553,
+          "difficulty": 0.422,
+          "underworld_power": 361,
+          "police_power": 30859
+        },
+        "Cloverdale city": {
+          "population": 8784,
+          "gdp_thousands": 713904,
+          "crime_rate": 2.27,
+          "reward": 1346,
+          "difficulty": 0.422,
+          "underworld_power": 299,
+          "police_power": 25558
+        },
+        "Cotati city": {
+          "population": 7403,
+          "gdp_thousands": 601666,
+          "crime_rate": 2.27,
+          "reward": 1150,
+          "difficulty": 0.422,
+          "underworld_power": 252,
+          "police_power": 21540
+        },
+        "Sebastopol city": {
+          "population": 7388,
+          "gdp_thousands": 600447,
+          "crime_rate": 2.27,
+          "reward": 1139,
+          "difficulty": 0.422,
+          "underworld_power": 252,
+          "police_power": 21496
+        },
+        "Sonoma (unincorporated)": {
+          "population": 132306,
+          "gdp_thousands": 10752948,
+          "crime_rate": 2.27,
+          "reward": 5217,
+          "difficulty": 0.422,
+          "underworld_power": 4506,
+          "police_power": 384956
+        }
+      }
+    },
+    "Stanislaus County": {
+      "fips": "06099",
+      "gdp_thousands": 32065240,
+      "gdp_estimated": false,
+      "population": 556972,
+      "homicide_rate": 3.8367156461,
+      "difficulty": 0.493,
+      "cities": {
+        "Modesto city": {
+          "population": 220592,
+          "gdp_thousands": 12699624,
+          "crime_rate": 3.84,
+          "reward": 5337,
+          "difficulty": 0.493,
+          "underworld_power": 12695,
+          "police_power": 454647
+        },
+        "Turlock city": {
+          "population": 72888,
+          "gdp_thousands": 4196209,
+          "crime_rate": 3.84,
+          "reward": 3706,
+          "difficulty": 0.493,
+          "underworld_power": 4195,
+          "police_power": 150224
+        },
+        "Ceres city": {
+          "population": 49253,
+          "gdp_thousands": 2835527,
+          "crime_rate": 3.84,
+          "reward": 3129,
+          "difficulty": 0.493,
+          "underworld_power": 2835,
+          "police_power": 101512
+        },
+        "Riverbank city": {
+          "population": 25625,
+          "gdp_thousands": 1475247,
+          "crime_rate": 3.84,
+          "reward": 2183,
+          "difficulty": 0.493,
+          "underworld_power": 1475,
+          "police_power": 52814
+        },
+        "Patterson city": {
+          "population": 25495,
+          "gdp_thousands": 1467763,
+          "crime_rate": 3.84,
+          "reward": 2172,
+          "difficulty": 0.493,
+          "underworld_power": 1467,
+          "police_power": 52546
+        },
+        "Oakdale city": {
+          "population": 23209,
+          "gdp_thousands": 1336157,
+          "crime_rate": 3.84,
+          "reward": 2031,
+          "difficulty": 0.493,
+          "underworld_power": 1336,
+          "police_power": 47834
+        },
+        "Newman city": {
+          "population": 12292,
+          "gdp_thousands": 707658,
+          "crime_rate": 3.84,
+          "reward": 1324,
+          "difficulty": 0.493,
+          "underworld_power": 707,
+          "police_power": 25334
+        },
+        "Waterford city": {
+          "population": 9271,
+          "gdp_thousands": 533737,
+          "crime_rate": 3.84,
+          "reward": 998,
+          "difficulty": 0.493,
+          "underworld_power": 534,
+          "police_power": 19108
+        },
+        "Hughson city": {
+          "population": 7903,
+          "gdp_thousands": 454980,
+          "crime_rate": 3.84,
+          "reward": 879,
+          "difficulty": 0.493,
+          "underworld_power": 455,
+          "police_power": 16288
+        },
+        "Stanislaus (unincorporated)": {
+          "population": 110444,
+          "gdp_thousands": 6358338,
+          "crime_rate": 3.84,
+          "reward": 4336,
+          "difficulty": 0.493,
+          "underworld_power": 6356,
+          "police_power": 227629
+        }
+      }
+    },
+    "Sutter County": {
+      "fips": "06101",
+      "gdp_thousands": 5238339,
+      "gdp_estimated": false,
+      "population": 98545,
+      "homicide_rate": 5.0074522672,
+      "difficulty": 0.424,
+      "cities": {
+        "Yuba City city": {
+          "population": 69148,
+          "gdp_thousands": 3675687,
+          "crime_rate": 5.01,
+          "reward": 3466,
+          "difficulty": 0.424,
+          "underworld_power": 5194,
+          "police_power": 131590
+        },
+        "Live Oak city": {
+          "population": 9503,
+          "gdp_thousands": 505149,
+          "crime_rate": 5.01,
+          "reward": 966,
+          "difficulty": 0.424,
+          "underworld_power": 714,
+          "police_power": 18084
+        },
+        "Sutter (unincorporated)": {
+          "population": 19894,
+          "gdp_thousands": 1057503,
+          "crime_rate": 5.01,
+          "reward": 1748,
+          "difficulty": 0.424,
+          "underworld_power": 1494,
+          "police_power": 37859
+        }
+      }
+    },
+    "Tehama County": {
+      "fips": "06103",
+      "gdp_thousands": 2869511,
+      "gdp_estimated": false,
+      "population": 64451,
+      "homicide_rate": 6.229115777,
+      "difficulty": 0.422,
+      "cities": {
+        "Red Bluff city": {
+          "population": 14286,
+          "gdp_thousands": 636046,
+          "crime_rate": 6.23,
+          "reward": 1194,
+          "difficulty": 0.422,
+          "underworld_power": 1335,
+          "police_power": 22770
+        },
+        "Corning city": {
+          "population": 8131,
+          "gdp_thousands": 362011,
+          "crime_rate": 6.23,
+          "reward": 770,
+          "difficulty": 0.422,
+          "underworld_power": 760,
+          "police_power": 12960
+        },
+        "Tehama city": {
+          "population": 436,
+          "gdp_thousands": 19411,
+          "crime_rate": 6.23,
+          "reward": 172,
+          "difficulty": 0.422,
+          "underworld_power": 41,
+          "police_power": 695
+        },
+        "Tehama (unincorporated)": {
+          "population": 41598,
+          "gdp_thousands": 1852043,
+          "crime_rate": 6.23,
+          "reward": 2499,
+          "difficulty": 0.422,
+          "underworld_power": 3887,
+          "police_power": 66303
+        }
+      }
+    },
+    "Trinity County": {
+      "fips": "06105",
+      "gdp_thousands": 598267,
+      "gdp_estimated": false,
+      "population": 15642,
+      "homicide_rate": null,
+      "difficulty": 0.268,
+      "cities": {
+        "Trinity": {
+          "population": 15642,
+          "gdp_thousands": 598267,
+          "crime_rate": 3.0,
+          "reward": 1118,
+          "difficulty": 0.268,
+          "underworld_power": 704,
+          "police_power": 21418
+        }
+      }
+    },
+    "Tulare County": {
+      "fips": "06107",
+      "gdp_thousands": 25414754,
+      "gdp_estimated": false,
+      "population": 483546,
+      "homicide_rate": 7.9997964803,
+      "difficulty": 0.724,
+      "cities": {
+        "Visalia city": {
+          "population": 146271,
+          "gdp_thousands": 7687875,
+          "crime_rate": 8.0,
+          "reward": 4576,
+          "difficulty": 0.724,
+          "underworld_power": 17552,
+          "police_power": 275226
+        },
+        "Tulare city": {
+          "population": 72601,
+          "gdp_thousands": 3815844,
+          "crime_rate": 8.0,
+          "reward": 3521,
+          "difficulty": 0.724,
+          "underworld_power": 8712,
+          "police_power": 136607
+        },
+        "Porterville city": {
+          "population": 63517,
+          "gdp_thousands": 3338397,
+          "crime_rate": 8.0,
+          "reward": 3314,
+          "difficulty": 0.724,
+          "underworld_power": 7622,
+          "police_power": 119515
+        },
+        "Dinuba city": {
+          "population": 25833,
+          "gdp_thousands": 1357759,
+          "crime_rate": 8.0,
+          "reward": 2075,
+          "difficulty": 0.724,
+          "underworld_power": 3100,
+          "police_power": 48608
+        },
+        "Lindsay city": {
+          "population": 12706,
+          "gdp_thousands": 667816,
+          "crime_rate": 8.0,
+          "reward": 1259,
+          "difficulty": 0.724,
+          "underworld_power": 1525,
+          "police_power": 23908
+        },
+        "Farmersville city": {
+          "population": 10501,
+          "gdp_thousands": 551923,
+          "crime_rate": 8.0,
+          "reward": 1031,
+          "difficulty": 0.724,
+          "underworld_power": 1260,
+          "police_power": 19759
+        },
+        "Exeter city": {
+          "population": 10186,
+          "gdp_thousands": 535367,
+          "crime_rate": 8.0,
+          "reward": 1009,
+          "difficulty": 0.724,
+          "underworld_power": 1222,
+          "police_power": 19166
+        },
+        "Woodlake city": {
+          "population": 7774,
+          "gdp_thousands": 408594,
+          "crime_rate": 8.0,
+          "reward": 813,
+          "difficulty": 0.724,
+          "underworld_power": 933,
+          "police_power": 14628
+        },
+        "Tulare (unincorporated)": {
+          "population": 134157,
+          "gdp_thousands": 7051179,
+          "crime_rate": 8.0,
+          "reward": 4445,
+          "difficulty": 0.724,
+          "underworld_power": 16098,
+          "police_power": 252432
+        }
+      }
+    },
+    "Tuolumne County": {
+      "fips": "06109",
+      "gdp_thousands": 3306314,
+      "gdp_estimated": false,
+      "population": 53893,
+      "homicide_rate": 3.148755061,
+      "difficulty": 0.283,
+      "cities": {
+        "Sonora city": {
+          "population": 4855,
+          "gdp_thousands": 297852,
+          "crime_rate": 3.15,
+          "reward": 672,
+          "difficulty": 0.283,
+          "underworld_power": 229,
+          "police_power": 10663
+        },
+        "Tuolumne (unincorporated)": {
+          "population": 49038,
+          "gdp_thousands": 3008462,
+          "crime_rate": 3.15,
+          "reward": 3173,
+          "difficulty": 0.283,
+          "underworld_power": 2316,
+          "police_power": 107703
+        }
+      }
+    },
+    "Ventura County": {
+      "fips": "06111",
+      "gdp_thousands": 69605643,
+      "gdp_estimated": false,
+      "population": 835427,
+      "homicide_rate": 3.2869003872,
+      "difficulty": 0.549,
+      "cities": {
+        "Oxnard city": {
+          "population": 200616,
+          "gdp_thousands": 16714812,
+          "crime_rate": 3.29,
+          "reward": 5576,
+          "difficulty": 0.549,
+          "underworld_power": 9891,
+          "police_power": 598390
+        },
+        "Simi Valley city": {
+          "population": 125778,
+          "gdp_thousands": 10479501,
+          "crime_rate": 3.29,
+          "reward": 5174,
+          "difficulty": 0.549,
+          "underworld_power": 6201,
+          "police_power": 375166
+        },
+        "Thousand Oaks city": {
+          "population": 124229,
+          "gdp_thousands": 10350442,
+          "crime_rate": 3.29,
+          "reward": 5130,
+          "difficulty": 0.549,
+          "underworld_power": 6125,
+          "police_power": 370546
+        },
+        "San Buenaventura (Ventura) city": {
+          "population": 109831,
+          "gdp_thousands": 9150838,
+          "crime_rate": 3.29,
+          "reward": 4815,
+          "difficulty": 0.549,
+          "underworld_power": 5415,
+          "police_power": 327600
+        },
+        "Camarillo city": {
+          "population": 69881,
+          "gdp_thousands": 5822306,
+          "crime_rate": 3.29,
+          "reward": 4108,
+          "difficulty": 0.549,
+          "underworld_power": 3445,
+          "police_power": 208439
+        },
+        "Moorpark city": {
+          "population": 35621,
+          "gdp_thousands": 2967850,
+          "crime_rate": 3.29,
+          "reward": 3162,
+          "difficulty": 0.549,
+          "underworld_power": 1756,
+          "police_power": 106249
+        },
+        "Santa Paula city": {
+          "population": 31786,
+          "gdp_thousands": 2648328,
+          "crime_rate": 3.29,
+          "reward": 3021,
+          "difficulty": 0.549,
+          "underworld_power": 1567,
+          "police_power": 94810
+        },
+        "Port Hueneme city": {
+          "population": 21325,
+          "gdp_thousands": 1776744,
+          "crime_rate": 3.29,
+          "reward": 2412,
+          "difficulty": 0.549,
+          "underworld_power": 1051,
+          "police_power": 63607
+        },
+        "Fillmore city": {
+          "population": 17216,
+          "gdp_thousands": 1434393,
+          "crime_rate": 3.29,
+          "reward": 2129,
+          "difficulty": 0.549,
+          "underworld_power": 849,
+          "police_power": 51351
+        },
+        "Ojai city": {
+          "population": 7563,
+          "gdp_thousands": 630129,
+          "crime_rate": 3.29,
+          "reward": 1172,
+          "difficulty": 0.549,
+          "underworld_power": 373,
+          "police_power": 22559
+        },
+        "Ventura (unincorporated)": {
+          "population": 91581,
+          "gdp_thousands": 7630300,
+          "crime_rate": 3.29,
+          "reward": 4565,
+          "difficulty": 0.549,
+          "underworld_power": 4515,
+          "police_power": 273165
+        }
+      }
+    },
+    "Yolo County": {
+      "fips": "06113",
+      "gdp_thousands": 20507463,
+      "gdp_estimated": false,
+      "population": 225251,
+      "homicide_rate": 2.5564449945,
+      "difficulty": 0.364,
+      "cities": {
+        "Davis city": {
+          "population": 67125,
+          "gdp_thousands": 6111242,
+          "crime_rate": 2.56,
+          "reward": 4238,
+          "difficulty": 0.364,
+          "underworld_power": 2574,
+          "police_power": 218782
+        },
+        "Woodland city": {
+          "population": 62983,
+          "gdp_thousands": 5734143,
+          "crime_rate": 2.56,
+          "reward": 4086,
+          "difficulty": 0.364,
+          "underworld_power": 2415,
+          "police_power": 205282
+        },
+        "West Sacramento city": {
+          "population": 55991,
+          "gdp_thousands": 5097572,
+          "crime_rate": 2.56,
+          "reward": 3934,
+          "difficulty": 0.364,
+          "underworld_power": 2147,
+          "police_power": 182493
+        },
+        "Winters city": {
+          "population": 7825,
+          "gdp_thousands": 712409,
+          "crime_rate": 2.56,
+          "reward": 1335,
+          "difficulty": 0.364,
+          "underworld_power": 300,
+          "police_power": 25504
+        },
+        "Yolo (unincorporated)": {
+          "population": 31327,
+          "gdp_thousands": 2852097,
+          "crime_rate": 2.56,
+          "reward": 3140,
+          "difficulty": 0.364,
+          "underworld_power": 1201,
+          "police_power": 102105
+        }
+      }
+    },
+    "Yuba County": {
+      "fips": "06115",
+      "gdp_thousands": 4508130,
+      "gdp_estimated": false,
+      "population": 87469,
+      "homicide_rate": 7.6770099143,
+      "difficulty": 0.552,
+      "cities": {
+        "Marysville city": {
+          "population": 12714,
+          "gdp_thousands": 655276,
+          "crime_rate": 7.68,
+          "reward": 1226,
+          "difficulty": 0.552,
+          "underworld_power": 1464,
+          "police_power": 23459
+        },
+        "Wheatland city": {
+          "population": 4110,
+          "gdp_thousands": 211828,
+          "crime_rate": 7.68,
+          "reward": 563,
+          "difficulty": 0.552,
+          "underworld_power": 473,
+          "police_power": 7583
+        },
+        "Yuba (unincorporated)": {
+          "population": 70645,
+          "gdp_thousands": 3641026,
+          "crime_rate": 7.68,
+          "reward": 3445,
+          "difficulty": 0.552,
+          "underworld_power": 8135,
+          "police_power": 130349
         }
       }
     }

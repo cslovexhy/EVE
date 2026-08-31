@@ -1,24 +1,172 @@
 {
   "country": "United States",
   "state": "Rhode Island",
-  "state_fips": "00",
+  "state_fips": "44",
   "counties": {
-    "Rhode Island County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Bristol County": {
+      "fips": "44001",
+      "gdp_thousands": 2696982,
+      "gdp_estimated": false,
+      "population": 50145,
+      "homicide_rate": null,
+      "difficulty": 0.25,
       "cities": {
-        "Rhode Island City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Bristol": {
+          "population": 50145,
+          "gdp_thousands": 2696982,
+          "crime_rate": 3.0,
+          "reward": 1125,
+          "difficulty": 0.25,
+          "underworld_power": 2257,
+          "police_power": 96552
+        }
+      }
+    },
+    "Kent County": {
+      "fips": "44003",
+      "gdp_thousands": 12418317,
+      "gdp_estimated": false,
+      "population": 172450,
+      "homicide_rate": null,
+      "difficulty": 0.625,
+      "cities": {
+        "Warwick city": {
+          "population": 83554,
+          "gdp_thousands": 6016816,
+          "crime_rate": 3.0,
+          "reward": 3562,
+          "difficulty": 0.625,
+          "underworld_power": 3760,
+          "police_power": 215402
+        },
+        "Kent (unincorporated)": {
+          "population": 88896,
+          "gdp_thousands": 6401501,
+          "crime_rate": 3.0,
+          "reward": 4538,
+          "difficulty": 0.625,
+          "underworld_power": 4000,
+          "police_power": 229174
+        }
+      }
+    },
+    "Newport County": {
+      "fips": "44005",
+      "gdp_thousands": 8771344,
+      "gdp_estimated": false,
+      "population": 83468,
+      "homicide_rate": null,
+      "difficulty": 0.375,
+      "cities": {
+        "Newport city": {
+          "population": 24482,
+          "gdp_thousands": 2572723,
+          "crime_rate": 3.0,
+          "reward": 638,
+          "difficulty": 0.375,
+          "underworld_power": 1102,
+          "police_power": 92103
+        },
+        "Newport (unincorporated)": {
+          "population": 58986,
+          "gdp_thousands": 6198621,
+          "crime_rate": 3.0,
+          "reward": 4050,
+          "difficulty": 0.375,
+          "underworld_power": 2654,
+          "police_power": 221911
+        }
+      }
+    },
+    "Providence County": {
+      "fips": "44007",
+      "gdp_thousands": 46726521,
+      "gdp_estimated": false,
+      "population": 675912,
+      "homicide_rate": 3.3524902074,
+      "difficulty": 0.75,
+      "cities": {
+        "Providence city": {
+          "population": 194706,
+          "gdp_thousands": 13460234,
+          "crime_rate": 3.35,
+          "reward": 5512,
+          "difficulty": 0.75,
+          "underworld_power": 9791,
+          "police_power": 481876
+        },
+        "Cranston city": {
+          "population": 84448,
+          "gdp_thousands": 5837980,
+          "crime_rate": 3.35,
+          "reward": 3075,
+          "difficulty": 0.75,
+          "underworld_power": 4247,
+          "police_power": 209000
+        },
+        "Pawtucket city": {
+          "population": 76996,
+          "gdp_thousands": 5322816,
+          "crime_rate": 3.35,
+          "reward": 2588,
+          "difficulty": 0.75,
+          "underworld_power": 3872,
+          "police_power": 190557
+        },
+        "East Providence city": {
+          "population": 47961,
+          "gdp_thousands": 3315595,
+          "crime_rate": 3.35,
+          "reward": 2100,
+          "difficulty": 0.75,
+          "underworld_power": 2412,
+          "police_power": 118698
+        },
+        "Woonsocket city": {
+          "population": 44508,
+          "gdp_thousands": 3076885,
+          "crime_rate": 3.35,
+          "reward": 1612,
+          "difficulty": 0.75,
+          "underworld_power": 2238,
+          "police_power": 110152
+        },
+        "Central Falls city": {
+          "population": 23034,
+          "gdp_thousands": 1592365,
+          "crime_rate": 3.35,
+          "reward": 150,
+          "difficulty": 0.75,
+          "underworld_power": 1158,
+          "police_power": 57007
+        },
+        "Providence (unincorporated)": {
+          "population": 204259,
+          "gdp_thousands": 14120646,
+          "crime_rate": 3.35,
+          "reward": 6000,
+          "difficulty": 0.75,
+          "underworld_power": 10272,
+          "police_power": 505519
+        }
+      }
+    },
+    "Washington County": {
+      "fips": "44009",
+      "gdp_thousands": 9767982,
+      "gdp_estimated": false,
+      "population": 130333,
+      "homicide_rate": null,
+      "difficulty": 0.5,
+      "cities": {
+        "Washington": {
+          "population": 130333,
+          "gdp_thousands": 9767982,
+          "crime_rate": 3.0,
+          "reward": 5025,
+          "difficulty": 0.5,
+          "underworld_power": 5865,
+          "police_power": 349694
         }
       }
     }

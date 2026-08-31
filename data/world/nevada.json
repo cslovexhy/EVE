@@ -1,24 +1,490 @@
 {
   "country": "United States",
   "state": "Nevada",
-  "state_fips": "00",
+  "state_fips": "32",
   "counties": {
-    "Nevada County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Churchill County": {
+      "fips": "32001",
+      "gdp_thousands": 1639429,
+      "gdp_estimated": false,
+      "population": 26033,
+      "homicide_rate": null,
+      "difficulty": 0.469,
       "cities": {
-        "Nevada City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Fallon city": {
+          "population": 9647,
+          "gdp_thousands": 607520,
+          "crime_rate": 3.0,
+          "reward": 2043,
+          "difficulty": 0.469,
+          "underworld_power": 434,
+          "police_power": 21749
+        },
+        "Churchill (unincorporated)": {
+          "population": 16386,
+          "gdp_thousands": 1031909,
+          "crime_rate": 3.0,
+          "reward": 3075,
+          "difficulty": 0.469,
+          "underworld_power": 737,
+          "police_power": 36942
+        }
+      }
+    },
+    "Clark County": {
+      "fips": "32003",
+      "gdp_thousands": 195936289,
+      "gdp_estimated": false,
+      "population": 2398871,
+      "homicide_rate": 7.7271891483,
+      "difficulty": 1.0,
+      "cities": {
+        "Las Vegas city": {
+          "population": 678922,
+          "gdp_thousands": 55453360,
+          "crime_rate": 7.73,
+          "reward": 5828,
+          "difficulty": 1.0,
+          "underworld_power": 78692,
+          "police_power": 1985230
+        },
+        "Henderson city": {
+          "population": 350039,
+          "gdp_thousands": 28590675,
+          "crime_rate": 7.73,
+          "reward": 5656,
+          "difficulty": 1.0,
+          "underworld_power": 40572,
+          "police_power": 1023546
+        },
+        "North Las Vegas city": {
+          "population": 294034,
+          "gdp_thousands": 24016268,
+          "crime_rate": 7.73,
+          "reward": 5312,
+          "difficulty": 1.0,
+          "underworld_power": 34081,
+          "police_power": 859782
+        },
+        "Mesquite city": {
+          "population": 23599,
+          "gdp_thousands": 1927531,
+          "crime_rate": 7.73,
+          "reward": 4107,
+          "difficulty": 1.0,
+          "underworld_power": 2735,
+          "police_power": 69006
+        },
+        "Boulder City city": {
+          "population": 15029,
+          "gdp_thousands": 1227546,
+          "crime_rate": 7.73,
+          "reward": 3247,
+          "difficulty": 1.0,
+          "underworld_power": 1742,
+          "police_power": 43946
+        },
+        "Clark (unincorporated)": {
+          "population": 1037248,
+          "gdp_thousands": 84720909,
+          "crime_rate": 7.73,
+          "reward": 6000,
+          "difficulty": 1.0,
+          "underworld_power": 120225,
+          "police_power": 3033009
+        }
+      }
+    },
+    "Douglas County": {
+      "fips": "32005",
+      "gdp_thousands": 4048172,
+      "gdp_estimated": false,
+      "population": 49564,
+      "homicide_rate": 3.5255854675,
+      "difficulty": 0.406,
+      "cities": {
+        "Douglas": {
+          "population": 49564,
+          "gdp_thousands": 4048172,
+          "crime_rate": 3.53,
+          "reward": 4624,
+          "difficulty": 0.406,
+          "underworld_power": 2621,
+          "police_power": 144925
+        }
+      }
+    },
+    "Elko County": {
+      "fips": "32007",
+      "gdp_thousands": 3994743,
+      "gdp_estimated": false,
+      "population": 54363,
+      "homicide_rate": 5.9634979711,
+      "difficulty": 0.792,
+      "cities": {
+        "Elko city": {
+          "population": 20822,
+          "gdp_thousands": 1530057,
+          "crime_rate": 5.96,
+          "reward": 3763,
+          "difficulty": 0.792,
+          "underworld_power": 1863,
+          "police_power": 54776
+        },
+        "West Wendover city": {
+          "population": 4528,
+          "gdp_thousands": 332729,
+          "crime_rate": 5.96,
+          "reward": 1526,
+          "difficulty": 0.792,
+          "underworld_power": 405,
+          "police_power": 11912
+        },
+        "Carlin city": {
+          "population": 2000,
+          "gdp_thousands": 146965,
+          "crime_rate": 5.96,
+          "reward": 838,
+          "difficulty": 0.792,
+          "underworld_power": 179,
+          "police_power": 5261
+        },
+        "Wells city": {
+          "population": 1242,
+          "gdp_thousands": 91265,
+          "crime_rate": 5.96,
+          "reward": 494,
+          "difficulty": 0.792,
+          "underworld_power": 111,
+          "police_power": 3267
+        },
+        "Elko (unincorporated)": {
+          "population": 25771,
+          "gdp_thousands": 1893727,
+          "crime_rate": 5.96,
+          "reward": 3935,
+          "difficulty": 0.792,
+          "underworld_power": 2305,
+          "police_power": 67795
+        }
+      }
+    },
+    "Esmeralda County": {
+      "fips": "32009",
+      "gdp_thousands": 46926,
+      "gdp_estimated": false,
+      "population": 720,
+      "homicide_rate": null,
+      "difficulty": 0.25,
+      "cities": {
+        "Esmeralda": {
+          "population": 720,
+          "gdp_thousands": 46926,
+          "crime_rate": 3.0,
+          "reward": 150,
+          "difficulty": 0.25,
+          "underworld_power": 32,
+          "police_power": 1680
+        }
+      }
+    },
+    "Eureka County": {
+      "fips": "32011",
+      "gdp_thousands": 1297450,
+      "gdp_estimated": false,
+      "population": 1877,
+      "homicide_rate": null,
+      "difficulty": 0.406,
+      "cities": {
+        "Eureka": {
+          "population": 1877,
+          "gdp_thousands": 1297450,
+          "crime_rate": 3.0,
+          "reward": 3419,
+          "difficulty": 0.406,
+          "underworld_power": 84,
+          "police_power": 46449
+        }
+      }
+    },
+    "Humboldt County": {
+      "fips": "32013",
+      "gdp_thousands": 1815207,
+      "gdp_estimated": false,
+      "population": 17116,
+      "homicide_rate": null,
+      "difficulty": 0.5,
+      "cities": {
+        "Winnemucca city": {
+          "population": 8225,
+          "gdp_thousands": 872287,
+          "crime_rate": 3.0,
+          "reward": 2387,
+          "difficulty": 0.5,
+          "underworld_power": 370,
+          "police_power": 31228
+        },
+        "Humboldt (unincorporated)": {
+          "population": 8891,
+          "gdp_thousands": 942920,
+          "crime_rate": 3.0,
+          "reward": 2731,
+          "difficulty": 0.5,
+          "underworld_power": 400,
+          "police_power": 33757
+        }
+      }
+    },
+    "Lander County": {
+      "fips": "32015",
+      "gdp_thousands": 920527,
+      "gdp_estimated": false,
+      "population": 5785,
+      "homicide_rate": null,
+      "difficulty": 0.375,
+      "cities": {
+        "Lander": {
+          "population": 5785,
+          "gdp_thousands": 920527,
+          "crime_rate": 3.0,
+          "reward": 2559,
+          "difficulty": 0.375,
+          "underworld_power": 260,
+          "police_power": 32955
+        }
+      }
+    },
+    "Lincoln County": {
+      "fips": "32017",
+      "gdp_thousands": 254451,
+      "gdp_estimated": false,
+      "population": 4345,
+      "homicide_rate": null,
+      "difficulty": 0.312,
+      "cities": {
+        "Caliente city": {
+          "population": 964,
+          "gdp_thousands": 56453,
+          "crime_rate": 3.0,
+          "reward": 322,
+          "difficulty": 0.312,
+          "underworld_power": 43,
+          "police_power": 2021
+        },
+        "Lincoln (unincorporated)": {
+          "population": 3381,
+          "gdp_thousands": 197998,
+          "crime_rate": 3.0,
+          "reward": 1182,
+          "difficulty": 0.312,
+          "underworld_power": 152,
+          "police_power": 7088
+        }
+      }
+    },
+    "Lyon County": {
+      "fips": "32019",
+      "gdp_thousands": 2367880,
+      "gdp_estimated": false,
+      "population": 63718,
+      "homicide_rate": 3.5675515893,
+      "difficulty": 0.365,
+      "cities": {
+        "Fernley city": {
+          "population": 25508,
+          "gdp_thousands": 947924,
+          "crime_rate": 3.57,
+          "reward": 2903,
+          "difficulty": 0.365,
+          "underworld_power": 1365,
+          "police_power": 33936
+        },
+        "Yerington city": {
+          "population": 3199,
+          "gdp_thousands": 118880,
+          "crime_rate": 3.57,
+          "reward": 666,
+          "difficulty": 0.365,
+          "underworld_power": 171,
+          "police_power": 4256
+        },
+        "Lyon (unincorporated)": {
+          "population": 35011,
+          "gdp_thousands": 1301076,
+          "crime_rate": 3.57,
+          "reward": 3591,
+          "difficulty": 0.365,
+          "underworld_power": 1874,
+          "police_power": 46579
+        }
+      }
+    },
+    "Mineral County": {
+      "fips": "32021",
+      "gdp_thousands": 232656,
+      "gdp_estimated": false,
+      "population": 4475,
+      "homicide_rate": null,
+      "difficulty": 0.281,
+      "cities": {
+        "Mineral": {
+          "population": 4475,
+          "gdp_thousands": 232656,
+          "crime_rate": 3.0,
+          "reward": 1354,
+          "difficulty": 0.281,
+          "underworld_power": 201,
+          "police_power": 8329
+        }
+      }
+    },
+    "Nye County": {
+      "fips": "32023",
+      "gdp_thousands": 2670068,
+      "gdp_estimated": false,
+      "population": 55990,
+      "homicide_rate": 4.6371435196,
+      "difficulty": 0.562,
+      "cities": {
+        "Nye": {
+          "population": 55990,
+          "gdp_thousands": 2670068,
+          "crime_rate": 4.64,
+          "reward": 4279,
+          "difficulty": 0.562,
+          "underworld_power": 3895,
+          "police_power": 95588
+        }
+      }
+    },
+    "Pershing County": {
+      "fips": "32027",
+      "gdp_thousands": 592231,
+      "gdp_estimated": false,
+      "population": 6536,
+      "homicide_rate": null,
+      "difficulty": 0.344,
+      "cities": {
+        "Lovelock city": {
+          "population": 1823,
+          "gdp_thousands": 165183,
+          "crime_rate": 3.0,
+          "reward": 1010,
+          "difficulty": 0.344,
+          "underworld_power": 82,
+          "police_power": 5914
+        },
+        "Pershing (unincorporated)": {
+          "population": 4713,
+          "gdp_thousands": 427048,
+          "crime_rate": 3.0,
+          "reward": 1699,
+          "difficulty": 0.344,
+          "underworld_power": 212,
+          "police_power": 15288
+        }
+      }
+    },
+    "Storey County": {
+      "fips": "32029",
+      "gdp_thousands": 2769246,
+      "gdp_estimated": false,
+      "population": 4112,
+      "homicide_rate": null,
+      "difficulty": 0.594,
+      "cities": {
+        "Storey": {
+          "population": 4112,
+          "gdp_thousands": 2769246,
+          "crime_rate": 3.0,
+          "reward": 4451,
+          "difficulty": 0.594,
+          "underworld_power": 185,
+          "police_power": 99139
+        }
+      }
+    },
+    "Washoe County": {
+      "fips": "32031",
+      "gdp_thousands": 43717096,
+      "gdp_estimated": false,
+      "population": 507280,
+      "homicide_rate": 5.2618150692,
+      "difficulty": 0.802,
+      "cities": {
+        "Reno city": {
+          "population": 281714,
+          "gdp_thousands": 24277949,
+          "crime_rate": 5.26,
+          "reward": 5484,
+          "difficulty": 0.802,
+          "underworld_power": 22235,
+          "police_power": 869151
+        },
+        "Sparks city": {
+          "population": 111520,
+          "gdp_thousands": 9610728,
+          "crime_rate": 5.26,
+          "reward": 4968,
+          "difficulty": 0.802,
+          "underworld_power": 8802,
+          "police_power": 344064
+        },
+        "Washoe (unincorporated)": {
+          "population": 114046,
+          "gdp_thousands": 9828419,
+          "crime_rate": 5.26,
+          "reward": 5140,
+          "difficulty": 0.802,
+          "underworld_power": 9001,
+          "police_power": 351857
+        }
+      }
+    },
+    "White Pine County": {
+      "fips": "32033",
+      "gdp_thousands": 1331760,
+      "gdp_estimated": false,
+      "population": 8534,
+      "homicide_rate": null,
+      "difficulty": 0.438,
+      "cities": {
+        "Ely city": {
+          "population": 3892,
+          "gdp_thousands": 607359,
+          "crime_rate": 3.0,
+          "reward": 1871,
+          "difficulty": 0.438,
+          "underworld_power": 175,
+          "police_power": 21743
+        },
+        "White Pine (unincorporated)": {
+          "population": 4642,
+          "gdp_thousands": 724401,
+          "crime_rate": 3.0,
+          "reward": 2215,
+          "difficulty": 0.438,
+          "underworld_power": 209,
+          "police_power": 25934
+        }
+      }
+    },
+    "Carson City": {
+      "fips": "32510",
+      "gdp_thousands": 5376379,
+      "gdp_estimated": false,
+      "population": 58148,
+      "homicide_rate": 3.5863870993,
+      "difficulty": 0.604,
+      "cities": {
+        "Carson City": {
+          "population": 58148,
+          "gdp_thousands": 5376379,
+          "crime_rate": 3.59,
+          "reward": 4796,
+          "difficulty": 0.604,
+          "underworld_power": 3128,
+          "police_power": 192474
         }
       }
     }

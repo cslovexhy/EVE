@@ -1,24 +1,3084 @@
 {
   "country": "United States",
   "state": "South Carolina",
-  "state_fips": "00",
+  "state_fips": "45",
   "counties": {
-    "South Carolina County": {
-      "fips": "00000",
-      "gdp_thousands": 2000000,
-      "gdp_estimated": true,
-      "population": 50000,
-      "homicide_rate": 20.0,
-      "difficulty": 0.2,
+    "Abbeville County": {
+      "fips": "45001",
+      "gdp_thousands": 846101,
+      "gdp_estimated": false,
+      "population": 24607,
+      "homicide_rate": 9.2862905332,
+      "difficulty": 0.248,
       "cities": {
-        "South Carolina City": {
-          "population": 50000,
-          "gdp_thousands": 2000000,
-          "crime_rate": 20.0,
-          "reward": 1500,
-          "difficulty": 0.2,
-          "underworld_power": 200,
-          "police_power": 8000
+        "Abbeville city": {
+          "population": 4870,
+          "gdp_thousands": 167452,
+          "crime_rate": 9.29,
+          "reward": 3660,
+          "difficulty": 0.248,
+          "underworld_power": 678,
+          "police_power": 5995
+        },
+        "Calhoun Falls town": {
+          "population": 1747,
+          "gdp_thousands": 60069,
+          "crime_rate": 9.29,
+          "reward": 2611,
+          "difficulty": 0.248,
+          "underworld_power": 243,
+          "police_power": 2150
+        },
+        "Due West town": {
+          "population": 1292,
+          "gdp_thousands": 44424,
+          "crime_rate": 9.29,
+          "reward": 2288,
+          "difficulty": 0.248,
+          "underworld_power": 180,
+          "police_power": 1590
+        },
+        "Donalds town": {
+          "population": 324,
+          "gdp_thousands": 11140,
+          "crime_rate": 9.29,
+          "reward": 1058,
+          "difficulty": 0.248,
+          "underworld_power": 45,
+          "police_power": 399
+        },
+        "Lowndesville town": {
+          "population": 122,
+          "gdp_thousands": 4194,
+          "crime_rate": 9.29,
+          "reward": 432,
+          "difficulty": 0.248,
+          "underworld_power": 17,
+          "police_power": 150
+        },
+        "Abbeville (unincorporated)": {
+          "population": 16252,
+          "gdp_thousands": 558822,
+          "crime_rate": 9.29,
+          "reward": 4608,
+          "difficulty": 0.248,
+          "underworld_power": 2264,
+          "police_power": 20006
+        }
+      }
+    },
+    "Aiken County": {
+      "fips": "45003",
+      "gdp_thousands": 10364699,
+      "gdp_estimated": false,
+      "population": 179245,
+      "homicide_rate": 11.135387756,
+      "difficulty": 0.628,
+      "cities": {
+        "Aiken city": {
+          "population": 32694,
+          "gdp_thousands": 1890504,
+          "crime_rate": 11.14,
+          "reward": 5274,
+          "difficulty": 0.628,
+          "underworld_power": 5461,
+          "police_power": 67680
+        },
+        "Burnettown town": {
+          "population": 3226,
+          "gdp_thousands": 186540,
+          "crime_rate": 11.14,
+          "reward": 3781,
+          "difficulty": 0.628,
+          "underworld_power": 539,
+          "police_power": 6678
+        },
+        "New Ellenton town": {
+          "population": 2354,
+          "gdp_thousands": 136118,
+          "crime_rate": 11.14,
+          "reward": 3418,
+          "difficulty": 0.628,
+          "underworld_power": 393,
+          "police_power": 4873
+        },
+        "Jackson town": {
+          "population": 1635,
+          "gdp_thousands": 94542,
+          "crime_rate": 11.14,
+          "reward": 3035,
+          "difficulty": 0.628,
+          "underworld_power": 273,
+          "police_power": 3385
+        },
+        "Wagener town": {
+          "population": 691,
+          "gdp_thousands": 39956,
+          "crime_rate": 11.14,
+          "reward": 2228,
+          "difficulty": 0.628,
+          "underworld_power": 115,
+          "police_power": 1430
+        },
+        "Salley town": {
+          "population": 351,
+          "gdp_thousands": 20296,
+          "crime_rate": 11.14,
+          "reward": 1582,
+          "difficulty": 0.628,
+          "underworld_power": 59,
+          "police_power": 727
+        },
+        "Perry town": {
+          "population": 209,
+          "gdp_thousands": 12085,
+          "crime_rate": 11.14,
+          "reward": 1118,
+          "difficulty": 0.628,
+          "underworld_power": 35,
+          "police_power": 433
+        },
+        "Windsor town": {
+          "population": 122,
+          "gdp_thousands": 7054,
+          "crime_rate": 11.14,
+          "reward": 755,
+          "difficulty": 0.628,
+          "underworld_power": 20,
+          "police_power": 253
+        },
+        "Aiken (unincorporated)": {
+          "population": 137963,
+          "gdp_thousands": 7977604,
+          "crime_rate": 11.14,
+          "reward": 5778,
+          "difficulty": 0.628,
+          "underworld_power": 23044,
+          "police_power": 285598
+        }
+      }
+    },
+    "Allendale County": {
+      "fips": "45005",
+      "gdp_thousands": 398266,
+      "gdp_estimated": false,
+      "population": 7551,
+      "homicide_rate": 29.382957884,
+      "difficulty": 0.5,
+      "cities": {
+        "Allendale town": {
+          "population": 2496,
+          "gdp_thousands": 131647,
+          "crime_rate": 29.38,
+          "reward": 3398,
+          "difficulty": 0.5,
+          "underworld_power": 1100,
+          "police_power": 4713
+        },
+        "Fairfax town": {
+          "population": 1389,
+          "gdp_thousands": 73260,
+          "crime_rate": 29.38,
+          "reward": 2833,
+          "difficulty": 0.5,
+          "underworld_power": 612,
+          "police_power": 2623
+        },
+        "Sycamore town": {
+          "population": 143,
+          "gdp_thousands": 7542,
+          "crime_rate": 29.38,
+          "reward": 796,
+          "difficulty": 0.5,
+          "underworld_power": 63,
+          "police_power": 270
+        },
+        "Ulmer town": {
+          "population": 59,
+          "gdp_thousands": 3111,
+          "crime_rate": 29.38,
+          "reward": 271,
+          "difficulty": 0.5,
+          "underworld_power": 26,
+          "police_power": 111
+        },
+        "Allendale (unincorporated)": {
+          "population": 3464,
+          "gdp_thousands": 182706,
+          "crime_rate": 29.38,
+          "reward": 3761,
+          "difficulty": 0.5,
+          "underworld_power": 1527,
+          "police_power": 6541
+        }
+      }
+    },
+    "Anderson County": {
+      "fips": "45007",
+      "gdp_thousands": 10558072,
+      "gdp_estimated": false,
+      "population": 217183,
+      "homicide_rate": 10.254065844,
+      "difficulty": 0.593,
+      "cities": {
+        "Anderson city": {
+          "population": 30937,
+          "gdp_thousands": 1503962,
+          "crime_rate": 10.25,
+          "reward": 5173,
+          "difficulty": 0.593,
+          "underworld_power": 4758,
+          "police_power": 53842
+        },
+        "Belton city": {
+          "population": 4573,
+          "gdp_thousands": 222310,
+          "crime_rate": 10.25,
+          "reward": 3902,
+          "difficulty": 0.593,
+          "underworld_power": 703,
+          "police_power": 7959
+        },
+        "Williamston town": {
+          "population": 4285,
+          "gdp_thousands": 208309,
+          "crime_rate": 10.25,
+          "reward": 3821,
+          "difficulty": 0.593,
+          "underworld_power": 659,
+          "police_power": 7457
+        },
+        "Pelzer town": {
+          "population": 1429,
+          "gdp_thousands": 69468,
+          "crime_rate": 10.25,
+          "reward": 2793,
+          "difficulty": 0.593,
+          "underworld_power": 220,
+          "police_power": 2487
+        },
+        "Iva town": {
+          "population": 1191,
+          "gdp_thousands": 57898,
+          "crime_rate": 10.25,
+          "reward": 2571,
+          "difficulty": 0.593,
+          "underworld_power": 183,
+          "police_power": 2073
+        },
+        "West Pelzer town": {
+          "population": 1027,
+          "gdp_thousands": 49926,
+          "crime_rate": 10.25,
+          "reward": 2470,
+          "difficulty": 0.593,
+          "underworld_power": 158,
+          "police_power": 1787
+        },
+        "Starr town": {
+          "population": 174,
+          "gdp_thousands": 8458,
+          "crime_rate": 10.25,
+          "reward": 896,
+          "difficulty": 0.593,
+          "underworld_power": 27,
+          "police_power": 303
+        },
+        "Anderson (unincorporated)": {
+          "population": 173567,
+          "gdp_thousands": 8437741,
+          "crime_rate": 10.25,
+          "reward": 5798,
+          "difficulty": 0.593,
+          "underworld_power": 26697,
+          "police_power": 302071
+        }
+      }
+    },
+    "Bamberg County": {
+      "fips": "45009",
+      "gdp_thousands": 510406,
+      "gdp_estimated": false,
+      "population": 12870,
+      "homicide_rate": 16.140258849,
+      "difficulty": 0.386,
+      "cities": {
+        "Denmark city": {
+          "population": 3072,
+          "gdp_thousands": 121831,
+          "crime_rate": 16.14,
+          "reward": 3337,
+          "difficulty": 0.386,
+          "underworld_power": 744,
+          "police_power": 4362
+        },
+        "Bamberg town": {
+          "population": 2943,
+          "gdp_thousands": 116715,
+          "crime_rate": 16.14,
+          "reward": 3257,
+          "difficulty": 0.386,
+          "underworld_power": 713,
+          "police_power": 4178
+        },
+        "Ehrhardt town": {
+          "population": 437,
+          "gdp_thousands": 17330,
+          "crime_rate": 16.14,
+          "reward": 1481,
+          "difficulty": 0.386,
+          "underworld_power": 106,
+          "police_power": 620
+        },
+        "Olar town": {
+          "population": 206,
+          "gdp_thousands": 8169,
+          "crime_rate": 16.14,
+          "reward": 876,
+          "difficulty": 0.386,
+          "underworld_power": 50,
+          "police_power": 292
+        },
+        "Govan town": {
+          "population": 53,
+          "gdp_thousands": 2101,
+          "crime_rate": 16.14,
+          "reward": 170,
+          "difficulty": 0.386,
+          "underworld_power": 13,
+          "police_power": 75
+        },
+        "Bamberg (unincorporated)": {
+          "population": 6159,
+          "gdp_thousands": 244260,
+          "crime_rate": 16.14,
+          "reward": 4084,
+          "difficulty": 0.386,
+          "underworld_power": 1491,
+          "police_power": 8745
+        }
+      }
+    },
+    "Barnwell County": {
+      "fips": "45011",
+      "gdp_thousands": 700844,
+      "gdp_estimated": false,
+      "population": 20495,
+      "homicide_rate": 22.986019092,
+      "difficulty": 0.521,
+      "cities": {
+        "Barnwell city": {
+          "population": 4589,
+          "gdp_thousands": 156924,
+          "crime_rate": 22.99,
+          "reward": 3620,
+          "difficulty": 0.521,
+          "underworld_power": 1582,
+          "police_power": 5618
+        },
+        "Williston town": {
+          "population": 2879,
+          "gdp_thousands": 98449,
+          "crime_rate": 22.99,
+          "reward": 3095,
+          "difficulty": 0.521,
+          "underworld_power": 993,
+          "police_power": 3524
+        },
+        "Blackville town": {
+          "population": 1906,
+          "gdp_thousands": 65177,
+          "crime_rate": 22.99,
+          "reward": 2732,
+          "difficulty": 0.521,
+          "underworld_power": 657,
+          "police_power": 2333
+        },
+        "Hilda town": {
+          "population": 421,
+          "gdp_thousands": 14396,
+          "crime_rate": 22.99,
+          "reward": 1300,
+          "difficulty": 0.521,
+          "underworld_power": 145,
+          "police_power": 515
+        },
+        "Snelling town": {
+          "population": 253,
+          "gdp_thousands": 8651,
+          "crime_rate": 22.99,
+          "reward": 937,
+          "difficulty": 0.521,
+          "underworld_power": 87,
+          "police_power": 310
+        },
+        "Kline town": {
+          "population": 142,
+          "gdp_thousands": 4855,
+          "crime_rate": 22.99,
+          "reward": 513,
+          "difficulty": 0.521,
+          "underworld_power": 49,
+          "police_power": 174
+        },
+        "Elko town": {
+          "population": 140,
+          "gdp_thousands": 4787,
+          "crime_rate": 22.99,
+          "reward": 493,
+          "difficulty": 0.521,
+          "underworld_power": 48,
+          "police_power": 171
+        },
+        "Barnwell (unincorporated)": {
+          "population": 10165,
+          "gdp_thousands": 347605,
+          "crime_rate": 22.99,
+          "reward": 4326,
+          "difficulty": 0.521,
+          "underworld_power": 3505,
+          "police_power": 12444
+        }
+      }
+    },
+    "Beaufort County": {
+      "fips": "45013",
+      "gdp_thousands": 12872955,
+      "gdp_estimated": false,
+      "population": 201775,
+      "homicide_rate": 7.0570934033,
+      "difficulty": 0.468,
+      "cities": {
+        "Hilton Head Island town": {
+          "population": 38158,
+          "gdp_thousands": 2434425,
+          "crime_rate": 7.06,
+          "reward": 5415,
+          "difficulty": 0.468,
+          "underworld_power": 4039,
+          "police_power": 87152
+        },
+        "Bluffton town": {
+          "population": 36146,
+          "gdp_thousands": 2306062,
+          "crime_rate": 7.06,
+          "reward": 5375,
+          "difficulty": 0.468,
+          "underworld_power": 3826,
+          "police_power": 82557
+        },
+        "Port Royal town": {
+          "population": 16507,
+          "gdp_thousands": 1053122,
+          "crime_rate": 7.06,
+          "reward": 4991,
+          "difficulty": 0.468,
+          "underworld_power": 1747,
+          "police_power": 37702
+        },
+        "Beaufort city": {
+          "population": 14334,
+          "gdp_thousands": 914488,
+          "crime_rate": 7.06,
+          "reward": 4951,
+          "difficulty": 0.468,
+          "underworld_power": 1517,
+          "police_power": 32739
+        },
+        "Beaufort (unincorporated)": {
+          "population": 96630,
+          "gdp_thousands": 6164858,
+          "crime_rate": 7.06,
+          "reward": 5718,
+          "difficulty": 0.468,
+          "underworld_power": 10229,
+          "police_power": 220702
+        }
+      }
+    },
+    "Berkeley County": {
+      "fips": "45015",
+      "gdp_thousands": 14302031,
+      "gdp_estimated": false,
+      "population": 264276,
+      "homicide_rate": 7.7254528564,
+      "difficulty": 0.524,
+      "cities": {
+        "Goose Creek city": {
+          "population": 50352,
+          "gdp_thousands": 2724938,
+          "crime_rate": 7.73,
+          "reward": 5516,
+          "difficulty": 0.524,
+          "underworld_power": 5835,
+          "police_power": 97553
+        },
+        "Hanahan city": {
+          "population": 21983,
+          "gdp_thousands": 1189671,
+          "crime_rate": 7.73,
+          "reward": 5052,
+          "difficulty": 0.524,
+          "underworld_power": 2547,
+          "police_power": 42590
+        },
+        "Moncks Corner town": {
+          "population": 18359,
+          "gdp_thousands": 993548,
+          "crime_rate": 7.73,
+          "reward": 4971,
+          "difficulty": 0.524,
+          "underworld_power": 2127,
+          "police_power": 35569
+        },
+        "St. Stephen town": {
+          "population": 1592,
+          "gdp_thousands": 86155,
+          "crime_rate": 7.73,
+          "reward": 2994,
+          "difficulty": 0.524,
+          "underworld_power": 184,
+          "police_power": 3084
+        },
+        "Bonneau town": {
+          "population": 433,
+          "gdp_thousands": 23432,
+          "crime_rate": 7.73,
+          "reward": 1703,
+          "difficulty": 0.524,
+          "underworld_power": 50,
+          "police_power": 839
+        },
+        "Jamestown town": {
+          "population": 73,
+          "gdp_thousands": 3950,
+          "crime_rate": 7.73,
+          "reward": 372,
+          "difficulty": 0.524,
+          "underworld_power": 8,
+          "police_power": 141
+        },
+        "Berkeley (unincorporated)": {
+          "population": 171484,
+          "gdp_thousands": 9280337,
+          "crime_rate": 7.73,
+          "reward": 5839,
+          "difficulty": 0.524,
+          "underworld_power": 19872,
+          "police_power": 332236
+        }
+      }
+    },
+    "Calhoun County": {
+      "fips": "45017",
+      "gdp_thousands": 910882,
+      "gdp_estimated": false,
+      "population": 14249,
+      "homicide_rate": 14.695365082,
+      "difficulty": 0.452,
+      "cities": {
+        "St. Matthews town": {
+          "population": 1834,
+          "gdp_thousands": 117240,
+          "crime_rate": 14.7,
+          "reward": 3277,
+          "difficulty": 0.452,
+          "underworld_power": 404,
+          "police_power": 4197
+        },
+        "Cameron town": {
+          "population": 374,
+          "gdp_thousands": 23908,
+          "crime_rate": 14.7,
+          "reward": 1723,
+          "difficulty": 0.452,
+          "underworld_power": 82,
+          "police_power": 856
+        },
+        "Calhoun (unincorporated)": {
+          "population": 12041,
+          "gdp_thousands": 769734,
+          "crime_rate": 14.7,
+          "reward": 4850,
+          "difficulty": 0.452,
+          "underworld_power": 2654,
+          "police_power": 27556
+        }
+      }
+    },
+    "Charleston County": {
+      "fips": "45019",
+      "gdp_thousands": 50461876,
+      "gdp_estimated": false,
+      "population": 431001,
+      "homicide_rate": 13.295715041,
+      "difficulty": 0.807,
+      "cities": {
+        "Mount Pleasant town": {
+          "population": 95604,
+          "gdp_thousands": 11193378,
+          "crime_rate": 13.3,
+          "reward": 5879,
+          "difficulty": 0.807,
+          "underworld_power": 19067,
+          "police_power": 400723
+        },
+        "James Island town": {
+          "population": 12451,
+          "gdp_thousands": 1457771,
+          "crime_rate": 13.3,
+          "reward": 5153,
+          "difficulty": 0.807,
+          "underworld_power": 2483,
+          "police_power": 52188
+        },
+        "Hollywood town": {
+          "population": 5503,
+          "gdp_thousands": 644294,
+          "crime_rate": 13.3,
+          "reward": 4749,
+          "difficulty": 0.807,
+          "underworld_power": 1097,
+          "police_power": 23066
+        },
+        "Isle of Palms city": {
+          "population": 4377,
+          "gdp_thousands": 512461,
+          "crime_rate": 13.3,
+          "reward": 4548,
+          "difficulty": 0.807,
+          "underworld_power": 873,
+          "police_power": 18346
+        },
+        "Ravenel town": {
+          "population": 2688,
+          "gdp_thousands": 314712,
+          "crime_rate": 13.3,
+          "reward": 4245,
+          "difficulty": 0.807,
+          "underworld_power": 536,
+          "police_power": 11267
+        },
+        "Seabrook Island town": {
+          "population": 2135,
+          "gdp_thousands": 249967,
+          "crime_rate": 13.3,
+          "reward": 4104,
+          "difficulty": 0.807,
+          "underworld_power": 426,
+          "police_power": 8949
+        },
+        "Folly Beach city": {
+          "population": 2084,
+          "gdp_thousands": 243996,
+          "crime_rate": 13.3,
+          "reward": 4063,
+          "difficulty": 0.807,
+          "underworld_power": 416,
+          "police_power": 8735
+        },
+        "Kiawah Island town": {
+          "population": 2003,
+          "gdp_thousands": 234512,
+          "crime_rate": 13.3,
+          "reward": 4003,
+          "difficulty": 0.807,
+          "underworld_power": 399,
+          "police_power": 8396
+        },
+        "Sullivan's Island town": {
+          "population": 1948,
+          "gdp_thousands": 228073,
+          "crime_rate": 13.3,
+          "reward": 3922,
+          "difficulty": 0.807,
+          "underworld_power": 389,
+          "police_power": 8165
+        },
+        "Awendaw town": {
+          "population": 1472,
+          "gdp_thousands": 172342,
+          "crime_rate": 13.3,
+          "reward": 3700,
+          "difficulty": 0.807,
+          "underworld_power": 294,
+          "police_power": 6170
+        },
+        "Meggett town": {
+          "population": 1453,
+          "gdp_thousands": 170118,
+          "crime_rate": 13.3,
+          "reward": 3680,
+          "difficulty": 0.807,
+          "underworld_power": 290,
+          "police_power": 6090
+        },
+        "McClellanville town": {
+          "population": 626,
+          "gdp_thousands": 73292,
+          "crime_rate": 13.3,
+          "reward": 2853,
+          "difficulty": 0.807,
+          "underworld_power": 125,
+          "police_power": 2624
+        },
+        "Rockville town": {
+          "population": 141,
+          "gdp_thousands": 16508,
+          "crime_rate": 13.3,
+          "reward": 1441,
+          "difficulty": 0.807,
+          "underworld_power": 28,
+          "police_power": 591
+        },
+        "Charleston (unincorporated)": {
+          "population": 298516,
+          "gdp_thousands": 34950452,
+          "crime_rate": 13.3,
+          "reward": 5960,
+          "difficulty": 0.807,
+          "underworld_power": 59535,
+          "police_power": 1251226
+        }
+      }
+    },
+    "Cherokee County": {
+      "fips": "45021",
+      "gdp_thousands": 2341786,
+      "gdp_estimated": false,
+      "population": 57770,
+      "homicide_rate": 7.794996618,
+      "difficulty": 0.358,
+      "cities": {
+        "Gaffney city": {
+          "population": 12546,
+          "gdp_thousands": 508569,
+          "crime_rate": 7.79,
+          "reward": 4527,
+          "difficulty": 0.358,
+          "underworld_power": 1467,
+          "police_power": 18207
+        },
+        "Blacksburg town": {
+          "population": 1954,
+          "gdp_thousands": 79208,
+          "crime_rate": 7.79,
+          "reward": 2974,
+          "difficulty": 0.358,
+          "underworld_power": 228,
+          "police_power": 2836
+        },
+        "Cherokee (unincorporated)": {
+          "population": 43270,
+          "gdp_thousands": 1754009,
+          "crime_rate": 7.79,
+          "reward": 5254,
+          "difficulty": 0.358,
+          "underworld_power": 5059,
+          "police_power": 62794
+        }
+      }
+    },
+    "Chester County": {
+      "fips": "45023",
+      "gdp_thousands": 1821832,
+      "gdp_estimated": false,
+      "population": 32323,
+      "homicide_rate": 12.849768483,
+      "difficulty": 0.484,
+      "cities": {
+        "Chester city": {
+          "population": 5230,
+          "gdp_thousands": 294780,
+          "crime_rate": 12.85,
+          "reward": 4225,
+          "difficulty": 0.484,
+          "underworld_power": 1008,
+          "police_power": 10553
+        },
+        "Great Falls town": {
+          "population": 1926,
+          "gdp_thousands": 108555,
+          "crime_rate": 12.85,
+          "reward": 3196,
+          "difficulty": 0.484,
+          "underworld_power": 371,
+          "police_power": 3886
+        },
+        "Fort Lawn town": {
+          "population": 980,
+          "gdp_thousands": 55236,
+          "crime_rate": 12.85,
+          "reward": 2530,
+          "difficulty": 0.484,
+          "underworld_power": 189,
+          "police_power": 1977
+        },
+        "Richburg town": {
+          "population": 271,
+          "gdp_thousands": 15274,
+          "crime_rate": 12.85,
+          "reward": 1360,
+          "difficulty": 0.484,
+          "underworld_power": 52,
+          "police_power": 547
+        },
+        "Lowrys town": {
+          "population": 184,
+          "gdp_thousands": 10370,
+          "crime_rate": 12.85,
+          "reward": 1017,
+          "difficulty": 0.484,
+          "underworld_power": 35,
+          "police_power": 371
+        },
+        "Chester (unincorporated)": {
+          "population": 23732,
+          "gdp_thousands": 1337617,
+          "crime_rate": 12.85,
+          "reward": 5112,
+          "difficulty": 0.484,
+          "underworld_power": 4574,
+          "police_power": 47887
+        }
+      }
+    },
+    "Chesterfield County": {
+      "fips": "45025",
+      "gdp_thousands": 1901760,
+      "gdp_estimated": false,
+      "population": 44488,
+      "homicide_rate": 13.196923232,
+      "difficulty": 0.507,
+      "cities": {
+        "Cheraw town": {
+          "population": 4946,
+          "gdp_thousands": 211430,
+          "crime_rate": 13.2,
+          "reward": 3882,
+          "difficulty": 0.507,
+          "underworld_power": 979,
+          "police_power": 7569
+        },
+        "Pageland town": {
+          "population": 2522,
+          "gdp_thousands": 107809,
+          "crime_rate": 13.2,
+          "reward": 3176,
+          "difficulty": 0.507,
+          "underworld_power": 499,
+          "police_power": 3860
+        },
+        "Chesterfield town": {
+          "population": 1351,
+          "gdp_thousands": 57752,
+          "crime_rate": 13.2,
+          "reward": 2551,
+          "difficulty": 0.507,
+          "underworld_power": 267,
+          "police_power": 2068
+        },
+        "McBee town": {
+          "population": 812,
+          "gdp_thousands": 34711,
+          "crime_rate": 13.2,
+          "reward": 2107,
+          "difficulty": 0.507,
+          "underworld_power": 161,
+          "police_power": 1243
+        },
+        "Jefferson town": {
+          "population": 788,
+          "gdp_thousands": 33685,
+          "crime_rate": 13.2,
+          "reward": 2087,
+          "difficulty": 0.507,
+          "underworld_power": 156,
+          "police_power": 1206
+        },
+        "Ruby town": {
+          "population": 322,
+          "gdp_thousands": 13764,
+          "crime_rate": 13.2,
+          "reward": 1280,
+          "difficulty": 0.507,
+          "underworld_power": 64,
+          "police_power": 493
+        },
+        "Patrick town": {
+          "population": 286,
+          "gdp_thousands": 12225,
+          "crime_rate": 13.2,
+          "reward": 1159,
+          "difficulty": 0.507,
+          "underworld_power": 57,
+          "police_power": 438
+        },
+        "Mount Croghan town": {
+          "population": 135,
+          "gdp_thousands": 5770,
+          "crime_rate": 13.2,
+          "reward": 533,
+          "difficulty": 0.507,
+          "underworld_power": 27,
+          "police_power": 207
+        },
+        "Chesterfield (unincorporated)": {
+          "population": 33326,
+          "gdp_thousands": 1424614,
+          "crime_rate": 13.2,
+          "reward": 5133,
+          "difficulty": 0.507,
+          "underworld_power": 6597,
+          "police_power": 51001
+        }
+      }
+    },
+    "Clarendon County": {
+      "fips": "45027",
+      "gdp_thousands": 962486,
+      "gdp_estimated": false,
+      "population": 31030,
+      "homicide_rate": 10.271026718,
+      "difficulty": 0.338,
+      "cities": {
+        "Manning city": {
+          "population": 3832,
+          "gdp_thousands": 118860,
+          "crime_rate": 10.27,
+          "reward": 3297,
+          "difficulty": 0.338,
+          "underworld_power": 590,
+          "police_power": 4255
+        },
+        "Summerton town": {
+          "population": 781,
+          "gdp_thousands": 24224,
+          "crime_rate": 10.27,
+          "reward": 1744,
+          "difficulty": 0.338,
+          "underworld_power": 120,
+          "police_power": 867
+        },
+        "Turbeville town": {
+          "population": 743,
+          "gdp_thousands": 23046,
+          "crime_rate": 10.27,
+          "reward": 1663,
+          "difficulty": 0.338,
+          "underworld_power": 114,
+          "police_power": 825
+        },
+        "Paxville town": {
+          "population": 225,
+          "gdp_thousands": 6979,
+          "crime_rate": 10.27,
+          "reward": 715,
+          "difficulty": 0.338,
+          "underworld_power": 35,
+          "police_power": 250
+        },
+        "Clarendon (unincorporated)": {
+          "population": 25449,
+          "gdp_thousands": 789377,
+          "crime_rate": 10.27,
+          "reward": 4870,
+          "difficulty": 0.338,
+          "underworld_power": 3921,
+          "police_power": 28260
+        }
+      }
+    },
+    "Colleton County": {
+      "fips": "45029",
+      "gdp_thousands": 1497142,
+      "gdp_estimated": false,
+      "population": 39259,
+      "homicide_rate": 23.436466386,
+      "difficulty": 0.655,
+      "cities": {
+        "Walterboro city": {
+          "population": 5488,
+          "gdp_thousands": 209284,
+          "crime_rate": 23.44,
+          "reward": 3862,
+          "difficulty": 0.655,
+          "underworld_power": 1929,
+          "police_power": 7492
+        },
+        "Edisto Beach town": {
+          "population": 1060,
+          "gdp_thousands": 40423,
+          "crime_rate": 23.44,
+          "reward": 2268,
+          "difficulty": 0.655,
+          "underworld_power": 373,
+          "police_power": 1447
+        },
+        "Cottageville town": {
+          "population": 720,
+          "gdp_thousands": 27457,
+          "crime_rate": 23.44,
+          "reward": 1804,
+          "difficulty": 0.655,
+          "underworld_power": 253,
+          "police_power": 983
+        },
+        "Smoaks town": {
+          "population": 98,
+          "gdp_thousands": 3737,
+          "crime_rate": 23.44,
+          "reward": 332,
+          "difficulty": 0.655,
+          "underworld_power": 34,
+          "police_power": 134
+        },
+        "Williams town": {
+          "population": 97,
+          "gdp_thousands": 3699,
+          "crime_rate": 23.44,
+          "reward": 311,
+          "difficulty": 0.655,
+          "underworld_power": 34,
+          "police_power": 132
+        },
+        "Lodge town": {
+          "population": 82,
+          "gdp_thousands": 3127,
+          "crime_rate": 23.44,
+          "reward": 291,
+          "difficulty": 0.655,
+          "underworld_power": 29,
+          "police_power": 112
+        },
+        "Colleton (unincorporated)": {
+          "population": 31714,
+          "gdp_thousands": 1209415,
+          "crime_rate": 23.44,
+          "reward": 5072,
+          "difficulty": 0.655,
+          "underworld_power": 11149,
+          "police_power": 43297
+        }
+      }
+    },
+    "Darlington County": {
+      "fips": "45031",
+      "gdp_thousands": 3415744,
+      "gdp_estimated": false,
+      "population": 62425,
+      "homicide_rate": 18.074972403,
+      "difficulty": 0.664,
+      "cities": {
+        "Hartsville city": {
+          "population": 7360,
+          "gdp_thousands": 402721,
+          "crime_rate": 18.07,
+          "reward": 4366,
+          "difficulty": 0.664,
+          "underworld_power": 1995,
+          "police_power": 14417
+        },
+        "Darlington city": {
+          "population": 6045,
+          "gdp_thousands": 330767,
+          "crime_rate": 18.07,
+          "reward": 4306,
+          "difficulty": 0.664,
+          "underworld_power": 1639,
+          "police_power": 11841
+        },
+        "Lamar town": {
+          "population": 851,
+          "gdp_thousands": 46564,
+          "crime_rate": 18.07,
+          "reward": 2308,
+          "difficulty": 0.664,
+          "underworld_power": 231,
+          "police_power": 1667
+        },
+        "Society Hill town": {
+          "population": 426,
+          "gdp_thousands": 23309,
+          "crime_rate": 18.07,
+          "reward": 1683,
+          "difficulty": 0.664,
+          "underworld_power": 115,
+          "police_power": 834
+        },
+        "Darlington (unincorporated)": {
+          "population": 47743,
+          "gdp_thousands": 2612383,
+          "crime_rate": 18.07,
+          "reward": 5496,
+          "difficulty": 0.664,
+          "underworld_power": 12944,
+          "police_power": 93523
+        }
+      }
+    },
+    "Dillon County": {
+      "fips": "45033",
+      "gdp_thousands": 1038951,
+      "gdp_estimated": false,
+      "population": 27577,
+      "homicide_rate": 32.031654812,
+      "difficulty": 0.656,
+      "cities": {
+        "Dillon city": {
+          "population": 6244,
+          "gdp_thousands": 235239,
+          "crime_rate": 32.03,
+          "reward": 4023,
+          "difficulty": 0.656,
+          "underworld_power": 3000,
+          "police_power": 8422
+        },
+        "Latta town": {
+          "population": 1242,
+          "gdp_thousands": 46791,
+          "crime_rate": 32.03,
+          "reward": 2349,
+          "difficulty": 0.656,
+          "underworld_power": 597,
+          "police_power": 1675
+        },
+        "Lake View town": {
+          "population": 759,
+          "gdp_thousands": 28594,
+          "crime_rate": 32.03,
+          "reward": 1865,
+          "difficulty": 0.656,
+          "underworld_power": 365,
+          "police_power": 1024
+        },
+        "Dillon (unincorporated)": {
+          "population": 19332,
+          "gdp_thousands": 728327,
+          "crime_rate": 32.03,
+          "reward": 4810,
+          "difficulty": 0.656,
+          "underworld_power": 9289,
+          "police_power": 26074
+        }
+      }
+    },
+    "Dorchester County": {
+      "fips": "45035",
+      "gdp_thousands": 6706364,
+      "gdp_estimated": false,
+      "population": 174663,
+      "homicide_rate": 7.7114345331,
+      "difficulty": 0.458,
+      "cities": {
+        "St. George town": {
+          "population": 1855,
+          "gdp_thousands": 71224,
+          "crime_rate": 7.71,
+          "reward": 2813,
+          "difficulty": 0.458,
+          "underworld_power": 215,
+          "police_power": 2550
+        },
+        "Ridgeville town": {
+          "population": 1234,
+          "gdp_thousands": 47380,
+          "crime_rate": 7.71,
+          "reward": 2369,
+          "difficulty": 0.458,
+          "underworld_power": 143,
+          "police_power": 1696
+        },
+        "Harleyville town": {
+          "population": 740,
+          "gdp_thousands": 28413,
+          "crime_rate": 7.71,
+          "reward": 1844,
+          "difficulty": 0.458,
+          "underworld_power": 86,
+          "police_power": 1017
+        },
+        "Reevesville town": {
+          "population": 197,
+          "gdp_thousands": 7564,
+          "crime_rate": 7.71,
+          "reward": 816,
+          "difficulty": 0.458,
+          "underworld_power": 23,
+          "police_power": 271
+        },
+        "Dorchester (unincorporated)": {
+          "population": 170637,
+          "gdp_thousands": 6551783,
+          "crime_rate": 7.71,
+          "reward": 5758,
+          "difficulty": 0.458,
+          "underworld_power": 19738,
+          "police_power": 234554
+        }
+      }
+    },
+    "Edgefield County": {
+      "fips": "45037",
+      "gdp_thousands": 893897,
+      "gdp_estimated": false,
+      "population": 29455,
+      "homicide_rate": 8.5492920118,
+      "difficulty": 0.237,
+      "cities": {
+        "Edgefield town": {
+          "population": 4147,
+          "gdp_thousands": 125852,
+          "crime_rate": 8.55,
+          "reward": 3378,
+          "difficulty": 0.237,
+          "underworld_power": 532,
+          "police_power": 4506
+        },
+        "Johnston town": {
+          "population": 2214,
+          "gdp_thousands": 67190,
+          "crime_rate": 8.55,
+          "reward": 2752,
+          "difficulty": 0.237,
+          "underworld_power": 284,
+          "police_power": 2405
+        },
+        "Trenton town": {
+          "population": 409,
+          "gdp_thousands": 12412,
+          "crime_rate": 8.55,
+          "reward": 1179,
+          "difficulty": 0.237,
+          "underworld_power": 52,
+          "police_power": 444
+        },
+        "Edgefield (unincorporated)": {
+          "population": 22685,
+          "gdp_thousands": 688443,
+          "crime_rate": 8.55,
+          "reward": 4790,
+          "difficulty": 0.237,
+          "underworld_power": 2909,
+          "police_power": 24646
+        }
+      }
+    },
+    "Fairfield County": {
+      "fips": "45039",
+      "gdp_thousands": 1422514,
+      "gdp_estimated": false,
+      "population": 20369,
+      "homicide_rate": 19.291984181,
+      "difficulty": 0.587,
+      "cities": {
+        "Winnsboro town": {
+          "population": 3279,
+          "gdp_thousands": 228996,
+          "crime_rate": 19.29,
+          "reward": 3942,
+          "difficulty": 0.587,
+          "underworld_power": 949,
+          "police_power": 8198
+        },
+        "Ridgeway town": {
+          "population": 255,
+          "gdp_thousands": 17808,
+          "crime_rate": 19.29,
+          "reward": 1522,
+          "difficulty": 0.587,
+          "underworld_power": 74,
+          "police_power": 638
+        },
+        "Jenkinsville town": {
+          "population": 39,
+          "gdp_thousands": 2723,
+          "crime_rate": 19.29,
+          "reward": 231,
+          "difficulty": 0.587,
+          "underworld_power": 11,
+          "police_power": 97
+        },
+        "Fairfield (unincorporated)": {
+          "population": 16796,
+          "gdp_thousands": 1172987,
+          "crime_rate": 19.29,
+          "reward": 5032,
+          "difficulty": 0.587,
+          "underworld_power": 4860,
+          "police_power": 41993
+        }
+      }
+    },
+    "Florence County": {
+      "fips": "45041",
+      "gdp_thousands": 9981118,
+      "gdp_estimated": false,
+      "population": 138049,
+      "homicide_rate": 14.067723677,
+      "difficulty": 0.696,
+      "cities": {
+        "Lake City city": {
+          "population": 5916,
+          "gdp_thousands": 427734,
+          "crime_rate": 14.07,
+          "reward": 4447,
+          "difficulty": 0.696,
+          "underworld_power": 1248,
+          "police_power": 15313
+        },
+        "Timmonsville town": {
+          "population": 2117,
+          "gdp_thousands": 153061,
+          "crime_rate": 14.07,
+          "reward": 3559,
+          "difficulty": 0.696,
+          "underworld_power": 447,
+          "police_power": 5480
+        },
+        "Johnsonville city": {
+          "population": 1350,
+          "gdp_thousands": 97606,
+          "crime_rate": 14.07,
+          "reward": 3075,
+          "difficulty": 0.696,
+          "underworld_power": 285,
+          "police_power": 3494
+        },
+        "Pamplico town": {
+          "population": 1061,
+          "gdp_thousands": 76711,
+          "crime_rate": 14.07,
+          "reward": 2934,
+          "difficulty": 0.696,
+          "underworld_power": 224,
+          "police_power": 2746
+        },
+        "Quinby town": {
+          "population": 895,
+          "gdp_thousands": 64709,
+          "crime_rate": 14.07,
+          "reward": 2692,
+          "difficulty": 0.696,
+          "underworld_power": 189,
+          "police_power": 2317
+        },
+        "Coward town": {
+          "population": 715,
+          "gdp_thousands": 51695,
+          "crime_rate": 14.07,
+          "reward": 2490,
+          "difficulty": 0.696,
+          "underworld_power": 151,
+          "police_power": 1851
+        },
+        "Scranton town": {
+          "population": 656,
+          "gdp_thousands": 47429,
+          "crime_rate": 14.07,
+          "reward": 2389,
+          "difficulty": 0.696,
+          "underworld_power": 138,
+          "police_power": 1698
+        },
+        "Olanta town": {
+          "population": 550,
+          "gdp_thousands": 39765,
+          "crime_rate": 14.07,
+          "reward": 2208,
+          "difficulty": 0.696,
+          "underworld_power": 116,
+          "police_power": 1424
+        },
+        "Florence (unincorporated)": {
+          "population": 124789,
+          "gdp_thousands": 9022408,
+          "crime_rate": 14.07,
+          "reward": 5818,
+          "difficulty": 0.696,
+          "underworld_power": 26332,
+          "police_power": 323002
+        }
+      }
+    },
+    "Georgetown County": {
+      "fips": "45043",
+      "gdp_thousands": 4015972,
+      "gdp_estimated": false,
+      "population": 66035,
+      "homicide_rate": 10.767295828,
+      "difficulty": 0.516,
+      "cities": {
+        "Georgetown city": {
+          "population": 8821,
+          "gdp_thousands": 536456,
+          "crime_rate": 10.77,
+          "reward": 4588,
+          "difficulty": 0.516,
+          "underworld_power": 1425,
+          "police_power": 19205
+        },
+        "Pawleys Island town": {
+          "population": 134,
+          "gdp_thousands": 8149,
+          "crime_rate": 10.77,
+          "reward": 856,
+          "difficulty": 0.516,
+          "underworld_power": 22,
+          "police_power": 292
+        },
+        "Georgetown (unincorporated)": {
+          "population": 57080,
+          "gdp_thousands": 3471367,
+          "crime_rate": 10.77,
+          "reward": 5597,
+          "difficulty": 0.516,
+          "underworld_power": 9219,
+          "police_power": 124275
+        }
+      }
+    },
+    "Greenville County": {
+      "fips": "45045",
+      "gdp_thousands": 48737518,
+      "gdp_estimated": false,
+      "population": 570745,
+      "homicide_rate": 7.052536678,
+      "difficulty": 0.534,
+      "cities": {
+        "Greenville city": {
+          "population": 74371,
+          "gdp_thousands": 6350748,
+          "crime_rate": 7.05,
+          "reward": 5738,
+          "difficulty": 0.534,
+          "underworld_power": 7868,
+          "police_power": 227357
+        },
+        "Mauldin city": {
+          "population": 29746,
+          "gdp_thousands": 2540094,
+          "crime_rate": 7.05,
+          "reward": 5455,
+          "difficulty": 0.534,
+          "underworld_power": 3147,
+          "police_power": 90935
+        },
+        "Simpsonville city": {
+          "population": 28078,
+          "gdp_thousands": 2397659,
+          "crime_rate": 7.05,
+          "reward": 5395,
+          "difficulty": 0.534,
+          "underworld_power": 2970,
+          "police_power": 85836
+        },
+        "Travelers Rest city": {
+          "population": 8960,
+          "gdp_thousands": 765119,
+          "crime_rate": 7.05,
+          "reward": 4830,
+          "difficulty": 0.534,
+          "underworld_power": 948,
+          "police_power": 27391
+        },
+        "Greenville (unincorporated)": {
+          "population": 429590,
+          "gdp_thousands": 36683898,
+          "crime_rate": 7.05,
+          "reward": 6000,
+          "difficulty": 0.534,
+          "underworld_power": 45445,
+          "police_power": 1313284
+        }
+      }
+    },
+    "Greenwood County": {
+      "fips": "45047",
+      "gdp_thousands": 4898796,
+      "gdp_estimated": false,
+      "population": 70041,
+      "homicide_rate": 7.9237209794,
+      "difficulty": 0.447,
+      "cities": {
+        "Greenwood city": {
+          "population": 22667,
+          "gdp_thousands": 1585371,
+          "crime_rate": 7.92,
+          "reward": 5193,
+          "difficulty": 0.447,
+          "underworld_power": 2694,
+          "police_power": 56756
+        },
+        "Ninety Six town": {
+          "population": 2075,
+          "gdp_thousands": 145129,
+          "crime_rate": 7.92,
+          "reward": 3478,
+          "difficulty": 0.447,
+          "underworld_power": 247,
+          "police_power": 5196
+        },
+        "Hodges town": {
+          "population": 165,
+          "gdp_thousands": 11540,
+          "crime_rate": 7.92,
+          "reward": 1078,
+          "difficulty": 0.447,
+          "underworld_power": 20,
+          "police_power": 413
+        },
+        "Troy town": {
+          "population": 87,
+          "gdp_thousands": 6084,
+          "crime_rate": 7.92,
+          "reward": 594,
+          "difficulty": 0.447,
+          "underworld_power": 10,
+          "police_power": 218
+        },
+        "Greenwood (unincorporated)": {
+          "population": 45047,
+          "gdp_thousands": 3150672,
+          "crime_rate": 7.92,
+          "reward": 5576,
+          "difficulty": 0.447,
+          "underworld_power": 5354,
+          "police_power": 112794
+        }
+      }
+    },
+    "Hampton County": {
+      "fips": "45049",
+      "gdp_thousands": 692433,
+      "gdp_estimated": false,
+      "population": 18172,
+      "homicide_rate": 21.580752945,
+      "difficulty": 0.487,
+      "cities": {
+        "Hampton town": {
+          "population": 2602,
+          "gdp_thousands": 99147,
+          "crime_rate": 21.58,
+          "reward": 3115,
+          "difficulty": 0.487,
+          "underworld_power": 842,
+          "police_power": 3549
+        },
+        "Estill town": {
+          "population": 1770,
+          "gdp_thousands": 67444,
+          "crime_rate": 21.58,
+          "reward": 2772,
+          "difficulty": 0.487,
+          "underworld_power": 573,
+          "police_power": 2414
+        },
+        "Varnville town": {
+          "population": 1630,
+          "gdp_thousands": 62110,
+          "crime_rate": 21.58,
+          "reward": 2651,
+          "difficulty": 0.487,
+          "underworld_power": 528,
+          "police_power": 2224
+        },
+        "Brunson town": {
+          "population": 416,
+          "gdp_thousands": 15851,
+          "crime_rate": 21.58,
+          "reward": 1381,
+          "difficulty": 0.487,
+          "underworld_power": 135,
+          "police_power": 567
+        },
+        "Gifford town": {
+          "population": 260,
+          "gdp_thousands": 9907,
+          "crime_rate": 21.58,
+          "reward": 997,
+          "difficulty": 0.487,
+          "underworld_power": 84,
+          "police_power": 355
+        },
+        "Furman town": {
+          "population": 223,
+          "gdp_thousands": 8497,
+          "crime_rate": 21.58,
+          "reward": 917,
+          "difficulty": 0.487,
+          "underworld_power": 72,
+          "police_power": 304
+        },
+        "Scotia town": {
+          "population": 159,
+          "gdp_thousands": 6058,
+          "crime_rate": 21.58,
+          "reward": 574,
+          "difficulty": 0.487,
+          "underworld_power": 51,
+          "police_power": 217
+        },
+        "Luray town": {
+          "population": 99,
+          "gdp_thousands": 3772,
+          "crime_rate": 21.58,
+          "reward": 352,
+          "difficulty": 0.487,
+          "underworld_power": 32,
+          "police_power": 135
+        },
+        "Hampton (unincorporated)": {
+          "population": 11013,
+          "gdp_thousands": 419647,
+          "crime_rate": 21.58,
+          "reward": 4406,
+          "difficulty": 0.487,
+          "underworld_power": 3565,
+          "police_power": 15023
+        }
+      }
+    },
+    "Horry County": {
+      "fips": "45051",
+      "gdp_thousands": 22774481,
+      "gdp_estimated": false,
+      "population": 413391,
+      "homicide_rate": 7.3515130124,
+      "difficulty": 0.535,
+      "cities": {
+        "Myrtle Beach city": {
+          "population": 40535,
+          "gdp_thousands": 2233148,
+          "crime_rate": 7.35,
+          "reward": 5334,
+          "difficulty": 0.535,
+          "underworld_power": 4470,
+          "police_power": 79947
+        },
+        "Conway city": {
+          "population": 29656,
+          "gdp_thousands": 1633804,
+          "crime_rate": 7.35,
+          "reward": 5233,
+          "difficulty": 0.535,
+          "underworld_power": 3270,
+          "police_power": 58490
+        },
+        "North Myrtle Beach city": {
+          "population": 20798,
+          "gdp_thousands": 1145800,
+          "crime_rate": 7.35,
+          "reward": 5012,
+          "difficulty": 0.535,
+          "underworld_power": 2293,
+          "police_power": 41020
+        },
+        "Surfside Beach town": {
+          "population": 4368,
+          "gdp_thousands": 240641,
+          "crime_rate": 7.35,
+          "reward": 4043,
+          "difficulty": 0.535,
+          "underworld_power": 482,
+          "police_power": 8615
+        },
+        "Loris city": {
+          "population": 2825,
+          "gdp_thousands": 155634,
+          "crime_rate": 7.35,
+          "reward": 3599,
+          "difficulty": 0.535,
+          "underworld_power": 312,
+          "police_power": 5572
+        },
+        "Aynor town": {
+          "population": 1063,
+          "gdp_thousands": 58562,
+          "crime_rate": 7.35,
+          "reward": 2591,
+          "difficulty": 0.535,
+          "underworld_power": 117,
+          "police_power": 2097
+        },
+        "Briarcliffe Acres town": {
+          "population": 568,
+          "gdp_thousands": 31292,
+          "crime_rate": 7.35,
+          "reward": 1966,
+          "difficulty": 0.535,
+          "underworld_power": 63,
+          "police_power": 1120
+        },
+        "Atlantic Beach town": {
+          "population": 418,
+          "gdp_thousands": 23028,
+          "crime_rate": 7.35,
+          "reward": 1643,
+          "difficulty": 0.535,
+          "underworld_power": 46,
+          "police_power": 824
+        },
+        "Horry (unincorporated)": {
+          "population": 313160,
+          "gdp_thousands": 17252572,
+          "crime_rate": 7.35,
+          "reward": 5899,
+          "difficulty": 0.535,
+          "underworld_power": 34533,
+          "police_power": 617642
+        }
+      }
+    },
+    "Jasper County": {
+      "fips": "45053",
+      "gdp_thousands": 2147521,
+      "gdp_estimated": false,
+      "population": 35618,
+      "homicide_rate": 22.362337934,
+      "difficulty": 0.677,
+      "cities": {
+        "Jasper": {
+          "population": 35618,
+          "gdp_thousands": 2147521,
+          "crime_rate": 22.36,
+          "reward": 5314,
+          "difficulty": 0.677,
+          "underworld_power": 11948,
+          "police_power": 76881
+        }
+      }
+    },
+    "Kershaw County": {
+      "fips": "45055",
+      "gdp_thousands": 3416986,
+      "gdp_estimated": false,
+      "population": 71698,
+      "homicide_rate": 5.4527886652,
+      "difficulty": 0.301,
+      "cities": {
+        "Camden city": {
+          "population": 8899,
+          "gdp_thousands": 424108,
+          "crime_rate": 5.45,
+          "reward": 4427,
+          "difficulty": 0.301,
+          "underworld_power": 728,
+          "police_power": 15183
+        },
+        "Elgin town": {
+          "population": 1657,
+          "gdp_thousands": 78969,
+          "crime_rate": 5.45,
+          "reward": 2954,
+          "difficulty": 0.301,
+          "underworld_power": 136,
+          "police_power": 2827
+        },
+        "Bethune town": {
+          "population": 337,
+          "gdp_thousands": 16060,
+          "crime_rate": 5.45,
+          "reward": 1401,
+          "difficulty": 0.301,
+          "underworld_power": 28,
+          "police_power": 575
+        },
+        "Kershaw (unincorporated)": {
+          "population": 60805,
+          "gdp_thousands": 2897849,
+          "crime_rate": 5.45,
+          "reward": 5536,
+          "difficulty": 0.301,
+          "underworld_power": 4973,
+          "police_power": 103743
+        }
+      }
+    },
+    "Lancaster County": {
+      "fips": "45057",
+      "gdp_thousands": 5253075,
+      "gdp_estimated": false,
+      "population": 111652,
+      "homicide_rate": 11.318362912,
+      "difficulty": 0.583,
+      "cities": {
+        "Lancaster city": {
+          "population": 9396,
+          "gdp_thousands": 442069,
+          "crime_rate": 11.32,
+          "reward": 4487,
+          "difficulty": 0.583,
+          "underworld_power": 1595,
+          "police_power": 15826
+        },
+        "Kershaw town": {
+          "population": 2014,
+          "gdp_thousands": 94755,
+          "crime_rate": 11.32,
+          "reward": 3055,
+          "difficulty": 0.583,
+          "underworld_power": 342,
+          "police_power": 3392
+        },
+        "Van Wyck town": {
+          "population": 1039,
+          "gdp_thousands": 48883,
+          "crime_rate": 11.32,
+          "reward": 2450,
+          "difficulty": 0.583,
+          "underworld_power": 176,
+          "police_power": 1750
+        },
+        "Heath Springs town": {
+          "population": 852,
+          "gdp_thousands": 40085,
+          "crime_rate": 11.32,
+          "reward": 2248,
+          "difficulty": 0.583,
+          "underworld_power": 145,
+          "police_power": 1435
+        },
+        "Lancaster (unincorporated)": {
+          "population": 98351,
+          "gdp_thousands": 4627283,
+          "crime_rate": 11.32,
+          "reward": 5657,
+          "difficulty": 0.583,
+          "underworld_power": 16698,
+          "police_power": 165657
+        }
+      }
+    },
+    "Laurens County": {
+      "fips": "45059",
+      "gdp_thousands": 2913878,
+      "gdp_estimated": false,
+      "population": 70545,
+      "homicide_rate": 7.2275684972,
+      "difficulty": 0.324,
+      "cities": {
+        "Laurens city": {
+          "population": 9352,
+          "gdp_thousands": 386286,
+          "crime_rate": 7.23,
+          "reward": 4346,
+          "difficulty": 0.324,
+          "underworld_power": 1014,
+          "police_power": 13829
+        },
+        "Clinton city": {
+          "population": 7852,
+          "gdp_thousands": 324328,
+          "crime_rate": 7.23,
+          "reward": 4285,
+          "difficulty": 0.324,
+          "underworld_power": 851,
+          "police_power": 11611
+        },
+        "Gray Court town": {
+          "population": 802,
+          "gdp_thousands": 33126,
+          "crime_rate": 7.23,
+          "reward": 2046,
+          "difficulty": 0.324,
+          "underworld_power": 87,
+          "police_power": 1186
+        },
+        "Cross Hill town": {
+          "population": 431,
+          "gdp_thousands": 17802,
+          "crime_rate": 7.23,
+          "reward": 1502,
+          "difficulty": 0.324,
+          "underworld_power": 47,
+          "police_power": 637
+        },
+        "Waterloo town": {
+          "population": 156,
+          "gdp_thousands": 6443,
+          "crime_rate": 7.23,
+          "reward": 654,
+          "difficulty": 0.324,
+          "underworld_power": 17,
+          "police_power": 231
+        },
+        "Laurens (unincorporated)": {
+          "population": 51952,
+          "gdp_thousands": 2145893,
+          "crime_rate": 7.23,
+          "reward": 5294,
+          "difficulty": 0.324,
+          "underworld_power": 5632,
+          "police_power": 76823
+        }
+      }
+    },
+    "Lee County": {
+      "fips": "45061",
+      "gdp_thousands": 507305,
+      "gdp_estimated": false,
+      "population": 15958,
+      "homicide_rate": 20.028039255,
+      "difficulty": 0.443,
+      "cities": {
+        "Bishopville city": {
+          "population": 2880,
+          "gdp_thousands": 91555,
+          "crime_rate": 20.03,
+          "reward": 3014,
+          "difficulty": 0.443,
+          "underworld_power": 865,
+          "police_power": 3278
+        },
+        "Lynchburg town": {
+          "population": 309,
+          "gdp_thousands": 9823,
+          "crime_rate": 20.03,
+          "reward": 977,
+          "difficulty": 0.443,
+          "underworld_power": 93,
+          "police_power": 352
+        },
+        "Lee (unincorporated)": {
+          "population": 12769,
+          "gdp_thousands": 405927,
+          "crime_rate": 20.03,
+          "reward": 4386,
+          "difficulty": 0.443,
+          "underworld_power": 3836,
+          "police_power": 14532
+        }
+      }
+    },
+    "Lexington County": {
+      "fips": "45063",
+      "gdp_thousands": 19752180,
+      "gdp_estimated": false,
+      "population": 313774,
+      "homicide_rate": 6.8075637869,
+      "difficulty": 0.479,
+      "cities": {
+        "Lexington town": {
+          "population": 25354,
+          "gdp_thousands": 1596042,
+          "crime_rate": 6.81,
+          "reward": 5213,
+          "difficulty": 0.479,
+          "underworld_power": 2589,
+          "police_power": 57138
+        },
+        "Springdale town": {
+          "population": 2756,
+          "gdp_thousands": 173491,
+          "crime_rate": 6.81,
+          "reward": 3721,
+          "difficulty": 0.479,
+          "underworld_power": 281,
+          "police_power": 6211
+        },
+        "South Congaree town": {
+          "population": 2392,
+          "gdp_thousands": 150577,
+          "crime_rate": 6.81,
+          "reward": 3539,
+          "difficulty": 0.479,
+          "underworld_power": 244,
+          "police_power": 5391
+        },
+        "Pine Ridge town": {
+          "population": 2326,
+          "gdp_thousands": 146422,
+          "crime_rate": 6.81,
+          "reward": 3519,
+          "difficulty": 0.479,
+          "underworld_power": 238,
+          "police_power": 5242
+        },
+        "Chapin town": {
+          "population": 1934,
+          "gdp_thousands": 121745,
+          "crime_rate": 6.81,
+          "reward": 3317,
+          "difficulty": 0.479,
+          "underworld_power": 197,
+          "police_power": 4358
+        },
+        "Gaston town": {
+          "population": 1641,
+          "gdp_thousands": 103301,
+          "crime_rate": 6.81,
+          "reward": 3156,
+          "difficulty": 0.479,
+          "underworld_power": 168,
+          "police_power": 3698
+        },
+        "Swansea town": {
+          "population": 771,
+          "gdp_thousands": 48534,
+          "crime_rate": 6.81,
+          "reward": 2429,
+          "difficulty": 0.479,
+          "underworld_power": 79,
+          "police_power": 1738
+        },
+        "Pelion town": {
+          "population": 623,
+          "gdp_thousands": 39218,
+          "crime_rate": 6.81,
+          "reward": 2167,
+          "difficulty": 0.479,
+          "underworld_power": 64,
+          "police_power": 1404
+        },
+        "Gilbert town": {
+          "population": 618,
+          "gdp_thousands": 38903,
+          "crime_rate": 6.81,
+          "reward": 2147,
+          "difficulty": 0.479,
+          "underworld_power": 63,
+          "police_power": 1393
+        },
+        "Summit town": {
+          "population": 460,
+          "gdp_thousands": 28957,
+          "crime_rate": 6.81,
+          "reward": 1885,
+          "difficulty": 0.479,
+          "underworld_power": 47,
+          "police_power": 1037
+        },
+        "Lexington (unincorporated)": {
+          "population": 274899,
+          "gdp_thousands": 17304990,
+          "crime_rate": 6.81,
+          "reward": 5919,
+          "difficulty": 0.479,
+          "underworld_power": 28071,
+          "police_power": 619519
+        }
+      }
+    },
+    "McCormick County": {
+      "fips": "45065",
+      "gdp_thousands": 330694,
+      "gdp_estimated": false,
+      "population": 9983,
+      "homicide_rate": 14.934958257,
+      "difficulty": 0.341,
+      "cities": {
+        "McCormick town": {
+          "population": 1960,
+          "gdp_thousands": 64926,
+          "crime_rate": 14.93,
+          "reward": 2712,
+          "difficulty": 0.341,
+          "underworld_power": 439,
+          "police_power": 2324
+        },
+        "Parksville town": {
+          "population": 130,
+          "gdp_thousands": 4306,
+          "crime_rate": 14.93,
+          "reward": 453,
+          "difficulty": 0.341,
+          "underworld_power": 29,
+          "police_power": 154
+        },
+        "Plum Branch town": {
+          "population": 82,
+          "gdp_thousands": 2716,
+          "crime_rate": 14.93,
+          "reward": 211,
+          "difficulty": 0.341,
+          "underworld_power": 18,
+          "police_power": 97
+        },
+        "McCormick (unincorporated)": {
+          "population": 7811,
+          "gdp_thousands": 258746,
+          "crime_rate": 14.93,
+          "reward": 4124,
+          "difficulty": 0.341,
+          "underworld_power": 1750,
+          "police_power": 9263
+        }
+      }
+    },
+    "Marion County": {
+      "fips": "45067",
+      "gdp_thousands": 900736,
+      "gdp_estimated": false,
+      "population": 28368,
+      "homicide_rate": 16.712781564,
+      "difficulty": 0.464,
+      "cities": {
+        "Marion city": {
+          "population": 6068,
+          "gdp_thousands": 192670,
+          "crime_rate": 16.71,
+          "reward": 3801,
+          "difficulty": 0.464,
+          "underworld_power": 1521,
+          "police_power": 6898
+        },
+        "Mullins city": {
+          "population": 3846,
+          "gdp_thousands": 122117,
+          "crime_rate": 16.71,
+          "reward": 3357,
+          "difficulty": 0.464,
+          "underworld_power": 964,
+          "police_power": 4372
+        },
+        "Nichols town": {
+          "population": 221,
+          "gdp_thousands": 7017,
+          "crime_rate": 16.71,
+          "reward": 735,
+          "difficulty": 0.464,
+          "underworld_power": 55,
+          "police_power": 251
+        },
+        "Sellers town": {
+          "population": 146,
+          "gdp_thousands": 4635,
+          "crime_rate": 16.71,
+          "reward": 473,
+          "difficulty": 0.464,
+          "underworld_power": 37,
+          "police_power": 166
+        },
+        "Marion (unincorporated)": {
+          "population": 18087,
+          "gdp_thousands": 574297,
+          "crime_rate": 16.71,
+          "reward": 4648,
+          "difficulty": 0.464,
+          "underworld_power": 4534,
+          "police_power": 20560
+        }
+      }
+    },
+    "Marlboro County": {
+      "fips": "45069",
+      "gdp_thousands": 965237,
+      "gdp_estimated": false,
+      "population": 25498,
+      "homicide_rate": 24.765401657,
+      "difficulty": 0.622,
+      "cities": {
+        "Bennettsville city": {
+          "population": 7595,
+          "gdp_thousands": 287511,
+          "crime_rate": 24.77,
+          "reward": 4205,
+          "difficulty": 0.622,
+          "underworld_power": 2821,
+          "police_power": 10293
+        },
+        "McColl town": {
+          "population": 1976,
+          "gdp_thousands": 74802,
+          "crime_rate": 24.77,
+          "reward": 2914,
+          "difficulty": 0.622,
+          "underworld_power": 734,
+          "police_power": 2678
+        },
+        "Clio town": {
+          "population": 574,
+          "gdp_thousands": 21728,
+          "crime_rate": 24.77,
+          "reward": 1623,
+          "difficulty": 0.622,
+          "underworld_power": 213,
+          "police_power": 778
+        },
+        "Blenheim town": {
+          "population": 107,
+          "gdp_thousands": 4050,
+          "crime_rate": 24.77,
+          "reward": 392,
+          "difficulty": 0.622,
+          "underworld_power": 40,
+          "police_power": 145
+        },
+        "Tatum town": {
+          "population": 70,
+          "gdp_thousands": 2649,
+          "crime_rate": 24.77,
+          "reward": 190,
+          "difficulty": 0.622,
+          "underworld_power": 26,
+          "police_power": 95
+        },
+        "Marlboro (unincorporated)": {
+          "population": 15176,
+          "gdp_thousands": 574497,
+          "crime_rate": 24.77,
+          "reward": 4669,
+          "difficulty": 0.622,
+          "underworld_power": 5638,
+          "police_power": 20567
+        }
+      }
+    },
+    "Newberry County": {
+      "fips": "45071",
+      "gdp_thousands": 2034044,
+      "gdp_estimated": false,
+      "population": 39203,
+      "homicide_rate": 9.329054407,
+      "difficulty": 0.404,
+      "cities": {
+        "Newberry city": {
+          "population": 10874,
+          "gdp_thousands": 564196,
+          "crime_rate": 9.33,
+          "reward": 4628,
+          "difficulty": 0.404,
+          "underworld_power": 1522,
+          "police_power": 20198
+        },
+        "Whitmire town": {
+          "population": 1439,
+          "gdp_thousands": 74662,
+          "crime_rate": 9.33,
+          "reward": 2893,
+          "difficulty": 0.404,
+          "underworld_power": 201,
+          "police_power": 2673
+        },
+        "Prosperity town": {
+          "population": 1244,
+          "gdp_thousands": 64544,
+          "crime_rate": 9.33,
+          "reward": 2672,
+          "difficulty": 0.404,
+          "underworld_power": 174,
+          "police_power": 2311
+        },
+        "Little Mountain town": {
+          "population": 262,
+          "gdp_thousands": 13593,
+          "crime_rate": 9.33,
+          "reward": 1259,
+          "difficulty": 0.404,
+          "underworld_power": 37,
+          "police_power": 487
+        },
+        "Silverstreet town": {
+          "population": 169,
+          "gdp_thousands": 8768,
+          "crime_rate": 9.33,
+          "reward": 957,
+          "difficulty": 0.404,
+          "underworld_power": 24,
+          "police_power": 314
+        },
+        "Pomaria town": {
+          "population": 132,
+          "gdp_thousands": 6848,
+          "crime_rate": 9.33,
+          "reward": 695,
+          "difficulty": 0.404,
+          "underworld_power": 18,
+          "police_power": 245
+        },
+        "Peak town": {
+          "population": 54,
+          "gdp_thousands": 2801,
+          "crime_rate": 9.33,
+          "reward": 251,
+          "difficulty": 0.404,
+          "underworld_power": 8,
+          "police_power": 100
+        },
+        "Newberry (unincorporated)": {
+          "population": 25029,
+          "gdp_thousands": 1298632,
+          "crime_rate": 9.33,
+          "reward": 5092,
+          "difficulty": 0.404,
+          "underworld_power": 3502,
+          "police_power": 46491
+        }
+      }
+    },
+    "Oconee County": {
+      "fips": "45073",
+      "gdp_thousands": 5242540,
+      "gdp_estimated": false,
+      "population": 82475,
+      "homicide_rate": 7.868598072,
+      "difficulty": 0.447,
+      "cities": {
+        "Seneca city": {
+          "population": 9202,
+          "gdp_thousands": 584926,
+          "crime_rate": 7.87,
+          "reward": 4709,
+          "difficulty": 0.447,
+          "underworld_power": 1086,
+          "police_power": 20940
+        },
+        "Walhalla city": {
+          "population": 4249,
+          "gdp_thousands": 270088,
+          "crime_rate": 7.87,
+          "reward": 4144,
+          "difficulty": 0.447,
+          "underworld_power": 502,
+          "police_power": 9669
+        },
+        "Westminster city": {
+          "population": 2439,
+          "gdp_thousands": 155035,
+          "crime_rate": 7.87,
+          "reward": 3579,
+          "difficulty": 0.447,
+          "underworld_power": 288,
+          "police_power": 5550
+        },
+        "West Union town": {
+          "population": 389,
+          "gdp_thousands": 24726,
+          "crime_rate": 7.87,
+          "reward": 1764,
+          "difficulty": 0.447,
+          "underworld_power": 46,
+          "police_power": 885
+        },
+        "Salem town": {
+          "population": 127,
+          "gdp_thousands": 8072,
+          "crime_rate": 7.87,
+          "reward": 836,
+          "difficulty": 0.447,
+          "underworld_power": 15,
+          "police_power": 289
+        },
+        "Oconee (unincorporated)": {
+          "population": 66069,
+          "gdp_thousands": 4199693,
+          "crime_rate": 7.87,
+          "reward": 5637,
+          "difficulty": 0.447,
+          "underworld_power": 7798,
+          "police_power": 150349
+        }
+      }
+    },
+    "Orangeburg County": {
+      "fips": "45075",
+      "gdp_thousands": 4007321,
+      "gdp_estimated": false,
+      "population": 83129,
+      "homicide_rate": 17.491720311,
+      "difficulty": 0.664,
+      "cities": {
+        "Orangeburg city": {
+          "population": 13378,
+          "gdp_thousands": 644900,
+          "crime_rate": 17.49,
+          "reward": 4769,
+          "difficulty": 0.664,
+          "underworld_power": 3510,
+          "police_power": 23087
+        },
+        "Holly Hill town": {
+          "population": 1259,
+          "gdp_thousands": 60691,
+          "crime_rate": 17.49,
+          "reward": 2631,
+          "difficulty": 0.664,
+          "underworld_power": 330,
+          "police_power": 2173
+        },
+        "Branchville town": {
+          "population": 969,
+          "gdp_thousands": 46711,
+          "crime_rate": 17.49,
+          "reward": 2329,
+          "difficulty": 0.664,
+          "underworld_power": 254,
+          "police_power": 1672
+        },
+        "Santee town": {
+          "population": 814,
+          "gdp_thousands": 39239,
+          "crime_rate": 17.49,
+          "reward": 2187,
+          "difficulty": 0.664,
+          "underworld_power": 214,
+          "police_power": 1405
+        },
+        "Bowman town": {
+          "population": 767,
+          "gdp_thousands": 36974,
+          "crime_rate": 17.49,
+          "reward": 2127,
+          "difficulty": 0.664,
+          "underworld_power": 201,
+          "police_power": 1324
+        },
+        "North town": {
+          "population": 677,
+          "gdp_thousands": 32635,
+          "crime_rate": 17.49,
+          "reward": 1986,
+          "difficulty": 0.664,
+          "underworld_power": 178,
+          "police_power": 1168
+        },
+        "Elloree town": {
+          "population": 548,
+          "gdp_thousands": 26416,
+          "crime_rate": 17.49,
+          "reward": 1784,
+          "difficulty": 0.664,
+          "underworld_power": 144,
+          "police_power": 946
+        },
+        "Springfield town": {
+          "population": 437,
+          "gdp_thousands": 21066,
+          "crime_rate": 17.49,
+          "reward": 1602,
+          "difficulty": 0.664,
+          "underworld_power": 115,
+          "police_power": 754
+        },
+        "Neeses town": {
+          "population": 315,
+          "gdp_thousands": 15184,
+          "crime_rate": 17.49,
+          "reward": 1340,
+          "difficulty": 0.664,
+          "underworld_power": 83,
+          "police_power": 544
+        },
+        "Norway town": {
+          "population": 276,
+          "gdp_thousands": 13304,
+          "crime_rate": 17.49,
+          "reward": 1239,
+          "difficulty": 0.664,
+          "underworld_power": 72,
+          "police_power": 476
+        },
+        "Rowesville town": {
+          "population": 251,
+          "gdp_thousands": 12099,
+          "crime_rate": 17.49,
+          "reward": 1138,
+          "difficulty": 0.664,
+          "underworld_power": 66,
+          "police_power": 433
+        },
+        "Eutawville town": {
+          "population": 241,
+          "gdp_thousands": 11617,
+          "crime_rate": 17.49,
+          "reward": 1098,
+          "difficulty": 0.664,
+          "underworld_power": 63,
+          "police_power": 416
+        },
+        "Woodford town": {
+          "population": 156,
+          "gdp_thousands": 7520,
+          "crime_rate": 17.49,
+          "reward": 775,
+          "difficulty": 0.664,
+          "underworld_power": 41,
+          "police_power": 269
+        },
+        "Cordova town": {
+          "population": 131,
+          "gdp_thousands": 6314,
+          "crime_rate": 17.49,
+          "reward": 634,
+          "difficulty": 0.664,
+          "underworld_power": 34,
+          "police_power": 226
+        },
+        "Livingston town": {
+          "population": 128,
+          "gdp_thousands": 6170,
+          "crime_rate": 17.49,
+          "reward": 614,
+          "difficulty": 0.664,
+          "underworld_power": 34,
+          "police_power": 221
+        },
+        "Vance town": {
+          "population": 124,
+          "gdp_thousands": 5977,
+          "crime_rate": 17.49,
+          "reward": 553,
+          "difficulty": 0.664,
+          "underworld_power": 33,
+          "police_power": 214
+        },
+        "Cope town": {
+          "population": 32,
+          "gdp_thousands": 1542,
+          "crime_rate": 17.49,
+          "reward": 150,
+          "difficulty": 0.664,
+          "underworld_power": 8,
+          "police_power": 55
+        },
+        "Orangeburg (unincorporated)": {
+          "population": 62626,
+          "gdp_thousands": 3018962,
+          "crime_rate": 17.49,
+          "reward": 5556,
+          "difficulty": 0.664,
+          "underworld_power": 16432,
+          "police_power": 108079
+        }
+      }
+    },
+    "Pickens County": {
+      "fips": "45077",
+      "gdp_thousands": 6019152,
+      "gdp_estimated": false,
+      "population": 138207,
+      "homicide_rate": 4.772369345,
+      "difficulty": 0.344,
+      "cities": {
+        "Central town": {
+          "population": 5339,
+          "gdp_thousands": 232522,
+          "crime_rate": 4.77,
+          "reward": 3983,
+          "difficulty": 0.344,
+          "underworld_power": 382,
+          "police_power": 8324
+        },
+        "Liberty city": {
+          "population": 3352,
+          "gdp_thousands": 145985,
+          "crime_rate": 4.77,
+          "reward": 3499,
+          "difficulty": 0.344,
+          "underworld_power": 240,
+          "police_power": 5226
+        },
+        "Pickens city": {
+          "population": 3188,
+          "gdp_thousands": 138842,
+          "crime_rate": 4.77,
+          "reward": 3458,
+          "difficulty": 0.344,
+          "underworld_power": 228,
+          "police_power": 4971
+        },
+        "Six Mile town": {
+          "population": 761,
+          "gdp_thousands": 33142,
+          "crime_rate": 4.77,
+          "reward": 2066,
+          "difficulty": 0.344,
+          "underworld_power": 54,
+          "police_power": 1186
+        },
+        "Norris town": {
+          "population": 754,
+          "gdp_thousands": 32837,
+          "crime_rate": 4.77,
+          "reward": 2006,
+          "difficulty": 0.344,
+          "underworld_power": 54,
+          "police_power": 1176
+        },
+        "Pickens (unincorporated)": {
+          "population": 124813,
+          "gdp_thousands": 5435824,
+          "crime_rate": 4.77,
+          "reward": 5697,
+          "difficulty": 0.344,
+          "underworld_power": 8935,
+          "police_power": 194602
+        }
+      }
+    },
+    "Richland County": {
+      "fips": "45079",
+      "gdp_thousands": 37437887,
+      "gdp_estimated": false,
+      "population": 430651,
+      "homicide_rate": 12.465964636,
+      "difficulty": 0.751,
+      "cities": {
+        "Forest Acres city": {
+          "population": 10438,
+          "gdp_thousands": 907409,
+          "crime_rate": 12.47,
+          "reward": 4931,
+          "difficulty": 0.751,
+          "underworld_power": 1952,
+          "police_power": 32485
+        },
+        "Arcadia Lakes town": {
+          "population": 856,
+          "gdp_thousands": 74414,
+          "crime_rate": 12.47,
+          "reward": 2873,
+          "difficulty": 0.751,
+          "underworld_power": 160,
+          "police_power": 2664
+        },
+        "Eastover town": {
+          "population": 628,
+          "gdp_thousands": 54594,
+          "crime_rate": 12.47,
+          "reward": 2510,
+          "difficulty": 0.751,
+          "underworld_power": 117,
+          "police_power": 1954
+        },
+        "Richland (unincorporated)": {
+          "population": 418729,
+          "gdp_thousands": 36401470,
+          "crime_rate": 12.47,
+          "reward": 5980,
+          "difficulty": 0.751,
+          "underworld_power": 78298,
+          "police_power": 1303173
+        }
+      }
+    },
+    "Saluda County": {
+      "fips": "45081",
+      "gdp_thousands": 643173,
+      "gdp_estimated": false,
+      "population": 19452,
+      "homicide_rate": null,
+      "difficulty": 0.294,
+      "cities": {
+        "Saluda town": {
+          "population": 3061,
+          "gdp_thousands": 101210,
+          "crime_rate": 3.0,
+          "reward": 3136,
+          "difficulty": 0.294,
+          "underworld_power": 138,
+          "police_power": 3623
+        },
+        "Ridge Spring town": {
+          "population": 588,
+          "gdp_thousands": 19441,
+          "crime_rate": 3.0,
+          "reward": 1562,
+          "difficulty": 0.294,
+          "underworld_power": 26,
+          "police_power": 696
+        },
+        "Ward town": {
+          "population": 124,
+          "gdp_thousands": 4100,
+          "crime_rate": 3.0,
+          "reward": 412,
+          "difficulty": 0.294,
+          "underworld_power": 6,
+          "police_power": 147
+        },
+        "Saluda (unincorporated)": {
+          "population": 15679,
+          "gdp_thousands": 518422,
+          "crime_rate": 3.0,
+          "reward": 4568,
+          "difficulty": 0.294,
+          "underworld_power": 706,
+          "police_power": 18560
+        }
+      }
+    },
+    "Spartanburg County": {
+      "fips": "45083",
+      "gdp_thousands": 22979816,
+      "gdp_estimated": false,
+      "population": 369256,
+      "homicide_rate": 8.721877057,
+      "difficulty": 0.626,
+      "cities": {
+        "Spartanburg city": {
+          "population": 39606,
+          "gdp_thousands": 2464790,
+          "crime_rate": 8.72,
+          "reward": 5435,
+          "difficulty": 0.626,
+          "underworld_power": 5182,
+          "police_power": 88239
+        },
+        "Lyman town": {
+          "population": 6939,
+          "gdp_thousands": 431833,
+          "crime_rate": 8.72,
+          "reward": 4467,
+          "difficulty": 0.626,
+          "underworld_power": 908,
+          "police_power": 15460
+        },
+        "Woodruff city": {
+          "population": 5072,
+          "gdp_thousands": 315644,
+          "crime_rate": 8.72,
+          "reward": 4265,
+          "difficulty": 0.626,
+          "underworld_power": 664,
+          "police_power": 11300
+        },
+        "Duncan town": {
+          "population": 4594,
+          "gdp_thousands": 285897,
+          "crime_rate": 8.72,
+          "reward": 4184,
+          "difficulty": 0.626,
+          "underworld_power": 601,
+          "police_power": 10235
+        },
+        "Wellford city": {
+          "population": 3733,
+          "gdp_thousands": 232314,
+          "crime_rate": 8.72,
+          "reward": 3963,
+          "difficulty": 0.626,
+          "underworld_power": 488,
+          "police_power": 8317
+        },
+        "Inman city": {
+          "population": 3354,
+          "gdp_thousands": 208728,
+          "crime_rate": 8.72,
+          "reward": 3842,
+          "difficulty": 0.626,
+          "underworld_power": 439,
+          "police_power": 7472
+        },
+        "Landrum city": {
+          "population": 2792,
+          "gdp_thousands": 173753,
+          "crime_rate": 8.72,
+          "reward": 3741,
+          "difficulty": 0.626,
+          "underworld_power": 365,
+          "police_power": 6220
+        },
+        "Pacolet town": {
+          "population": 2566,
+          "gdp_thousands": 159689,
+          "crime_rate": 8.72,
+          "reward": 3640,
+          "difficulty": 0.626,
+          "underworld_power": 336,
+          "police_power": 5717
+        },
+        "Cowpens town": {
+          "population": 2230,
+          "gdp_thousands": 138779,
+          "crime_rate": 8.72,
+          "reward": 3438,
+          "difficulty": 0.626,
+          "underworld_power": 292,
+          "police_power": 4968
+        },
+        "Reidville town": {
+          "population": 1842,
+          "gdp_thousands": 114632,
+          "crime_rate": 8.72,
+          "reward": 3236,
+          "difficulty": 0.626,
+          "underworld_power": 241,
+          "police_power": 4104
+        },
+        "Campobello town": {
+          "population": 766,
+          "gdp_thousands": 47670,
+          "crime_rate": 8.72,
+          "reward": 2409,
+          "difficulty": 0.626,
+          "underworld_power": 100,
+          "police_power": 1707
+        },
+        "Central Pacolet town": {
+          "population": 236,
+          "gdp_thousands": 14686,
+          "crime_rate": 8.72,
+          "reward": 1320,
+          "difficulty": 0.626,
+          "underworld_power": 31,
+          "police_power": 526
+        },
+        "Spartanburg (unincorporated)": {
+          "population": 295526,
+          "gdp_thousands": 18391401,
+          "crime_rate": 8.72,
+          "reward": 5939,
+          "difficulty": 0.626,
+          "underworld_power": 38663,
+          "police_power": 658412
+        }
+      }
+    },
+    "Sumter County": {
+      "fips": "45085",
+      "gdp_thousands": 6287811,
+      "gdp_estimated": false,
+      "population": 104776,
+      "homicide_rate": 12.197181513,
+      "difficulty": 0.617,
+      "cities": {
+        "Sumter city": {
+          "population": 42958,
+          "gdp_thousands": 2577992,
+          "crime_rate": 12.2,
+          "reward": 5476,
+          "difficulty": 0.617,
+          "underworld_power": 7859,
+          "police_power": 92292
+        },
+        "Mayesville town": {
+          "population": 550,
+          "gdp_thousands": 33006,
+          "crime_rate": 12.2,
+          "reward": 2026,
+          "difficulty": 0.617,
+          "underworld_power": 101,
+          "police_power": 1182
+        },
+        "Pinewood town": {
+          "population": 501,
+          "gdp_thousands": 30065,
+          "crime_rate": 12.2,
+          "reward": 1945,
+          "difficulty": 0.617,
+          "underworld_power": 92,
+          "police_power": 1076
+        },
+        "Sumter (unincorporated)": {
+          "population": 60767,
+          "gdp_thousands": 3646748,
+          "crime_rate": 12.2,
+          "reward": 5617,
+          "difficulty": 0.617,
+          "underworld_power": 11118,
+          "police_power": 130554
+        }
+      }
+    },
+    "Union County": {
+      "fips": "45087",
+      "gdp_thousands": 904840,
+      "gdp_estimated": false,
+      "population": 26678,
+      "homicide_rate": 10.953473816,
+      "difficulty": 0.338,
+      "cities": {
+        "Union city": {
+          "population": 7988,
+          "gdp_thousands": 270929,
+          "crime_rate": 10.95,
+          "reward": 4164,
+          "difficulty": 0.338,
+          "underworld_power": 1312,
+          "police_power": 9699
+        },
+        "Jonesville town": {
+          "population": 815,
+          "gdp_thousands": 27642,
+          "crime_rate": 10.95,
+          "reward": 1824,
+          "difficulty": 0.338,
+          "underworld_power": 134,
+          "police_power": 990
+        },
+        "Lockhart town": {
+          "population": 370,
+          "gdp_thousands": 12549,
+          "crime_rate": 10.95,
+          "reward": 1199,
+          "difficulty": 0.338,
+          "underworld_power": 61,
+          "police_power": 449
+        },
+        "Carlisle town": {
+          "population": 315,
+          "gdp_thousands": 10683,
+          "crime_rate": 10.95,
+          "reward": 1038,
+          "difficulty": 0.338,
+          "underworld_power": 52,
+          "police_power": 382
+        },
+        "Union (unincorporated)": {
+          "population": 17190,
+          "gdp_thousands": 583037,
+          "crime_rate": 10.95,
+          "reward": 4689,
+          "difficulty": 0.338,
+          "underworld_power": 2824,
+          "police_power": 20873
+        }
+      }
+    },
+    "Williamsburg County": {
+      "fips": "45089",
+      "gdp_thousands": 1066621,
+      "gdp_estimated": false,
+      "population": 29865,
+      "homicide_rate": 17.980138862,
+      "difficulty": 0.553,
+      "cities": {
+        "Kingstree town": {
+          "population": 3055,
+          "gdp_thousands": 109108,
+          "crime_rate": 17.98,
+          "reward": 3216,
+          "difficulty": 0.553,
+          "underworld_power": 824,
+          "police_power": 3906
+        },
+        "Hemingway town": {
+          "population": 466,
+          "gdp_thousands": 16643,
+          "crime_rate": 17.98,
+          "reward": 1461,
+          "difficulty": 0.553,
+          "underworld_power": 126,
+          "police_power": 596
+        },
+        "Lane town": {
+          "population": 451,
+          "gdp_thousands": 16107,
+          "crime_rate": 17.98,
+          "reward": 1421,
+          "difficulty": 0.553,
+          "underworld_power": 122,
+          "police_power": 577
+        },
+        "Greeleyville town": {
+          "population": 359,
+          "gdp_thousands": 12821,
+          "crime_rate": 17.98,
+          "reward": 1219,
+          "difficulty": 0.553,
+          "underworld_power": 97,
+          "police_power": 459
+        },
+        "Stuckey town": {
+          "population": 189,
+          "gdp_thousands": 6750,
+          "crime_rate": 17.98,
+          "reward": 674,
+          "difficulty": 0.553,
+          "underworld_power": 51,
+          "police_power": 242
+        },
+        "Williamsburg (unincorporated)": {
+          "population": 25345,
+          "gdp_thousands": 905192,
+          "crime_rate": 17.98,
+          "reward": 4891,
+          "difficulty": 0.553,
+          "underworld_power": 6836,
+          "police_power": 32406
+        }
+      }
+    },
+    "York County": {
+      "fips": "45091",
+      "gdp_thousands": 19234632,
+      "gdp_estimated": false,
+      "population": 303001,
+      "homicide_rate": 5.3956165592,
+      "difficulty": 0.445,
+      "cities": {
+        "Rock Hill city": {
+          "population": 75798,
+          "gdp_thousands": 4811689,
+          "crime_rate": 5.4,
+          "reward": 5677,
+          "difficulty": 0.445,
+          "underworld_power": 6135,
+          "police_power": 172258
+        },
+        "Fort Mill town": {
+          "population": 36244,
+          "gdp_thousands": 2300784,
+          "crime_rate": 5.4,
+          "reward": 5354,
+          "difficulty": 0.445,
+          "underworld_power": 2933,
+          "police_power": 82368
+        },
+        "Tega Cay city": {
+          "population": 14294,
+          "gdp_thousands": 907389,
+          "crime_rate": 5.4,
+          "reward": 4911,
+          "difficulty": 0.445,
+          "underworld_power": 1157,
+          "police_power": 32485
+        },
+        "York city": {
+          "population": 9830,
+          "gdp_thousands": 624012,
+          "crime_rate": 5.4,
+          "reward": 4729,
+          "difficulty": 0.445,
+          "underworld_power": 796,
+          "police_power": 22340
+        },
+        "Clover town": {
+          "population": 7558,
+          "gdp_thousands": 479785,
+          "crime_rate": 5.4,
+          "reward": 4507,
+          "difficulty": 0.445,
+          "underworld_power": 612,
+          "police_power": 17176
+        },
+        "Sharon town": {
+          "population": 470,
+          "gdp_thousands": 29835,
+          "crime_rate": 5.4,
+          "reward": 1925,
+          "difficulty": 0.445,
+          "underworld_power": 38,
+          "police_power": 1068
+        },
+        "Hickory Grove town": {
+          "population": 469,
+          "gdp_thousands": 29772,
+          "crime_rate": 5.4,
+          "reward": 1905,
+          "difficulty": 0.445,
+          "underworld_power": 38,
+          "police_power": 1066
+        },
+        "McConnells town": {
+          "population": 287,
+          "gdp_thousands": 18218,
+          "crime_rate": 5.4,
+          "reward": 1542,
+          "difficulty": 0.445,
+          "underworld_power": 23,
+          "police_power": 652
+        },
+        "York (unincorporated)": {
+          "population": 158051,
+          "gdp_thousands": 10033148,
+          "crime_rate": 5.4,
+          "reward": 5859,
+          "difficulty": 0.445,
+          "underworld_power": 12792,
+          "police_power": 359187
         }
       }
     }

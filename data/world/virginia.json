@@ -15,7 +15,7 @@
           "population": 3279,
           "gdp_thousands": 200151,
           "crime_rate": 14.87,
-          "reward": 3782,
+          "reward": 3009,
           "difficulty": 0.775,
           "underworld_power": 731,
           "police_power": 7165
@@ -24,7 +24,7 @@
           "population": 1160,
           "gdp_thousands": 70806,
           "crime_rate": 14.87,
-          "reward": 2807,
+          "reward": 2214,
           "difficulty": 0.775,
           "underworld_power": 259,
           "police_power": 2535
@@ -33,7 +33,7 @@
           "population": 813,
           "gdp_thousands": 49625,
           "crime_rate": 14.87,
-          "reward": 2222,
+          "reward": 1759,
           "difficulty": 0.775,
           "underworld_power": 181,
           "police_power": 1777
@@ -42,7 +42,7 @@
           "population": 537,
           "gdp_thousands": 32778,
           "crime_rate": 14.87,
-          "reward": 1783,
+          "reward": 1418,
           "difficulty": 0.775,
           "underworld_power": 120,
           "police_power": 1173
@@ -51,7 +51,7 @@
           "population": 516,
           "gdp_thousands": 31496,
           "crime_rate": 14.87,
-          "reward": 1734,
+          "reward": 1381,
           "difficulty": 0.775,
           "underworld_power": 115,
           "police_power": 1128
@@ -60,7 +60,7 @@
           "population": 433,
           "gdp_thousands": 26430,
           "crime_rate": 14.87,
-          "reward": 1539,
+          "reward": 1229,
           "difficulty": 0.775,
           "underworld_power": 97,
           "police_power": 946
@@ -69,7 +69,7 @@
           "population": 400,
           "gdp_thousands": 24416,
           "crime_rate": 14.87,
-          "reward": 1393,
+          "reward": 1116,
           "difficulty": 0.775,
           "underworld_power": 89,
           "police_power": 874
@@ -78,7 +78,7 @@
           "population": 380,
           "gdp_thousands": 23195,
           "crime_rate": 14.87,
-          "reward": 1320,
+          "reward": 1059,
           "difficulty": 0.775,
           "underworld_power": 85,
           "police_power": 830
@@ -87,7 +87,7 @@
           "population": 272,
           "gdp_thousands": 16602,
           "crime_rate": 14.87,
-          "reward": 1125,
+          "reward": 907,
           "difficulty": 0.775,
           "underworld_power": 61,
           "police_power": 594
@@ -96,7 +96,7 @@
           "population": 258,
           "gdp_thousands": 15748,
           "crime_rate": 14.87,
-          "reward": 1028,
+          "reward": 832,
           "difficulty": 0.775,
           "underworld_power": 58,
           "police_power": 564
@@ -105,7 +105,7 @@
           "population": 203,
           "gdp_thousands": 12391,
           "crime_rate": 14.87,
-          "reward": 808,
+          "reward": 661,
           "difficulty": 0.775,
           "underworld_power": 45,
           "police_power": 444
@@ -114,7 +114,7 @@
           "population": 169,
           "gdp_thousands": 10315,
           "crime_rate": 14.87,
-          "reward": 589,
+          "reward": 491,
           "difficulty": 0.775,
           "underworld_power": 38,
           "police_power": 369
@@ -123,10 +123,19 @@
           "population": 144,
           "gdp_thousands": 8789,
           "crime_rate": 14.87,
-          "reward": 564,
+          "reward": 472,
           "difficulty": 0.775,
           "underworld_power": 32,
           "police_power": 315
+        },
+        "Accomack (unincorporated)": {
+          "population": 24847,
+          "gdp_thousands": 1516678,
+          "crime_rate": 14.87,
+          "reward": 5091,
+          "difficulty": 0.775,
+          "underworld_power": 5541,
+          "police_power": 54297
         }
       }
     },
@@ -142,7 +151,7 @@
           "population": 117313,
           "gdp_thousands": 5604044,
           "crime_rate": 2.1,
-          "reward": 5634,
+          "reward": 5640,
           "difficulty": 0.483,
           "underworld_power": 3692,
           "police_power": 200625
@@ -161,7 +170,7 @@
           "population": 3385,
           "gdp_thousands": 161701,
           "crime_rate": 3.0,
-          "reward": 3611,
+          "reward": 2876,
           "difficulty": 0.406,
           "underworld_power": 152,
           "police_power": 5789
@@ -170,10 +179,19 @@
           "population": 310,
           "gdp_thousands": 14808,
           "crime_rate": 3.0,
-          "reward": 954,
+          "reward": 775,
           "difficulty": 0.406,
           "underworld_power": 14,
           "police_power": 530
+        },
+        "Alleghany (unincorporated)": {
+          "population": 10937,
+          "gdp_thousands": 522462,
+          "crime_rate": 3.0,
+          "reward": 3974,
+          "difficulty": 0.406,
+          "underworld_power": 492,
+          "police_power": 18704
         }
       }
     },
@@ -189,7 +207,7 @@
           "population": 13716,
           "gdp_thousands": 394683,
           "crime_rate": 3.0,
-          "reward": 4464,
+          "reward": 3671,
           "difficulty": 0.319,
           "underworld_power": 617,
           "police_power": 14130
@@ -208,10 +226,19 @@
           "population": 2128,
           "gdp_thousands": 73902,
           "crime_rate": 3.0,
-          "reward": 2880,
+          "reward": 2270,
           "difficulty": 0.478,
           "underworld_power": 96,
           "police_power": 2646
+        },
+        "Amherst (unincorporated)": {
+          "population": 29522,
+          "gdp_thousands": 1025261,
+          "crime_rate": 3.0,
+          "reward": 4523,
+          "difficulty": 0.478,
+          "underworld_power": 1328,
+          "police_power": 36704
         }
       }
     },
@@ -227,10 +254,19 @@
           "population": 2003,
           "gdp_thousands": 56174,
           "crime_rate": 3.0,
-          "reward": 2319,
+          "reward": 1835,
           "difficulty": 0.338,
           "underworld_power": 90,
           "police_power": 2011
+        },
+        "Appomattox (unincorporated)": {
+          "population": 14954,
+          "gdp_thousands": 419386,
+          "crime_rate": 3.0,
+          "reward": 3728,
+          "difficulty": 0.338,
+          "underworld_power": 673,
+          "police_power": 15014
         }
       }
     },
@@ -246,7 +282,7 @@
           "population": 239807,
           "gdp_thousands": 49077789,
           "crime_rate": 1.16,
-          "reward": 6000,
+          "reward": 5981,
           "difficulty": 0.505,
           "underworld_power": 4163,
           "police_power": 1756985
@@ -265,10 +301,19 @@
           "population": 915,
           "gdp_thousands": 43709,
           "crime_rate": 1.89,
-          "reward": 2051,
+          "reward": 1627,
           "difficulty": 0.439,
           "underworld_power": 26,
           "police_power": 1565
+        },
+        "Augusta (unincorporated)": {
+          "population": 77707,
+          "gdp_thousands": 3712065,
+          "crime_rate": 1.89,
+          "reward": 5508,
+          "difficulty": 0.439,
+          "underworld_power": 2201,
+          "police_power": 132892
         }
       }
     },
@@ -284,7 +329,7 @@
           "population": 4071,
           "gdp_thousands": 327016,
           "crime_rate": 3.0,
-          "reward": 4294,
+          "reward": 3482,
           "difficulty": 0.296,
           "underworld_power": 183,
           "police_power": 11707
@@ -303,10 +348,19 @@
           "population": 7823,
           "gdp_thousands": 261392,
           "crime_rate": 3.08,
-          "reward": 4074,
+          "reward": 3255,
           "difficulty": 0.502,
           "underworld_power": 362,
           "police_power": 9358
+        },
+        "Bedford (unincorporated)": {
+          "population": 74359,
+          "gdp_thousands": 2484578,
+          "crime_rate": 3.08,
+          "reward": 5375,
+          "difficulty": 0.502,
+          "underworld_power": 3439,
+          "police_power": 88948
         }
       }
     },
@@ -322,7 +376,7 @@
           "population": 6186,
           "gdp_thousands": 283471,
           "crime_rate": 3.0,
-          "reward": 4148,
+          "reward": 3312,
           "difficulty": 0.285,
           "underworld_power": 278,
           "police_power": 10148
@@ -341,7 +395,7 @@
           "population": 1207,
           "gdp_thousands": 66574,
           "crime_rate": 3.0,
-          "reward": 2685,
+          "reward": 2119,
           "difficulty": 0.569,
           "underworld_power": 54,
           "police_power": 2383
@@ -350,7 +404,7 @@
           "population": 823,
           "gdp_thousands": 45394,
           "crime_rate": 3.0,
-          "reward": 2100,
+          "reward": 1665,
           "difficulty": 0.569,
           "underworld_power": 37,
           "police_power": 1625
@@ -359,10 +413,19 @@
           "population": 468,
           "gdp_thousands": 25813,
           "crime_rate": 3.0,
-          "reward": 1442,
+          "reward": 1153,
           "difficulty": 0.569,
           "underworld_power": 21,
           "police_power": 924
+        },
+        "Botetourt (unincorporated)": {
+          "population": 31631,
+          "gdp_thousands": 1744671,
+          "crime_rate": 3.0,
+          "reward": 5167,
+          "difficulty": 0.569,
+          "underworld_power": 1423,
+          "police_power": 62459
         }
       }
     },
@@ -378,7 +441,7 @@
           "population": 997,
           "gdp_thousands": 75784,
           "crime_rate": 3.0,
-          "reward": 2953,
+          "reward": 2327,
           "difficulty": 0.486,
           "underworld_power": 45,
           "police_power": 2713
@@ -387,10 +450,19 @@
           "population": 297,
           "gdp_thousands": 22575,
           "crime_rate": 3.0,
-          "reward": 1296,
+          "reward": 1040,
           "difficulty": 0.486,
           "underworld_power": 13,
           "police_power": 808
+        },
+        "Brunswick (unincorporated)": {
+          "population": 14456,
+          "gdp_thousands": 1098834,
+          "crime_rate": 3.0,
+          "reward": 4637,
+          "difficulty": 0.486,
+          "underworld_power": 651,
+          "police_power": 39338
         }
       }
     },
@@ -406,10 +478,19 @@
           "population": 820,
           "gdp_thousands": 61471,
           "crime_rate": 3.0,
-          "reward": 2514,
+          "reward": 1986,
           "difficulty": 0.527,
           "underworld_power": 37,
           "police_power": 2201
+        },
+        "Buchanan (unincorporated)": {
+          "population": 17812,
+          "gdp_thousands": 1335282,
+          "crime_rate": 3.0,
+          "reward": 4978,
+          "difficulty": 0.527,
+          "underworld_power": 802,
+          "police_power": 47803
         }
       }
     },
@@ -425,10 +506,19 @@
           "population": 439,
           "gdp_thousands": 17901,
           "crime_rate": 3.0,
-          "reward": 1174,
+          "reward": 945,
           "difficulty": 0.402,
           "underworld_power": 20,
           "police_power": 641
+        },
+        "Buckingham (unincorporated)": {
+          "population": 16676,
+          "gdp_thousands": 680025,
+          "crime_rate": 3.0,
+          "reward": 4183,
+          "difficulty": 0.402,
+          "underworld_power": 750,
+          "police_power": 24345
         }
       }
     },
@@ -444,7 +534,7 @@
           "population": 3332,
           "gdp_thousands": 159169,
           "crime_rate": 5.19,
-          "reward": 3562,
+          "reward": 2838,
           "difficulty": 0.631,
           "underworld_power": 259,
           "police_power": 5698
@@ -453,10 +543,19 @@
           "population": 1076,
           "gdp_thousands": 51400,
           "crime_rate": 5.19,
-          "reward": 2271,
+          "reward": 1797,
           "difficulty": 0.631,
           "underworld_power": 84,
           "police_power": 1840
+        },
+        "Campbell (unincorporated)": {
+          "population": 50934,
+          "gdp_thousands": 2433119,
+          "crime_rate": 5.19,
+          "reward": 5337,
+          "difficulty": 0.631,
+          "underworld_power": 3962,
+          "police_power": 87106
         }
       }
     },
@@ -472,7 +571,7 @@
           "population": 1252,
           "gdp_thousands": 47243,
           "crime_rate": 5.6,
-          "reward": 2149,
+          "reward": 1702,
           "difficulty": 0.545,
           "underworld_power": 105,
           "police_power": 1691
@@ -481,10 +580,19 @@
           "population": 216,
           "gdp_thousands": 8150,
           "crime_rate": 5.6,
-          "reward": 516,
+          "reward": 434,
           "difficulty": 0.545,
           "underworld_power": 18,
           "police_power": 292
+        },
+        "Caroline (unincorporated)": {
+          "population": 32009,
+          "gdp_thousands": 1207843,
+          "crime_rate": 5.6,
+          "reward": 4750,
+          "difficulty": 0.545,
+          "underworld_power": 2688,
+          "police_power": 43241
         }
       }
     },
@@ -500,10 +608,19 @@
           "population": 2843,
           "gdp_thousands": 135810,
           "crime_rate": 3.0,
-          "reward": 3368,
+          "reward": 2668,
           "difficulty": 0.531,
           "underworld_power": 128,
           "police_power": 4862
+        },
+        "Carroll (unincorporated)": {
+          "population": 26399,
+          "gdp_thousands": 1261081,
+          "crime_rate": 3.0,
+          "reward": 4902,
+          "difficulty": 0.531,
+          "underworld_power": 1188,
+          "police_power": 45147
         }
       }
     },
@@ -519,7 +636,7 @@
           "population": 6564,
           "gdp_thousands": 358325,
           "crime_rate": 3.0,
-          "reward": 4318,
+          "reward": 3520,
           "difficulty": 0.304,
           "underworld_power": 295,
           "police_power": 12828
@@ -538,7 +655,7 @@
           "population": 786,
           "gdp_thousands": 26282,
           "crime_rate": 3.0,
-          "reward": 1515,
+          "reward": 1210,
           "difficulty": 0.311,
           "underworld_power": 35,
           "police_power": 941
@@ -547,7 +664,7 @@
           "population": 516,
           "gdp_thousands": 17254,
           "crime_rate": 3.0,
-          "reward": 1149,
+          "reward": 926,
           "difficulty": 0.311,
           "underworld_power": 23,
           "police_power": 618
@@ -556,7 +673,7 @@
           "population": 493,
           "gdp_thousands": 16485,
           "crime_rate": 3.0,
-          "reward": 1076,
+          "reward": 869,
           "difficulty": 0.311,
           "underworld_power": 22,
           "police_power": 590
@@ -565,10 +682,19 @@
           "population": 226,
           "gdp_thousands": 7557,
           "crime_rate": 3.0,
-          "reward": 442,
+          "reward": 377,
           "difficulty": 0.311,
           "underworld_power": 10,
           "police_power": 271
+        },
+        "Charlotte (unincorporated)": {
+          "population": 9237,
+          "gdp_thousands": 308873,
+          "crime_rate": 3.0,
+          "reward": 3368,
+          "difficulty": 0.311,
+          "underworld_power": 416,
+          "police_power": 11058
         }
       }
     },
@@ -584,7 +710,7 @@
           "population": 389793,
           "gdp_thousands": 24002409,
           "crime_rate": 6.09,
-          "reward": 5878,
+          "reward": 5867,
           "difficulty": 0.792,
           "underworld_power": 35579,
           "police_power": 859286
@@ -603,7 +729,7 @@
           "population": 4819,
           "gdp_thousands": 188946,
           "crime_rate": 3.0,
-          "reward": 3709,
+          "reward": 2952,
           "difficulty": 0.376,
           "underworld_power": 217,
           "police_power": 6764
@@ -612,10 +738,19 @@
           "population": 793,
           "gdp_thousands": 31092,
           "crime_rate": 3.0,
-          "reward": 1686,
+          "reward": 1343,
           "difficulty": 0.376,
           "underworld_power": 36,
           "police_power": 1113
+        },
+        "Clarke (unincorporated)": {
+          "population": 9986,
+          "gdp_thousands": 391539,
+          "crime_rate": 3.0,
+          "reward": 3652,
+          "difficulty": 0.376,
+          "underworld_power": 449,
+          "police_power": 14017
         }
       }
     },
@@ -631,10 +766,19 @@
           "population": 122,
           "gdp_thousands": 3839,
           "crime_rate": 3.0,
-          "reward": 223,
+          "reward": 207,
           "difficulty": 0.258,
           "underworld_power": 5,
           "police_power": 137
+        },
+        "Craig (unincorporated)": {
+          "population": 4707,
+          "gdp_thousands": 148142,
+          "crime_rate": 3.0,
+          "reward": 2744,
+          "difficulty": 0.258,
+          "underworld_power": 212,
+          "police_power": 5303
         }
       }
     },
@@ -650,10 +794,19 @@
           "population": 21464,
           "gdp_thousands": 1041317,
           "crime_rate": 2.76,
-          "reward": 5001,
+          "reward": 4561,
           "difficulty": 0.462,
           "underworld_power": 888,
           "police_power": 37279
+        },
+        "Culpeper (unincorporated)": {
+          "population": 34661,
+          "gdp_thousands": 1681566,
+          "crime_rate": 2.76,
+          "reward": 5148,
+          "difficulty": 0.462,
+          "underworld_power": 1435,
+          "police_power": 60200
         }
       }
     },
@@ -669,7 +822,7 @@
           "population": 10062,
           "gdp_thousands": 231862,
           "crime_rate": 3.0,
-          "reward": 3928,
+          "reward": 3122,
           "difficulty": 0.27,
           "underworld_power": 453,
           "police_power": 8301
@@ -688,7 +841,7 @@
           "population": 1313,
           "gdp_thousands": 83268,
           "crime_rate": 3.0,
-          "reward": 3051,
+          "reward": 2403,
           "difficulty": 0.44,
           "underworld_power": 59,
           "police_power": 2981
@@ -697,7 +850,7 @@
           "population": 476,
           "gdp_thousands": 30187,
           "crime_rate": 3.0,
-          "reward": 1637,
+          "reward": 1305,
           "difficulty": 0.44,
           "underworld_power": 21,
           "police_power": 1081
@@ -706,10 +859,19 @@
           "population": 230,
           "gdp_thousands": 14586,
           "crime_rate": 3.0,
-          "reward": 906,
+          "reward": 737,
           "difficulty": 0.44,
           "underworld_power": 10,
           "police_power": 522
+        },
+        "Dickenson (unincorporated)": {
+          "population": 11392,
+          "gdp_thousands": 722467,
+          "crime_rate": 3.0,
+          "reward": 4258,
+          "difficulty": 0.44,
+          "underworld_power": 513,
+          "police_power": 25864
         }
       }
     },
@@ -725,10 +887,19 @@
           "population": 465,
           "gdp_thousands": 22213,
           "crime_rate": 7.08,
-          "reward": 1271,
+          "reward": 1021,
           "difficulty": 0.623,
           "underworld_power": 49,
           "police_power": 795
+        },
+        "Dinwiddie (unincorporated)": {
+          "population": 28111,
+          "gdp_thousands": 1342863,
+          "crime_rate": 7.08,
+          "reward": 5016,
+          "difficulty": 0.623,
+          "underworld_power": 2983,
+          "police_power": 48074
         }
       }
     },
@@ -744,10 +915,19 @@
           "population": 2199,
           "gdp_thousands": 115347,
           "crime_rate": 3.0,
-          "reward": 3319,
+          "reward": 2630,
           "difficulty": 0.364,
           "underworld_power": 99,
           "police_power": 4129
+        },
+        "Essex (unincorporated)": {
+          "population": 8484,
+          "gdp_thousands": 445025,
+          "crime_rate": 3.0,
+          "reward": 3766,
+          "difficulty": 0.364,
+          "underworld_power": 382,
+          "police_power": 15932
         }
       }
     },
@@ -763,7 +943,7 @@
           "population": 16562,
           "gdp_thousands": 791167,
           "crime_rate": 1.76,
-          "reward": 4830,
+          "reward": 4353,
           "difficulty": 0.527,
           "underworld_power": 437,
           "police_power": 28324
@@ -772,10 +952,19 @@
           "population": 242,
           "gdp_thousands": 11560,
           "crime_rate": 1.76,
-          "reward": 711,
+          "reward": 585,
           "difficulty": 0.527,
           "underworld_power": 6,
           "police_power": 414
+        },
+        "Fairfax (unincorporated)": {
+          "population": 1144121,
+          "gdp_thousands": 54654688,
+          "crime_rate": 1.76,
+          "reward": 6000,
+          "difficulty": 0.527,
+          "underworld_power": 30179,
+          "police_power": 1956638
         }
       }
     },
@@ -791,7 +980,7 @@
           "population": 10224,
           "gdp_thousands": 559828,
           "crime_rate": 3.64,
-          "reward": 4635,
+          "reward": 4069,
           "difficulty": 0.591,
           "underworld_power": 558,
           "police_power": 20042
@@ -800,7 +989,7 @@
           "population": 643,
           "gdp_thousands": 35208,
           "crime_rate": 3.64,
-          "reward": 1832,
+          "reward": 1456,
           "difficulty": 0.591,
           "underworld_power": 35,
           "police_power": 1260
@@ -809,10 +998,19 @@
           "population": 255,
           "gdp_thousands": 13962,
           "crime_rate": 3.64,
-          "reward": 857,
+          "reward": 699,
           "difficulty": 0.591,
           "underworld_power": 14,
           "police_power": 500
+        },
+        "Fauquier (unincorporated)": {
+          "population": 64743,
+          "gdp_thousands": 3545092,
+          "crime_rate": 3.64,
+          "reward": 5489,
+          "difficulty": 0.591,
+          "underworld_power": 3536,
+          "police_power": 126914
         }
       }
     },
@@ -828,10 +1026,19 @@
           "population": 448,
           "gdp_thousands": 15336,
           "crime_rate": 3.0,
-          "reward": 979,
+          "reward": 794,
           "difficulty": 0.361,
           "underworld_power": 20,
           "police_power": 549
+        },
+        "Floyd (unincorporated)": {
+          "population": 15210,
+          "gdp_thousands": 520702,
+          "crime_rate": 3.0,
+          "reward": 3955,
+          "difficulty": 0.361,
+          "underworld_power": 684,
+          "police_power": 18641
         }
       }
     },
@@ -847,7 +1054,7 @@
           "population": 28746,
           "gdp_thousands": 1258570,
           "crime_rate": 3.0,
-          "reward": 5171,
+          "reward": 4845,
           "difficulty": 0.497,
           "underworld_power": 1294,
           "police_power": 45057
@@ -866,7 +1073,7 @@
           "population": 4971,
           "gdp_thousands": 197985,
           "crime_rate": 7.65,
-          "reward": 3758,
+          "reward": 2990,
           "difficulty": 0.717,
           "underworld_power": 570,
           "police_power": 7088
@@ -875,10 +1082,19 @@
           "population": 260,
           "gdp_thousands": 10355,
           "crime_rate": 7.65,
-          "reward": 613,
+          "reward": 510,
           "difficulty": 0.717,
           "underworld_power": 30,
           "police_power": 371
+        },
+        "Franklin (unincorporated)": {
+          "population": 50406,
+          "gdp_thousands": 2007575,
+          "crime_rate": 7.65,
+          "reward": 5205,
+          "difficulty": 0.717,
+          "underworld_power": 5785,
+          "police_power": 71871
         }
       }
     },
@@ -894,7 +1110,7 @@
           "population": 2160,
           "gdp_thousands": 103183,
           "crime_rate": 1.78,
-          "reward": 3197,
+          "reward": 2535,
           "difficulty": 0.457,
           "underworld_power": 58,
           "police_power": 3694
@@ -903,10 +1119,19 @@
           "population": 1444,
           "gdp_thousands": 68979,
           "crime_rate": 1.78,
-          "reward": 2709,
+          "reward": 2138,
           "difficulty": 0.457,
           "underworld_power": 39,
           "police_power": 2469
+        },
+        "Frederick (unincorporated)": {
+          "population": 94505,
+          "gdp_thousands": 4514507,
+          "crime_rate": 1.78,
+          "reward": 5602,
+          "difficulty": 0.457,
+          "underworld_power": 2529,
+          "police_power": 161619
         }
       }
     },
@@ -922,7 +1147,7 @@
           "population": 2857,
           "gdp_thousands": 159561,
           "crime_rate": 3.0,
-          "reward": 3587,
+          "reward": 2857,
           "difficulty": 0.459,
           "underworld_power": 129,
           "police_power": 5712
@@ -931,7 +1156,7 @@
           "population": 2040,
           "gdp_thousands": 113932,
           "crime_rate": 3.0,
-          "reward": 3294,
+          "reward": 2611,
           "difficulty": 0.459,
           "underworld_power": 92,
           "police_power": 4079
@@ -940,7 +1165,7 @@
           "population": 1135,
           "gdp_thousands": 63388,
           "crime_rate": 3.0,
-          "reward": 2588,
+          "reward": 2043,
           "difficulty": 0.459,
           "underworld_power": 51,
           "police_power": 2269
@@ -949,7 +1174,7 @@
           "population": 734,
           "gdp_thousands": 40993,
           "crime_rate": 3.0,
-          "reward": 1978,
+          "reward": 1570,
           "difficulty": 0.459,
           "underworld_power": 33,
           "police_power": 1468
@@ -958,10 +1183,19 @@
           "population": 93,
           "gdp_thousands": 5193,
           "crime_rate": 3.0,
-          "reward": 296,
+          "reward": 264,
           "difficulty": 0.459,
           "underworld_power": 4,
           "police_power": 186
+        },
+        "Giles (unincorporated)": {
+          "population": 9674,
+          "gdp_thousands": 540290,
+          "crime_rate": 3.0,
+          "reward": 4012,
+          "difficulty": 0.459,
+          "underworld_power": 435,
+          "police_power": 19342
         }
       }
     },
@@ -977,7 +1211,7 @@
           "population": 40154,
           "gdp_thousands": 1361331,
           "crime_rate": 3.0,
-          "reward": 5269,
+          "reward": 5034,
           "difficulty": 0.52,
           "underworld_power": 1807,
           "police_power": 48736
@@ -996,7 +1230,7 @@
           "population": 28223,
           "gdp_thousands": 4001586,
           "crime_rate": 3.0,
-          "reward": 5586,
+          "reward": 5565,
           "difficulty": 0.66,
           "underworld_power": 1270,
           "police_power": 143257
@@ -1015,7 +1249,7 @@
           "population": 998,
           "gdp_thousands": 26019,
           "crime_rate": 3.0,
-          "reward": 1466,
+          "reward": 1172,
           "difficulty": 0.327,
           "underworld_power": 45,
           "police_power": 931
@@ -1024,7 +1258,7 @@
           "population": 444,
           "gdp_thousands": 11575,
           "crime_rate": 3.0,
-          "reward": 759,
+          "reward": 623,
           "difficulty": 0.327,
           "underworld_power": 20,
           "police_power": 414
@@ -1033,10 +1267,19 @@
           "population": 139,
           "gdp_thousands": 3623,
           "crime_rate": 3.0,
-          "reward": 199,
+          "reward": 188,
           "difficulty": 0.327,
           "underworld_power": 6,
           "police_power": 130
+        },
+        "Grayson (unincorporated)": {
+          "population": 13684,
+          "gdp_thousands": 356764,
+          "crime_rate": 3.0,
+          "reward": 3501,
+          "difficulty": 0.327,
+          "underworld_power": 616,
+          "police_power": 12772
         }
       }
     },
@@ -1052,10 +1295,19 @@
           "population": 363,
           "gdp_thousands": 11368,
           "crime_rate": 3.0,
-          "reward": 686,
+          "reward": 567,
           "difficulty": 0.395,
           "underworld_power": 16,
           "police_power": 407
+        },
+        "Greene (unincorporated)": {
+          "population": 21381,
+          "gdp_thousands": 669614,
+          "crime_rate": 3.0,
+          "reward": 4164,
+          "difficulty": 0.395,
+          "underworld_power": 962,
+          "police_power": 23972
         }
       }
     },
@@ -1071,7 +1323,7 @@
           "population": 11150,
           "gdp_thousands": 532635,
           "crime_rate": 3.0,
-          "reward": 4586,
+          "reward": 3993,
           "difficulty": 0.353,
           "underworld_power": 502,
           "police_power": 19068
@@ -1090,7 +1342,7 @@
           "population": 7795,
           "gdp_thousands": 381681,
           "crime_rate": 7.91,
-          "reward": 4416,
+          "reward": 3596,
           "difficulty": 0.69,
           "underworld_power": 925,
           "police_power": 13664
@@ -1099,7 +1351,7 @@
           "population": 1090,
           "gdp_thousands": 53371,
           "crime_rate": 7.91,
-          "reward": 2295,
+          "reward": 1816,
           "difficulty": 0.69,
           "underworld_power": 129,
           "police_power": 1911
@@ -1108,7 +1360,7 @@
           "population": 124,
           "gdp_thousands": 6071,
           "crime_rate": 7.91,
-          "reward": 369,
+          "reward": 320,
           "difficulty": 0.69,
           "underworld_power": 15,
           "police_power": 217
@@ -1117,10 +1369,19 @@
           "population": 119,
           "gdp_thousands": 5826,
           "crime_rate": 7.91,
-          "reward": 345,
+          "reward": 301,
           "difficulty": 0.69,
           "underworld_power": 14,
           "police_power": 209
+        },
+        "Halifax (unincorporated)": {
+          "population": 24320,
+          "gdp_thousands": 1190831,
+          "crime_rate": 7.91,
+          "reward": 4713,
+          "difficulty": 0.69,
+          "underworld_power": 2887,
+          "police_power": 42632
         }
       }
     },
@@ -1136,10 +1397,19 @@
           "population": 7910,
           "gdp_thousands": 632849,
           "crime_rate": 2.27,
-          "reward": 4684,
+          "reward": 4126,
           "difficulty": 0.514,
           "underworld_power": 270,
           "police_power": 22656
+        },
+        "Hanover (unincorporated)": {
+          "population": 107399,
+          "gdp_thousands": 8592597,
+          "crime_rate": 2.27,
+          "reward": 5735,
+          "difficulty": 0.514,
+          "underworld_power": 3659,
+          "police_power": 307615
         }
       }
     },
@@ -1155,7 +1425,7 @@
           "population": 338696,
           "gdp_thousands": 37564811,
           "crime_rate": 6.55,
-          "reward": 5976,
+          "reward": 5943,
           "difficulty": 0.816,
           "underworld_power": 33254,
           "police_power": 1344820
@@ -1174,10 +1444,19 @@
           "population": 733,
           "gdp_thousands": 35015,
           "crime_rate": 7.29,
-          "reward": 1808,
+          "reward": 1437,
           "difficulty": 0.716,
           "underworld_power": 80,
           "police_power": 1254
+        },
+        "Henry (unincorporated)": {
+          "population": 48652,
+          "gdp_thousands": 2324107,
+          "crime_rate": 7.29,
+          "reward": 5318,
+          "difficulty": 0.716,
+          "underworld_power": 5321,
+          "police_power": 83203
         }
       }
     },
@@ -1193,10 +1472,19 @@
           "population": 164,
           "gdp_thousands": 7727,
           "crime_rate": 3.0,
-          "reward": 491,
+          "reward": 415,
           "difficulty": 0.255,
           "underworld_power": 7,
           "police_power": 277
+        },
+        "Highland (unincorporated)": {
+          "population": 2184,
+          "gdp_thousands": 102915,
+          "crime_rate": 3.0,
+          "reward": 2498,
+          "difficulty": 0.255,
+          "underworld_power": 98,
+          "police_power": 3684
         }
       }
     },
@@ -1212,7 +1500,7 @@
           "population": 9032,
           "gdp_thousands": 364765,
           "crime_rate": 3.84,
-          "reward": 4367,
+          "reward": 3558,
           "difficulty": 0.512,
           "underworld_power": 520,
           "police_power": 13059
@@ -1221,10 +1509,19 @@
           "population": 2920,
           "gdp_thousands": 117926,
           "crime_rate": 3.84,
-          "reward": 3343,
+          "reward": 2649,
           "difficulty": 0.512,
           "underworld_power": 168,
           "police_power": 4222
+        },
+        "Isle of Wight (unincorporated)": {
+          "population": 28990,
+          "gdp_thousands": 1170788,
+          "crime_rate": 3.84,
+          "reward": 4694,
+          "difficulty": 0.512,
+          "underworld_power": 1669,
+          "police_power": 41914
         }
       }
     },
@@ -1240,7 +1537,7 @@
           "population": 82797,
           "gdp_thousands": 3955214,
           "crime_rate": 3.37,
-          "reward": 5561,
+          "reward": 5546,
           "difficulty": 0.556,
           "underworld_power": 4190,
           "police_power": 141597
@@ -1259,7 +1556,7 @@
           "population": 6747,
           "gdp_thousands": 218330,
           "crime_rate": 3.0,
-          "reward": 3879,
+          "reward": 3084,
           "difficulty": 0.266,
           "underworld_power": 304,
           "police_power": 7816
@@ -1278,7 +1575,7 @@
           "population": 28816,
           "gdp_thousands": 2903020,
           "crime_rate": 3.0,
-          "reward": 5488,
+          "reward": 5413,
           "difficulty": 0.637,
           "underworld_power": 1297,
           "police_power": 103928
@@ -1297,10 +1594,19 @@
           "population": 3529,
           "gdp_thousands": 155949,
           "crime_rate": 3.0,
-          "reward": 3538,
+          "reward": 2819,
           "difficulty": 0.436,
           "underworld_power": 159,
           "police_power": 5583
+        },
+        "King William (unincorporated)": {
+          "population": 15703,
+          "gdp_thousands": 693928,
+          "crime_rate": 3.0,
+          "reward": 4201,
+          "difficulty": 0.436,
+          "underworld_power": 707,
+          "police_power": 24843
         }
       }
     },
@@ -1316,7 +1622,7 @@
           "population": 479,
           "gdp_thousands": 29405,
           "crime_rate": 3.0,
-          "reward": 1588,
+          "reward": 1267,
           "difficulty": 0.391,
           "underworld_power": 22,
           "police_power": 1053
@@ -1325,10 +1631,19 @@
           "population": 389,
           "gdp_thousands": 23880,
           "crime_rate": 3.0,
-          "reward": 1344,
+          "reward": 1078,
           "difficulty": 0.391,
           "underworld_power": 18,
           "police_power": 855
+        },
+        "Lancaster (unincorporated)": {
+          "population": 10194,
+          "gdp_thousands": 625810,
+          "crime_rate": 3.0,
+          "reward": 4107,
+          "difficulty": 0.391,
+          "underworld_power": 459,
+          "police_power": 22404
         }
       }
     },
@@ -1344,7 +1659,7 @@
           "population": 1575,
           "gdp_thousands": 40972,
           "crime_rate": 3.0,
-          "reward": 1954,
+          "reward": 1551,
           "difficulty": 0.368,
           "underworld_power": 71,
           "police_power": 1467
@@ -1353,10 +1668,19 @@
           "population": 851,
           "gdp_thousands": 22137,
           "crime_rate": 3.0,
-          "reward": 1247,
+          "reward": 1002,
           "difficulty": 0.368,
           "underworld_power": 38,
           "police_power": 793
+        },
+        "Lee (unincorporated)": {
+          "population": 19354,
+          "gdp_thousands": 503477,
+          "crime_rate": 3.0,
+          "reward": 3899,
+          "difficulty": 0.368,
+          "underworld_power": 871,
+          "police_power": 18024
         }
       }
     },
@@ -1372,7 +1696,7 @@
           "population": 49831,
           "gdp_thousands": 5041208,
           "crime_rate": 0.88,
-          "reward": 5610,
+          "reward": 5621,
           "difficulty": 0.492,
           "underworld_power": 660,
           "police_power": 180475
@@ -1381,7 +1705,7 @@
           "population": 8965,
           "gdp_thousands": 906954,
           "crime_rate": 0.88,
-          "reward": 4928,
+          "reward": 4429,
           "difficulty": 0.492,
           "underworld_power": 119,
           "police_power": 32469
@@ -1390,7 +1714,7 @@
           "population": 2719,
           "gdp_thousands": 275070,
           "crime_rate": 0.88,
-          "reward": 4123,
+          "reward": 3293,
           "difficulty": 0.492,
           "underworld_power": 36,
           "police_power": 9848
@@ -1399,7 +1723,7 @@
           "population": 696,
           "gdp_thousands": 70411,
           "crime_rate": 0.88,
-          "reward": 2782,
+          "reward": 2195,
           "difficulty": 0.492,
           "underworld_power": 9,
           "police_power": 2521
@@ -1408,7 +1732,7 @@
           "population": 687,
           "gdp_thousands": 69501,
           "crime_rate": 0.88,
-          "reward": 2734,
+          "reward": 2157,
           "difficulty": 0.492,
           "underworld_power": 9,
           "police_power": 2488
@@ -1417,7 +1741,7 @@
           "population": 607,
           "gdp_thousands": 61407,
           "crime_rate": 0.88,
-          "reward": 2490,
+          "reward": 1967,
           "difficulty": 0.492,
           "underworld_power": 8,
           "police_power": 2198
@@ -1426,10 +1750,19 @@
           "population": 110,
           "gdp_thousands": 11128,
           "crime_rate": 0.88,
-          "reward": 662,
+          "reward": 548,
           "difficulty": 0.492,
           "underworld_power": 1,
           "police_power": 398
+        },
+        "Loudoun (unincorporated)": {
+          "population": 379765,
+          "gdp_thousands": 38419355,
+          "crime_rate": 0.88,
+          "reward": 5962,
+          "difficulty": 0.492,
+          "underworld_power": 5031,
+          "police_power": 1375413
         }
       }
     },
@@ -1445,7 +1778,7 @@
           "population": 2201,
           "gdp_thousands": 162410,
           "crime_rate": 4.67,
-          "reward": 3636,
+          "reward": 2895,
           "difficulty": 0.632,
           "underworld_power": 154,
           "police_power": 5814
@@ -1454,10 +1787,19 @@
           "population": 523,
           "gdp_thousands": 38591,
           "crime_rate": 4.67,
-          "reward": 1905,
+          "reward": 1513,
           "difficulty": 0.632,
           "underworld_power": 37,
           "police_power": 1382
+        },
+        "Louisa (unincorporated)": {
+          "population": 39385,
+          "gdp_thousands": 2906196,
+          "crime_rate": 4.67,
+          "reward": 5432,
+          "difficulty": 0.632,
+          "underworld_power": 2758,
+          "police_power": 104042
         }
       }
     },
@@ -1473,7 +1815,7 @@
           "population": 1743,
           "gdp_thousands": 49215,
           "crime_rate": 3.0,
-          "reward": 2173,
+          "reward": 1721,
           "difficulty": 0.3,
           "underworld_power": 78,
           "police_power": 1762
@@ -1482,10 +1824,19 @@
           "population": 1111,
           "gdp_thousands": 31369,
           "crime_rate": 3.0,
-          "reward": 1710,
+          "reward": 1362,
           "difficulty": 0.3,
           "underworld_power": 50,
           "police_power": 1123
+        },
+        "Lunenburg (unincorporated)": {
+          "population": 9206,
+          "gdp_thousands": 259940,
+          "crime_rate": 3.0,
+          "reward": 3217,
+          "difficulty": 0.3,
+          "underworld_power": 414,
+          "police_power": 9306
         }
       }
     },
@@ -1501,10 +1852,19 @@
           "population": 210,
           "gdp_thousands": 7684,
           "crime_rate": 3.0,
-          "reward": 467,
+          "reward": 396,
           "difficulty": 0.345,
           "underworld_power": 9,
           "police_power": 275
+        },
+        "Madison (unincorporated)": {
+          "population": 14042,
+          "gdp_thousands": 513811,
+          "crime_rate": 3.0,
+          "reward": 3917,
+          "difficulty": 0.345,
+          "underworld_power": 632,
+          "police_power": 18394
         }
       }
     },
@@ -1520,7 +1880,7 @@
           "population": 8602,
           "gdp_thousands": 260520,
           "crime_rate": 3.0,
-          "reward": 4050,
+          "reward": 3236,
           "difficulty": 0.277,
           "underworld_power": 387,
           "police_power": 9327
@@ -1539,7 +1899,7 @@
           "population": 4920,
           "gdp_thousands": 255661,
           "crime_rate": 7.91,
-          "reward": 3977,
+          "reward": 3160,
           "difficulty": 0.67,
           "underworld_power": 584,
           "police_power": 9153
@@ -1548,7 +1908,7 @@
           "population": 2057,
           "gdp_thousands": 106889,
           "crime_rate": 7.91,
-          "reward": 3221,
+          "reward": 2554,
           "difficulty": 0.67,
           "underworld_power": 244,
           "police_power": 3827
@@ -1557,7 +1917,7 @@
           "population": 613,
           "gdp_thousands": 31853,
           "crime_rate": 7.91,
-          "reward": 1759,
+          "reward": 1400,
           "difficulty": 0.67,
           "underworld_power": 73,
           "police_power": 1140
@@ -1566,10 +1926,19 @@
           "population": 301,
           "gdp_thousands": 15641,
           "crime_rate": 7.91,
-          "reward": 1003,
+          "reward": 813,
           "difficulty": 0.67,
           "underworld_power": 36,
           "police_power": 560
+        },
+        "Mecklenburg (unincorporated)": {
+          "population": 22933,
+          "gdp_thousands": 1191683,
+          "crime_rate": 7.91,
+          "reward": 4732,
+          "difficulty": 0.67,
+          "underworld_power": 2722,
+          "police_power": 42662
         }
       }
     },
@@ -1585,10 +1954,19 @@
           "population": 515,
           "gdp_thousands": 24601,
           "crime_rate": 3.0,
-          "reward": 1418,
+          "reward": 1134,
           "difficulty": 0.349,
           "underworld_power": 23,
           "police_power": 881
+        },
+        "Middlesex (unincorporated)": {
+          "population": 10434,
+          "gdp_thousands": 498433,
+          "crime_rate": 3.0,
+          "reward": 3880,
+          "difficulty": 0.349,
+          "underworld_power": 470,
+          "police_power": 17844
         }
       }
     },
@@ -1604,7 +1982,7 @@
           "population": 45452,
           "gdp_thousands": 2171242,
           "crime_rate": 1.74,
-          "reward": 5439,
+          "reward": 5300,
           "difficulty": 0.442,
           "underworld_power": 1187,
           "police_power": 77730
@@ -1613,10 +1991,19 @@
           "population": 22632,
           "gdp_thousands": 1081130,
           "crime_rate": 1.74,
-          "reward": 5049,
+          "reward": 4599,
           "difficulty": 0.442,
           "underworld_power": 591,
           "police_power": 38704
+        },
+        "Montgomery (unincorporated)": {
+          "population": 30914,
+          "gdp_thousands": 1476764,
+          "crime_rate": 1.74,
+          "reward": 5072,
+          "difficulty": 0.442,
+          "underworld_power": 807,
+          "police_power": 52868
         }
       }
     },
@@ -1632,7 +2019,7 @@
           "population": 14766,
           "gdp_thousands": 700333,
           "crime_rate": 3.0,
-          "reward": 4732,
+          "reward": 4220,
           "difficulty": 0.41,
           "underworld_power": 664,
           "police_power": 25072
@@ -1651,7 +2038,7 @@
           "population": 27218,
           "gdp_thousands": 1080735,
           "crime_rate": 3.0,
-          "reward": 5025,
+          "reward": 4580,
           "difficulty": 0.47,
           "underworld_power": 1225,
           "police_power": 38690
@@ -1670,7 +2057,7 @@
           "population": 1416,
           "gdp_thousands": 80465,
           "crime_rate": 3.0,
-          "reward": 3026,
+          "reward": 2384,
           "difficulty": 0.398,
           "underworld_power": 64,
           "police_power": 2881
@@ -1679,7 +2066,7 @@
           "population": 1288,
           "gdp_thousands": 73191,
           "crime_rate": 3.0,
-          "reward": 2856,
+          "reward": 2251,
           "difficulty": 0.398,
           "underworld_power": 58,
           "police_power": 2620
@@ -1688,7 +2075,7 @@
           "population": 520,
           "gdp_thousands": 29549,
           "crime_rate": 3.0,
-          "reward": 1612,
+          "reward": 1286,
           "difficulty": 0.398,
           "underworld_power": 23,
           "police_power": 1058
@@ -1697,7 +2084,7 @@
           "population": 458,
           "gdp_thousands": 26026,
           "crime_rate": 3.0,
-          "reward": 1491,
+          "reward": 1191,
           "difficulty": 0.398,
           "underworld_power": 21,
           "police_power": 932
@@ -1706,10 +2093,19 @@
           "population": 291,
           "gdp_thousands": 16536,
           "crime_rate": 3.0,
-          "reward": 1101,
+          "reward": 888,
           "difficulty": 0.398,
           "underworld_power": 13,
           "police_power": 592
+        },
+        "Northampton (unincorporated)": {
+          "population": 8031,
+          "gdp_thousands": 456372,
+          "crime_rate": 3.0,
+          "reward": 3785,
+          "difficulty": 0.398,
+          "underworld_power": 361,
+          "police_power": 16338
         }
       }
     },
@@ -1725,7 +2121,7 @@
           "population": 12397,
           "gdp_thousands": 478308,
           "crime_rate": 3.0,
-          "reward": 4538,
+          "reward": 3804,
           "difficulty": 0.342,
           "underworld_power": 558,
           "police_power": 17123
@@ -1744,7 +2140,7 @@
           "population": 3344,
           "gdp_thousands": 149863,
           "crime_rate": 3.0,
-          "reward": 3514,
+          "reward": 2800,
           "difficulty": 0.414,
           "underworld_power": 150,
           "police_power": 5365
@@ -1753,7 +2149,7 @@
           "population": 2248,
           "gdp_thousands": 100745,
           "crime_rate": 3.0,
-          "reward": 3124,
+          "reward": 2460,
           "difficulty": 0.414,
           "underworld_power": 101,
           "police_power": 3607
@@ -1762,10 +2158,19 @@
           "population": 419,
           "gdp_thousands": 18777,
           "crime_rate": 3.0,
-          "reward": 1198,
+          "reward": 964,
           "difficulty": 0.414,
           "underworld_power": 19,
           "police_power": 672
+        },
+        "Nottoway (unincorporated)": {
+          "population": 9621,
+          "gdp_thousands": 431174,
+          "crime_rate": 3.0,
+          "reward": 3747,
+          "difficulty": 0.414,
+          "underworld_power": 433,
+          "police_power": 15436
         }
       }
     },
@@ -1781,7 +2186,7 @@
           "population": 5210,
           "gdp_thousands": 216543,
           "crime_rate": 3.0,
-          "reward": 3855,
+          "reward": 3066,
           "difficulty": 0.546,
           "underworld_power": 234,
           "police_power": 7752
@@ -1790,10 +2195,19 @@
           "population": 1509,
           "gdp_thousands": 62718,
           "crime_rate": 3.0,
-          "reward": 2563,
+          "reward": 2024,
           "difficulty": 0.546,
           "underworld_power": 68,
           "police_power": 2245
+        },
+        "Orange (unincorporated)": {
+          "population": 32267,
+          "gdp_thousands": 1341114,
+          "crime_rate": 3.0,
+          "reward": 4997,
+          "difficulty": 0.546,
+          "underworld_power": 1452,
+          "police_power": 48012
         }
       }
     },
@@ -1809,7 +2223,7 @@
           "population": 4813,
           "gdp_thousands": 181249,
           "crime_rate": 3.0,
-          "reward": 3684,
+          "reward": 2933,
           "difficulty": 0.448,
           "underworld_power": 217,
           "police_power": 6489
@@ -1818,7 +2232,7 @@
           "population": 2467,
           "gdp_thousands": 92903,
           "crime_rate": 3.0,
-          "reward": 3099,
+          "reward": 2441,
           "difficulty": 0.448,
           "underworld_power": 111,
           "police_power": 3326
@@ -1827,10 +2241,19 @@
           "population": 1696,
           "gdp_thousands": 63868,
           "crime_rate": 3.0,
-          "reward": 2612,
+          "reward": 2062,
           "difficulty": 0.448,
           "underworld_power": 76,
           "police_power": 2286
+        },
+        "Page (unincorporated)": {
+          "population": 14710,
+          "gdp_thousands": 553956,
+          "crime_rate": 3.0,
+          "reward": 4050,
+          "difficulty": 0.448,
+          "underworld_power": 662,
+          "police_power": 19832
         }
       }
     },
@@ -1846,10 +2269,19 @@
           "population": 1407,
           "gdp_thousands": 43490,
           "crime_rate": 3.0,
-          "reward": 2027,
+          "reward": 1608,
           "difficulty": 0.357,
           "underworld_power": 63,
           "police_power": 1557
+        },
+        "Patrick (unincorporated)": {
+          "population": 15901,
+          "gdp_thousands": 491500,
+          "crime_rate": 3.0,
+          "reward": 3823,
+          "difficulty": 0.357,
+          "underworld_power": 716,
+          "police_power": 17596
         }
       }
     },
@@ -1865,7 +2297,7 @@
           "population": 1276,
           "gdp_thousands": 60954,
           "crime_rate": 4.93,
-          "reward": 2466,
+          "reward": 1949,
           "difficulty": 0.633,
           "underworld_power": 94,
           "police_power": 2182
@@ -1874,7 +2306,7 @@
           "population": 1239,
           "gdp_thousands": 59187,
           "crime_rate": 4.93,
-          "reward": 2417,
+          "reward": 1911,
           "difficulty": 0.633,
           "underworld_power": 92,
           "police_power": 2119
@@ -1883,10 +2315,19 @@
           "population": 1195,
           "gdp_thousands": 57085,
           "crime_rate": 4.93,
-          "reward": 2344,
+          "reward": 1854,
           "difficulty": 0.633,
           "underworld_power": 88,
           "police_power": 2044
+        },
+        "Pittsylvania (unincorporated)": {
+          "population": 55700,
+          "gdp_thousands": 2660791,
+          "crime_rate": 4.93,
+          "reward": 5394,
+          "difficulty": 0.633,
+          "underworld_power": 4116,
+          "police_power": 95256
         }
       }
     },
@@ -1902,7 +2343,7 @@
           "population": 32392,
           "gdp_thousands": 1259984,
           "crime_rate": 3.0,
-          "reward": 5220,
+          "reward": 4883,
           "difficulty": 0.505,
           "underworld_power": 1458,
           "police_power": 45107
@@ -1921,7 +2362,7 @@
           "population": 22276,
           "gdp_thousands": 995469,
           "crime_rate": 3.0,
-          "reward": 4976,
+          "reward": 4467,
           "difficulty": 0.463,
           "underworld_power": 1002,
           "police_power": 35638
@@ -1940,7 +2381,7 @@
           "population": 43589,
           "gdp_thousands": 2082247,
           "crime_rate": 3.68,
-          "reward": 5366,
+          "reward": 5224,
           "difficulty": 0.524,
           "underworld_power": 2408,
           "police_power": 74544
@@ -1959,7 +2400,7 @@
           "population": 5978,
           "gdp_thousands": 285569,
           "crime_rate": 2.94,
-          "reward": 4172,
+          "reward": 3331,
           "difficulty": 0.588,
           "underworld_power": 263,
           "police_power": 10223
@@ -1968,7 +2409,7 @@
           "population": 1594,
           "gdp_thousands": 76145,
           "crime_rate": 2.94,
-          "reward": 2978,
+          "reward": 2346,
           "difficulty": 0.588,
           "underworld_power": 70,
           "police_power": 2726
@@ -1977,7 +2418,7 @@
           "population": 1063,
           "gdp_thousands": 50779,
           "crime_rate": 2.94,
-          "reward": 2246,
+          "reward": 1778,
           "difficulty": 0.588,
           "underworld_power": 47,
           "police_power": 1818
@@ -1986,10 +2427,19 @@
           "population": 591,
           "gdp_thousands": 28232,
           "crime_rate": 2.94,
-          "reward": 1564,
+          "reward": 1248,
           "difficulty": 0.588,
           "underworld_power": 26,
           "police_power": 1011
+        },
+        "Prince William (unincorporated)": {
+          "population": 487777,
+          "gdp_thousands": 23301120,
+          "crime_rate": 2.94,
+          "reward": 5849,
+          "difficulty": 0.588,
+          "underworld_power": 21491,
+          "police_power": 834180
         }
       }
     },
@@ -2005,7 +2455,7 @@
           "population": 8805,
           "gdp_thousands": 495820,
           "crime_rate": 3.0,
-          "reward": 4562,
+          "reward": 3861,
           "difficulty": 0.573,
           "underworld_power": 396,
           "police_power": 17750
@@ -2014,10 +2464,19 @@
           "population": 2657,
           "gdp_thousands": 149618,
           "crime_rate": 3.0,
-          "reward": 3489,
+          "reward": 2782,
           "difficulty": 0.573,
           "underworld_power": 120,
           "police_power": 5356
+        },
+        "Pulaski (unincorporated)": {
+          "population": 22117,
+          "gdp_thousands": 1245437,
+          "crime_rate": 3.0,
+          "reward": 4807,
+          "difficulty": 0.573,
+          "underworld_power": 995,
+          "police_power": 44587
         }
       }
     },
@@ -2033,10 +2492,19 @@
           "population": 84,
           "gdp_thousands": 4378,
           "crime_rate": 3.0,
-          "reward": 248,
+          "reward": 226,
           "difficulty": 0.315,
           "underworld_power": 4,
           "police_power": 157
+        },
+        "Rappahannock (unincorporated)": {
+          "population": 7395,
+          "gdp_thousands": 385466,
+          "crime_rate": 3.0,
+          "reward": 3633,
+          "difficulty": 0.315,
+          "underworld_power": 333,
+          "police_power": 13800
         }
       }
     },
@@ -2052,10 +2520,19 @@
           "population": 1683,
           "gdp_thousands": 72359,
           "crime_rate": 3.0,
-          "reward": 2831,
+          "reward": 2233,
           "difficulty": 0.323,
           "underworld_power": 76,
           "police_power": 2590
+        },
+        "Richmond (unincorporated)": {
+          "population": 7532,
+          "gdp_thousands": 323835,
+          "crime_rate": 3.0,
+          "reward": 3444,
+          "difficulty": 0.323,
+          "underworld_power": 339,
+          "police_power": 11593
         }
       }
     },
@@ -2071,10 +2548,19 @@
           "population": 8059,
           "gdp_thousands": 384978,
           "crime_rate": 3.17,
-          "reward": 4440,
+          "reward": 3615,
           "difficulty": 0.553,
           "underworld_power": 384,
           "police_power": 13782
+        },
+        "Roanoke (unincorporated)": {
+          "population": 89275,
+          "gdp_thousands": 4264669,
+          "crime_rate": 3.17,
+          "reward": 5583,
+          "difficulty": 0.553,
+          "underworld_power": 4251,
+          "police_power": 152675
         }
       }
     },
@@ -2090,7 +2576,7 @@
           "population": 1037,
           "gdp_thousands": 49537,
           "crime_rate": 3.0,
-          "reward": 2198,
+          "reward": 1740,
           "difficulty": 0.467,
           "underworld_power": 47,
           "police_power": 1773
@@ -2099,10 +2585,19 @@
           "population": 334,
           "gdp_thousands": 15955,
           "crime_rate": 3.0,
-          "reward": 1052,
+          "reward": 850,
           "difficulty": 0.467,
           "underworld_power": 15,
           "police_power": 571
+        },
+        "Rockbridge (unincorporated)": {
+          "population": 20997,
+          "gdp_thousands": 1003027,
+          "crime_rate": 3.0,
+          "reward": 4485,
+          "difficulty": 0.467,
+          "underworld_power": 945,
+          "police_power": 35908
         }
       }
     },
@@ -2118,7 +2613,7 @@
           "population": 6826,
           "gdp_thousands": 326078,
           "crime_rate": 2.46,
-          "reward": 4269,
+          "reward": 3463,
           "difficulty": 0.486,
           "underworld_power": 252,
           "police_power": 11674
@@ -2127,7 +2622,7 @@
           "population": 4384,
           "gdp_thousands": 209423,
           "crime_rate": 2.46,
-          "reward": 3806,
+          "reward": 3028,
           "difficulty": 0.486,
           "underworld_power": 162,
           "police_power": 7497
@@ -2136,7 +2631,7 @@
           "population": 3104,
           "gdp_thousands": 148278,
           "crime_rate": 2.46,
-          "reward": 3465,
+          "reward": 2763,
           "difficulty": 0.486,
           "underworld_power": 115,
           "police_power": 5308
@@ -2145,7 +2640,7 @@
           "population": 3073,
           "gdp_thousands": 146797,
           "crime_rate": 2.46,
-          "reward": 3441,
+          "reward": 2725,
           "difficulty": 0.486,
           "underworld_power": 114,
           "police_power": 5255
@@ -2154,7 +2649,7 @@
           "population": 1756,
           "gdp_thousands": 83884,
           "crime_rate": 2.46,
-          "reward": 3075,
+          "reward": 2422,
           "difficulty": 0.486,
           "underworld_power": 65,
           "police_power": 3003
@@ -2163,10 +2658,19 @@
           "population": 460,
           "gdp_thousands": 21974,
           "crime_rate": 2.46,
-          "reward": 1222,
+          "reward": 983,
           "difficulty": 0.486,
           "underworld_power": 17,
           "police_power": 787
+        },
+        "Rockingham (unincorporated)": {
+          "population": 68071,
+          "gdp_thousands": 3251755,
+          "crime_rate": 2.46,
+          "reward": 5451,
+          "difficulty": 0.486,
+          "underworld_power": 2515,
+          "police_power": 116413
         }
       }
     },
@@ -2182,7 +2686,7 @@
           "population": 3093,
           "gdp_thousands": 109962,
           "crime_rate": 3.0,
-          "reward": 3246,
+          "reward": 2573,
           "difficulty": 0.455,
           "underworld_power": 139,
           "police_power": 3937
@@ -2191,7 +2695,7 @@
           "population": 1192,
           "gdp_thousands": 42377,
           "crime_rate": 3.0,
-          "reward": 2002,
+          "reward": 1589,
           "difficulty": 0.455,
           "underworld_power": 54,
           "police_power": 1517
@@ -2200,10 +2704,19 @@
           "population": 134,
           "gdp_thousands": 4763,
           "crime_rate": 3.0,
-          "reward": 272,
+          "reward": 245,
           "difficulty": 0.455,
           "underworld_power": 6,
           "police_power": 171
+        },
+        "Russell (unincorporated)": {
+          "population": 21001,
+          "gdp_thousands": 746628,
+          "crime_rate": 3.0,
+          "reward": 4296,
+          "difficulty": 0.455,
+          "underworld_power": 945,
+          "police_power": 26729
         }
       }
     },
@@ -2219,7 +2732,7 @@
           "population": 2019,
           "gdp_thousands": 57597,
           "crime_rate": 3.0,
-          "reward": 2368,
+          "reward": 1873,
           "difficulty": 0.372,
           "underworld_power": 91,
           "police_power": 2062
@@ -2228,7 +2741,7 @@
           "population": 1236,
           "gdp_thousands": 35260,
           "crime_rate": 3.0,
-          "reward": 1856,
+          "reward": 1475,
           "difficulty": 0.372,
           "underworld_power": 56,
           "police_power": 1262
@@ -2237,7 +2750,7 @@
           "population": 376,
           "gdp_thousands": 10726,
           "crime_rate": 3.0,
-          "reward": 638,
+          "reward": 529,
           "difficulty": 0.372,
           "underworld_power": 17,
           "police_power": 384
@@ -2246,7 +2759,7 @@
           "population": 251,
           "gdp_thousands": 7160,
           "crime_rate": 3.0,
-          "reward": 418,
+          "reward": 358,
           "difficulty": 0.372,
           "underworld_power": 11,
           "police_power": 256
@@ -2255,7 +2768,7 @@
           "population": 69,
           "gdp_thousands": 1968,
           "crime_rate": 3.0,
-          "reward": 174,
+          "reward": 169,
           "difficulty": 0.372,
           "underworld_power": 3,
           "police_power": 70
@@ -2268,6 +2781,15 @@
           "difficulty": 0.372,
           "underworld_power": 3,
           "police_power": 63
+        },
+        "Scott (unincorporated)": {
+          "population": 17375,
+          "gdp_thousands": 495676,
+          "crime_rate": 3.0,
+          "reward": 3842,
+          "difficulty": 0.372,
+          "underworld_power": 782,
+          "police_power": 17745
         }
       }
     },
@@ -2283,7 +2805,7 @@
           "population": 7290,
           "gdp_thousands": 364206,
           "crime_rate": 3.0,
-          "reward": 4342,
+          "reward": 3539,
           "difficulty": 0.603,
           "underworld_power": 328,
           "police_power": 13039
@@ -2292,7 +2814,7 @@
           "population": 5954,
           "gdp_thousands": 297460,
           "crime_rate": 3.0,
-          "reward": 4196,
+          "reward": 3350,
           "difficulty": 0.603,
           "underworld_power": 268,
           "police_power": 10649
@@ -2301,7 +2823,7 @@
           "population": 2202,
           "gdp_thousands": 110011,
           "crime_rate": 3.0,
-          "reward": 3270,
+          "reward": 2592,
           "difficulty": 0.603,
           "underworld_power": 99,
           "police_power": 3938
@@ -2310,7 +2832,7 @@
           "population": 2019,
           "gdp_thousands": 100868,
           "crime_rate": 3.0,
-          "reward": 3148,
+          "reward": 2479,
           "difficulty": 0.603,
           "underworld_power": 91,
           "police_power": 3611
@@ -2319,7 +2841,7 @@
           "population": 1213,
           "gdp_thousands": 60601,
           "crime_rate": 3.0,
-          "reward": 2441,
+          "reward": 1930,
           "difficulty": 0.603,
           "underworld_power": 55,
           "police_power": 2170
@@ -2328,10 +2850,19 @@
           "population": 285,
           "gdp_thousands": 14238,
           "crime_rate": 3.0,
-          "reward": 881,
+          "reward": 718,
           "difficulty": 0.603,
           "underworld_power": 13,
           "police_power": 510
+        },
+        "Shenandoah (unincorporated)": {
+          "population": 26478,
+          "gdp_thousands": 1322836,
+          "crime_rate": 3.0,
+          "reward": 4940,
+          "difficulty": 0.603,
+          "underworld_power": 1192,
+          "police_power": 47358
         }
       }
     },
@@ -2347,7 +2878,7 @@
           "population": 5602,
           "gdp_thousands": 259451,
           "crime_rate": 6.56,
-          "reward": 4026,
+          "reward": 3198,
           "difficulty": 0.598,
           "underworld_power": 551,
           "police_power": 9288
@@ -2356,10 +2887,19 @@
           "population": 1610,
           "gdp_thousands": 74565,
           "crime_rate": 6.56,
-          "reward": 2929,
+          "reward": 2308,
           "difficulty": 0.598,
           "underworld_power": 158,
           "police_power": 2669
+        },
+        "Smyth (unincorporated)": {
+          "population": 21925,
+          "gdp_thousands": 1015436,
+          "crime_rate": 6.56,
+          "reward": 4504,
+          "difficulty": 0.598,
+          "underworld_power": 2158,
+          "police_power": 36353
         }
       }
     },
@@ -2375,7 +2915,7 @@
           "population": 1287,
           "gdp_thousands": 61480,
           "crime_rate": 3.0,
-          "reward": 2539,
+          "reward": 2005,
           "difficulty": 0.444,
           "underworld_power": 58,
           "police_power": 2201
@@ -2384,7 +2924,7 @@
           "population": 510,
           "gdp_thousands": 24362,
           "crime_rate": 3.0,
-          "reward": 1369,
+          "reward": 1097,
           "difficulty": 0.444,
           "underworld_power": 23,
           "police_power": 872
@@ -2393,7 +2933,7 @@
           "population": 310,
           "gdp_thousands": 14808,
           "crime_rate": 3.0,
-          "reward": 954,
+          "reward": 775,
           "difficulty": 0.444,
           "underworld_power": 14,
           "police_power": 530
@@ -2402,7 +2942,7 @@
           "population": 280,
           "gdp_thousands": 13375,
           "crime_rate": 3.0,
-          "reward": 832,
+          "reward": 680,
           "difficulty": 0.444,
           "underworld_power": 13,
           "police_power": 479
@@ -2411,7 +2951,7 @@
           "population": 135,
           "gdp_thousands": 6448,
           "crime_rate": 3.0,
-          "reward": 394,
+          "reward": 339,
           "difficulty": 0.444,
           "underworld_power": 6,
           "police_power": 231
@@ -2420,10 +2960,19 @@
           "population": 119,
           "gdp_thousands": 5684,
           "crime_rate": 3.0,
-          "reward": 321,
+          "reward": 283,
           "difficulty": 0.444,
           "underworld_power": 5,
           "police_power": 203
+        },
+        "Southampton (unincorporated)": {
+          "population": 15300,
+          "gdp_thousands": 730885,
+          "crime_rate": 3.0,
+          "reward": 4277,
+          "difficulty": 0.444,
+          "underworld_power": 688,
+          "police_power": 26166
         }
       }
     },
@@ -2439,7 +2988,7 @@
           "population": 152021,
           "gdp_thousands": 7262046,
           "crime_rate": 3.38,
-          "reward": 5683,
+          "reward": 5678,
           "difficulty": 0.599,
           "underworld_power": 7696,
           "police_power": 259981
@@ -2458,7 +3007,7 @@
           "population": 168919,
           "gdp_thousands": 8345038,
           "crime_rate": 3.51,
-          "reward": 5732,
+          "reward": 5716,
           "difficulty": 0.616,
           "underworld_power": 8899,
           "police_power": 298752
@@ -2477,7 +3026,7 @@
           "population": 309,
           "gdp_thousands": 69761,
           "crime_rate": 3.0,
-          "reward": 2758,
+          "reward": 2176,
           "difficulty": 0.539,
           "underworld_power": 14,
           "police_power": 2497
@@ -2486,7 +3035,7 @@
           "population": 256,
           "gdp_thousands": 57796,
           "crime_rate": 3.0,
-          "reward": 2392,
+          "reward": 1892,
           "difficulty": 0.539,
           "underworld_power": 12,
           "police_power": 2069
@@ -2495,10 +3044,19 @@
           "population": 209,
           "gdp_thousands": 47185,
           "crime_rate": 3.0,
-          "reward": 2124,
+          "reward": 1683,
           "difficulty": 0.539,
           "underworld_power": 9,
           "police_power": 1689
+        },
+        "Surry (unincorporated)": {
+          "population": 5805,
+          "gdp_thousands": 1310578,
+          "crime_rate": 3.0,
+          "reward": 4921,
+          "difficulty": 0.539,
+          "underworld_power": 261,
+          "police_power": 46919
         }
       }
     },
@@ -2514,7 +3072,7 @@
           "population": 1934,
           "gdp_thousands": 78957,
           "crime_rate": 3.0,
-          "reward": 3002,
+          "reward": 2365,
           "difficulty": 0.334,
           "underworld_power": 87,
           "police_power": 2827
@@ -2523,7 +3081,7 @@
           "population": 747,
           "gdp_thousands": 30497,
           "crime_rate": 3.0,
-          "reward": 1661,
+          "reward": 1324,
           "difficulty": 0.334,
           "underworld_power": 34,
           "police_power": 1092
@@ -2532,10 +3090,19 @@
           "population": 202,
           "gdp_thousands": 8246,
           "crime_rate": 3.0,
-          "reward": 540,
+          "reward": 453,
           "difficulty": 0.334,
           "underworld_power": 9,
           "police_power": 295
+        },
+        "Sussex (unincorporated)": {
+          "population": 7870,
+          "gdp_thousands": 321303,
+          "crime_rate": 3.0,
+          "reward": 3406,
+          "difficulty": 0.334,
+          "underworld_power": 354,
+          "police_power": 11503
         }
       }
     },
@@ -2551,7 +3118,7 @@
           "population": 5074,
           "gdp_thousands": 223951,
           "crime_rate": 4.51,
-          "reward": 3904,
+          "reward": 3103,
           "difficulty": 0.538,
           "underworld_power": 343,
           "police_power": 8017
@@ -2560,7 +3127,7 @@
           "population": 4871,
           "gdp_thousands": 214991,
           "crime_rate": 4.51,
-          "reward": 3831,
+          "reward": 3047,
           "difficulty": 0.538,
           "underworld_power": 330,
           "police_power": 7697
@@ -2569,7 +3136,7 @@
           "population": 4302,
           "gdp_thousands": 189877,
           "crime_rate": 4.51,
-          "reward": 3733,
+          "reward": 2971,
           "difficulty": 0.538,
           "underworld_power": 291,
           "police_power": 6798
@@ -2578,7 +3145,7 @@
           "population": 1014,
           "gdp_thousands": 44754,
           "crime_rate": 4.51,
-          "reward": 2076,
+          "reward": 1646,
           "difficulty": 0.538,
           "underworld_power": 69,
           "police_power": 1602
@@ -2587,10 +3154,19 @@
           "population": 262,
           "gdp_thousands": 11563,
           "crime_rate": 4.51,
-          "reward": 735,
+          "reward": 604,
           "difficulty": 0.538,
           "underworld_power": 18,
           "police_power": 414
+        },
+        "Tazewell (unincorporated)": {
+          "population": 23352,
+          "gdp_thousands": 1030690,
+          "crime_rate": 4.51,
+          "reward": 4542,
+          "difficulty": 0.538,
+          "underworld_power": 1581,
+          "police_power": 36899
         }
       }
     },
@@ -2606,10 +3182,19 @@
           "population": 15628,
           "gdp_thousands": 941188,
           "crime_rate": 3.0,
-          "reward": 4952,
+          "reward": 4448,
           "difficulty": 0.614,
           "underworld_power": 703,
           "police_power": 33695
+        },
+        "Warren (unincorporated)": {
+          "population": 26833,
+          "gdp_thousands": 1616005,
+          "crime_rate": 3.0,
+          "reward": 5110,
+          "difficulty": 0.614,
+          "underworld_power": 1207,
+          "police_power": 57853
         }
       }
     },
@@ -2625,7 +3210,7 @@
           "population": 8316,
           "gdp_thousands": 397255,
           "crime_rate": 2.9,
-          "reward": 4489,
+          "reward": 3690,
           "difficulty": 0.473,
           "underworld_power": 362,
           "police_power": 14222
@@ -2634,7 +3219,7 @@
           "population": 1368,
           "gdp_thousands": 65349,
           "crime_rate": 2.9,
-          "reward": 2636,
+          "reward": 2081,
           "difficulty": 0.473,
           "underworld_power": 60,
           "police_power": 2339
@@ -2643,10 +3228,19 @@
           "population": 790,
           "gdp_thousands": 37738,
           "crime_rate": 2.9,
-          "reward": 1881,
+          "reward": 1494,
           "difficulty": 0.473,
           "underworld_power": 34,
           "police_power": 1351
+        },
+        "Washington (unincorporated)": {
+          "population": 43624,
+          "gdp_thousands": 2083920,
+          "crime_rate": 2.9,
+          "reward": 5262,
+          "difficulty": 0.473,
+          "underworld_power": 1901,
+          "police_power": 74604
         }
       }
     },
@@ -2662,7 +3256,7 @@
           "population": 4038,
           "gdp_thousands": 139812,
           "crime_rate": 3.0,
-          "reward": 3416,
+          "reward": 2706,
           "difficulty": 0.387,
           "underworld_power": 182,
           "police_power": 5005
@@ -2671,10 +3265,19 @@
           "population": 346,
           "gdp_thousands": 11980,
           "crime_rate": 3.0,
-          "reward": 784,
+          "reward": 642,
           "difficulty": 0.387,
           "underworld_power": 16,
           "police_power": 429
+        },
+        "Westmoreland (unincorporated)": {
+          "population": 14851,
+          "gdp_thousands": 514206,
+          "crime_rate": 3.0,
+          "reward": 3936,
+          "difficulty": 0.387,
+          "underworld_power": 668,
+          "police_power": 18409
         }
       }
     },
@@ -2690,7 +3293,7 @@
           "population": 5087,
           "gdp_thousands": 243006,
           "crime_rate": 3.76,
-          "reward": 3952,
+          "reward": 3141,
           "difficulty": 0.507,
           "underworld_power": 287,
           "police_power": 8700
@@ -2699,7 +3302,7 @@
           "population": 2869,
           "gdp_thousands": 137052,
           "crime_rate": 3.76,
-          "reward": 3392,
+          "reward": 2687,
           "difficulty": 0.507,
           "underworld_power": 162,
           "police_power": 4906
@@ -2708,7 +3311,7 @@
           "population": 1556,
           "gdp_thousands": 74330,
           "crime_rate": 3.76,
-          "reward": 2904,
+          "reward": 2289,
           "difficulty": 0.507,
           "underworld_power": 88,
           "police_power": 2661
@@ -2717,7 +3320,7 @@
           "population": 1376,
           "gdp_thousands": 65731,
           "crime_rate": 3.76,
-          "reward": 2661,
+          "reward": 2100,
           "difficulty": 0.507,
           "underworld_power": 78,
           "police_power": 2353
@@ -2726,10 +3329,19 @@
           "population": 840,
           "gdp_thousands": 40126,
           "crime_rate": 3.76,
-          "reward": 1929,
+          "reward": 1532,
           "difficulty": 0.507,
           "underworld_power": 47,
           "police_power": 1437
+        },
+        "Wise (unincorporated)": {
+          "population": 23245,
+          "gdp_thousands": 1110416,
+          "crime_rate": 3.76,
+          "reward": 4656,
+          "difficulty": 0.507,
+          "underworld_power": 1312,
+          "police_power": 39753
         }
       }
     },
@@ -2745,7 +3357,7 @@
           "population": 8160,
           "gdp_thousands": 549181,
           "crime_rate": 3.0,
-          "reward": 4611,
+          "reward": 4031,
           "difficulty": 0.577,
           "underworld_power": 367,
           "police_power": 19661
@@ -2754,10 +3366,19 @@
           "population": 1530,
           "gdp_thousands": 102971,
           "crime_rate": 3.0,
-          "reward": 3173,
+          "reward": 2517,
           "difficulty": 0.577,
           "underworld_power": 69,
           "police_power": 3686
+        },
+        "Wythe (unincorporated)": {
+          "population": 18410,
+          "gdp_thousands": 1239023,
+          "crime_rate": 3.0,
+          "reward": 4788,
+          "difficulty": 0.577,
+          "underworld_power": 828,
+          "police_power": 44357
         }
       }
     },
@@ -2773,7 +3394,7 @@
           "population": 71410,
           "gdp_thousands": 3411257,
           "crime_rate": 3.33,
-          "reward": 5512,
+          "reward": 5470,
           "difficulty": 0.536,
           "underworld_power": 3572,
           "police_power": 122123
@@ -2792,7 +3413,7 @@
           "population": 159102,
           "gdp_thousands": 18000090,
           "crime_rate": 2.9,
-          "reward": 5829,
+          "reward": 5811,
           "difficulty": 0.562,
           "underworld_power": 6925,
           "police_power": 644403
@@ -2811,7 +3432,7 @@
           "population": 16316,
           "gdp_thousands": 779415,
           "crime_rate": 3.0,
-          "reward": 4806,
+          "reward": 4334,
           "difficulty": 0.425,
           "underworld_power": 734,
           "police_power": 27903
@@ -2830,7 +3451,7 @@
           "population": 6581,
           "gdp_thousands": 314374,
           "crime_rate": 3.0,
-          "reward": 4221,
+          "reward": 3387,
           "difficulty": 0.289,
           "underworld_power": 296,
           "police_power": 11255
@@ -2849,7 +3470,7 @@
           "population": 44767,
           "gdp_thousands": 2138520,
           "crime_rate": 4.25,
-          "reward": 5415,
+          "reward": 5281,
           "difficulty": 0.559,
           "underworld_power": 2853,
           "police_power": 76559
@@ -2868,7 +3489,7 @@
           "population": 254997,
           "gdp_thousands": 15246579,
           "crime_rate": 7.06,
-          "reward": 5805,
+          "reward": 5792,
           "difficulty": 0.804,
           "underworld_power": 27007,
           "police_power": 545828
@@ -2887,7 +3508,7 @@
           "population": 18674,
           "gdp_thousands": 892057,
           "crime_rate": 8.06,
-          "reward": 4903,
+          "reward": 4410,
           "difficulty": 0.597,
           "underworld_power": 2257,
           "police_power": 31936
@@ -2906,7 +3527,7 @@
           "population": 5663,
           "gdp_thousands": 270521,
           "crime_rate": 3.0,
-          "reward": 4099,
+          "reward": 3274,
           "difficulty": 0.281,
           "underworld_power": 255,
           "police_power": 9685
@@ -2925,7 +3546,7 @@
           "population": 41993,
           "gdp_thousands": 2006006,
           "crime_rate": 25.01,
-          "reward": 5342,
+          "reward": 5186,
           "difficulty": 0.817,
           "underworld_power": 15751,
           "police_power": 71815
@@ -2944,7 +3565,7 @@
           "population": 5402,
           "gdp_thousands": 258053,
           "crime_rate": 3.0,
-          "reward": 4001,
+          "reward": 3179,
           "difficulty": 0.273,
           "underworld_power": 243,
           "police_power": 9238
@@ -2963,7 +3584,7 @@
           "population": 26340,
           "gdp_thousands": 1258262,
           "crime_rate": 3.0,
-          "reward": 5147,
+          "reward": 4826,
           "difficulty": 0.493,
           "underworld_power": 1185,
           "police_power": 45046
@@ -2982,7 +3603,7 @@
           "population": 15034,
           "gdp_thousands": 718174,
           "crime_rate": 3.0,
-          "reward": 4757,
+          "reward": 4239,
           "difficulty": 0.417,
           "underworld_power": 677,
           "police_power": 25711
@@ -3001,7 +3622,7 @@
           "population": 8373,
           "gdp_thousands": 399978,
           "crime_rate": 3.0,
-          "reward": 4513,
+          "reward": 3709,
           "difficulty": 0.33,
           "underworld_power": 377,
           "police_power": 14319
@@ -3020,7 +3641,7 @@
           "population": 29992,
           "gdp_thousands": 1432718,
           "crime_rate": 5.48,
-          "reward": 5293,
+          "reward": 5053,
           "difficulty": 0.553,
           "underworld_power": 2464,
           "police_power": 51291
@@ -3039,7 +3660,7 @@
           "population": 6739,
           "gdp_thousands": 321922,
           "crime_rate": 3.0,
-          "reward": 4245,
+          "reward": 3425,
           "difficulty": 0.292,
           "underworld_power": 303,
           "police_power": 11525
@@ -3058,7 +3679,7 @@
           "population": 137596,
           "gdp_thousands": 9153841,
           "crime_rate": 14.55,
-          "reward": 5756,
+          "reward": 5754,
           "difficulty": 0.883,
           "underworld_power": 30027,
           "police_power": 327708
@@ -3077,7 +3698,7 @@
           "population": 51164,
           "gdp_thousands": 2444105,
           "crime_rate": 2.69,
-          "reward": 5464,
+          "reward": 5356,
           "difficulty": 0.438,
           "underworld_power": 2066,
           "police_power": 87499
@@ -3096,7 +3717,7 @@
           "population": 22970,
           "gdp_thousands": 1097277,
           "crime_rate": 17.68,
-          "reward": 5074,
+          "reward": 4618,
           "difficulty": 0.683,
           "underworld_power": 6092,
           "police_power": 39283
@@ -3115,7 +3736,7 @@
           "population": 7802,
           "gdp_thousands": 372701,
           "crime_rate": 3.0,
-          "reward": 4391,
+          "reward": 3577,
           "difficulty": 0.308,
           "underworld_power": 351,
           "police_power": 13343
@@ -3134,7 +3755,7 @@
           "population": 80301,
           "gdp_thousands": 3835980,
           "crime_rate": 5.48,
-          "reward": 5537,
+          "reward": 5527,
           "difficulty": 0.68,
           "underworld_power": 6599,
           "police_power": 137328
@@ -3153,7 +3774,7 @@
           "population": 43616,
           "gdp_thousands": 2083537,
           "crime_rate": 3.0,
-          "reward": 5391,
+          "reward": 5243,
           "difficulty": 0.592,
           "underworld_power": 1963,
           "police_power": 74591
@@ -3172,7 +3793,7 @@
           "population": 16611,
           "gdp_thousands": 793507,
           "crime_rate": 3.0,
-          "reward": 4854,
+          "reward": 4372,
           "difficulty": 0.429,
           "underworld_power": 747,
           "police_power": 28408
@@ -3191,7 +3812,7 @@
           "population": 13834,
           "gdp_thousands": 660850,
           "crime_rate": 13.11,
-          "reward": 4708,
+          "reward": 4145,
           "difficulty": 0.538,
           "underworld_power": 2720,
           "police_power": 23658
@@ -3210,7 +3831,7 @@
           "population": 183056,
           "gdp_thousands": 18793031,
           "crime_rate": 14.47,
-          "reward": 5854,
+          "reward": 5830,
           "difficulty": 0.893,
           "underworld_power": 39719,
           "police_power": 672791
@@ -3229,7 +3850,7 @@
           "population": 231105,
           "gdp_thousands": 26766672,
           "crime_rate": 15.34,
-          "reward": 5902,
+          "reward": 5886,
           "difficulty": 0.932,
           "underworld_power": 53193,
           "police_power": 958247
@@ -3248,7 +3869,7 @@
           "population": 3478,
           "gdp_thousands": 166144,
           "crime_rate": 3.0,
-          "reward": 3660,
+          "reward": 2914,
           "difficulty": 0.262,
           "underworld_power": 157,
           "police_power": 5948
@@ -3267,7 +3888,7 @@
           "population": 34058,
           "gdp_thousands": 1626951,
           "crime_rate": 46.21,
-          "reward": 5318,
+          "reward": 5129,
           "difficulty": 0.795,
           "underworld_power": 23607,
           "police_power": 58245
@@ -3286,7 +3907,7 @@
           "population": 12854,
           "gdp_thousands": 614035,
           "crime_rate": 3.0,
-          "reward": 4659,
+          "reward": 4088,
           "difficulty": 0.38,
           "underworld_power": 578,
           "police_power": 21982
@@ -3305,7 +3926,7 @@
           "population": 96482,
           "gdp_thousands": 7777384,
           "crime_rate": 20.66,
-          "reward": 5708,
+          "reward": 5697,
           "difficulty": 0.912,
           "underworld_power": 29898,
           "police_power": 278430
@@ -3324,7 +3945,7 @@
           "population": 17273,
           "gdp_thousands": 825131,
           "crime_rate": 3.0,
-          "reward": 4879,
+          "reward": 4391,
           "difficulty": 0.433,
           "underworld_power": 777,
           "police_power": 29540
@@ -3343,7 +3964,7 @@
           "population": 233655,
           "gdp_thousands": 35105659,
           "crime_rate": 22.16,
-          "reward": 5951,
+          "reward": 5924,
           "difficulty": 0.967,
           "underworld_power": 77662,
           "police_power": 1256783
@@ -3362,7 +3983,7 @@
           "population": 97912,
           "gdp_thousands": 10060668,
           "crime_rate": 13.35,
-          "reward": 5781,
+          "reward": 5773,
           "difficulty": 0.873,
           "underworld_power": 19614,
           "police_power": 360172
@@ -3381,7 +4002,7 @@
           "population": 25908,
           "gdp_thousands": 1237625,
           "crime_rate": 5.6,
-          "reward": 5122,
+          "reward": 4769,
           "difficulty": 0.535,
           "underworld_power": 2177,
           "police_power": 44307
@@ -3400,7 +4021,7 @@
           "population": 26361,
           "gdp_thousands": 1259265,
           "crime_rate": 3.0,
-          "reward": 5196,
+          "reward": 4864,
           "difficulty": 0.501,
           "underworld_power": 1186,
           "police_power": 45082
@@ -3438,7 +4059,7 @@
           "population": 454808,
           "gdp_thousands": 32879166,
           "crime_rate": 4.64,
-          "reward": 5927,
+          "reward": 5905,
           "difficulty": 0.717,
           "underworld_power": 31687,
           "police_power": 1177074
@@ -3457,7 +4078,7 @@
           "population": 23498,
           "gdp_thousands": 1122500,
           "crime_rate": 3.0,
-          "reward": 5098,
+          "reward": 4675,
           "difficulty": 0.482,
           "underworld_power": 1057,
           "police_power": 40186
@@ -3476,7 +4097,7 @@
           "population": 16030,
           "gdp_thousands": 765753,
           "crime_rate": 3.0,
-          "reward": 4781,
+          "reward": 4315,
           "difficulty": 0.421,
           "underworld_power": 721,
           "police_power": 27414
@@ -3495,7 +4116,7 @@
           "population": 27800,
           "gdp_thousands": 1328006,
           "crime_rate": 3.0,
-          "reward": 5244,
+          "reward": 4959,
           "difficulty": 0.512,
           "underworld_power": 1251,
           "police_power": 47543
