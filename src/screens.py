@@ -21,6 +21,7 @@ import config
 import buildings
 import enemy_gen
 import game_state
+import profiles
 import world_map as wm
 from models import Empire, BuildingType, MemberClass
 
@@ -135,6 +136,258 @@ class MainMenu(_Screen):
         self.screen.blit(sub, sub.get_rect(centerx=config.SCREEN_WIDTH // 2, y=185))
         for btn in self.buttons.values():
             btn.draw(self.screen, mouse_pos)
+
+
+# ---------------------------------------------------------------------------
+# Profile Select: choose / create / delete a save profile at game start
+# ---------------------------------------------------------------------------
+class ProfileSelect(_Screen):
+    """Startup screen for picking which save to play.
+
+    run() returns a loaded/created GameState to play, or "quit".
+
+    Modes:
+      - "list"    : rows of existing profiles + New Profile + Quit
+      - "new"     : free-text name entry (Enter=create, Esc=cancel)
+      - "confirm" : delete confirmation for the selected profile
+    """
+
+    ROW_H = 72
+    ROW_W = 640
+
+    def __init__(self, screen):
+        super().__init__(screen)
+        profiles.migrate_legacy()
+        self.mode = "list"
+        self.typed = ""            # new-profile name buffer
+        self.error = ""            # transient message (e.g. duplicate name)
+        self.pending_delete = None  # slug awaiting delete confirmation
+        self._refresh()
+
+    def _refresh(self):
+        self.slugs = profiles.list_profiles()
+        self.summaries = [profiles.summarize(s) for s in self.slugs]
+
+    # --- layout helpers ---
+    def _row_rect(self, i):
+        cx = config.SCREEN_WIDTH // 2
+        y0 = 240
+        return pygame.Rect(cx - self.ROW_W // 2, y0 + i * (self.ROW_H + 12),
+                           self.ROW_W, self.ROW_H)
+
+    def _delete_rect(self, row_rect):
+        # small square on the right edge of a profile row
+        return pygame.Rect(row_rect.right - 56, row_rect.y + 16, 40, 40)
+
+    def _new_button_rect(self):
+        cx = config.SCREEN_WIDTH // 2
+        y0 = 240 + len(self.slugs) * (self.ROW_H + 12)
+        return pygame.Rect(cx - self.ROW_W // 2, y0, self.ROW_W, 56)
+
+    def _quit_button_rect(self):
+        r = self._new_button_rect()
+        return pygame.Rect(r.x, r.bottom + 12, self.ROW_W, 48)
+
+    # --- input ---
+    def handle_key(self, key):
+        if self.mode == "new":
+            self._handle_new_key(key)
+            return
+        if self.mode == "confirm":
+            if key in (pygame.K_y, pygame.K_RETURN):
+                self._do_delete()
+            elif key in (pygame.K_n, pygame.K_ESCAPE):
+                self.mode = "list"
+                self.pending_delete = None
+            return
+        # list mode
+        if key in (pygame.K_q, pygame.K_ESCAPE):
+            self.result = "quit"
+            self.done = True
+
+    def _handle_new_key(self, key):
+        if key == pygame.K_RETURN:
+            self._create_typed()
+        elif key == pygame.K_ESCAPE:
+            self.mode = "list"
+            self.typed = ""
+            self.error = ""
+        elif key == pygame.K_BACKSPACE:
+            self.typed = self.typed[:-1]
+        else:
+            ch = self._char_for_key(key)
+            if ch and len(self.typed) < 24:
+                self.typed += ch
+
+    @staticmethod
+    def _char_for_key(key):
+        """Map a pygame key to a printable char for the name field. Accepts
+        letters, digits, space, dash, underscore (kept simple + safe)."""
+        if pygame.K_a <= key <= pygame.K_z:
+            mods = pygame.key.get_mods()
+            ch = chr(key)
+            if mods & pygame.KMOD_SHIFT:
+                ch = ch.upper()
+            return ch
+        if pygame.K_0 <= key <= pygame.K_9:
+            return chr(key)
+        if key == pygame.K_SPACE:
+            return " "
+        if key in (pygame.K_MINUS,):
+            return "-"
+        if key == pygame.K_UNDERSCORE:
+            return "_"
+        return ""
+
+    def _create_typed(self):
+        name = self.typed.strip()
+        if not name:
+            self.error = "Enter a name."
+            return
+        if profiles.profile_exists(name):
+            self.error = "That name already exists."
+            return
+        state = profiles.create_profile(name)
+        if state is None:
+            self.error = "Could not create that profile."
+            return
+        self.result = state       # brand-new profile -> play it
+        self.done = True
+
+    def _do_delete(self):
+        if self.pending_delete:
+            profiles.delete_profile(self.pending_delete)
+        self.pending_delete = None
+        self.mode = "list"
+        self._refresh()
+
+    def handle_click(self, pos):
+        if self.mode == "new":
+            # click anywhere just dismisses the error; typing continues
+            self.error = ""
+            return
+        if self.mode == "confirm":
+            return  # keyboard-only confirm (Y/N)
+
+        # list mode
+        for i, slug in enumerate(self.slugs):
+            row = self._row_rect(i)
+            if self._delete_rect(row).collidepoint(pos):
+                self.pending_delete = slug
+                self.mode = "confirm"
+                return
+            if row.collidepoint(pos):
+                self.result = profiles.load_profile(slug)
+                self.done = True
+                return
+        if self._new_button_rect().collidepoint(pos):
+            self.mode = "new"
+            self.typed = ""
+            self.error = ""
+            return
+        if self._quit_button_rect().collidepoint(pos):
+            self.result = "quit"
+            self.done = True
+
+    # --- render ---
+    def render(self, mouse_pos):
+        self.screen.fill((18, 18, 28))
+        title = self.font_title.render("EVE", True, config.GOLD)
+        self.screen.blit(title, title.get_rect(centerx=config.SCREEN_WIDTH // 2, y=90))
+        sub = self.font_h.render("Choose a Profile", True, config.LIGHT_GRAY)
+        self.screen.blit(sub, sub.get_rect(centerx=config.SCREEN_WIDTH // 2, y=160))
+
+        if self.mode == "new":
+            self._render_new(mouse_pos)
+            return
+        self._render_list(mouse_pos)
+        if self.mode == "confirm":
+            self._render_confirm()
+
+    def _render_list(self, mouse_pos):
+        cx = config.SCREEN_WIDTH // 2
+        if not self.slugs:
+            empty = self.font_med.render(
+                "No profiles yet — create one to begin.", True, config.GRAY)
+            self.screen.blit(empty, empty.get_rect(centerx=cx, y=200))
+        for i, summ in enumerate(self.summaries):
+            row = self._row_rect(i)
+            hover = row.collidepoint(mouse_pos)
+            pygame.draw.rect(self.screen, (44, 44, 60) if hover else (32, 32, 44),
+                             row, border_radius=10)
+            pygame.draw.rect(self.screen, config.WHITE, row, 2, border_radius=10)
+            name = self.font_h.render(summ["name"], True, config.WHITE)
+            self.screen.blit(name, (row.x + 20, row.y + 10))
+            home = summ["home"]
+            if home:
+                _, st, _, city = wm.split_city_id(home)
+                loc = f"{city}, {st}"
+            else:
+                loc = "New game (no birthplace yet)"
+            info = self.font_small.render(
+                f"${summ['money']:,}   ·   {summ['conquered']} cities   ·   {loc}",
+                True, config.LIGHT_GRAY)
+            self.screen.blit(info, (row.x + 20, row.y + 44))
+            # delete box
+            dr = self._delete_rect(row)
+            pygame.draw.rect(self.screen, config.RED, dr, border_radius=6)
+            x = self.font_btn.render("X", True, config.WHITE)
+            self.screen.blit(x, x.get_rect(center=dr.center))
+
+        nr = self._new_button_rect()
+        n_hover = nr.collidepoint(mouse_pos)
+        pygame.draw.rect(self.screen, tuple(min(255, c + 40) for c in config.GREEN)
+                         if n_hover else config.GREEN, nr, border_radius=10)
+        pygame.draw.rect(self.screen, config.WHITE, nr, 2, border_radius=10)
+        nt = self.font_btn.render("+ New Profile", True, config.BLACK)
+        self.screen.blit(nt, nt.get_rect(center=nr.center))
+
+        qr = self._quit_button_rect()
+        q_hover = qr.collidepoint(mouse_pos)
+        pygame.draw.rect(self.screen, (90, 40, 40) if q_hover else (70, 30, 30),
+                         qr, border_radius=10)
+        pygame.draw.rect(self.screen, config.WHITE, qr, 2, border_radius=10)
+        qt = self.font_btn.render("Quit", True, config.WHITE)
+        self.screen.blit(qt, qt.get_rect(center=qr.center))
+
+    def _render_new(self, mouse_pos):
+        cx = config.SCREEN_WIDTH // 2
+        prompt = self.font_h.render("Name your profile:", True, config.WHITE)
+        self.screen.blit(prompt, prompt.get_rect(centerx=cx, y=260))
+        box = pygame.Rect(cx - 300, 320, 600, 64)
+        pygame.draw.rect(self.screen, (32, 32, 44), box, border_radius=10)
+        pygame.draw.rect(self.screen, config.GOLD, box, 2, border_radius=10)
+        # blinking caret
+        caret = "|" if (pygame.time.get_ticks() // 500) % 2 == 0 else " "
+        shown = self.typed + caret
+        txt = self.font_h.render(shown, True, config.WHITE)
+        self.screen.blit(txt, (box.x + 16, box.y + 16))
+        hint = self.font_small.render("Enter = create    ·    Esc = cancel",
+                                      True, config.LIGHT_GRAY)
+        self.screen.blit(hint, hint.get_rect(centerx=cx, y=400))
+        if self.error:
+            err = self.font_med.render(self.error, True, config.RED)
+            self.screen.blit(err, err.get_rect(centerx=cx, y=440))
+
+    def _render_confirm(self):
+        # dim overlay + centered confirm box
+        overlay = pygame.Surface((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
+        overlay.set_alpha(180)
+        overlay.fill((0, 0, 0))
+        self.screen.blit(overlay, (0, 0))
+        cx, cy = config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2
+        box = pygame.Rect(cx - 320, cy - 120, 640, 240)
+        pygame.draw.rect(self.screen, (30, 20, 20), box, border_radius=12)
+        pygame.draw.rect(self.screen, config.RED, box, 3, border_radius=12)
+        name = profiles._display_name(self.pending_delete) if self.pending_delete else "?"
+        t = self.font_h.render("Delete this profile?", True, config.WHITE)
+        self.screen.blit(t, t.get_rect(centerx=cx, y=cy - 90))
+        n = self.font_h.render(f"'{name}'", True, config.GOLD)
+        self.screen.blit(n, n.get_rect(centerx=cx, y=cy - 40))
+        warn = self.font_med.render("This cannot be undone.", True, config.LIGHT_GRAY)
+        self.screen.blit(warn, warn.get_rect(centerx=cx, y=cy + 6))
+        keys = self.font_btn.render("Y = delete       N = cancel", True, config.WHITE)
+        self.screen.blit(keys, keys.get_rect(centerx=cx, y=cy + 60))
 
 
 # ---------------------------------------------------------------------------

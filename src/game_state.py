@@ -61,15 +61,27 @@ class GameState:
     # Sound effects preference. Off by default; toggled with M in battle and
     # persisted so the choice sticks across restarts.
     sound_on: bool = False
+    # Filesystem path this profile loads/saves to. Defaults to the legacy
+    # single-profile path; the profile system points it at profiles/<name>.json.
+    # Not serialized — it's where the JSON lives, not part of the JSON.
+    path: str = PROFILE_PATH
+    # Human-readable profile name (shown on the Profile Select screen). Persisted
+    # inside the JSON as "profile_name"; the filename is a slug of it.
+    profile_name: str = "default"
 
     # --- persistence -----------------------------------------------------
     @classmethod
-    def load(cls) -> "GameState":
-        """Load profile from disk, or return a fresh default profile."""
-        if not os.path.exists(PROFILE_PATH):
-            return cls()
+    def load(cls, path: str = None) -> "GameState":
+        """Load a profile from `path`, or return a fresh default profile bound
+        to that path (so a subsequent save() writes to the right file). When
+        `path` is None, resolve PROFILE_PATH at call time (so tests can
+        monkeypatch game_state.PROFILE_PATH)."""
+        if path is None:
+            path = PROFILE_PATH
+        if not os.path.exists(path):
+            return cls(path=path)
         try:
-            with open(PROFILE_PATH, "r") as f:
+            with open(path, "r") as f:
                 data = json.load(f)
             layout = [BuildingType(v) for v in data.get("building_layout", [])]
             if len(layout) != 9:
@@ -99,6 +111,8 @@ class GameState:
                 backup=backup,
                 home_city=data.get("home_city"),
                 sound_on=bool(data.get("sound_on", False)),
+                path=path,
+                profile_name=str(data.get("profile_name", "default")),
             )
             # Self-heal: if the saved home city no longer exists in the world
             # data (e.g. the map changed), reset birthplace + territory so the
@@ -108,7 +122,7 @@ class GameState:
                 state.conquered = set()
             return state
         except (json.JSONDecodeError, ValueError, TypeError, KeyError):
-            return cls()
+            return cls(path=path)
 
     def save(self) -> None:
         data = {
@@ -121,8 +135,10 @@ class GameState:
             "backup": [m.to_dict() for m in self.backup],
             "home_city": self.home_city,
             "sound_on": self.sound_on,
+            "profile_name": self.profile_name,
         }
-        with open(PROFILE_PATH, "w") as f:
+        os.makedirs(os.path.dirname(self.path), exist_ok=True)
+        with open(self.path, "w") as f:
             json.dump(data, f, indent=2)
 
     # --- helpers ---------------------------------------------------------

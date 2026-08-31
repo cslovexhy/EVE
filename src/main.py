@@ -16,8 +16,8 @@ import enemy_gen
 import world_map as wm
 from game_state import GameState, war_reward
 from models import top_rarity_recruit
-from screens import (MainMenu, EveLayout, MapScreen, USMapScreen, GameOverScreen,
-                     VictoryScreen, RecruitPopup, CapBlockedPopup)
+from screens import (ProfileSelect, MainMenu, EveLayout, MapScreen, USMapScreen,
+                     GameOverScreen, VictoryScreen, RecruitPopup, CapBlockedPopup)
 from battle_session import BattleSession
 
 
@@ -40,12 +40,15 @@ class Game:
         config.BATTLEFIELD_HEIGHT = (config.SCREEN_HEIGHT - config.BATTLEFIELD_Y
                                      - config.ORDER_PANEL_HEIGHT)
 
-        self.state = GameState.load()
+        # The active profile is chosen on the Profile Select screen at startup
+        # (set in run()), so audio init is deferred until we know its sound_on.
+        self.state = None
 
-        # Audio: initialize the SFX mixer. Safe no-op if no audio device is
-        # available (headless). Sound is OFF by default and the preference is
-        # persisted (toggle with M in battle). CLI flags override for one run:
-        # --mute forces silent, --sound forces on.
+    def _init_audio(self):
+        """Initialize the SFX mixer from the active profile's preference. Safe
+        no-op if no audio device is available (headless). Sound is OFF by
+        default and persisted per profile. CLI flags override for one run:
+        --mute forces silent, --sound forces on."""
         import sound
         muted = not self.state.sound_on
         if "--mute" in sys.argv:
@@ -55,7 +58,15 @@ class Game:
         sound.init(muted=muted)
 
     def run(self):
-        # First launch: choose a birthplace before anything else.
+        # Choose (or create) a save profile before anything else.
+        result = ProfileSelect(self.screen).run()
+        if result == "quit" or result is None:
+            pygame.quit()
+            sys.exit()
+        self.state = result           # a loaded/created GameState
+        self._init_audio()
+
+        # A freshly created profile has no birthplace yet: pick one first.
         if self.state.home_city is None:
             if not self._choose_birthplace():
                 pygame.quit()
