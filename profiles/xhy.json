@@ -1,0 +1,341 @@
+{
+  "money": 0,
+  "building_layout": [
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse",
+    "warehouse"
+  ],
+  "building_levels": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "conquered": [
+    "United States/California/Los Angeles County/Vernon city"
+  ],
+  "member_assignments": [
+    [
+      0,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    [
+      2
+    ],
+    [
+      3
+    ],
+    [
+      4
+    ],
+    [
+      5
+    ],
+    [
+      6
+    ],
+    [
+      7
+    ]
+  ],
+  "roster": [
+    {
+      "name": "Hammer",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Duke",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Tank",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Brick",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Ironside",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Magnus",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bulwark",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Titan",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Rocco",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Slab",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fox",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kate",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hawkeye",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Scope",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Viper",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Longshot",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Whisper",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Deadshot",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Iris",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bolt",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nightshade",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Shadow",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Wraith",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Stiletto",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Venom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Specter",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Mirage",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Silhouette",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Hotwire",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blade",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fuse",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bomber",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Sparks",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Inferno",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nitro",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Torch",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kaboom",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blast",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "common"
+    }
+  ],
+  "backup": [
+    {
+      "name": "Dagger",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    }
+  ],
+  "home_city": "United States/California/Los Angeles County/Vernon city",
+  "sound_on": false,
+  "profile_name": "xhy"
+}
