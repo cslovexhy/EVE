@@ -31,11 +31,6 @@ class Game:
         config.SCREEN_WIDTH = display_info.current_w
         config.SCREEN_HEIGHT = display_info.current_h
 
-        # Audio: initialize the SFX mixer. Safe no-op if no audio device is
-        # available (headless). Pass --mute to start silent.
-        import sound
-        sound.init(muted=("--mute" in sys.argv))
-
         self.screen = pygame.display.set_mode(
             (config.SCREEN_WIDTH, config.SCREEN_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption(config.TITLE)
@@ -46,6 +41,18 @@ class Game:
                                      - config.ORDER_PANEL_HEIGHT)
 
         self.state = GameState.load()
+
+        # Audio: initialize the SFX mixer. Safe no-op if no audio device is
+        # available (headless). Sound is OFF by default and the preference is
+        # persisted (toggle with M in battle). CLI flags override for one run:
+        # --mute forces silent, --sound forces on.
+        import sound
+        muted = not self.state.sound_on
+        if "--mute" in sys.argv:
+            muted = True
+        elif "--sound" in sys.argv:
+            muted = False
+        sound.init(muted=muted)
 
     def run(self):
         # First launch: choose a birthplace before anything else.
@@ -121,6 +128,12 @@ class Game:
                                 building_order=order,
                                 member_assignments=member_assignments)
         won = session.run() is player
+        # Persist any in-battle sound toggle (M key) so the choice sticks.
+        import sound
+        sound_on = not sound.is_muted()
+        if sound_on != self.state.sound_on:
+            self.state.sound_on = sound_on
+            self.state.save()
         if won:
             self._acquire_recruit(enemy)
         return won, enemy

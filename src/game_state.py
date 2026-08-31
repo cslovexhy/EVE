@@ -58,6 +58,9 @@ class GameState:
     # The player's birthplace city id ("Country/State/City"). None until chosen
     # on first run; determines the home state/country for map gating.
     home_city: Optional[str] = None
+    # Sound effects preference. Off by default; toggled with M in battle and
+    # persisted so the choice sticks across restarts.
+    sound_on: bool = False
 
     # --- persistence -----------------------------------------------------
     @classmethod
@@ -95,6 +98,7 @@ class GameState:
                 roster=roster,
                 backup=backup,
                 home_city=data.get("home_city"),
+                sound_on=bool(data.get("sound_on", False)),
             )
             # Self-heal: if the saved home city no longer exists in the world
             # data (e.g. the map changed), reset birthplace + territory so the
@@ -116,6 +120,7 @@ class GameState:
             "roster": [m.to_dict() for m in self.roster],
             "backup": [m.to_dict() for m in self.backup],
             "home_city": self.home_city,
+            "sound_on": self.sound_on,
         }
         with open(PROFILE_PATH, "w") as f:
             json.dump(data, f, indent=2)
