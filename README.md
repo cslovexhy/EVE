@@ -74,6 +74,14 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-08-30 — Multiple save profiles (choose / create / delete at startup)
+
+- **Multi-profile saves.** The game now opens on a **Profile Select** screen: pick an existing save to play, or **+ New Profile** (free-text name entry) to start fresh. Each profile is its own file under `profiles/<slug>.json`, in the exact format `GameState` already uses. Rows show a quick summary (money · cities conquered · home city). **Delete** a profile via the red **X** on its row (Y/N confirmation).
+- **Per-file `GameState`.** `GameState` gained a non-serialized `path` (where it loads/saves) and a persisted `profile_name`. `GameState.load(path=...)` / `save()` use it; `load(path=None)` resolves the legacy `PROFILE_PATH` at call time (so existing tests that monkeypatch it still work). `save()` creates the parent dir as needed.
+- **`profiles.py`** owns the directory + name↔path mapping (`_slugify`), listing (sorted by display name), create/load/delete, light summaries for the screen, and a one-time **legacy migration**: on first launch, an existing `player_profile.json` is copied into `profiles/default.json`, so current progress carries over untouched as the "default" profile. Idempotent (no-op once any profile exists).
+- **`main.py` startup** now shows `ProfileSelect` before the main menu, binds the chosen/created `GameState`, initializes audio from that profile's `sound_on`, and only runs the birthplace picker for a fresh profile (no `home_city`).
+- Verified: **119 unit tests pass** (`tests/test_profiles.py` +12 covering CRUD, slugify, duplicate/blank rejection, save/load round-trip, summaries, and migration idempotency); a headless smoke test drove the ProfileSelect screen's own handlers through create/select/delete/duplicate; the live `player_profile.json` was byte-for-byte **unchanged** by the test run.
+
 ### 2026-08-30 — All-states data + county reconciliation, sound off by default, smarter enemy AI
 
 - **County data now reconciles to its cities.** The ETL (`tools/build_world_data.py`) mapped only *incorporated* places and allocated county GDP by each town's share of the **whole** county population, so a county's cities summed to **less** than the county (the unincorporated remainder was silently dropped). Added a **`"<County> (unincorporated)"` remainder city** per county carrying the leftover population + GDP (GDP subtracts the already-rounded town slices so children sum **exactly** to the parent). Whole-county cases (independent cities, place-less counties) are unchanged — their single city already equals the county. The remainder is a normal, challengeable city, so you must clear a county's unincorporated gangs (usually the largest slice of a rural county) before it reads 100% controlled.
