@@ -1223,11 +1223,26 @@ class USMapScreen(_Screen):
         self.state = state
         self.hint = ""
         self.hint_timer = 0.0
+        # View transform: zoom (1..MAX) and pan offset in screen pixels applied
+        # on top of the base projection, so small states (e.g. DC) can be zoomed
+        # into and clicked. Mouse wheel zooms toward the cursor; drag / arrow
+        # keys pan; R resets.
+        self.zoom = 1.0
+        self.pan_x = 0.0
+        self.pan_y = 0.0
+        self._dragging = False
+        self._drag_last = (0, 0)
         self.back_btn = Button(
             (40, config.SCREEN_HEIGHT - 80, 200, 52), "Back", self.font_btn,
             base_color=config.GRAY)
+        self.reset_btn = Button(
+            (260, config.SCREEN_HEIGHT - 80, 200, 52), "Reset View", self.font_btn,
+            base_color=config.GRAY)
         # Compute the on-screen map rect (fit US aspect into the content area).
         self._layout_map()
+
+    MIN_ZOOM = 1.0
+    MAX_ZOOM = 12.0
 
     def _layout_map(self):
         aspect = wm.US_MAP.get("aspect", 2.4) or 2.4
@@ -1249,8 +1264,55 @@ class USMapScreen(_Screen):
         self.map_h = h
 
     def _to_screen(self, x, y):
-        return (int(self.map_x + x * self.map_w),
-                int(self.map_y + y * self.map_h))
+        # Base projection into the map rect, then apply zoom + pan.
+        bx = self.map_x + x * self.map_w
+        by = self.map_y + y * self.map_h
+        return (int(bx * self.zoom + self.pan_x),
+                int(by * self.zoom + self.pan_y))
+
+    def _zoom_at(self, factor, focus):
+        """Multiply zoom by `factor`, keeping the screen point `focus` fixed
+        (so wheel-zoom homes in on the cursor)."""
+        new_zoom = max(self.MIN_ZOOM, min(self.MAX_ZOOM, self.zoom * factor))
+        if new_zoom == self.zoom:
+            return
+        fx, fy = focus
+        # Keep focus point stationary: solve for pan so fx maps to the same
+        # world point before and after. screen = base*zoom + pan.
+        # world_base = (screen - pan) / zoom  must be equal before/after.
+        ratio = new_zoom / self.zoom
+        self.pan_x = fx - (fx - self.pan_x) * ratio
+        self.pan_y = fy - (fy - self.pan_y) * ratio
+        self.zoom = new_zoom
+        self._clamp_pan()
+
+    def _clamp_pan(self):
+        """Keep the map from drifting entirely off-screen. At zoom 1 with no
+        pan the map sits in its rect; allow panning only within sane bounds."""
+        if self.zoom <= self.MIN_ZOOM:
+            self.pan_x = 0.0
+            self.pan_y = 0.0
+            return
+        # Scaled map bounds in screen space.
+        left = self.map_x * self.zoom + self.pan_x
+        top = self.map_y * self.zoom + self.pan_y
+        right = (self.map_x + self.map_w) * self.zoom + self.pan_x
+        bottom = (self.map_y + self.map_h) * self.zoom + self.pan_y
+        margin = 80
+        # Don't let the whole map leave the viewport.
+        if right < margin:
+            self.pan_x += margin - right
+        if left > config.SCREEN_WIDTH - margin:
+            self.pan_x -= left - (config.SCREEN_WIDTH - margin)
+        if bottom < margin:
+            self.pan_y += margin - bottom
+        if top > config.SCREEN_HEIGHT - margin:
+            self.pan_y -= top - (config.SCREEN_HEIGHT - margin)
+
+    def _reset_view(self):
+        self.zoom = 1.0
+        self.pan_x = 0.0
+        self.pan_y = 0.0
 
     def _state_polys(self):
         """Yield (state_name, abbrev, [screen_pts]) for each map state."""
@@ -1281,11 +1343,41 @@ class USMapScreen(_Screen):
         if key in (pygame.K_q, pygame.K_ESCAPE):
             self.result = "menu"
             self.done = True
+        elif key in (pygame.K_r,):
+            self._reset_view()
+        elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
+            self._zoom_at(1.25, (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2))
+        elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
+            self._zoom_at(0.8, (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2))
+        else:
+            # Arrow keys pan (step scales with zoom so it feels consistent).
+            step = 60
+            if key == pygame.K_LEFT:
+                self.pan_x += step
+            elif key == pygame.K_RIGHT:
+                self.pan_x -= step
+            elif key == pygame.K_UP:
+                self.pan_y += step
+            elif key == pygame.K_DOWN:
+                self.pan_y -= step
+            else:
+                return
+            self._clamp_pan()
+
+    def handle_scroll(self, dy, pos):
+        # Wheel up (dy>0) zooms in toward the cursor; down zooms out.
+        if dy == 0:
+            return
+        factor = 1.2 if dy > 0 else 1 / 1.2
+        self._zoom_at(factor, pos)
 
     def handle_click(self, pos):
         if self.back_btn.hit(pos):
             self.result = "menu"
             self.done = True
+            return
+        if self.reset_btn.hit(pos):
+            self._reset_view()
             return
         for name, abbrev, sd, pts in self._state_polys():
             if len(pts) >= 3 and self._point_in_poly(pos[0], pos[1], pts):
@@ -1313,6 +1405,11 @@ class USMapScreen(_Screen):
         conquered = self.state.conquered
         thr = config.STATE_UNLOCK_THRESHOLD
         hovered = None
+        # Clip the (zoomable) map to a content band so it never overdraws the
+        # title, legend, or bottom controls when zoomed/panned.
+        clip = pygame.Rect(0, 150, config.SCREEN_WIDTH,
+                           config.SCREEN_HEIGHT - 150 - 100)
+        self.screen.set_clip(clip)
         for name, abbrev, sd, pts in self._state_polys():
             if len(pts) < 3:
                 continue
@@ -1342,6 +1439,7 @@ class USMapScreen(_Screen):
             self.screen.blit(surf, surf.get_rect(center=(cx, cy)))
 
         # Legend.
+        self.screen.set_clip(None)
         self._draw_legend()
 
         # Hover tooltip.
@@ -1359,9 +1457,13 @@ class USMapScreen(_Screen):
                                            y=config.SCREEN_HEIGHT - 120))
 
         self.back_btn.draw(self.screen, mouse_pos)
-        self.screen.blit(self.font_small.render("Click a state to enter.  Q/ESC: back",
-                                                True, config.GRAY),
-                         (260, config.SCREEN_HEIGHT - 64))
+        self.reset_btn.draw(self.screen, mouse_pos)
+        zoom_lbl = self.font_small.render(f"Zoom {self.zoom:.1f}x", True, config.LIGHT_GRAY)
+        self.screen.blit(zoom_lbl, (480, config.SCREEN_HEIGHT - 72))
+        self.screen.blit(self.font_small.render(
+            "Click a state to enter.  Wheel: zoom  ·  Arrows: pan  ·  R: reset  ·  Q/ESC: back",
+            True, config.GRAY),
+            (600, config.SCREEN_HEIGHT - 64))
 
     def _draw_legend(self):
         items = [("Locked", "locked"), ("0%", "red"), ("<30%", "orange"),
