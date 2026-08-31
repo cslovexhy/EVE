@@ -1,12 +1,12 @@
 {
-  "money": 397677,
+  "money": 713702,
   "building_layout": [
     "bunker",
     "armory",
     "sniper_tower",
     "headquarters",
-    "hospital",
     "bunker",
+    "hospital",
     "safehouse",
     "research_lab",
     "nuclear_silo"
@@ -54,14 +54,18 @@
     "United States/Virginia/Dickenson County/Clintwood town",
     "United States/Virginia/Dickenson County/Haysi town",
     "United States/Virginia/Dinwiddie County/McKenney town",
+    "United States/Virginia/Essex County/Essex (unincorporated)",
     "United States/Virginia/Essex County/Tappahannock town",
     "United States/Virginia/Fairfax County/Clifton town",
+    "United States/Virginia/Fairfax County/Fairfax (unincorporated)",
     "United States/Virginia/Fairfax County/Vienna town",
     "United States/Virginia/Floyd County/Floyd town",
+    "United States/Virginia/Franklin County/Franklin (unincorporated)",
     "United States/Virginia/Frederick County/Middletown town",
     "United States/Virginia/Frederick County/Stephens City town",
     "United States/Virginia/Fredericksburg city/Fredericksburg city",
     "United States/Virginia/Gloucester County/Gloucester",
+    "United States/Virginia/Goochland County/Goochland",
     "United States/Virginia/Grayson County/Fries town",
     "United States/Virginia/Grayson County/Independence town",
     "United States/Virginia/Grayson County/Troutdale town",
@@ -71,6 +75,7 @@
     "United States/Virginia/Harrisonburg city/Harrisonburg city",
     "United States/Virginia/Henrico County/Henrico",
     "United States/Virginia/Henry County/Ridgeway town",
+    "United States/Virginia/Highland County/Highland (unincorporated)",
     "United States/Virginia/Highland County/Monterey town",
     "United States/Virginia/Hopewell city/Hopewell city",
     "United States/Virginia/James City County/James City",
@@ -93,6 +98,7 @@
     "United States/Virginia/Portsmouth city/Portsmouth city",
     "United States/Virginia/Powhatan County/Powhatan",
     "United States/Virginia/Prince George County/Prince George",
+    "United States/Virginia/Prince William County/Prince William (unincorporated)",
     "United States/Virginia/Rappahannock County/Washington town",
     "United States/Virginia/Richmond County/Warsaw town",
     "United States/Virginia/Richmond city/Richmond city",
@@ -101,6 +107,7 @@
     "United States/Virginia/Rockbridge County/Glasgow town",
     "United States/Virginia/Rockbridge County/Goshen town",
     "United States/Virginia/Salem city/Salem city",
+    "United States/Virginia/Southampton County/Branchville town",
     "United States/Virginia/Spotsylvania County/Spotsylvania",
     "United States/Virginia/Stafford County/Stafford",
     "United States/Virginia/Staunton city/Staunton city",
@@ -189,13 +196,13 @@
       34
     ],
     [
+      18,
+      45
+    ],
+    [
       16,
       38,
       50
-    ],
-    [
-      18,
-      45
     ],
     [
       22,
@@ -868,7 +875,68 @@
       "member_class": "enforcer",
       "level": 20,
       "rarity": "rare"
+    },
+    {
+      "name": "Eclipse",
+      "member_class": "assassin",
+      "level": 19,
+      "rarity": "rare"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 13,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 16,
+      "rarity": "rare"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 27,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Razor 2",
+      "member_class": "sniper",
+      "level": 27,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Scorpion",
+      "member_class": "assassin",
+      "level": 40,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Pyro 2",
+      "member_class": "demolitionist",
+      "level": 23,
+      "rarity": "super_rare"
+    },
+    {
+      "name": "Mortar",
+      "member_class": "demolitionist",
+      "level": 40,
+      "rarity": "super_rare"
     }
   ],
-  "home_city": "United States/Virginia/Rappahannock County/Washington town"
+  "home_city": "United States/Virginia/Rappahannock County/Washington town",
+  "sound_on": false
 }
