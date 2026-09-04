@@ -1,5 +1,5 @@
 {
-  "money": 0,
+  "money": 1611,
   "building_layout": [
     "warehouse",
     "warehouse",
@@ -23,16 +23,20 @@
     1
   ],
   "conquered": [
-    "United States/California/Los Angeles County/Vernon city"
+    "United States/California/Alpine County/Alpine",
+    "United States/California/Los Angeles County/Vernon city",
+    "United States/California/Modoc County/Alturas city",
+    "United States/California/Sierra County/Loyalton city",
+    "United States/California/Sierra County/Sierra (unincorporated)"
   ],
   "member_assignments": [
     [
-      0,
-      8
+      5,
+      0
     ],
     [
-      1,
-      9
+      7,
+      1
     ],
     [
       10,
@@ -63,26 +67,26 @@
       35,
       36,
       37,
-      38,
       39
     ],
     [
       2
     ],
     [
-      3
-    ],
-    [
+      3,
       4
     ],
     [
-      5
+      38
+    ],
+    [
+      8
     ],
     [
       6
     ],
     [
-      7
+      9
     ]
   ],
   "roster": [
@@ -261,30 +265,6 @@
       "rarity": "common"
     },
     {
-      "name": "Hotwire",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Blade",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Fuse",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Bomber",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Sparks",
       "member_class": "demolitionist",
       "level": 3,
@@ -325,14 +305,62 @@
       "member_class": "assassin",
       "level": 9,
       "rarity": "common"
-    }
-  ],
-  "backup": [
+    },
     {
       "name": "Dagger",
       "member_class": "assassin",
       "level": 3,
       "rarity": "common"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 13,
+      "rarity": "uncommon"
+    }
+  ],
+  "backup": [
+    {
+      "name": "Hotwire",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fuse",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Blade",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Bomber",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Glint",
+      "member_class": "sniper",
+      "level": 13,
+      "rarity": "uncommon"
     }
   ],
   "home_city": "United States/California/Los Angeles County/Vernon city",
