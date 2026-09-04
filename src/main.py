@@ -130,10 +130,11 @@ class Game:
         if police:
             power = city["police_power"] if city else 0
             enemy = enemy_gen.build_enemy(power, name=f"{city_name} Police",
-                                          police=True)
+                                          police=True, profile_seed=target_city_id)
         else:
             power = city["underworld_power"] if city else 0
-            enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld")
+            enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld",
+                                          profile_seed=target_city_id)
 
         session = BattleSession(self.screen, player, enemy,
                                 building_order=order,

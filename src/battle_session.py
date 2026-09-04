@@ -35,8 +35,12 @@ class BattleSession:
 
         self.engine = BattleEngine(player_empire, enemy_empire)
         self.order_system = OrderSystem()
-        self.ai = BattleAI(enemy_empire, player_empire, is_player=False)
-        # Same AI class drives the player's side when AI-assist is toggled on.
+        # The enemy fights with its assigned targeting personality (set on the
+        # empire by enemy_gen; falls back to the default when absent).
+        self.ai = BattleAI(enemy_empire, player_empire, is_player=False,
+                           profile=getattr(enemy_empire, "ai_profile_name", None))
+        # Same AI class drives the player's side when AI-assist is toggled on
+        # (default targeting personality).
         self.player_ai = BattleAI(player_empire, enemy_empire, is_player=True)
         self.ai_mode = False
         self.nuke_armed = False   # player has armed the nuke and is picking a target

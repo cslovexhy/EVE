@@ -12,6 +12,7 @@ from typing import List
 
 import config
 import buildings
+import ai_profiles
 from models import Empire, Member, MemberClass, Rarity, BuildingType
 
 MAX_MEMBERS = 80              # roster cap (docs/questions.md)
@@ -185,16 +186,22 @@ def _assign_members(members: List[Member], building_order: List[int],
 
 
 def build_enemy(underworld_power: float, name: str = "Rival Gang",
-                seed: int = None, police: bool = False) -> Empire:
+                seed: int = None, police: bool = False,
+                profile_seed: str = None) -> Empire:
     """Build a scaled enemy Empire for the given power. The returned empire has
-    members, building_order, and member_assignments pre-set, so the battle
-    engine will not randomize it.
+    members, building_order, member_assignments, and ai_profile_name pre-set, so
+    the battle engine will not randomize it.
 
     police=True builds the city's police raid boss: because a city's
     police_power far exceeds any gang's underworld_power (and the reference
     max), the roster is already maxed out — this additionally forces the elite
     POLICE_LEVEL, the full fortification, and the top HQ level, making it the
     hardest, repeatable end-of-city fight.
+
+    profile_seed is a stable string (the city id) used to deterministically pick
+    the AI targeting personality. Folded with the side (gang/police) so a city's
+    gang and police get independent but individually stable strategies. Falls
+    back to `name` when not supplied.
     """
     rng = random.Random(seed if seed is not None else int(underworld_power))
     norm = power_norm(underworld_power)
@@ -236,17 +243,37 @@ def build_enemy(underworld_power: float, name: str = "Rival Gang",
     empire.building_order = order
     empire.building_levels = levels
     empire.member_assignments = _assign_members(members, order, rng)
+    empire.ai_profile_name = ai_profiles.profile_name_for(
+        profile_seed if profile_seed is not None else name, police=police)
     return empire
 
 
-def describe(underworld_power: float) -> dict:
-    """Preview the scaled parameters (for UI/tests) without building the empire."""
+def describe(underworld_power: float, profile_seed: str = None) -> dict:
+    """Preview the scaled parameters (for UI/tests) without building the empire.
+    When profile_seed is given, also reports the deterministic gang/police AI
+    strategy labels for that city."""
     norm = power_norm(underworld_power)
-    return {
+    info = {
         "norm": round(norm, 3),
         "members": _member_count(norm),
         "level": _member_level(norm),
         "forts": len(_fort_types(norm)),
+    }
+    if profile_seed is not None:
+        info["gang_strategy"] = city_strategies(profile_seed)["gang"]
+        info["police_strategy"] = city_strategies(profile_seed)["police"]
+    return info
+
+
+def city_strategies(profile_seed: str) -> dict:
+    """Deterministic AI strategy display labels for a city, without building the
+    empire. Returns {'gang': <label>, 'police': <label>} for the city detail UI.
+    Mirrors exactly what build_enemy assigns for each side."""
+    gang = ai_profiles.profile_name_for(profile_seed, police=False)
+    police = ai_profiles.profile_name_for(profile_seed, police=True)
+    return {
+        "gang": ai_profiles.display_name(gang),
+        "police": ai_profiles.display_name(police),
     }
 
 

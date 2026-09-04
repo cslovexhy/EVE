@@ -1859,6 +1859,7 @@ class MapScreen(_Screen):
         if city:
             pop = city["population"]
             gdp_pc = int(city["gdp_thousands"] * 1000 / pop) if pop else 0
+            strategies = enemy_gen.city_strategies(self.popup_city)
             if self.popup_police:
                 reward = int(0.30 * enemy_gen.police_net_worth(city["police_power"])
                              * config.POLICE_REWARD_MULT)
@@ -1866,6 +1867,7 @@ class MapScreen(_Screen):
                     f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
                     f"Police power (raid boss): {city['police_power']:,}",
                     f"Reward on victory: ${reward:,}",
+                    f"Police strategy: {strategies['police']}",
                 ]
                 highlight = 1  # emphasise police power
             else:
@@ -1873,6 +1875,7 @@ class MapScreen(_Screen):
                     f"Population {pop:,}      GDP/capita ${gdp_pc:,}      Crime {city['crime_rate']}/100k",
                     f"Gang power (underworld): {city['underworld_power']:,}",
                     f"Police power (raid boss): {city['police_power']:,}",
+                    f"Gang strategy: {strategies['gang']}",
                 ]
                 if self.mode == "war":
                     stats.append(f"Reward on victory: ${city['reward']:,}")

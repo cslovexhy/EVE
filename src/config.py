@@ -289,6 +289,43 @@ AI_TARGET_SCORE_BUILDING = {          # by building type (fallback = _DEFAULT)
 }
 AI_TARGET_SCORE_BUILDING_DEFAULT = 5  # HQ, safehouse, bunker, sniper tower, lab, silo, warehouse
 
+# AI targeting PERSONALITIES (profiles). Each enemy is assigned one profile
+# deterministically from a seed (city id + side), so a city's gang and its
+# police boss can fight differently but always the same way on replay. A
+# profile only changes HOW a reachable building is scored; the wave/phase logic
+# is shared. See ai_profiles.py. Tunables per profile live here.
+#
+# "value" is the baseline (reproduces AI_TARGET_SCORE_* above). The path-taker
+# profiles score by how contested a building is (defender count, weighted by
+# ENFORCER weight so tanks count differently); the destroyer profiles heap a
+# large bonus on one building type and otherwise fall back to the value model.
+AI_PROFILE_DEFAULT = "value"          # used when no profile is specified
+AI_PROFILE_POLICE = "hard_path"       # the police raid boss always dives the toughest
+# Pool the deterministic seed picker draws a GANG profile from (police is fixed
+# to AI_PROFILE_POLICE). Weighted by repetition — duplicate a name to make it
+# more common.
+AI_PROFILE_GANG_POOL = [
+    "value", "value",
+    "easy_path",
+    "hard_path",
+    "hospital_destroyer",
+    "armory_destroyer",
+    "random_path",
+]
+# Per-profile knobs.
+AI_PROFILE_PARAMS = {
+    # Beeline a building TYPE: this bonus is added when the building matches,
+    # on top of the shared "value" base score, so once the target type is gone
+    # the profile degrades gracefully to value-based targeting.
+    "hospital_destroyer": {"target_type": "hospital", "bonus": 1000},
+    "armory_destroyer": {"target_type": "armory", "bonus": 1000},
+    # Path takers score purely by contested-ness: weighted live-defender count
+    # (+ small building-type value tiebreak). hard_path maximizes it, easy_path
+    # minimizes it (negated).
+    "hard_path": {"sign": 1},
+    "easy_path": {"sign": -1},
+}
+
 # Movement (pixels per second on the battlefield)
 MEMBER_MOVE_SPEED = 48
 

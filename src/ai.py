@@ -4,6 +4,7 @@ import random
 import time
 from models import Empire, MemberClass, MemberState, OrderAction, Order
 from engine import BattleEngine
+import ai_profiles
 import config
 
 
@@ -17,15 +18,24 @@ class BattleAI:
     - Assassins + Snipers open the assault (assassins engage, snipers support
       from range); demos charge in after defenders are weakened to destroy
       buildings; enforcers add sustained ranged damage on the focus target.
-    - Picks a focus target with weighted randomness:
-      - Building 3, 6, 9 (front row from AI's perspective): 30% each
-      - Building 7 (backdoor via assassins): 10%
+    - Focus target is chosen by a VALUE-scoring model (see the target-scoring
+      section below and config.AI_TARGET_SCORE_*): each wave the AI picks the
+      highest-scoring building it can currently see/reach, ties broken randomly.
+      Score = building-type value + the summed value of the building's live
+      defenders.
     """
     
-    def __init__(self, empire: Empire, enemy_empire: Empire, is_player: bool = False):
+    def __init__(self, empire: Empire, enemy_empire: Empire, is_player: bool = False,
+                 profile=None):
         self.empire = empire
         self.enemy = enemy_empire
         self.is_player = is_player  # True when this AI drives the player's side
+        # Targeting personality (see ai_profiles). Accepts an AIProfile, a
+        # profile name, or None (-> the default "value" profile).
+        if isinstance(profile, str) or profile is None:
+            self.profile = ai_profiles.get_profile(profile)
+        else:
+            self.profile = profile
         self.time_since_last_order = 0.0
         self.first_order_issued = False
         self.orders_issued = 0
@@ -67,24 +77,16 @@ class BattleAI:
         return None
 
     # --- target scoring ---------------------------------------------------
-    # Value model (see config.AI_TARGET_SCORE_*): the AI focuses the highest-
-    # value building it can currently see/reach. Score = building-type value +
-    # sum of the value of its live defenders. Only reachable targets are scored.
-    def _building_type_score(self, building) -> int:
-        return config.AI_TARGET_SCORE_BUILDING.get(
-            building.building_type.value, config.AI_TARGET_SCORE_BUILDING_DEFAULT)
-
-    def _target_score(self, building_index: int) -> int:
-        """Value of attacking this building: its type value plus the value of
-        every live defender inside it."""
+    # The active PROFILE (ai_profiles) decides how a candidate building is
+    # scored; the AI focuses the highest-scoring building it can currently
+    # see/reach. Only reachable targets are ever scored (filtered by callers).
+    def _target_score(self, building_index: int) -> float:
+        """Value of attacking this building, per the active targeting profile.
+        Passes the building plus its live defenders to the profile's scorer."""
         b = self.enemy.buildings[building_index]
-        score = self._building_type_score(b)
-        for m in self.enemy.members:
-            if m.is_alive and m.assigned_building == building_index:
-                score += (config.AI_TARGET_SCORE_ENFORCER
-                          if m.member_class == MemberClass.ENFORCER
-                          else config.AI_TARGET_SCORE_DEFENDER)
-        return score
+        defenders = [m for m in self.enemy.members
+                     if m.is_alive and m.assigned_building == building_index]
+        return self.profile.score(b, defenders, self.rng)
 
     def _best_target(self, candidate_indices) -> int:
         """Pick the highest-scoring building among candidates (ties broken
@@ -92,8 +94,9 @@ class BattleAI:
         candidates = list(candidate_indices)
         if not candidates:
             return None
-        best = max(self._target_score(i) for i in candidates)
-        top = [i for i in candidates if self._target_score(i) == best]
+        scores = {i: self._target_score(i) for i in candidates}
+        best = max(scores.values())
+        top = [i for i, s in scores.items() if s == best]
         return self.rng.choice(top)
 
     def _plan_attack(self, engine: BattleEngine):
