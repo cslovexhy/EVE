@@ -1,12 +1,12 @@
 {
-  "money": 1611,
+  "money": 2244,
   "building_layout": [
     "warehouse",
+    "armory",
     "warehouse",
     "warehouse",
     "warehouse",
-    "warehouse",
-    "warehouse",
+    "hospital",
     "warehouse",
     "warehouse",
     "warehouse"
@@ -25,18 +25,20 @@
   "conquered": [
     "United States/California/Alpine County/Alpine",
     "United States/California/Los Angeles County/Vernon city",
+    "United States/California/Mendocino County/Point Arena city",
     "United States/California/Modoc County/Alturas city",
     "United States/California/Sierra County/Loyalton city",
-    "United States/California/Sierra County/Sierra (unincorporated)"
+    "United States/California/Sierra County/Sierra (unincorporated)",
+    "United States/Nevada/Esmeralda County/Esmeralda",
+    "United States/Nevada/Eureka County/Eureka",
+    "United States/Nevada/White Pine County/Ely city"
   ],
   "member_assignments": [
     [
-      5,
-      0
+      6
     ],
     [
-      7,
-      1
+      9
     ],
     [
       10,
@@ -62,31 +64,33 @@
       30,
       31,
       32,
-      33,
       34,
       35,
       36,
       37,
+      38,
       39
     ],
     [
       2
     ],
     [
+      8
+    ],
+    [
+      33
+    ],
+    [
       3,
       4
     ],
     [
-      38
+      5,
+      0
     ],
     [
-      8
-    ],
-    [
-      6
-    ],
-    [
-      9
+      7,
+      1
     ]
   ],
   "roster": [
@@ -211,24 +215,6 @@
       "rarity": "common"
     },
     {
-      "name": "Phantom",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Nightshade",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Shadow",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Wraith",
       "member_class": "assassin",
       "level": 3,
@@ -261,18 +247,6 @@
     {
       "name": "Silhouette",
       "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Sparks",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Inferno",
-      "member_class": "demolitionist",
       "level": 3,
       "rarity": "common"
     },
@@ -329,6 +303,36 @@
       "member_class": "sniper",
       "level": 13,
       "rarity": "uncommon"
+    },
+    {
+      "name": "Glint",
+      "member_class": "sniper",
+      "level": 13,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Havoc",
+      "member_class": "demolitionist",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Fang",
+      "member_class": "assassin",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Crater",
+      "member_class": "demolitionist",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Lotus",
+      "member_class": "assassin",
+      "level": 14,
+      "rarity": "uncommon"
     }
   ],
   "backup": [
@@ -357,10 +361,34 @@
       "rarity": "common"
     },
     {
-      "name": "Glint",
-      "member_class": "sniper",
-      "level": 13,
-      "rarity": "uncommon"
+      "name": "Sparks",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nightshade",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Inferno",
+      "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Shadow",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
     }
   ],
   "home_city": "United States/California/Los Angeles County/Vernon city",

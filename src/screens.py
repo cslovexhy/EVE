@@ -1218,6 +1218,7 @@ class USMapScreen(_Screen):
         "orange": (230, 140, 40),
         "yellow": (225, 205, 60),
         "green": (60, 190, 90),
+        "blue": (60, 120, 220),
     }
 
     def __init__(self, screen, state):
@@ -1468,8 +1469,8 @@ class USMapScreen(_Screen):
             (600, config.SCREEN_HEIGHT - 64))
 
     def _draw_legend(self):
-        items = [("Locked", "locked"), ("0%", "red"), ("<30%", "orange"),
-                 ("<100%", "yellow"), (">= unlock", "green")]
+        items = [("Locked", "locked"), ("<1%", "red"), ("1-10%", "orange"),
+                 ("10-30%", "yellow"), ("30-70%", "green"), ("70%+", "blue")]
         x = config.SCREEN_WIDTH - 60 - len(items) * 130
         y = 100
         for label, bucket in items:

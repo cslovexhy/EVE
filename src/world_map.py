@@ -202,24 +202,28 @@ def state_color_bucket(control_frac: float, unlocked: bool,
                        threshold: Optional[float] = None) -> str:
     """Map a state's control fraction to a color bucket for the map.
 
-    Buckets are relative to the unlock threshold X:
+    Absolute control-percentage bands (independent of the unlock threshold —
+    that gate only decides whether a state is challengeable, not its color):
+
         locked  -> not yet challengeable (gray)
-        red     -> 0 .. 10% of X
-        orange  -> 10% .. 30% of X
-        yellow  -> 30% .. 50% of X   (also anything below X once unlocked)
-        green   -> >= X (state "cleared" to the unlock bar)
+        red     ->   0% .. 1%
+        orange  ->   1% .. 10%
+        yellow  ->  10% .. 30%
+        green   ->  30% .. 70%
+        blue    ->  70% and up
+
+    Bands are lower-inclusive: exactly 1% is orange, 10% yellow, 30% green,
+    70% blue. `threshold` is accepted for signature compatibility but unused.
     """
     if not unlocked:
         return "locked"
-    if threshold is None:
-        threshold = config.STATE_UNLOCK_THRESHOLD
-    if threshold <= 0:
-        return "green" if control_frac > 0 else "red"
-    r = control_frac / threshold   # 0..1+ where 1.0 == the unlock bar (X)
-    if r >= 1.0:
-        return "green"     # >= X : cleared to the unlock bar
-    if r >= 0.3:
-        return "yellow"    # 30% .. 100% of X
-    if r >= 0.1:
-        return "orange"    # 10% .. 30% of X
-    return "red"           # 0% .. 10% of X
+    pct = control_frac * 100.0
+    if pct >= 70.0:
+        return "blue"
+    if pct >= 30.0:
+        return "green"
+    if pct >= 10.0:
+        return "yellow"
+    if pct >= 1.0:
+        return "orange"
+    return "red"

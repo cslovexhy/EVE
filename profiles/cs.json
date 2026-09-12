@@ -1,5 +1,5 @@
 {
-  "money": 436,
+  "money": 7159,
   "building_layout": [
     "warehouse",
     "warehouse",
@@ -23,9 +23,13 @@
     1
   ],
   "conquered": [
+    "United States/Arizona/Greenlee County/Duncan town",
     "United States/New Mexico/Guadalupe County/Vaughn town",
     "United States/New Mexico/Harding County/Harding",
-    "United States/New Mexico/Roosevelt County/Elida town"
+    "United States/New Mexico/Roosevelt County/Elida town",
+    "United States/Utah/Daggett County/Daggett (unincorporated)",
+    "United States/Utah/Daggett County/Dutch John town",
+    "United States/Utah/Daggett County/Manila town"
   ],
   "member_assignments": [
     [
@@ -347,6 +351,30 @@
       "member_class": "demolitionist",
       "level": 3,
       "rarity": "common"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 8,
+      "rarity": "common"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 9,
+      "rarity": "uncommon"
     }
   ],
   "home_city": "United States/New Mexico/Harding County/Harding",

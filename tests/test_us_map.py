@@ -64,22 +64,33 @@ class TestColorBucket(unittest.TestCase):
     def test_locked_bucket(self):
         self.assertEqual(wm.state_color_bucket(0.9, unlocked=False), "locked")
 
-    def test_buckets_relative_to_threshold(self):
-        X = 0.10
-        self.assertEqual(wm.state_color_bucket(0.0, True, X), "red")       # 0
-        self.assertEqual(wm.state_color_bucket(0.005, True, X), "red")     # 5% of X
-        self.assertEqual(wm.state_color_bucket(0.02, True, X), "orange")   # 20% of X
-        self.assertEqual(wm.state_color_bucket(0.05, True, X), "yellow")   # 50% of X
-        self.assertEqual(wm.state_color_bucket(0.10, True, X), "green")    # == X
-        self.assertEqual(wm.state_color_bucket(0.30, True, X), "green")    # > X
+    def test_absolute_percentage_bands(self):
+        b = wm.state_color_bucket
+        # red: 0% .. 1%
+        self.assertEqual(b(0.0, True), "red")
+        self.assertEqual(b(0.009, True), "red")     # 0.9%
+        # orange: 1% .. 10%
+        self.assertEqual(b(0.01, True), "orange")   # exactly 1%
+        self.assertEqual(b(0.05, True), "orange")   # 5%
+        # yellow: 10% .. 30%
+        self.assertEqual(b(0.10, True), "yellow")   # exactly 10%
+        self.assertEqual(b(0.20, True), "yellow")   # 20%
+        # green: 30% .. 70%
+        self.assertEqual(b(0.30, True), "green")    # exactly 30%
+        self.assertEqual(b(0.50, True), "green")    # 50%
+        # blue: 70%+
+        self.assertEqual(b(0.70, True), "blue")     # exactly 70%
+        self.assertEqual(b(1.0, True), "blue")      # 100%
+
+    def test_locked_overrides_band(self):
+        self.assertEqual(wm.state_color_bucket(0.95, unlocked=False), "locked")
 
     def test_monotonic_ordering(self):
-        order = ["red", "orange", "yellow", "green"]
-        X = 0.5
+        order = ["red", "orange", "yellow", "green", "blue"]
         prev = -1
-        for frac in [0.0, 0.1 * X, 0.3 * X, 0.99 * X, X]:
-            b = wm.state_color_bucket(frac, True, X)
-            self.assertGreaterEqual(order.index(b), prev)
+        for frac in [0.0, 0.005, 0.01, 0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 1.0]:
+            b = wm.state_color_bucket(frac, True)
+            self.assertGreaterEqual(order.index(b), prev, frac)
             prev = order.index(b)
 
 
