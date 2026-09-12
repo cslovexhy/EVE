@@ -69,9 +69,11 @@ class _Screen:
         self.font_small = pygame.font.SysFont("Arial", 16)
 
     def run(self):
+        import voice  # parallel voice input; no-op if unavailable
         while not self.done:
             self.clock.tick(config.FPS)
             mouse_pos = pygame.mouse.get_pos()
+            voice.pump()  # drain voice -> synthetic pygame events (parallel input)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

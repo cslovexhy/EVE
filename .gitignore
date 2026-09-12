@@ -20,6 +20,9 @@ assets/portraits/
 # Large raw geo datasets (regenerate via ETL)
 data/raw/
 
+# Standalone voice prototype scratch model (the real model in models/ is committed)
+voice_demo/models/
+
 # Runtime state (not source)
 player_setup.json
 battle_log.txt

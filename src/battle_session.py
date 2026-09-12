@@ -70,6 +70,8 @@ class BattleSession:
 
     # --- events ----------------------------------------------------------
     def _handle_events(self):
+        import voice  # parallel voice input; no-op if unavailable
+        voice.pump()  # 1:1 keystroke commands arrive as synthetic KEYDOWN below
         mouse_pos = pygame.mouse.get_pos()
         if not self.engine.battle_over:
             self.order_system.handle_mouse_move(
@@ -77,6 +79,10 @@ class BattleSession:
                 self.player_empire.buildings,
                 self.enemy_empire.buildings,
             )
+            # Numbered voice commands (attack/heal/nuke {n}) resolve through the
+            # same order logic a mouse click uses (visibility/validity checks).
+            for intent in voice.poll_battle_intents():
+                self._handle_voice_battle_intent(intent)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -99,6 +105,63 @@ class BattleSession:
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if not self.engine.battle_over:
                     self._handle_click(event.pos)
+
+    def _handle_voice_battle_intent(self, intent):
+        """Resolve a numbered voice command (attack/heal/nuke {n}) through the
+        same logic a mouse click uses. Voice never bypasses the game's checks:
+        attacks honor visibility/attack-block, nuke uses launch_nuke, heal uses
+        the health-pack path. Ignored while AI-assist is driving your side."""
+        from models import MemberClass, OrderAction, Order
+
+        p = intent.payload
+        idx = p.get("building")
+        if idx is None:
+            return
+
+        if intent.kind == "heal":
+            self._use_health_pack_on_building(idx)
+            return
+
+        if intent.kind == "nuke":
+            frac = self.engine.nuke_charge_fraction(self.player_empire)
+            if frac is None:
+                self.order_system.feedback_msg = "No Nuclear Silo"
+                self.order_system.feedback_timer = 1.5
+                return
+            if self.engine.launch_nuke(self.player_empire, idx):
+                self.order_system.feedback_msg = f"NUKE launched on building {idx + 1}!"
+                self.order_system.feedback_timer = 2.0
+                self.nuke_armed = False
+            return
+
+        if intent.kind == "attack":
+            if self.ai_mode:
+                return  # AI is driving your side; manual orders are ignored
+            cls_map = {
+                "enforcer": MemberClass.ENFORCER, "assassin": MemberClass.ASSASSIN,
+                "sniper": MemberClass.SNIPER, "demolitionist": MemberClass.DEMOLITIONIST,
+            }
+            member_class = cls_map.get(p.get("cls"))
+            if member_class is None:
+                return
+            # Select the class (same as pressing its hotkey / clicking its button).
+            idx_btn = {MemberClass.ENFORCER: 0, MemberClass.ASSASSIN: 1,
+                       MemberClass.SNIPER: 2, MemberClass.DEMOLITIONIST: 3}[member_class]
+            self.order_system.select_button_by_index(idx_btn)
+            self.order_system.heal_mode = False
+            # Apply the same reachability/attack-block checks the click path uses.
+            if not self.engine.is_attackable_by_class(idx, member_class, is_player=True):
+                self.order_system.feedback_msg = "No visibility"
+                self.order_system.feedback_timer = 1.5
+                return
+            reason = self.engine.attack_block_reason(idx, is_player=True)
+            if reason:
+                self.order_system.feedback_msg = reason
+                self.order_system.feedback_timer = 2.5
+                return
+            order = Order(member_class=member_class, target_building=idx,
+                          action=OrderAction.ATTACK)
+            self._execute_player_order(order)
 
     def _handle_click(self, pos):
         if self.nuke_armed:

@@ -65,33 +65,60 @@ class Game:
             sys.exit()
         self.state = result           # a loaded/created GameState
         self._init_audio()
+        self._init_voice()
 
         # A freshly created profile has no birthplace yet: pick one first.
         if self.state.home_city is None:
             if not self._choose_birthplace():
-                pygame.quit()
-                sys.exit()
+                self._shutdown()
 
-        screen_name = "menu"
-        while True:
-            if screen_name == "menu":
-                screen_name = MainMenu(self.screen).run()
-            elif screen_name == "layout":
-                EveLayout(self.screen, self.state).run()
-                screen_name = "menu"
-            elif screen_name == "map":
-                # Visual US map at the states level.
-                result = USMapScreen(self.screen, self.state).run()
-                if isinstance(result, tuple) and result[0] == "state":
-                    self._browse_state(result[1])
-                    screen_name = "map"   # back to the US map afterwards
-                else:
+        try:
+            screen_name = "menu"
+            while True:
+                if screen_name == "menu":
+                    import voice
+                    voice.set_context("menu")
+                    screen_name = MainMenu(self.screen).run()
+                elif screen_name == "layout":
+                    import voice
+                    voice.set_context("layout")
+                    EveLayout(self.screen, self.state).run()
                     screen_name = "menu"
-            elif screen_name == "quit":
-                break
-            else:
-                break
+                elif screen_name == "map":
+                    # Visual US map at the states level.
+                    import voice
+                    voice.set_context("map")
+                    result = USMapScreen(self.screen, self.state).run()
+                    if isinstance(result, tuple) and result[0] == "state":
+                        self._browse_state(result[1])
+                        screen_name = "map"   # back to the US map afterwards
+                    else:
+                        screen_name = "menu"
+                elif screen_name == "quit":
+                    break
+                else:
+                    break
+        finally:
+            self._shutdown()
 
+    def _init_voice(self):
+        """Start always-listening voice control from game start. Fully offline
+        (Vosk). Safe no-op if the model/mic/deps are unavailable or --no-voice
+        is passed — the game then behaves exactly as before. Voice is a parallel
+        input path: it injects the same events keyboard/mouse do and never
+        supersedes them."""
+        if "--no-voice" in sys.argv:
+            return
+        import voice
+        voice.start()
+
+    def _shutdown(self):
+        """Stop voice (always torn down when the game ends) and exit."""
+        try:
+            import voice
+            voice.stop()
+        except Exception:
+            pass
         pygame.quit()
         sys.exit()
 
@@ -139,7 +166,12 @@ class Game:
         session = BattleSession(self.screen, player, enemy,
                                 building_order=order,
                                 member_assignments=member_assignments)
-        won = session.run() is player
+        import voice
+        voice.set_context("battle")
+        try:
+            won = session.run() is player
+        finally:
+            voice.set_context("menu")
         # Persist any in-battle sound toggle (M key) so the choice sticks.
         import sound
         sound_on = not sound.is_muted()
