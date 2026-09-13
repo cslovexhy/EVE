@@ -1,22 +1,22 @@
 {
-  "money": 7159,
+  "money": 1960,
   "building_layout": [
+    "safehouse",
+    "armory",
+    "sniper_tower",
     "warehouse",
+    "headquarters",
+    "hospital",
     "warehouse",
-    "warehouse",
-    "warehouse",
-    "warehouse",
-    "warehouse",
-    "warehouse",
-    "warehouse",
-    "warehouse"
+    "research_lab",
+    "safehouse"
   ],
   "building_levels": [
     1,
     1,
     1,
     1,
-    1,
+    4,
     1,
     1,
     1,
@@ -24,23 +24,62 @@
   ],
   "conquered": [
     "United States/Arizona/Greenlee County/Duncan town",
+    "United States/Arkansas/Calhoun County/Calhoun (unincorporated)",
+    "United States/Arkansas/Calhoun County/Hampton city",
+    "United States/Arkansas/Calhoun County/Harrell town",
+    "United States/Arkansas/Calhoun County/Thornton city",
+    "United States/Arkansas/Calhoun County/Tinsman town",
+    "United States/Arkansas/Woodruff County/Augusta city",
+    "United States/Arkansas/Woodruff County/Cotton Plant city",
+    "United States/Arkansas/Woodruff County/Hunter town",
+    "United States/Arkansas/Woodruff County/McCrory city",
+    "United States/Arkansas/Woodruff County/Patterson city",
+    "United States/Arkansas/Woodruff County/Woodruff (unincorporated)",
     "United States/New Mexico/Guadalupe County/Vaughn town",
     "United States/New Mexico/Harding County/Harding",
     "United States/New Mexico/Roosevelt County/Elida town",
+    "United States/Oklahoma/Cimarron County/Boise City city",
+    "United States/Oklahoma/Cimarron County/Cimarron (unincorporated)",
+    "United States/Oklahoma/Cimarron County/Keyes town",
+    "United States/Oklahoma/Harmon County/Gould town",
+    "United States/Oklahoma/Harmon County/Harmon (unincorporated)",
+    "United States/Oklahoma/Harmon County/Hollis city",
+    "United States/Oklahoma/Harper County/Buffalo town",
+    "United States/Oklahoma/Harper County/Harper (unincorporated)",
+    "United States/Oklahoma/Harper County/Laverne town",
+    "United States/Oklahoma/Harper County/May town",
+    "United States/Oklahoma/Harper County/Rosston town",
+    "United States/Tennessee/Hancock County/Hancock (unincorporated)",
+    "United States/Tennessee/Hancock County/Sneedville town",
+    "United States/Tennessee/Moore County/Moore",
+    "United States/Tennessee/Pickett County/Byrdstown town",
+    "United States/Tennessee/Pickett County/Pickett (unincorporated)",
+    "United States/Tennessee/Van Buren County/Spencer city",
+    "United States/Tennessee/Van Buren County/Van Buren (unincorporated)",
     "United States/Utah/Daggett County/Daggett (unincorporated)",
     "United States/Utah/Daggett County/Dutch John town",
-    "United States/Utah/Daggett County/Manila town"
+    "United States/Utah/Daggett County/Manila town",
+    "United States/Utah/Piute County/Circleville town",
+    "United States/Utah/Piute County/Junction town",
+    "United States/Utah/Piute County/Kingston town",
+    "United States/Utah/Piute County/Marysvale town",
+    "United States/Utah/Piute County/Piute (unincorporated)"
   ],
   "member_assignments": [
     [
-      4
-    ],
-    [
       1,
-      9,
-      39
+      38,
+      67
     ],
     [
+      30,
+      37,
+      51
+    ],
+    [
+      7,
+      8,
+      9,
       10,
       11,
       12,
@@ -61,55 +100,72 @@
       27,
       28,
       29,
-      30,
       31,
       32,
       33,
       34,
       35,
-      36,
-      37,
-      38
+      41,
+      42,
+      46,
+      47,
+      48,
+      49,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      69,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
     ],
     [
-      2
-    ],
-    [
-      3
+      39,
+      45,
+      68
     ],
     [
       0,
-      8
+      5,
+      44
     ],
     [
-      5
+      66,
+      72,
+      70,
+      50,
+      36
     ],
     [
-      6
+      2,
+      6,
+      53
     ],
     [
-      7
+      3,
+      40,
+      71
+    ],
+    [
+      4,
+      43,
+      52
     ]
   ],
   "roster": [
-    {
-      "name": "Hammer",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Duke",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Tank",
-      "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
     {
       "name": "Brick",
       "member_class": "enforcer",
@@ -149,18 +205,6 @@
     {
       "name": "Slab",
       "member_class": "enforcer",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Fox",
-      "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Kate",
-      "member_class": "sniper",
       "level": 3,
       "rarity": "common"
     },
@@ -213,18 +257,6 @@
       "rarity": "common"
     },
     {
-      "name": "Phantom",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Nightshade",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Shadow",
       "member_class": "assassin",
       "level": 3,
@@ -269,18 +301,6 @@
     {
       "name": "Dagger",
       "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Bomber",
-      "member_class": "demolitionist",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Sparks",
-      "member_class": "demolitionist",
       "level": 3,
       "rarity": "common"
     },
@@ -331,9 +351,169 @@
       "member_class": "enforcer",
       "level": 9,
       "rarity": "common"
-    }
-  ],
-  "backup": [
+    },
+    {
+      "name": "Shade",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Crosshair",
+      "member_class": "sniper",
+      "level": 7,
+      "rarity": "common"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 7,
+      "rarity": "common"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 8,
+      "rarity": "common"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 7,
+      "rarity": "common"
+    },
+    {
+      "name": "Hammer",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Duke",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Tank",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Fox",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Kate",
+      "member_class": "sniper",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Nightshade",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Grizzly",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Brutus",
+      "member_class": "enforcer",
+      "level": 5,
+      "rarity": "common"
+    },
+    {
+      "name": "Reticle",
+      "member_class": "sniper",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Lotus",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Havoc",
+      "member_class": "demolitionist",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 4,
+      "rarity": "common"
+    },
     {
       "name": "Hotwire",
       "member_class": "demolitionist",
@@ -347,34 +527,132 @@
       "rarity": "common"
     },
     {
+      "name": "Cobra",
+      "member_class": "assassin",
+      "level": 11,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Lotus",
+      "member_class": "assassin",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Sharpshot",
+      "member_class": "sniper",
+      "level": 14,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Razor",
+      "member_class": "sniper",
+      "level": 7,
+      "rarity": "common"
+    },
+    {
+      "name": "Rhino",
+      "member_class": "enforcer",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Goliath",
+      "member_class": "enforcer",
+      "level": 8,
+      "rarity": "common"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 8,
+      "rarity": "common"
+    },
+    {
+      "name": "Arson",
+      "member_class": "demolitionist",
+      "level": 6,
+      "rarity": "common"
+    },
+    {
+      "name": "Boulder",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gustavo",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Rhino",
+      "member_class": "enforcer",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Eagle",
+      "member_class": "sniper",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Marksman",
+      "member_class": "sniper",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Ghost",
+      "member_class": "assassin",
+      "level": 16,
+      "rarity": "rare"
+    },
+    {
+      "name": "Raven",
+      "member_class": "assassin",
+      "level": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Lotus",
+      "member_class": "assassin",
+      "level": 4,
+      "rarity": "common"
+    },
+    {
       "name": "Fuse",
       "member_class": "demolitionist",
       "level": 3,
       "rarity": "common"
     },
     {
-      "name": "Ghost",
-      "member_class": "assassin",
-      "level": 10,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Salvatore",
-      "member_class": "enforcer",
-      "level": 6,
+      "name": "Bomber",
+      "member_class": "demolitionist",
+      "level": 3,
       "rarity": "common"
-    },
+    }
+  ],
+  "backup": [
     {
-      "name": "Gustavo",
-      "member_class": "enforcer",
-      "level": 8,
+      "name": "Sparks",
+      "member_class": "demolitionist",
+      "level": 3,
       "rarity": "common"
-    },
-    {
-      "name": "Eagle",
-      "member_class": "sniper",
-      "level": 9,
-      "rarity": "uncommon"
     }
   ],
   "home_city": "United States/New Mexico/Harding County/Harding",

@@ -123,6 +123,44 @@ def next_level_cost(building_type: BuildingType, current_level: int) -> Optional
     return ladder[nxt - 1]["cost"]
 
 
+def level_field(building_type: BuildingType, level: int, field: str, default=None):
+    """Read a per-level field (e.g. 'bonus_packs', 'charge_time') from a
+    building type's level ladder at a clamped level, or `default` if absent."""
+    ladder = building_type.spec["levels"]
+    lvl = max(1, min(level, len(ladder)))
+    return ladder[lvl - 1].get(field, default)
+
+
+def effect_line(building_type: BuildingType, level: int) -> Optional[str]:
+    """A short human description of what a building of this type does at the
+    given level, beyond HP. Returns None for types whose only effect is HP
+    (Warehouse, Armory, Sniper Tower, Research Lab, Safehouse).
+
+    Surfaces the real, engine-backed mechanics so the upgrade screen tells you
+    what leveling actually buys:
+      * Hospital     -> bonus health packs granted at battle start (scales)
+      * Nuclear Silo -> nuke charge time in seconds (lower = faster; scales)
+      * Bunker       -> structural-damage shield while a bunker is defended
+      * HQ           -> roster cap (+HQ_MEMBERS_PER_LEVEL per level)
+    """
+    t = building_type
+    if t == BuildingType.HOSPITAL:
+        packs = level_field(t, level, "bonus_packs", 0) or 0
+        return (f"+{packs} health packs at battle start" if packs
+                else "No bonus packs at Lv1 (level up for +packs)")
+    if t == BuildingType.NUCLEAR_SILO:
+        secs = level_field(t, level, "charge_time", None)
+        if secs is not None:
+            return f"Enables nuke · charges in {secs:.0f}s (lower is faster)"
+        return "Enables the nuke"
+    if t == BuildingType.BUNKER:
+        return "Shields structure while any bunker is defended"
+    if t == BuildingType.HEADQUARTERS:
+        cap = config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * max(1, level)
+        return f"Roster cap {cap}"
+    return None  # Warehouse / Armory / Sniper Tower / Research Lab / Safehouse
+
+
 def can_level_building(empire: Empire, slot: int) -> Tuple[bool, str]:
     """Whether the building at `slot` can be leveled up one step. Applies to
     every level-able type (Warehouse is single-level and always returns

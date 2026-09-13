@@ -428,10 +428,16 @@ class EveLayout(_Screen):
         self.active_scroll = 0
         self.backup_scroll = 0
 
-        self.slot_size = 150
-        self.gap = 18
+        # Slot planks: target 1.5x the old 150px so more defenders fit and we
+        # show fewer "+N more" rows. Clamp so the 3-row grid still fits above
+        # the Back button on shorter screens.
+        self.gap = 16
         self.grid_x = 70
-        self.grid_y = 170
+        self.grid_y = 150
+        target = int(150 * 1.5)  # 225
+        avail_h = (config.SCREEN_HEIGHT - 80) - self.grid_y - 20  # above Back btn
+        fit = (avail_h - 2 * self.gap) // 3
+        self.slot_size = max(150, min(target, fit))
         self._compute_slot_rects()
 
         self.back_btn = Button(
@@ -440,9 +446,16 @@ class EveLayout(_Screen):
         self.tab_rects = {}
         self.upgrade_rows = []   # (rect, target_type, ok)
         self.roster_rows = []    # (rect, member_idx)   [Assign tab]
+        self.member_hotspots = []  # (rect, member_idx) clickable defenders in planks [Assign tab]
         self.active_rows = []    # (rect, roster_idx)   [Force tab]
         self.backup_rows = []    # (rect, backup_idx)   [Force tab]
         self.force_action_rects = {}  # name -> rect  [Force tab bottom bar]
+        # Double-click tracking for the Force tab: (col, idx, time_ms) of the
+        # last click, so a quick second click on the same row triggers its
+        # action (backup -> Activate, active -> Move to Backup) without needing
+        # the bottom button.
+        self._force_last_click = None
+        self.DOUBLE_CLICK_MS = 400
 
     def _compute_slot_rects(self):
         self.slot_rects = {}
@@ -576,15 +589,31 @@ class EveLayout(_Screen):
         self.feedback = f"Swapped slots {a + 1} and {b + 1}"
 
     def _click_members(self, pos):
-        # Assign a selected member to a clicked slot.
+        # If a member is already selected, clicking any slot moves it there
+        # (this preserves the existing select -> click-destination flow, and
+        # lets you drop onto a slot even if it already has defenders).
         if self.selected_member is not None:
             for idx, rect in self.slot_rects.items():
                 if rect.collidepoint(pos):
+                    # Clicking the member's current slot is a no-op (don't
+                    # reorder/re-save); just deselect.
+                    if self.selected_member in self.member_assignments[idx]:
+                        self.selected_member = None
+                        return
                     self._move_member(self.selected_member, idx)
                     self.selected_member = None
                     self._sync_to_state()
                     return
-        # Select a member from the roster.
+            # Clicked off any slot: deselect.
+            self.selected_member = None
+            return
+        # No member selected yet: a click on a defender name inside a plank
+        # selects that defender (so you can then click a destination slot).
+        for rect, midx in self.member_hotspots:
+            if rect.collidepoint(pos):
+                self.selected_member = midx
+                return
+        # Or select a member from the roster list on the right.
         for rect, midx in self.roster_rows:
             if rect.collidepoint(pos):
                 self.selected_member = None if self.selected_member == midx else midx
@@ -610,17 +639,38 @@ class EveLayout(_Screen):
             if rect.collidepoint(pos):
                 self._do_force_action(name)
                 return
-        # Select a row in either column.
+        # Select a row in either column. A quick second click on the SAME row
+        # performs its action (backup -> Activate, active -> Move to Backup),
+        # reusing the same logic the bottom buttons use.
         for rect, ridx in self.active_rows:
             if rect.collidepoint(pos):
-                self.force_sel = None if self.force_sel == ("active", ridx) else ("active", ridx)
-                self.feedback = ""
+                if self._is_double_click(("active", ridx)):
+                    self.force_sel = ("active", ridx)
+                    self._do_force_action("bench")
+                    self._force_last_click = None  # roster reindexed; reset
+                else:
+                    self.force_sel = None if self.force_sel == ("active", ridx) else ("active", ridx)
+                    self.feedback = ""
                 return
         for rect, bidx in self.backup_rows:
             if rect.collidepoint(pos):
-                self.force_sel = None if self.force_sel == ("backup", bidx) else ("backup", bidx)
-                self.feedback = ""
+                if self._is_double_click(("backup", bidx)):
+                    self.force_sel = ("backup", bidx)
+                    self._do_force_action("activate")
+                    self._force_last_click = None  # roster reindexed; reset
+                else:
+                    self.force_sel = None if self.force_sel == ("backup", bidx) else ("backup", bidx)
+                    self.feedback = ""
                 return
+
+    def _is_double_click(self, row_key) -> bool:
+        """True if this click is a second click on the same Force-tab row within
+        DOUBLE_CLICK_MS of the previous one. Resets the tracker either way."""
+        now = pygame.time.get_ticks()
+        last = self._force_last_click
+        self._force_last_click = (row_key, now)
+        return (last is not None and last[0] == row_key
+                and now - last[1] <= self.DOUBLE_CLICK_MS)
 
     def _do_force_action(self, name):
         if self.force_sel is None:
@@ -740,6 +790,7 @@ class EveLayout(_Screen):
             x += w + gap
 
     def _draw_grid(self, mouse_pos):
+        self.member_hotspots = []  # rebuilt each frame (Assign tab defender rows)
         for idx, rect in self.slot_rects.items():
             b = self.empire.buildings[idx]
             highlight = (idx == self.selected_slot) or (idx == self.swap_slot)
@@ -765,20 +816,30 @@ class EveLayout(_Screen):
         self.screen.blit(short, (rect.x + 8, rect.y + 26))
         assigned = self.member_assignments[idx]
         y = rect.y + 48
-        for mi in assigned[:config.BUILDING_DEFENDER_SLOTS]:
+        row_h = 18
+        count_y = rect.bottom - 20            # reserved for the "N members" line
+        # How many defender rows fit in this (now larger) plank, leaving one
+        # line for "+N more" when the list overflows.
+        max_rows = max(1, (count_y - 4 - y) // row_h)
+        overflow = len(assigned) > max_rows
+        shown = (max_rows - 1) if overflow else max_rows
+        for mi in assigned[:shown]:
             m = self.empire.members[mi]
             col = self._class_color(m.member_class)
+            hot = pygame.Rect(rect.x + 4, y - 1, rect.width - 8, row_h)
             if mi == self.selected_member:
-                pygame.draw.rect(self.screen, config.GOLD,
-                                 pygame.Rect(rect.x + 4, y - 1, rect.width - 8, 16), 1)
-            self.screen.blit(self.font_small.render(m.name[:12], True, col), (rect.x + 10, y))
-            y += 16
-        if len(assigned) > config.BUILDING_DEFENDER_SLOTS:
-            extra = len(assigned) - config.BUILDING_DEFENDER_SLOTS
+                pygame.draw.rect(self.screen, config.GOLD, hot, 1)
+            self.screen.blit(self.font_small.render(m.name[:16], True, col),
+                             (rect.x + 10, y))
+            # Record a clickable hotspot so defenders can be selected in-plank.
+            self.member_hotspots.append((hot, mi))
+            y += row_h
+        if overflow:
+            extra = len(assigned) - shown
             self.screen.blit(self.font_small.render(f"+{extra} more", True, config.GRAY),
                              (rect.x + 10, y))
         cnt = self.font_small.render(f"{len(assigned)} members", True, config.LIGHT_GRAY)
-        self.screen.blit(cnt, cnt.get_rect(centerx=rect.centerx, y=rect.bottom - 20))
+        self.screen.blit(cnt, cnt.get_rect(centerx=rect.centerx, y=count_y))
 
     def _panel_x(self):
         return self.grid_x + 3 * (self.slot_size + self.gap) + 50
@@ -818,7 +879,9 @@ class EveLayout(_Screen):
             return
         for target in targets:
             ok, reason = buildings.can_upgrade(self.empire, self.selected_slot, target)
-            rect = pygame.Rect(px, y, panel_w, 56)
+            eff = buildings.effect_line(target, 1)
+            row_h = 74 if eff else 56
+            rect = pygame.Rect(px, y, panel_w, row_h)
             hover = rect.collidepoint(mouse_pos)
             bg = ((64, 96, 64) if hover else (48, 70, 48)) if ok else (54, 40, 40)
             pygame.draw.rect(self.screen, bg, rect, border_radius=6)
@@ -826,14 +889,18 @@ class EveLayout(_Screen):
             spec = target.spec
             self.screen.blit(self.font_btn.render(spec["display_name"], True, config.WHITE),
                              (rect.x + 12, rect.y + 6))
+            # Universal HP before -> after, plus cost.
             self.screen.blit(self.font_small.render(
-                f"HP {spec['hp']}   Cost ${spec['upgrade_cost']:,}", True, config.LIGHT_GRAY),
-                (rect.x + 12, rect.y + 32))
+                f"HP: {int(b.max_hp)} -> {spec['hp']}   Cost ${spec['upgrade_cost']:,}",
+                True, config.LIGHT_GRAY), (rect.x + 12, rect.y + 32))
+            if eff:
+                self.screen.blit(self.font_small.render(eff, True, (150, 210, 235)),
+                                 (rect.x + 12, rect.y + 52))
             if not ok:
                 tag = self.font_small.render(self._reason_text(reason, target), True, config.RED)
-                self.screen.blit(tag, tag.get_rect(right=rect.right - 12, centery=rect.centery))
+                self.screen.blit(tag, tag.get_rect(right=rect.right - 12, top=rect.y + 6))
             self.upgrade_rows.append((rect, target, ok))
-            y += 66
+            y += row_h + 10
 
     def _render_levelup(self, px, y, panel_w, mouse_pos, b):
         """Render the generic 'Upgrade to LvN' row for any level-able building.
@@ -861,7 +928,12 @@ class EveLayout(_Screen):
         nxt = b.level + 1
         cost = buildings.next_level_cost(b.building_type, b.level)
         new_hp = buildings.level_hp(b.building_type, nxt)
-        rect = pygame.Rect(px, y, panel_w, 56)
+        eff_now = buildings.effect_line(b.building_type, b.level)
+        eff_next = buildings.effect_line(b.building_type, nxt)
+        # Only show an effect line when this type actually has a non-HP effect.
+        show_eff = eff_next is not None and not is_hq  # HQ cap is in the detail line
+        row_h = 74 if show_eff else 56
+        rect = pygame.Rect(px, y, panel_w, row_h)
         hover = rect.collidepoint(mouse_pos)
         bg = ((64, 96, 64) if hover else (48, 70, 48)) if ok else (54, 40, 40)
         pygame.draw.rect(self.screen, bg, rect, border_radius=6)
@@ -869,18 +941,23 @@ class EveLayout(_Screen):
         self.screen.blit(self.font_btn.render(
             f"Upgrade {b.type_name} to Lv{nxt}", True, config.WHITE),
             (rect.x + 12, rect.y + 6))
+        # Universal HP before -> after.
         if is_hq:
             new_cap = config.BASE_MEMBER_CAP + config.HQ_MEMBERS_PER_LEVEL * nxt
-            detail = f"HP {new_hp}   Roster cap {new_cap}   Cost ${cost:,}"
+            detail = f"HP: {int(b.max_hp)} -> {new_hp}   Roster cap {new_cap}   Cost ${cost:,}"
         else:
-            detail = f"HP {new_hp}   Cost ${cost:,}"
+            detail = f"HP: {int(b.max_hp)} -> {new_hp}   Cost ${cost:,}"
         self.screen.blit(self.font_small.render(detail, True, config.LIGHT_GRAY),
                          (rect.x + 12, rect.y + 32))
+        if show_eff:
+            self.screen.blit(self.font_small.render(
+                f"{eff_now}  ->  {eff_next}" if eff_now and eff_now != eff_next else eff_next,
+                True, (150, 210, 235)), (rect.x + 12, rect.y + 52))
         if not ok:
             tag = self.font_small.render(self._reason_text(reason, None), True, config.RED)
-            self.screen.blit(tag, tag.get_rect(right=rect.right - 12, centery=rect.centery))
+            self.screen.blit(tag, tag.get_rect(right=rect.right - 12, top=rect.y + 6))
         self.upgrade_rows.append((rect, "LEVEL_UP", ok))
-        return y + 66
+        return y + row_h + 10
 
     def _render_arrange_panel(self):
         px, py = self._panel_x(), self.grid_y
