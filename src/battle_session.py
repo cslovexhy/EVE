@@ -128,6 +128,12 @@ class BattleSession:
                 self.order_system.feedback_msg = "No Nuclear Silo"
                 self.order_system.feedback_timer = 1.5
                 return
+            if frac < config.NUKE_MIN_CHARGE:
+                pct = int(config.NUKE_MIN_CHARGE * 100)
+                self.order_system.feedback_msg = (
+                    f"Nuke needs {pct}% charge ({int(frac * 100)}% now)")
+                self.order_system.feedback_timer = 1.5
+                return
             if self.engine.launch_nuke(self.player_empire, idx):
                 self.order_system.feedback_msg = f"NUKE launched on building {idx + 1}!"
                 self.order_system.feedback_timer = 2.0
@@ -230,8 +236,13 @@ class BattleSession:
             if frac is None:
                 self.order_system.feedback_msg = "No Nuclear Silo"
                 self.order_system.feedback_timer = 1.5
+            elif frac < config.NUKE_MIN_CHARGE:
+                pct = int(config.NUKE_MIN_CHARGE * 100)
+                self.order_system.feedback_msg = (
+                    f"Nuke needs {pct}% charge ({int(frac * 100)}% now)")
+                self.order_system.feedback_timer = 1.5
             else:
-                # Fire-at-will: arm any time; charge only scales the damage.
+                # Armed; the nuke is one-shot, charge scales the damage.
                 self.nuke_armed = not self.nuke_armed
         elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
             self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
@@ -279,17 +290,28 @@ class BattleSession:
             if self.engine.battle_over:
                 break
 
-        # Enemy auto-launches its nuke at your bloodiest building once charged enough.
+        # Enemy auto-launches its (one-shot) nuke as soon as it reaches the
+        # minimum charge, aimed at its CURRENT attack target so the blast
+        # supports its offense. Falls back to your bloodiest building if the AI
+        # has no current target (e.g. nothing reachable yet).
         enemy_frac = self.engine.nuke_charge_fraction(self.enemy_empire)
         if (not self.engine.battle_over and enemy_frac is not None
                 and enemy_frac >= config.ENEMY_NUKE_THRESHOLD):
-            targets = [b for b in self.player_empire.buildings
-                       if self.engine.is_slot_targetable(self.player_empire, b.index)]
-            if targets:
-                best = max(targets, key=lambda b: sum(
-                    1 for m in self.player_empire.members
-                    if m.is_alive and m.assigned_building == b.index))
-                self.engine.launch_nuke(self.enemy_empire, best.index)
+            target_idx = self.ai.current_target
+            if target_idx is None or not self.engine.is_slot_targetable(
+                    self.player_empire, target_idx):
+                targets = [b for b in self.player_empire.buildings
+                           if self.engine.is_slot_targetable(
+                               self.player_empire, b.index)]
+                if targets:
+                    best = max(targets, key=lambda b: sum(
+                        1 for m in self.player_empire.members
+                        if m.is_alive and m.assigned_building == b.index))
+                    target_idx = best.index
+                else:
+                    target_idx = None
+            if target_idx is not None:
+                self.engine.launch_nuke(self.enemy_empire, target_idx)
 
     def _enemy_building_at(self, pos):
         size = config.BUILDING_SIZE
@@ -306,19 +328,35 @@ class BattleSession:
     def _render(self):
         self.renderer.render(self.engine, self.order_system)
         if not self.engine.battle_over:
-            speed = self._speed_font.render(f"Speed {self.speed}x  (+/-)", True, config.GOLD)
-            self.screen.blit(speed, (config.SCREEN_WIDTH - speed.get_width() - 20, 10))
-            mode_txt = "AI: ON  (Tab)" if self.ai_mode else "Manual  (Tab)"
-            mode_col = config.GREEN if self.ai_mode else config.LIGHT_GRAY
-            mode = self._speed_font.render(mode_txt, True, mode_col)
-            self.screen.blit(mode, (config.SCREEN_WIDTH - mode.get_width() - 20, 38))
+            # Right-edge status stack, placed BELOW the HUD bar (0-40) and the
+            # class-stats bar (42-112) so it never overlaps the enemy
+            # score/forces readouts drawn there by the renderer.
+            x_right = config.SCREEN_WIDTH - 20
+            y = config.STATS_Y + config.STATS_HEIGHT + 12   # just below stats bar
+            line_h = 26
 
-            frac = self.engine.nuke_charge_fraction(self.player_empire)
-            if frac is not None:
+            def _blit_right(text, color):
+                nonlocal y
+                surf = self._speed_font.render(text, True, color)
+                self.screen.blit(surf, (x_right - surf.get_width(), y))
+                y += line_h
+
+            _blit_right(f"Speed {self.speed}x  (+/-)", config.GOLD)
+            mode_txt = "AI: ON  (Tab)" if self.ai_mode else "Manual  (Tab)"
+            _blit_right(mode_txt, config.GREEN if self.ai_mode else config.LIGHT_GRAY)
+
+            state, frac = self.engine.nuke_status(self.player_empire)
+            if state == "spent":
+                _blit_right("Nuke: SPENT", config.DARK_GRAY)
+            elif state == "charging":
+                pct = int(config.NUKE_MIN_CHARGE * 100)
+                _blit_right(f"Nuke {int(frac*100)}%  (needs {pct}% to launch)",
+                            config.LIGHT_GRAY)
+            elif state == "ready":
                 if self.nuke_armed:
-                    nuke_txt, nuke_col = f"NUKE {int(frac*100)}%: click enemy building", config.RED
+                    _blit_right(f"NUKE {int(frac*100)}%: click enemy building",
+                                config.RED)
                 else:
-                    nuke_txt = f"Nuke {int(frac*100)}%  (N to launch)"
-                    nuke_col = config.RED if frac >= 1.0 else config.LIGHT_GRAY
-                nuke = self._speed_font.render(nuke_txt, True, nuke_col)
-                self.screen.blit(nuke, (config.SCREEN_WIDTH - nuke.get_width() - 20, 66))
+                    _blit_right(f"Nuke {int(frac*100)}% READY  (N to launch)",
+                                config.RED)
+            # state == "none": no silo, draw nothing.

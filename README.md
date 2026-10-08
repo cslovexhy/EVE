@@ -85,6 +85,55 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-10-07 (pm) — Nuke rework + build-cost rescale to the enemy ladder
+
+Two gameplay tweaks this session. **210 unit tests pass**; live
+`player_profile.json` and the non-played profiles were byte-for-byte unchanged
+by all test/verification runs (shasums matched before/after).
+
+**1. Nuclear Silo / nuke mechanics reworked** (`src/engine.py`,
+`src/battle_session.py`, `src/config.py`). The old nuke could be fired at any
+charge and recharged from 0, so spamming partial shots was viable and the 3x3
+blast hit every cell for full damage (making "nuke the center" a no-brainer).
+Now:
+  - **Minimum 30% charge to fire** (`NUKE_MIN_CHARGE = 0.30`); below that the
+    launch is rejected and the player gets "needs 30%" feedback.
+  - **One-shot**: firing marks the silo spent (`_nuke_spent`) — it never
+    recharges that battle. (`nuke_charge_fraction` returns None once spent.)
+  - **Distance-based blast falloff** applied to BOTH buildings and members, on
+    top of the charge fraction: center 100%, orthogonal (L/R/U/D) 70%, diagonal
+    50% (`NUKE_SPLASH_CENTER/ORTHOGONAL/DIAGONAL`). Target choice now matters.
+  - **Enemy AI**: `ENEMY_NUKE_THRESHOLD` 0.75 → **0.30** (fires at the minimum),
+    aimed at its **current attack target** (`ai.current_target`) to support its
+    offense, falling back to your bloodiest building if it has none.
+  - **Player charge readout**: new `engine.nuke_status()` → (state, fraction)
+    for `none`/`charging`/`ready`/`spent`; the HUD always shows the %, and the
+    whole Speed/Mode/Nuke stack was **moved below the class-stats bar** (it was
+    overlapping the enemy score + ENEMY FORCES readouts in the top-right).
+  Tests: new `tests/test_nuke.py` (+14) + updated `test_building_levels_skills.py`
+  for the new ready-at-30% semantics.
+
+**2. Building upgrade costs rescaled to the enemy build ladder** (`src/config.py`).
+Costs were far too low for the new power scale. Reapplied per
+`docs/building_progression.md`: HQ anchors an **x10-per-level** curve
+(HQ1 10k / HQ2 100k / HQ3 1M / HQ4 10M); every other (type, level) cost is the
+curve interpolated by that action's **first ladder row** (Option 2 — per type,
+so each type's L1<L2<L3<L4 stays monotonic), rounded down to full thousands,
+with rows past HQ4 adding +1M/row. Result (L1..L4): Safehouse 14k/316k/562k;
+Armory 31k/133k/1.52M/13M; Hospital 46k/177k/1.87M/14M; Sniper Tower
+68k/237k/2.31M/15M; Research Lab 1.23M/2.85M/3.51M/16M (expensive from L1 — it
+is gated late); Nuclear Silo 11M/17M/18M/21M; Bunker 4.33M/6.58M/19M/22M.
+`HQ_LEVEL_UP_COST` synced to 100k/1M/10M. Progression is **intentionally much
+slower** (a maxed base is ~100M+ vs 0 starting money, 30%-net-worth rewards); we
+will revisit income sources after playtesting. Tests: `TestLadderCosts` (+5,
+exact table + monotonicity + thousands-rounding + HQ anchors + HQ_LEVEL_UP_COST
+consistency); fixed 6 existing `test_buildings.py` cases for the new costs.
+
+**Note on enemy member count:** still on the old `power_norm` curve
+(`4 + 76*norm`, saturating at 80 by ~1M power) — deliberately left as-is. With
+the steep new HQ costs the player's 80-member cap (HQ L4) is hard-won, so the
+enemy's smooth 4→80 count curve is a reasonable match.
+
 ### 2026-10-07 — Kick All Backups, income→rarity, unified "power" scaling + tier-driven buildings
 
 Three features this session. **191 unit tests pass**; live `player_profile.json`

@@ -27,6 +27,7 @@ class BattleEngine:
         # Building-power state (per side).
         self._pack_timer = {"player": 0.0, "enemy": 0.0}   # Hospital pack generation
         self._nuke_charge = {"player": 0.0, "enemy": 0.0}  # Nuclear Silo charge (seconds)
+        self._nuke_spent = {"player": False, "enemy": False}  # one-shot: fired => never recharges
         
         # The enemy is expected to arrive pre-built (building_order +
         # member_assignments), e.g. scaled from a region's underworld power by
@@ -383,45 +384,85 @@ class BattleEngine:
                     self._pack_timer[key] -= config.HOSPITAL_PACK_INTERVAL
                     empire.health_packs += 1
             # Nuclear Silo: charge 0->100% over the (level-scaled) charge time
-            # while a silo stands.
-            if self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
+            # while a silo stands. One-shot: a spent nuke never recharges.
+            if (not self._nuke_spent[key]
+                    and self._active_of_type(empire, BuildingType.NUCLEAR_SILO)):
                 charge_time = self._silo_charge_time(empire)
                 self._nuke_charge[key] = min(charge_time,
                                              self._nuke_charge[key] + dt)
 
     def nuke_charge_fraction(self, empire: Empire):
-        """0..1 charge of the side's Nuclear Silo, or None if it has no silo."""
+        """0..1 charge of the side's Nuclear Silo, or None if it has no silo or
+        the nuke has already been spent (one-shot)."""
+        key = self._side_key(empire)
+        if self._nuke_spent[key]:
+            return None
         if not self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
             return None
         charge_time = self._silo_charge_time(empire)
-        return self._nuke_charge[self._side_key(empire)] / charge_time
+        return self._nuke_charge[key] / charge_time
 
     def nuke_ready(self, empire: Empire) -> bool:
+        """True when the nuke can be fired: charged to at least the minimum and
+        not already spent."""
         frac = self.nuke_charge_fraction(empire)
-        return frac is not None and frac >= 1.0
+        return frac is not None and frac >= config.NUKE_MIN_CHARGE
+
+    def nuke_status(self, empire: Empire):
+        """A UI-friendly (state, fraction) for the side's nuke:
+          "none"     -> no Nuclear Silo (fraction None)
+          "spent"    -> already fired this battle (fraction None)
+          "charging" -> has a silo, below the minimum charge (fraction 0..1)
+          "ready"    -> at or above the minimum charge, can fire (fraction 0..1)
+        Lets the HUD always show a meaningful nuke readout."""
+        key = self._side_key(empire)
+        if self._nuke_spent[key]:
+            return "spent", None
+        if not self._active_of_type(empire, BuildingType.NUCLEAR_SILO):
+            return "none", None
+        charge_time = self._silo_charge_time(empire)
+        frac = self._nuke_charge[key] / charge_time
+        return ("ready" if frac >= config.NUKE_MIN_CHARGE else "charging"), frac
+
+    def _nuke_falloff(self, dr: int, dc: int) -> float:
+        """Blast damage multiplier for a cell offset (dr, dc) from the target:
+        center full, orthogonal (one axis) reduced, diagonal reduced further."""
+        dist = abs(dr) + abs(dc)
+        if dist == 0:
+            return config.NUKE_SPLASH_CENTER
+        if dist == 1:
+            return config.NUKE_SPLASH_ORTHOGONAL
+        return config.NUKE_SPLASH_DIAGONAL          # diagonal (dr and dc both 1)
 
     def launch_nuke(self, empire: Empire, target_index: int) -> bool:
-        """Launch the side's nuke at an enemy building. Can be fired at any time;
-        the current charge fraction scales the blast damage. 3x3 area centered on
-        target_index; consumes the charge (recharges from 0)."""
+        """Launch the side's nuke at an enemy building. Requires at least
+        NUKE_MIN_CHARGE (30%); the current charge fraction scales the blast.
+        3x3 area centered on target_index, with distance-based falloff (center
+        100%, orthogonal 70%, diagonal 50%) applied to both buildings and
+        members. ONE-SHOT: firing marks the nuke spent — it never recharges this
+        battle."""
         frac = self.nuke_charge_fraction(empire)
-        if frac is None or frac <= 0:
+        if frac is None or frac < config.NUKE_MIN_CHARGE:
             return False
         target_empire = self.enemy if empire is self.player else self.player
-        self._nuke_charge[self._side_key(empire)] = 0.0  # consume charge
+        key = self._side_key(empire)
+        self._nuke_spent[key] = True                 # one-shot: no recharge
+        self._nuke_charge[key] = 0.0
 
-        bldg_dmg = config.NUKE_BUILDING_DAMAGE * frac
-        mem_dmg = config.NUKE_MEMBER_DAMAGE * frac
         r, c = target_index // 3, target_index % 3
-        block = [rr * 3 + cc for rr in range(3) for cc in range(3)
+        block = [(rr, cc) for rr in range(3) for cc in range(3)
                  if abs(rr - r) <= 1 and abs(cc - c) <= 1]
         side = "PLAYER" if empire is self.player else "ENEMY"
         self._log(f"{side} launched NUKE on building {target_index+1} "
-                  f"at {int(frac*100)}% charge (3x3 blast)")
+                  f"at {int(frac*100)}% charge (3x3 blast, distance falloff)")
         sound.play("nuke")
 
-        for idx in block:
-            # Members in the blast.
+        for rr, cc in block:
+            idx = rr * 3 + cc
+            falloff = self._nuke_falloff(rr - r, cc - c)
+            bldg_dmg = config.NUKE_BUILDING_DAMAGE * frac * falloff
+            mem_dmg = config.NUKE_MEMBER_DAMAGE * frac * falloff
+            # Members in this cell.
             for m in list(target_empire.members):
                 if m.is_alive and m.assigned_building == idx:
                     m.take_damage(mem_dmg)
@@ -432,7 +473,7 @@ class BattleEngine:
                                 b.defenders.remove(m)
                                 break
                         empire.points += config.POINTS_PER_MEMBER_KILLED
-            # Building in the blast.
+            # Building in this cell.
             bldg = target_empire.buildings[idx]
             if not bldg.destroyed:
                 bldg.take_damage(bldg_dmg)

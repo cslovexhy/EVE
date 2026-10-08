@@ -82,8 +82,10 @@ class TestSiloChargeScaling(unittest.TestCase):
         _set_building(p1, 0, BuildingType.NUCLEAR_SILO, level=1)
         eng1 = BattleEngine(p1, _empire())
         eng1._nuke_charge["player"] = elapsed
+        # Lv1: 60% charge -> not yet full, but above the 30% min so fireable.
         self.assertLess(eng1.nuke_charge_fraction(p1), 1.0)
-        self.assertFalse(eng1.nuke_ready(p1))
+        self.assertAlmostEqual(eng1.nuke_charge_fraction(p1), 0.60, places=2)
+        self.assertTrue(eng1.nuke_ready(p1))  # >= NUKE_MIN_CHARGE
 
         p4 = _empire()
         _set_building(p4, 0, BuildingType.NUCLEAR_SILO, level=4)
@@ -91,6 +93,16 @@ class TestSiloChargeScaling(unittest.TestCase):
         eng4._nuke_charge["player"] = elapsed
         self.assertGreaterEqual(eng4.nuke_charge_fraction(p4), 1.0)
         self.assertTrue(eng4.nuke_ready(p4))
+
+    def test_nuke_ready_requires_min_charge(self):
+        # Below NUKE_MIN_CHARGE the nuke is not ready (not fireable).
+        p = _empire()
+        _set_building(p, 0, BuildingType.NUCLEAR_SILO, level=1)
+        eng = BattleEngine(p, _empire())
+        eng._nuke_charge["player"] = config.BATTLE_DURATION * 0.10  # 10%
+        self.assertAlmostEqual(eng.nuke_charge_fraction(p), 0.10, places=2)
+        self.assertFalse(eng.nuke_ready(p))
+        self.assertFalse(eng.launch_nuke(p, 4))  # rejected below the minimum
 
     def test_no_silo_fraction_is_none(self):
         player = _empire()

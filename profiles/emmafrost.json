@@ -1,5 +1,5 @@
 {
-  "money": 2719,
+  "money": 365,
   "building_layout": [
     "warehouse",
     "warehouse",
@@ -8,7 +8,7 @@
     "warehouse",
     "warehouse",
     "warehouse",
-    "warehouse",
+    "headquarters",
     "warehouse"
   ],
   "building_levels": [
@@ -23,19 +23,21 @@
     1
   ],
   "conquered": [
+    "United States/Alabama/Choctaw County/Needham town",
+    "United States/Alabama/Crenshaw County/Dozier town",
+    "United States/Alabama/Crenshaw County/Glenwood town",
     "United States/Alabama/Crenshaw County/Petrey town",
+    "United States/Alabama/Crenshaw County/Rutledge town",
     "United States/Alabama/Greene County/Boligee town",
     "United States/Alabama/Greene County/Forkland town",
     "United States/Alabama/Greene County/Union town"
   ],
   "member_assignments": [
     [
-      0,
-      8
+      9
     ],
     [
-      1,
-      9
+      40
     ],
     [
       10,
@@ -65,27 +67,36 @@
       34,
       35,
       36,
-      37,
       38,
-      39
+      39,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
     ],
     [
-      2
-    ],
-    [
-      3
+      2,
+      1
     ],
     [
       4
     ],
     [
-      5
+      37
     ],
     [
-      6
+      5,
+      8
     ],
     [
-      7
+      7,
+      0
+    ],
+    [
+      6,
+      3
     ]
   ],
   "roster": [
@@ -264,12 +275,6 @@
       "rarity": "common"
     },
     {
-      "name": "Dagger",
-      "member_class": "assassin",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
       "name": "Bomber",
       "member_class": "demolitionist",
       "level": 3,
@@ -328,9 +333,43 @@
       "member_class": "sniper",
       "level": 13,
       "rarity": "uncommon"
-    }
-  ],
-  "backup": [
+    },
+    {
+      "name": "Crosshair",
+      "member_class": "sniper",
+      "level": 7,
+      "rarity": "rare"
+    },
+    {
+      "name": "Salvatore",
+      "member_class": "enforcer",
+      "level": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Crosshair",
+      "member_class": "sniper",
+      "level": 7,
+      "rarity": "rare"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Gunslinger",
+      "member_class": "sniper",
+      "level": 14,
+      "rarity": "uncommon"
+    },
+    {
+      "name": "Dagger",
+      "member_class": "assassin",
+      "level": 3,
+      "rarity": "common"
+    },
     {
       "name": "Blade",
       "member_class": "demolitionist",
@@ -342,14 +381,9 @@
       "member_class": "demolitionist",
       "level": 3,
       "rarity": "common"
-    },
-    {
-      "name": "Crosshair",
-      "member_class": "sniper",
-      "level": 7,
-      "rarity": "rare"
     }
   ],
+  "backup": [],
   "home_city": "United States/Alabama/Greene County/Union town",
   "sound_on": false,
   "profile_name": "emmafrost"

@@ -185,82 +185,82 @@ BUILDING_TYPES = {
         ],
     },
     "safehouse": {
-        "display_name": "Safehouse", "hp": 650, "upgrade_cost": 1500,
+        "display_name": "Safehouse", "hp": 650, "upgrade_cost": 14000,
         "upgrades_from": "warehouse", "max_count": 2, "name_index": 8, "max_level": 3,
         "levels": [
-            {"hp": 650,  "cost": 1500},
-            {"hp": 850,  "cost": 2000},
-            {"hp": 1100, "cost": 4000},
+            {"hp": 650,  "cost": 14000},
+            {"hp": 850,  "cost": 316000},
+            {"hp": 1100, "cost": 562000},
         ],
     },
     "armory": {
-        "display_name": "Armory", "hp": 750, "upgrade_cost": 2500,
+        "display_name": "Armory", "hp": 750, "upgrade_cost": 31000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 1, "max_level": 4,
         "levels": [
-            {"hp": 750,  "cost": 2500},
-            {"hp": 950,  "cost": 3000},
-            {"hp": 1200, "cost": 6000},
-            {"hp": 1500, "cost": 12000},
+            {"hp": 750,  "cost": 31000},
+            {"hp": 950,  "cost": 133000},
+            {"hp": 1200, "cost": 1519000},
+            {"hp": 1500, "cost": 13000000},
         ],
     },
     "hospital": {
-        "display_name": "Hospital", "hp": 750, "upgrade_cost": 2500,
+        "display_name": "Hospital", "hp": 750, "upgrade_cost": 46000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 2, "max_level": 4,
         "levels": [
-            {"hp": 750,  "cost": 2500,  "bonus_packs": 0},
-            {"hp": 950,  "cost": 3000,  "bonus_packs": 2},
-            {"hp": 1200, "cost": 6000,  "bonus_packs": 4},
-            {"hp": 1500, "cost": 12000, "bonus_packs": 6},
+            {"hp": 750,  "cost": 46000,    "bonus_packs": 0},
+            {"hp": 950,  "cost": 177000,   "bonus_packs": 2},
+            {"hp": 1200, "cost": 1873000,  "bonus_packs": 4},
+            {"hp": 1500, "cost": 14000000, "bonus_packs": 6},
         ],
     },
     "research_lab": {
-        "display_name": "Research Lab", "hp": 800, "upgrade_cost": 3500,
+        "display_name": "Research Lab", "hp": 800, "upgrade_cost": 1232000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 7, "max_level": 4,
         "levels": [
-            {"hp": 800,  "cost": 3500},
-            {"hp": 1000, "cost": 4000},
-            {"hp": 1300, "cost": 8000},
-            {"hp": 1600, "cost": 16000},
+            {"hp": 800,  "cost": 1232000},
+            {"hp": 1000, "cost": 2848000},
+            {"hp": 1300, "cost": 3511000},
+            {"hp": 1600, "cost": 16000000},
         ],
     },
     "sniper_tower": {
-        "display_name": "Sniper Tower", "hp": 850, "upgrade_cost": 3500,
+        "display_name": "Sniper Tower", "hp": 850, "upgrade_cost": 68000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 6, "max_level": 4,
         "levels": [
-            {"hp": 850,  "cost": 3500},
-            {"hp": 1050, "cost": 4000},
-            {"hp": 1350, "cost": 8000},
-            {"hp": 1700, "cost": 16000},
+            {"hp": 850,  "cost": 68000},
+            {"hp": 1050, "cost": 237000},
+            {"hp": 1350, "cost": 2310000},
+            {"hp": 1700, "cost": 15000000},
         ],
     },
     "nuclear_silo": {
-        "display_name": "Nuclear Silo", "hp": 950, "upgrade_cost": 10000,
+        "display_name": "Nuclear Silo", "hp": 950, "upgrade_cost": 11000000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 5, "max_level": 4,
         "levels": [
-            {"hp": 950,  "cost": 10000, "charge_time": BATTLE_DURATION * 1.00},
-            {"hp": 1200, "cost": 12000, "charge_time": BATTLE_DURATION * 0.85},
-            {"hp": 1500, "cost": 24000, "charge_time": BATTLE_DURATION * 0.70},
-            {"hp": 1900, "cost": 48000, "charge_time": BATTLE_DURATION * 0.55},
+            {"hp": 950,  "cost": 11000000, "charge_time": BATTLE_DURATION * 1.00},
+            {"hp": 1200, "cost": 17000000, "charge_time": BATTLE_DURATION * 0.85},
+            {"hp": 1500, "cost": 18000000, "charge_time": BATTLE_DURATION * 0.70},
+            {"hp": 1900, "cost": 21000000, "charge_time": BATTLE_DURATION * 0.55},
         ],
     },
     "headquarters": {
-        "display_name": "Headquarters", "hp": 1300, "upgrade_cost": 6000,
+        "display_name": "Headquarters", "hp": 1300, "upgrade_cost": 10000,
         "upgrades_from": "warehouse", "max_count": 1, "name_index": 0, "max_level": 4,
         "levels": [
-            {"hp": 1300, "cost": 6000},
-            {"hp": 1700, "cost": 8000},
-            {"hp": 2200, "cost": 20000},
-            {"hp": 3000, "cost": 45000},
+            {"hp": 1300, "cost": 10000},
+            {"hp": 1700, "cost": 100000},
+            {"hp": 2200, "cost": 1000000},
+            {"hp": 3000, "cost": 10000000},
         ],
     },
     "bunker": {
-        "display_name": "Bunker", "hp": 1300, "upgrade_cost": 5000,
+        "display_name": "Bunker", "hp": 1300, "upgrade_cost": 4328000,
         "upgrades_from": "safehouse", "max_count": 2, "name_index": 4, "max_level": 4,
         "levels": [
-            {"hp": 1300, "cost": 5000},
-            {"hp": 1700, "cost": 6000},
-            {"hp": 2200, "cost": 12000},
-            {"hp": 3000, "cost": 24000},
+            {"hp": 1300, "cost": 4328000},
+            {"hp": 1700, "cost": 6579000},
+            {"hp": 2200, "cost": 19000000},
+            {"hp": 3000, "cost": 22000000},
         ],
     },
 }
@@ -288,8 +288,10 @@ BACKUP_FORCE_CAP = 80
 # HQ HP per level (Lv1 matches BUILDING_TYPES["headquarters"]["hp"]).
 HQ_LEVEL_HP = {1: 1300, 2: 1700, 3: 2200, 4: 3000}
 # Money cost to level the HQ FROM level n-1 TO level n (steeply escalating).
-# Building an HQ (Warehouse -> HQ) costs BUILDING_TYPES cost and yields Lv1.
-HQ_LEVEL_UP_COST = {2: 8000, 3: 20000, 4: 45000}
+# Building an HQ (Warehouse -> HQ) costs BUILDING_TYPES cost ($10k) and yields
+# Lv1. Level-up costs follow the x10-per-level anchor curve (L2 100k, L3 1M,
+# L4 10M), matching headquarters' per-level ladder in BUILDING_TYPES.
+HQ_LEVEL_UP_COST = {2: 100000, 3: 1000000, 4: 10000000}
 
 # --- Police raid boss -------------------------------------------------------------------
 # Once a city is conquered you can repeatedly "Challenge Police" — a much harder
@@ -391,9 +393,20 @@ ARMORY_AMMO_SPEEDUP = 2.0          # ammo regenerates this many x faster while a
 SNIPER_TOWER_DAMAGE_BONUS = 0.5    # +50% damage for a Sniper stationed in a Sniper Tower
 RESEARCH_LAB_REVEAL = (3, 4, 6, 7, 8)   # buildings 4/5/7/8/9 become see-able + attackable
 NUKE_CHARGE_TIME = BATTLE_DURATION       # Nuclear Silo charges 0->100% over the full battle
-NUKE_BUILDING_DAMAGE = 800         # nuke damage to each building in the 3x3 blast, at FULL charge
-NUKE_MEMBER_DAMAGE = 600           # nuke damage to each member in the 3x3 blast, at FULL charge
-ENEMY_NUKE_THRESHOLD = 0.75        # enemy AI fires its nuke once charge reaches this fraction
+NUKE_BUILDING_DAMAGE = 800         # nuke damage to the CENTER building in the blast, at FULL charge
+NUKE_MEMBER_DAMAGE = 600           # nuke damage to a CENTER member in the blast, at FULL charge
+# Nuke can only be launched once charge reaches this fraction, and firing is a
+# ONE-SHOT: after launching, the silo never recharges that battle.
+NUKE_MIN_CHARGE = 0.30
+# Distance-based blast falloff within the 3x3, applied to BOTH buildings and
+# members (on top of the charge fraction): center (target) full, orthogonal
+# (L/R/U/D) neighbours reduced, diagonal neighbours reduced further. This makes
+# the target choice matter (not always "nuke the center building").
+NUKE_SPLASH_CENTER = 1.00
+NUKE_SPLASH_ORTHOGONAL = 0.70
+NUKE_SPLASH_DIAGONAL = 0.50
+ENEMY_NUKE_THRESHOLD = 0.30        # enemy AI fires its nuke once charge reaches this fraction
+                                   # (= the minimum), aimed at its CURRENT attack target
 
 # UI Layout
 # Top bar: timer + scores (0-40px)

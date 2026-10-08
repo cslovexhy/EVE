@@ -1,5 +1,5 @@
 {
-  "money": 2238986,
+  "money": 2250539,
   "building_layout": [
     "bunker",
     "armory",
@@ -35,15 +35,18 @@
     "United States/Arkansas/Woodruff County/McCrory city",
     "United States/Arkansas/Woodruff County/Patterson city",
     "United States/Arkansas/Woodruff County/Woodruff (unincorporated)",
+    "United States/California/Alpine County/Alpine",
     "United States/California/Inyo County/Bishop city",
     "United States/California/Inyo County/Inyo (unincorporated)",
     "United States/California/Los Angeles County/Avalon city",
     "United States/California/Los Angeles County/Los Angeles (unincorporated)",
     "United States/California/Los Angeles County/Los Angeles city",
+    "United States/California/Los Angeles County/Santa Clarita city",
     "United States/California/Mariposa County/Mariposa",
     "United States/California/Orange County/Anaheim city",
     "United States/California/Plumas County/Plumas (unincorporated)",
     "United States/California/San Diego County/Coronado city",
+    "United States/California/Santa Barbara County/Santa Barbara (unincorporated)",
     "United States/California/Santa Clara County/San Jose city",
     "United States/California/Santa Clara County/Sunnyvale city",
     "United States/California/Trinity County/Trinity",
@@ -191,20 +194,20 @@
   ],
   "member_assignments": [
     [
-      4,
-      21,
-      19,
-      56
+      3,
+      20,
+      18,
+      54
     ],
     [
-      40,
-      60
+      38,
+      58
     ],
     [
       0,
       1,
       2,
-      3,
+      5,
       6,
       7,
       8,
@@ -216,11 +219,11 @@
       14,
       15,
       16,
-      17,
+      22,
       23,
       24,
       25,
-      26,
+      28,
       29,
       30,
       31,
@@ -229,21 +232,21 @@
       34,
       35,
       36,
-      37,
-      38,
+      40,
+      41,
       42,
       43,
       44,
       45,
-      46,
-      47,
+      48,
+      49,
       50,
       51,
       52,
       53,
-      54,
-      55,
+      57,
       59,
+      60,
       61,
       62,
       63,
@@ -260,39 +263,35 @@
       74,
       75,
       76,
-      77
+      77,
+      78,
+      79
     ],
     [],
     [
-      5,
-      22,
-      20,
-      57
+      4,
+      21,
+      19,
+      55
     ],
     [
-      28,
       27,
-      39
+      26,
+      37
     ],
     [
-      18
+      17
     ],
     [
-      41,
-      48
+      39,
+      46
     ],
     [
-      49,
-      58
+      47,
+      56
     ]
   ],
   "roster": [
-    {
-      "name": "Crosshair",
-      "member_class": "sniper",
-      "level": 17,
-      "rarity": "rare"
-    },
     {
       "name": "Sharpshot",
       "member_class": "sniper",
@@ -477,12 +476,6 @@
       "name": "Caine",
       "member_class": "demolitionist",
       "level": 40,
-      "rarity": "super_rare"
-    },
-    {
-      "name": "Pyro 2",
-      "member_class": "demolitionist",
-      "level": 23,
       "rarity": "super_rare"
     },
     {
@@ -754,313 +747,23 @@
       "member_class": "demolitionist",
       "level": 24,
       "rarity": "super_rare"
-    }
-  ],
-  "backup": [
-    {
-      "name": "Eclipse",
-      "member_class": "assassin",
-      "level": 15,
-      "rarity": "uncommon"
     },
     {
-      "name": "Shade",
-      "member_class": "assassin",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Marksman",
+      "name": "Eagle",
       "member_class": "sniper",
-      "level": 13,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Glint",
-      "member_class": "sniper",
-      "level": 13,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Archer",
-      "member_class": "sniper",
-      "level": 13,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Diablo 2",
-      "member_class": "demolitionist",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Arson",
-      "member_class": "demolitionist",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Diablo",
-      "member_class": "demolitionist",
-      "level": 18,
+      "level": 20,
       "rarity": "rare"
     },
     {
       "name": "Napalm",
       "member_class": "demolitionist",
-      "level": 19,
+      "level": 40,
       "rarity": "rare"
     },
     {
-      "name": "Mortar",
-      "member_class": "demolitionist",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Landmine",
-      "member_class": "demolitionist",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Diablo 2",
-      "member_class": "demolitionist",
-      "level": 20,
-      "rarity": "rare"
-    },
-    {
-      "name": "Sharpshot",
+      "name": "Crosshair",
       "member_class": "sniper",
-      "level": 14,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Marksman",
-      "member_class": "sniper",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Goliath",
-      "member_class": "enforcer",
-      "level": 6,
-      "rarity": "common"
-    },
-    {
-      "name": "Shrapnel",
-      "member_class": "demolitionist",
-      "level": 22,
-      "rarity": "rare"
-    },
-    {
-      "name": "Razor",
-      "member_class": "sniper",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Reticle",
-      "member_class": "sniper",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Gustavo",
-      "member_class": "enforcer",
-      "level": 14,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Goliath",
-      "member_class": "enforcer",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Boulder",
-      "member_class": "enforcer",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Gustavo",
-      "member_class": "enforcer",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Gustavo",
-      "member_class": "enforcer",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Marksman",
-      "member_class": "sniper",
-      "level": 14,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Rhino",
-      "member_class": "enforcer",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Shrapnel",
-      "member_class": "demolitionist",
-      "level": 20,
-      "rarity": "rare"
-    },
-    {
-      "name": "Arson 2",
-      "member_class": "demolitionist",
-      "level": 20,
-      "rarity": "rare"
-    },
-    {
-      "name": "Cobra",
-      "member_class": "assassin",
-      "level": 13,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Arson",
-      "member_class": "demolitionist",
-      "level": 20,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mamba",
-      "member_class": "assassin",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mamba",
-      "member_class": "assassin",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Grizzly",
-      "member_class": "enforcer",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Raven 2",
-      "member_class": "assassin",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Raven",
-      "member_class": "assassin",
-      "level": 22,
-      "rarity": "rare"
-    },
-    {
-      "name": "Eclipse",
-      "member_class": "assassin",
-      "level": 19,
-      "rarity": "rare"
-    },
-    {
-      "name": "Eagle",
-      "member_class": "sniper",
-      "level": 14,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Eagle",
-      "member_class": "sniper",
-      "level": 15,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Goliath",
-      "member_class": "enforcer",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Salvatore",
-      "member_class": "enforcer",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Goliath",
-      "member_class": "enforcer",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Gustavo 2",
-      "member_class": "enforcer",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Ox",
-      "member_class": "enforcer",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mamba",
-      "member_class": "assassin",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Eclipse",
-      "member_class": "assassin",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Ghost",
-      "member_class": "assassin",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Pierce",
-      "member_class": "sniper",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Sharpshot",
-      "member_class": "sniper",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Caine 2",
-      "member_class": "demolitionist",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Eagle",
-      "member_class": "sniper",
-      "level": 20,
-      "rarity": "rare"
-    },
-    {
-      "name": "Cobra",
-      "member_class": "assassin",
-      "level": 22,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mortar",
-      "member_class": "demolitionist",
-      "level": 21,
+      "level": 47,
       "rarity": "rare"
     },
     {
@@ -1068,98 +771,9 @@
       "member_class": "sniper",
       "level": 20,
       "rarity": "rare"
-    },
-    {
-      "name": "Mortar",
-      "member_class": "demolitionist",
-      "level": 16,
-      "rarity": "rare"
-    },
-    {
-      "name": "Scorpion",
-      "member_class": "assassin",
-      "level": 14,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Eclipse",
-      "member_class": "assassin",
-      "level": 13,
-      "rarity": "uncommon"
-    },
-    {
-      "name": "Ox",
-      "member_class": "enforcer",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Goliath",
-      "member_class": "enforcer",
-      "level": 19,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mammoth",
-      "member_class": "enforcer",
-      "level": 23,
-      "rarity": "rare"
-    },
-    {
-      "name": "Grizzly",
-      "member_class": "enforcer",
-      "level": 22,
-      "rarity": "rare"
-    },
-    {
-      "name": "Ox",
-      "member_class": "enforcer",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Cobra",
-      "member_class": "assassin",
-      "level": 18,
-      "rarity": "rare"
-    },
-    {
-      "name": "Ghost",
-      "member_class": "assassin",
-      "level": 19,
-      "rarity": "rare"
-    },
-    {
-      "name": "Eclipse",
-      "member_class": "assassin",
-      "level": 19,
-      "rarity": "rare"
-    },
-    {
-      "name": "Scorpion",
-      "member_class": "assassin",
-      "level": 17,
-      "rarity": "rare"
-    },
-    {
-      "name": "Mamba",
-      "member_class": "assassin",
-      "level": 17,
-      "rarity": "rare"
-    },
-    {
-      "name": "Lotus",
-      "member_class": "assassin",
-      "level": 21,
-      "rarity": "rare"
-    },
-    {
-      "name": "Lotus",
-      "member_class": "assassin",
-      "level": 23,
-      "rarity": "rare"
     }
   ],
+  "backup": [],
   "home_city": "United States/New Mexico/Harding County/Harding",
   "sound_on": false,
   "profile_name": "cs"

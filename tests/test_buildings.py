@@ -52,7 +52,7 @@ class TestBuildingHP(unittest.TestCase):
 
 class TestUpgradeChain(unittest.TestCase):
     def test_warehouse_can_upgrade_to_tier1(self):
-        e = make_empire(money=100000)
+        e = make_empire(money=20_000_000)
         for target in (BuildingType.HEADQUARTERS, BuildingType.ARMORY,
                        BuildingType.HOSPITAL, BuildingType.SAFEHOUSE,
                        BuildingType.SNIPER_TOWER, BuildingType.RESEARCH_LAB,
@@ -67,7 +67,7 @@ class TestUpgradeChain(unittest.TestCase):
         self.assertEqual(reason, "invalid_chain")
 
     def test_safehouse_upgrades_to_bunker(self):
-        e = make_empire(money=100000)
+        e = make_empire(money=20_000_000)
         buildings.upgrade_building(e, 0, BuildingType.SAFEHOUSE)
         # Bunker is gated behind a fully-leveled (Lv3) Safehouse.
         ok, reason = buildings.can_upgrade(e, 0, BuildingType.BUNKER)
@@ -122,7 +122,7 @@ class TestUpgradeLimits(unittest.TestCase):
         self.assertEqual(reason, "max_count_reached")
 
     def test_bunker_limit_two(self):
-        e = make_empire(money=1000000)
+        e = make_empire(money=40_000_000)
 
         def make_bunker(slot):
             self.assertTrue(buildings.upgrade_building(e, slot, BuildingType.SAFEHOUSE)[0])
@@ -147,11 +147,12 @@ class TestUpgradeLimits(unittest.TestCase):
 
 class TestUpgradeCosts(unittest.TestCase):
     def test_cost_is_deducted(self):
-        e = make_empire(money=5000)
+        money = 100000
+        e = make_empire(money=money)
         cost = buildings.upgrade_cost(BuildingType.ARMORY)
         ok, _ = buildings.upgrade_building(e, 0, BuildingType.ARMORY)
         self.assertTrue(ok)
-        self.assertEqual(e.money, 5000 - cost)
+        self.assertEqual(e.money, money - cost)
 
     def test_insufficient_funds_blocks_and_preserves_state(self):
         e = make_empire(money=100)
@@ -165,9 +166,12 @@ class TestUpgradeCosts(unittest.TestCase):
         self.assertEqual(e.buildings[0].building_type, BuildingType.WAREHOUSE)
 
     def test_costs_match_config(self):
-        self.assertEqual(buildings.upgrade_cost(BuildingType.SAFEHOUSE), 1500)
-        self.assertEqual(buildings.upgrade_cost(BuildingType.NUCLEAR_SILO), 10000)
-        self.assertEqual(buildings.upgrade_cost(BuildingType.BUNKER), 5000)
+        # Costs now derive from the enemy build-ladder (Option 2), rounded to
+        # full thousands. HQ anchors the x10-per-level curve.
+        self.assertEqual(buildings.upgrade_cost(BuildingType.HEADQUARTERS), 10000)
+        self.assertEqual(buildings.upgrade_cost(BuildingType.SAFEHOUSE), 14000)
+        self.assertEqual(buildings.upgrade_cost(BuildingType.NUCLEAR_SILO), 11000000)
+        self.assertEqual(buildings.upgrade_cost(BuildingType.BUNKER), 4328000)
 
 
 class TestBuildingOrderInterop(unittest.TestCase):
@@ -219,7 +223,7 @@ class TestBuildingLevels(unittest.TestCase):
                 buildings.next_level_cost(BuildingType.HEADQUARTERS, lvl - 1), cost)
 
     def test_level_up_deducts_and_scales_hp(self):
-        e = make_empire(money=100000)
+        e = make_empire(money=1000000)
         buildings.upgrade_building(e, 0, BuildingType.ARMORY)  # Lv1, HP 750
         self.assertEqual(e.buildings[0].max_hp, 750)
         money_before = e.money
@@ -227,10 +231,10 @@ class TestBuildingLevels(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(e.buildings[0].level, 2)
         self.assertEqual(e.buildings[0].max_hp, 950)
-        self.assertEqual(money_before - e.money, 3000)  # Armory Lv2 cost
+        self.assertEqual(money_before - e.money, 133000)  # Armory Lv2 cost
 
     def test_level_up_blocked_at_max(self):
-        e = make_empire(money=10_000_000)
+        e = make_empire(money=20_000_000)
         buildings.upgrade_building(e, 0, BuildingType.ARMORY)
         for _ in range(3):
             self.assertTrue(buildings.level_up_building(e, 0)[0])
@@ -246,8 +250,10 @@ class TestBuildingLevels(unittest.TestCase):
         self.assertEqual(reason, "max_level")
 
     def test_level_up_insufficient_funds(self):
-        e = make_empire(money=2500)
-        buildings.upgrade_building(e, 0, BuildingType.ARMORY)  # spends 2500 -> $0
+        # Enough to build Armory L1 (31000) but not to level to L2 (133000).
+        e = make_empire(money=31000)
+        buildings.upgrade_building(e, 0, BuildingType.ARMORY)  # spends 31000 -> $0
+        self.assertEqual(e.money, 0)
         ok, reason = buildings.can_level_building(e, 0)
         self.assertFalse(ok)
         self.assertEqual(reason, "insufficient_funds")
@@ -261,7 +267,7 @@ class TestBuildingLevels(unittest.TestCase):
         self.assertEqual(e.buildings[0].max_hp, 1100)
 
     def test_hq_wrappers_still_work(self):
-        e = make_empire(money=100000)
+        e = make_empire(money=1000000)
         buildings.upgrade_building(e, 0, BuildingType.HEADQUARTERS)
         self.assertTrue(buildings.can_level_hq(e, 0)[0])
         self.assertTrue(buildings.level_up_hq(e, 0)[0])
@@ -272,6 +278,50 @@ class TestBuildingLevels(unittest.TestCase):
         ok, reason = buildings.can_level_hq(e, 1)
         self.assertFalse(ok)
         self.assertEqual(reason, "not_hq")
+
+
+class TestLadderCosts(unittest.TestCase):
+    """The upgrade economy derives from the enemy build ladder (Option 2):
+    each (type, level) cost = the interpolated cost at the FIRST ladder row that
+    type/level appears, rounded to full thousands. HQ anchors the x10-per-level
+    curve (10k/100k/1M/10M)."""
+
+    EXPECTED = {
+        BuildingType.HEADQUARTERS: [10000, 100000, 1000000, 10000000],
+        BuildingType.SAFEHOUSE:    [14000, 316000, 562000],
+        BuildingType.ARMORY:       [31000, 133000, 1519000, 13000000],
+        BuildingType.HOSPITAL:     [46000, 177000, 1873000, 14000000],
+        BuildingType.SNIPER_TOWER: [68000, 237000, 2310000, 15000000],
+        BuildingType.RESEARCH_LAB: [1232000, 2848000, 3511000, 16000000],
+        BuildingType.NUCLEAR_SILO: [11000000, 17000000, 18000000, 21000000],
+        BuildingType.BUNKER:       [4328000, 6579000, 19000000, 22000000],
+    }
+
+    def test_costs_match_expected_table(self):
+        for bt, costs in self.EXPECTED.items():
+            for lvl, want in enumerate(costs, start=1):
+                got = bt.spec["levels"][lvl - 1]["cost"]
+                self.assertEqual(got, want, f"{bt.value} L{lvl}")
+
+    def test_costs_monotonic_per_type(self):
+        for bt, costs in self.EXPECTED.items():
+            self.assertEqual(costs, sorted(costs), f"{bt.value} not monotonic")
+
+    def test_costs_rounded_to_thousands(self):
+        for bt in BuildingType:
+            for lvl in bt.spec["levels"]:
+                self.assertEqual(lvl["cost"] % 1000, 0, bt.value)
+
+    def test_hq_anchors(self):
+        hq = BuildingType.HEADQUARTERS.spec["levels"]
+        self.assertEqual([c["cost"] for c in hq],
+                         [10000, 100000, 1000000, 10000000])
+
+    def test_hq_level_up_cost_matches_ladder(self):
+        # HQ_LEVEL_UP_COST (L2..L4) must equal the headquarters level ladder.
+        for lvl in (2, 3, 4):
+            self.assertEqual(config.HQ_LEVEL_UP_COST[lvl],
+                             BuildingType.HEADQUARTERS.spec["levels"][lvl - 1]["cost"])
 
 
 if __name__ == "__main__":
