@@ -136,6 +136,27 @@ class TestRosterMoves(unittest.TestCase):
         self.assertEqual(len(st.roster), before)
         self.assertTrue(_valid(st))
 
+    def test_kick_all_backups_clears_backup_only(self):
+        st = self.st
+        for i in range(5):
+            st.add_recruit(Member(name=f"B{i}", member_class=MemberClass.SNIPER,
+                                  level=1, rarity=Rarity.COMMON))
+        roster_before = len(st.roster)
+        assign_before = [list(s) for s in st.member_assignments]
+        n = st.kick_all_backups()
+        self.assertEqual(n, 5)
+        self.assertEqual(len(st.backup), 0)
+        # Active roster and its building assignments are untouched.
+        self.assertEqual(len(st.roster), roster_before)
+        self.assertEqual([list(s) for s in st.member_assignments], assign_before)
+        self.assertTrue(_valid(st))
+
+    def test_kick_all_backups_empty_returns_zero(self):
+        st = self.st
+        self.assertEqual(len(st.backup), 0)
+        self.assertEqual(st.kick_all_backups(), 0)
+        self.assertEqual(len(st.backup), 0)
+
     def test_backup_cap_enforced(self):
         st = self.st
         for i in range(config.BACKUP_FORCE_CAP):

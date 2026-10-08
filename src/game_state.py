@@ -303,6 +303,14 @@ class GameState:
         self.backup.pop(backup_idx)
         return True
 
+    def kick_all_backups(self) -> int:
+        """Permanently remove every backup member from the game. Does NOT touch
+        the active roster or its building assignments (backup indices are
+        independent of roster indices). Returns the number removed."""
+        n = len(self.backup)
+        self.backup.clear()
+        return n
+
     def member_cap(self) -> int:
         """Roster cap from the persistent HQ level (base + 10 per HQ level)."""
         cap = config.BASE_MEMBER_CAP

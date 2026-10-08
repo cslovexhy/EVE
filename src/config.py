@@ -43,6 +43,43 @@ RARITY_MULTIPLIERS = {
     "super_rare": 2.0,
 }
 
+# --- Enemy member rarity by city GDP-per-capita ----------------------------
+# Richer territories field better-equipped (higher-rarity) gangs. Each enemy
+# member rolls its rarity independently from the bracket its city's per-capita
+# income falls into. A bracket is (upper_bound_usd, [common, uncommon, rare,
+# super_rare] weights) and the first bracket whose upper bound exceeds the
+# income wins; the final bracket (upper bound = infinity) catches the top.
+# Weights are relative (need not sum to 100) and are fed straight to
+# random.choices. Anchored at [95,5,0,0] for the lowest bracket and [0,0,0,100]
+# for the highest; the middle brackets sweep the mass through uncommon then rare
+# (smooth hump handoff). See docs/building_progression.md sibling analysis.
+#
+# Data note: ~95% of real cities fall at or below $120k/capita, so most gangs
+# roll from the first five brackets (mostly common/uncommon). The $1M+ brackets
+# are low-population data artifacts (county unincorporated-remainder slices).
+RARITY_INCOME_BRACKETS = [
+    #  upper $      common uncommon rare super_rare
+    (   20_000, [95,  5,  0,   0]),
+    (   40_000, [65, 33,  2,   0]),
+    (   60_000, [56, 40,  4,   0]),
+    (   80_000, [47, 47,  6,   0]),
+    (  100_000, [37, 53, 10,   0]),
+    (  120_000, [29, 56, 14,   1]),
+    (  140_000, [21, 57, 21,   1]),
+    (  160_000, [14, 56, 28,   2]),
+    (  180_000, [ 9, 51, 36,   4]),
+    (  200_000, [ 6, 44, 44,   6]),
+    (  250_000, [ 4, 36, 51,   9]),
+    (  300_000, [ 2, 28, 56,  14]),
+    (  400_000, [ 1, 21, 57,  21]),
+    (  500_000, [ 1, 14, 56,  29]),
+    (  750_000, [ 0, 10, 53,  37]),
+    (1_000_000, [ 0,  6, 47,  47]),
+    (5_000_000, [ 0,  4, 40,  56]),
+    (10_000_000,[ 0,  2, 33,  65]),
+    (float("inf"), [0, 0, 0, 100]),
+]
+
 # --- Class skills (rarity-keyed) -------------------------------------------
 # Sniper: chance for a shot vs a member to CRIT (deal SNIPER_CRIT_MULT x damage).
 SNIPER_CRIT_CHANCE = {

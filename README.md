@@ -85,6 +85,88 @@ python3 src/download_portraits.py  # Download character art
 
 ## Worklog
 
+### 2026-10-07 — Kick All Backups, income→rarity, unified "power" scaling + tier-driven buildings
+
+Three features this session. **191 unit tests pass**; live `player_profile.json`
+and `profiles/*.json` were byte-for-byte unchanged by all test/verification runs
+(shasums matched before/after).
+
+**1. "Kick All Backups" button** (Force tab, EVE Layout). New
+`GameState.kick_all_backups()` clears the entire backup force in one action and
+returns the count; the active roster and its building assignments are untouched
+(backup indices are independent of roster indices). UI: a dark-red **Kick All
+Backups** button shows in the Force-tab action bar whenever the backup force is
+non-empty, independent of row selection. Because the bulk delete is irreversible
+it **arms a confirmation** on first click (becomes `Confirm: Kick All N` +
+`Cancel`, with a red warning line); only confirming wipes the backups and saves.
+Switching tabs resets the arm state. Tests: +3 in `tests/test_roster.py`.
+Changed `src/game_state.py`, `src/screens.py`, `tests/test_roster.py`.
+
+**2. Enemy rarity now scales with city GDP-per-capita.** Previously gang rarity
+rode the same compressed power `norm` and GDP had zero effect on the gang you
+fight. Now each enemy member rolls its rarity from the bracket its city's
+per-capita income (`gdp_thousands*1000/population`) falls into —
+`config.RARITY_INCOME_BRACKETS`, 19 brackets anchored at `[95,5,0,0]` (lowest,
+≤$20k) and `[0,0,0,100]` (highest, ≥$10M), with the mass sweeping smoothly
+through uncommon then rare in between (hump handoff). Richer territories field
+better-equipped gangs. `enemy_gen.per_capita_income(city)`,
+`income_rarity_weights(income)`, `_pick_rarity_by_income`; `build_enemy` and
+`_make_members` take an optional `per_capita_income` (falls back to the legacy
+power model when absent); `main._fight_city` passes it for gang + police (and so
+the birthplace fight). Data note: ~95% of cities are ≤$120k/capita (mostly
+common/uncommon); the $1M+ brackets are low-population data artifacts. Tests:
++12 in `tests/test_rarity_income.py`. Changed `src/config.py`,
+`src/enemy_gen.py`, `src/main.py`.
+
+**3. Unified "power" scaling (replaces the compressed `norm` for level +
+buildings).** Root problem: cities with huge power gaps spawned similar-strength
+empires because a single doubly-compressive `norm = log10(power)/log10(REF)` fed
+every strength axis and saturated the top end; and police were a flat max
+(`POLICE_LEVEL=40` + maxed HQ/buildings) regardless of their real `police_power`.
+
+Data (all 49 states, ~16.5k cities): underworld p50 137 / max 1,060,611 (tier
+6); police p50 4,421 / max 36,038,902 (tier 7) — same log shape, shifted ~1.5
+decades. Unified into one **"power"** axis; the only gang/police difference is
+which scalar feeds in (police is larger → naturally tougher), no overrides.
+
+- **Decade tiers.** `power_tier(p) = clamp(floor(log10 p), 0, 7)` → 8 tiers.
+  Level band per tier `[n*10+1, (n+1)*10]` (tier 0→1–10 … tier 7→71–80);
+  `MAX_LEVEL=80`. Retired `POLICE_LEVEL` and the old `MAX_LEVEL=30`.
+- **Skewed per-member level roll.** `roll_member_level`: `frac = log10(p) - n`,
+  `center = L_min + frac**0.7 * span` (skewed, front-loads the climb),
+  `spread = span * frac * (1-frac)` (0 at both ends), `level = round(center +
+  uniform(-1,1)*spread)` clamped to the band. Each member rolls independently.
+  Guarantees: tier floor → all L_min, ceiling → all L_max, higher power → higher
+  expected level and higher max-level chance. Both gang and police.
+- **Tier-driven building ladder** (`docs/building_progression.md`). An explicit
+  41-row build ladder with fixed slot roles (S1 Sniper Tower, S2 Research Lab,
+  S3 Hospital, S4 Bunker, S5 HQ, S6 Nuclear Silo, S7 Bunker, S8 Armory, S9 late
+  Safehouse) and 3 build gates: Research Lab only after HQ L3 (row 16), Nuclear
+  Silo only after HQ L4 (row 27), slot-9 Warehouse→Safehouse only after HQ L4
+  (row 28). Row 0 = all-Warehouse base; end (row 41) = fully-maxed base. Row↔tier
+  map: tier 0 = base (row 0); tier n (1–6) = `[1+6(n-1), 6n]`; tier 7 absorbs
+  the remaining rows 37–41; within a tier the row interpolates by `frac`.
+  Realistically only POLICE bosses (power up to ~36M, tier 7) reach rows 37–41.
+  Dropped `_fort_types`/`_make_layout`/`_place_layout`/`FORT_STAGES`, the
+  placement bans, the member-count-derived HQ level, and all police
+  max-overrides.
+- **Supporting changes.** `describe()` now returns `tier` / `level_band` /
+  `row` (plus `level` = band max, back-compat). `police_net_worth()` builds the
+  boss deterministically and sums real member levels (levels now vary), so the
+  UI reward preview equals the paid reward exactly — guaranteed by giving level
+  rolls a **separate RNG stream** so income/rarity draws never perturb them.
+  `REFERENCE_MAX_POWER` re-anchored to the real underworld max (1,060,611); it
+  now only feeds member **count**, which stays on the old smooth curve (owner
+  scoped count out of this change). `tests/test_police.py` fully rewritten for
+  the unified model (tier math, level-roll endpoints/monotonicity/skew, ladder +
+  gates, row/tier mapping, police-via-power, describe, reward parity).
+  `tests/test_ai_profiles.py` needed no change. Changed `src/enemy_gen.py`,
+  `src/config.py`, `src/main.py`, `tests/test_police.py`; added
+  `docs/building_progression.md`.
+
+**Not in scope (deferred):** member **count** still uses the old power-norm
+curve; tying gang strength (vs rarity) to GDP; any finer-than-decade tiering.
+
 ### 2026-09-12 — Offline voice control (always-on, parallel to keyboard/mouse)
 
 - **You can now play by voice, fully offline.** A always-listening voice layer runs from game start to game exit and injects the **same** input the keyboard/mouse already produce — it never supersedes them. Both input paths are live at all times. Recognition is 100% on-device via **Vosk** (small English model, ~40MB) with a **closed 43-word grammar** for accuracy; no network, no API keys, no cloud.

@@ -456,6 +456,10 @@ class EveLayout(_Screen):
         # the bottom button.
         self._force_last_click = None
         self.DOUBLE_CLICK_MS = 400
+        # Pending "Kick All Backups" confirmation (destructive, irreversible):
+        # first click arms it (button turns into Confirm/Cancel), confirm wipes
+        # the whole backup force.
+        self._confirm_kick_all = False
 
     def _compute_slot_rects(self):
         self.slot_rects = {}
@@ -495,6 +499,7 @@ class EveLayout(_Screen):
         self.swap_slot = None
         self.selected_member = None
         self.force_sel = None
+        self._confirm_kick_all = False
         self.feedback = ""
 
     def handle_click(self, pos):
@@ -673,6 +678,30 @@ class EveLayout(_Screen):
                 and now - last[1] <= self.DOUBLE_CLICK_MS)
 
     def _do_force_action(self, name):
+        # Bulk "Kick All Backups" is independent of the row selection: it arms a
+        # confirmation on the first click, then wipes the whole backup force.
+        if name == "kick_all":
+            if not self.state.backup:
+                self.feedback = "No backup members to kick."
+                return
+            self._confirm_kick_all = True
+            self.feedback = ""
+            return
+        if name == "kick_all_cancel":
+            self._confirm_kick_all = False
+            self.feedback = ""
+            return
+        if name == "kick_all_confirm":
+            n = self.state.kick_all_backups()
+            self.state.save()
+            self._confirm_kick_all = False
+            # A kicked backup member may have been the current selection.
+            if self.force_sel is not None and self.force_sel[0] == "backup":
+                self.force_sel = None
+            self.feedback = (f"Kicked all {n} backup "
+                             f"member{'s' if n != 1 else ''}.")
+            return
+
         if self.force_sel is None:
             return
         col, idx = self.force_sel
@@ -1201,6 +1230,17 @@ class EveLayout(_Screen):
             else:
                 actions = [("activate", "◀ Activate", config.GREEN),
                            ("kick", "Kick Out", config.RED)]
+        # Bulk kick-all is always available (independent of selection) whenever
+        # there is a backup force to clear. When armed, it becomes Confirm/Cancel.
+        if self.state.backup:
+            if self._confirm_kick_all:
+                actions += [
+                    ("kick_all_confirm",
+                     f"Confirm: Kick All {len(self.state.backup)}", config.RED),
+                    ("kick_all_cancel", "Cancel", config.GRAY),
+                ]
+            else:
+                actions += [("kick_all", "Kick All Backups", config.DARK_RED)]
         bx = x
         for name, label, color in actions:
             w = self.font_btn.size(label)[0] + 28
@@ -1213,7 +1253,11 @@ class EveLayout(_Screen):
             self.screen.blit(txt, txt.get_rect(center=rect.center))
             self.force_action_rects[name] = rect
             bx += w + 14
-        if self.force_sel is None:
+        if self._confirm_kick_all:
+            self.screen.blit(self.font_small.render(
+                "This permanently removes ALL backup members. This cannot be undone.",
+                True, config.RED), (x, y + 52))
+        elif self.force_sel is None and not self.state.backup:
             self.screen.blit(self.font_small.render(
                 "Select a member on either side to move them.", True, config.GRAY),
                 (x, y + 12))

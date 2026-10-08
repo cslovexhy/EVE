@@ -157,11 +157,13 @@ class Game:
         if police:
             power = city["police_power"] if city else 0
             enemy = enemy_gen.build_enemy(power, name=f"{city_name} Police",
-                                          police=True, profile_seed=target_city_id)
+                                          police=True, profile_seed=target_city_id,
+                                          per_capita_income=enemy_gen.per_capita_income(city))
         else:
             power = city["underworld_power"] if city else 0
             enemy = enemy_gen.build_enemy(power, name=f"{city_name} Underworld",
-                                          profile_seed=target_city_id)
+                                          profile_seed=target_city_id,
+                                          per_capita_income=enemy_gen.per_capita_income(city))
 
         session = BattleSession(self.screen, player, enemy,
                                 building_order=order,
