@@ -1,5 +1,5 @@
 {
-  "money": 365,
+  "money": 2627,
   "building_layout": [
     "warehouse",
     "warehouse",
@@ -24,6 +24,7 @@
   ],
   "conquered": [
     "United States/Alabama/Choctaw County/Needham town",
+    "United States/Alabama/Crenshaw County/Brantley town",
     "United States/Alabama/Crenshaw County/Dozier town",
     "United States/Alabama/Crenshaw County/Glenwood town",
     "United States/Alabama/Crenshaw County/Petrey town",
@@ -37,7 +38,7 @@
       9
     ],
     [
-      40
+      39
     ],
     [
       10,
@@ -66,15 +67,16 @@
       33,
       34,
       35,
-      36,
+      37,
       38,
-      39,
+      40,
       41,
       42,
       43,
       44,
       45,
-      46
+      46,
+      47
     ],
     [
       2,
@@ -84,7 +86,7 @@
       4
     ],
     [
-      37
+      36
     ],
     [
       5,
@@ -217,12 +219,6 @@
     {
       "name": "Bolt",
       "member_class": "sniper",
-      "level": 3,
-      "rarity": "common"
-    },
-    {
-      "name": "Phantom",
-      "member_class": "assassin",
       "level": 3,
       "rarity": "common"
     },
@@ -379,6 +375,18 @@
     {
       "name": "Fuse",
       "member_class": "demolitionist",
+      "level": 3,
+      "rarity": "common"
+    },
+    {
+      "name": "Raven",
+      "member_class": "assassin",
+      "level": 18,
+      "rarity": "rare"
+    },
+    {
+      "name": "Phantom",
+      "member_class": "assassin",
       "level": 3,
       "rarity": "common"
     }
