@@ -1666,8 +1666,10 @@ class MapScreen(_Screen):
         self.total_pages = 1
         self.prev_btn = None
         self.next_btn = None
-        self.sort_mode = "underworld"   # county-list sort: alpha | underworld | gdp
-        self.sort_desc = False          # True = large->small, False = small->large
+        # County-list filter, remembered per save: initialize from the profile
+        # and write back whenever the player changes it (see handle_click).
+        self.sort_mode = getattr(state, "map_sort_mode", "underworld")  # alpha | underworld | gdp
+        self.sort_desc = getattr(state, "map_sort_desc", False)         # True = large->small
         self.sort_button_rects = {}
         self.sort_dir_rect = None
 
@@ -1728,16 +1730,29 @@ class MapScreen(_Screen):
             if rect.collidepoint(pos):
                 self.sort_mode = mode
                 self.page = 0
+                self._persist_filter()
                 return
         if self.sort_dir_rect and self.sort_dir_rect.collidepoint(pos):
             self.sort_desc = not self.sort_desc
             self.page = 0
+            self._persist_filter()
             return
 
         for rect, value in self.item_rects:
             if rect.collidepoint(pos):
                 self._select(value)
                 return
+
+    def _persist_filter(self):
+        """Mirror the current county-list filter onto the profile and save it so
+        the choice is remembered per save. Skipped before a birthplace exists
+        (a fresh, not-yet-committed profile), so we never write a half-made save
+        during the birthplace picker — the in-memory choice still applies for
+        the current session, and persists once the profile is real."""
+        self.state.map_sort_mode = self.sort_mode
+        self.state.map_sort_desc = self.sort_desc
+        if getattr(self.state, "home_city", None):
+            self.state.save()
 
     def _select(self, value):
         if self.level == "country":

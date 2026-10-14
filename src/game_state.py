@@ -61,6 +61,11 @@ class GameState:
     # Sound effects preference. Off by default; toggled with M in battle and
     # persisted so the choice sticks across restarts.
     sound_on: bool = False
+    # Map county-list filter, remembered per save. map_sort_mode is one of
+    # "alpha" | "underworld" | "gdp"; map_sort_desc flips large->small. Set on
+    # the MapScreen and persisted so the chosen filter sticks across sessions.
+    map_sort_mode: str = "underworld"
+    map_sort_desc: bool = False
     # Filesystem path this profile loads/saves to. Defaults to the legacy
     # single-profile path; the profile system points it at profiles/<name>.json.
     # Not serialized — it's where the JSON lives, not part of the JSON.
@@ -101,6 +106,11 @@ class GameState:
             member_assignments = data.get("member_assignments")
             if not _valid_assignments(member_assignments, len(roster)):
                 member_assignments = None
+            # Map filter (county-list sort), validated against the known modes
+            # so a corrupt/unknown value falls back to the default.
+            sort_mode = data.get("map_sort_mode", "underworld")
+            if sort_mode not in ("alpha", "underworld", "gdp"):
+                sort_mode = "underworld"
             state = cls(
                 money=int(data.get("money", config.STARTING_MONEY)),
                 building_layout=layout,
@@ -111,6 +121,8 @@ class GameState:
                 backup=backup,
                 home_city=data.get("home_city"),
                 sound_on=bool(data.get("sound_on", False)),
+                map_sort_mode=sort_mode,
+                map_sort_desc=bool(data.get("map_sort_desc", False)),
                 path=path,
                 profile_name=str(data.get("profile_name", "default")),
             )
@@ -135,6 +147,8 @@ class GameState:
             "backup": [m.to_dict() for m in self.backup],
             "home_city": self.home_city,
             "sound_on": self.sound_on,
+            "map_sort_mode": self.map_sort_mode,
+            "map_sort_desc": self.map_sort_desc,
             "profile_name": self.profile_name,
         }
         os.makedirs(os.path.dirname(self.path), exist_ok=True)

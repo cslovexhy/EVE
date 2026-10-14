@@ -116,5 +116,52 @@ class TestProfiles(unittest.TestCase):
         self.assertEqual(profiles.list_profiles(), [])
 
 
+class TestMapFilterPersistence(unittest.TestCase):
+    """The map county-list filter (sort mode + direction) is remembered per
+    save. Uses a temp-file GameState — never touches the live saves."""
+
+    def setUp(self):
+        self.sandbox = tempfile.mkdtemp()
+        self.path = os.path.join(self.sandbox, "p.json")
+
+    def tearDown(self):
+        shutil.rmtree(self.sandbox, ignore_errors=True)
+
+    def test_defaults(self):
+        st = gs.GameState(path=self.path)
+        self.assertEqual(st.map_sort_mode, "underworld")
+        self.assertFalse(st.map_sort_desc)
+
+    def test_roundtrip(self):
+        st = gs.GameState(path=self.path)
+        st.map_sort_mode = "gdp"
+        st.map_sort_desc = True
+        st.save()
+        loaded = gs.GameState.load(self.path)
+        self.assertEqual(loaded.map_sort_mode, "gdp")
+        self.assertTrue(loaded.map_sort_desc)
+
+    def test_alpha_mode_persists(self):
+        st = gs.GameState(path=self.path)
+        st.map_sort_mode = "alpha"
+        st.save()
+        self.assertEqual(gs.GameState.load(self.path).map_sort_mode, "alpha")
+
+    def test_unknown_mode_falls_back_to_default(self):
+        st = gs.GameState(path=self.path)
+        st.save()
+        data = json.load(open(self.path))
+        data["map_sort_mode"] = "bogus"
+        json.dump(data, open(self.path, "w"))
+        self.assertEqual(gs.GameState.load(self.path).map_sort_mode, "underworld")
+
+    def test_legacy_save_without_filter_uses_default(self):
+        # A save predating the feature has no map_sort_* keys.
+        json.dump({"money": 10}, open(self.path, "w"))
+        loaded = gs.GameState.load(self.path)
+        self.assertEqual(loaded.map_sort_mode, "underworld")
+        self.assertFalse(loaded.map_sort_desc)
+
+
 if __name__ == "__main__":
     unittest.main()
