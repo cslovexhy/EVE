@@ -45,17 +45,12 @@ class Game:
         self.state = None
 
     def _init_audio(self):
-        """Initialize the SFX mixer from the active profile's preference. Safe
-        no-op if no audio device is available (headless). Sound is OFF by
-        default and persisted per profile. CLI flags override for one run:
-        --mute forces silent, --sound forces on."""
+        """Sound effects are DISABLED: the SFX mixer is always initialized
+        muted, so every sound.play* call is a no-op. (The per-profile sound_on
+        preference and the --sound/--mute CLI flags are intentionally ignored
+        while the feature is turned off.)"""
         import sound
-        muted = not self.state.sound_on
-        if "--mute" in sys.argv:
-            muted = True
-        elif "--sound" in sys.argv:
-            muted = False
-        sound.init(muted=muted)
+        sound.init(muted=True)
 
     def run(self):
         # Choose (or create) a save profile before anything else.
@@ -102,15 +97,12 @@ class Game:
             self._shutdown()
 
     def _init_voice(self):
-        """Start always-listening voice control from game start. Fully offline
-        (Vosk). Safe no-op if the model/mic/deps are unavailable or --no-voice
-        is passed — the game then behaves exactly as before. Voice is a parallel
-        input path: it injects the same events keyboard/mouse do and never
-        supersedes them."""
-        if "--no-voice" in sys.argv:
-            return
-        import voice
-        voice.start()
+        """Voice control is DISABLED: the always-listening controller is never
+        started, so voice.pump()/poll_battle_intents() stay no-ops everywhere
+        and the game behaves exactly as a keyboard/mouse-only build. (The
+        voice.* calls scattered through the screens/battle loop are safe no-ops
+        when the controller was never started.)"""
+        return
 
     def _shutdown(self):
         """Stop voice (always torn down when the game ends) and exit."""

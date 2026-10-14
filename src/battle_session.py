@@ -249,9 +249,11 @@ class BattleSession:
         elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
             self.speed_idx = max(0, self.speed_idx - 1)
         elif key == pygame.K_m:
+            # Sound effects are disabled game-wide; keep the mixer muted so M
+            # cannot re-enable SFX (and so the choice is never persisted on).
             import sound
-            muted = sound.toggle_muted()
-            self.order_system.feedback_msg = "Sound muted" if muted else "Sound on"
+            sound.set_muted(True)
+            self.order_system.feedback_msg = "Sound disabled"
             self.order_system.feedback_timer = 1.2
 
     def _execute_player_order(self, order):
