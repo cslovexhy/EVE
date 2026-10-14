@@ -46,11 +46,20 @@ python3 src/download_portraits.py  # Download character art
 
 ### Controls
 
-- **SPACE / E / A / S / D** — Select class (All / Enforcer / Assassin / Sniper / Demolitionist)
-- **Click enemy building** — Attack with selected class
-- **Click own building** — Defend with selected class
+- **A / S / D / F** — Attack mode: 1/4 · 1/2 · Full · Auto (how much of a group fires per volley)
+- **Left-click enemy building** — Attack with Enforcer + Sniper + Assassin
+- **Right-click enemy building** — Attack with Demolitionist
+- **Left-click your own building** — Heal the strongest dead member there (uses a health pack)
+- **N** — Arm/launch the nuke (then left-click an enemy building)
+- **+ / -** — War speed (1x/2x/4x/8x)
+- **TAB** — Toggle AI-assist for your side
 - **R** — Restart (after battle ends)
-- **Q** — Quit
+- **Q / ESC** — Forfeit / quit the battle
+
+The bottom readout shows the current attack mode, remaining **rounds** for the
+Enf+Sni+Assassin group (sniper icon) and the Demolitionist group (demo icon),
+and remaining health packs (first-aid icon). A "round" is one volley at the
+current mode, so dropping to 1/4 quadruples the rounds a given ammo pool shows.
 
 ## Current Features
 
@@ -84,6 +93,54 @@ python3 src/download_portraits.py  # Download character art
 - No external dependencies beyond pygame
 
 ## Worklog
+
+### 2026-10-13 — Click-driven attack controls + per-group ammo "rounds" HUD
+
+Reworked the battle control scheme end to end. **226 unit tests pass** (+16 new
+in `tests/test_attack_modes.py`); live `player_profile.json` and the
+`profiles/*.json` were byte-for-byte unchanged by all test/verification runs
+(shasums matched before/after), and a headless end-to-end smoke test drove the
+full flow (modes, left/right-click attacks, own-building heal, a rendered
+frame).
+
+**New scheme (old A/S/D/E/H class-select + H heal-mode + T mode-cycle hotkeys
+removed):**
+  - **A / S / D / F → attack mode 1/4 · 1/2 · Full · Auto.** Modes generalized
+    into a single fraction table (`config.ATTACK_MODE_FRACTION`), consumed by
+    both `engine.execute_order` (how many actually fire — ceil, ≥1; `auto`
+    sustains, everything else is one volley) and the HUD. `once` kept as a
+    legacy alias of `full`.
+  - **Left-click enemy building → Enforcer+Sniper+Assassin** (the "ESA" group);
+    **right-click enemy building → Demolitionist.** Each class in a group is
+    ordered independently through its own visibility / attack-block checks
+    (`battle_session._order_attack_group`), so e.g. only the assassin may reach
+    a backdoored building; if none can reach it, a single shared feedback line
+    explains why.
+  - **Left-click your own building → heal** the strongest dead member there
+    (one health pack). This already routed through `Empire.heal_building`
+    (highest-max-HP revive), which the enemy AI also uses — so heal semantics
+    are identical for player and AI; only the trigger changed (no more H mode).
+  - Nuke (**N** + left-click), speed (**+/-**), AI-assist (**Tab**) unchanged.
+
+**Ammo as "rounds" per group** (`engine.group_rounds_remaining`): remaining
+ammo is shown as whole volleys at the current mode, scaling by 1/frac — e.g.
+2 full rounds of demo read as **8** on 1/4 mode. The readout uses the exact
+fractional divisor (`members × frac`) so it scales cleanly for the player,
+while the engine still fires a whole, ceil'd number of members per volley.
+
+**UI** (`src/renderer.py`): the old class/heal/mode buttons are replaced by a
+bottom readout — a 1/4·1/2·Full·Auto **mode selector bar** (clickable; current
+mode gold-highlighted) plus **ESA rounds (sniper icon)**, **Demo rounds (demo
+icon)**, and **health packs (first-aid icon)**. HUD icons load at 28 px from
+`assets/icons/` (`sniper.png`, `demolitionist.png`, `firstaid.png`), with a
+text fallback if an icon is missing.
+
+**Voice** (`src/voice.py`): the removed hotkeys' intents (`select_class`, bare
+`heal`, `mode`) are now no-ops in the router; numbered battle commands
+("`{class} {n}`", "`heal {n}`", "`nuke {n}`") still work via the battle-session
+path. Changed `src/engine.py`, `src/config.py`, `src/orders.py`,
+`src/battle_session.py`, `src/renderer.py`, `src/voice.py`; added
+`tests/test_attack_modes.py`; updated `tests/test_voice.py`.
 
 ### 2026-10-07 (pm) — Nuke rework + build-cost rescale to the enemy ladder
 

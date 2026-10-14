@@ -4,7 +4,7 @@ import os
 import pygame
 from models import Empire, Member, Building, MemberClass, MemberState, Rarity
 from engine import BattleEngine
-from orders import OrderSystem, CLASS_BUTTONS
+from orders import OrderSystem, ATTACK_MODE_BUTTON, ESA_CLASSES, DEMO_CLASSES
 import config
 
 # Portrait and icon directories
@@ -52,6 +52,11 @@ class Renderer:
         # Load class icons
         self.class_icons = {}
         self._load_class_icons()
+
+        # Load HUD readout icons (sniper = ESA rounds, demo = Demo rounds,
+        # firstaid = health packs), scaled for the bottom ammo readout.
+        self.hud_icons = {}
+        self._load_hud_icons()
         
         # Load building images
         self.building_images = {}
@@ -109,6 +114,28 @@ class Renderer:
             except (pygame.error, FileNotFoundError):
                 pass
     
+    def _load_hud_icons(self):
+        """Load the ammo/health readout icons at HUD size. Keys: 'sniper'
+        (ESA group rounds), 'demo' (Demo group rounds), 'firstaid' (health
+        packs). Missing files are simply skipped; the readout falls back to a
+        text label when an icon is absent."""
+        hud_size = (28, 28)
+        wanted = {
+            "sniper": "sniper.png",
+            "demo": "demolitionist.png",
+            "firstaid": "firstaid.png",
+        }
+        if not os.path.isdir(ICON_DIR):
+            return
+        for key, fname in wanted.items():
+            path = os.path.join(ICON_DIR, fname)
+            try:
+                img = pygame.image.load(path).convert_alpha()
+                img = pygame.transform.smoothscale(img, hud_size)
+                self.hud_icons[key] = img
+            except (pygame.error, FileNotFoundError, ValueError):
+                pass
+
     def _load_building_images(self):
         """Load building sprite images, crop to content, and scale to building size."""
         # Mapping from building name index (as used in building_order) to sprite filename
@@ -238,8 +265,8 @@ class Renderer:
         # Draw class stats (left side)
         self._draw_class_stats(engine)
         
-        # Draw class buttons
-        self._draw_class_buttons(order_system)
+        # Draw attack mode selector + per-group ammo rounds + health packs
+        self._draw_ammo_readout(engine, order_system)
         
         # Draw order prompt
         self._draw_order_prompt(order_system.get_prompt())
@@ -540,77 +567,69 @@ class Renderer:
             pygame.draw.circle(self.screen, color, (x_end - 6, y + 6), 5)
             y += 16
     
-    def _draw_class_buttons(self, order_system: OrderSystem):
-        """Draw the class selection buttons, attack mode toggle, and heal button."""
-        from orders import HEAL_BUTTON, ATTACK_MODE_BUTTON
-        
-        for btn in CLASS_BUTTONS:
-            if btn.selected:
-                bg_color = btn.color
-                text_color = config.BLACK
-            elif btn.hovered:
-                r, g, b = btn.color
-                bg_color = (min(255, r + 40), min(255, g + 40), min(255, b + 40))
-                text_color = config.BLACK
-            else:
-                bg_color = config.DARK_GRAY
-                text_color = btn.color
-            
-            pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
-            pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
-            
-            # Main label
-            label = self.font_btn.render(btn.label, True, text_color)
-            label_rect = label.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 5)
-            self.screen.blit(label, label_rect)
-            
-            # Ammo count + target info (bottom of button)
-            if btn.member_class and hasattr(self, '_engine_ref'):
-                engine = self._engine_ref
-                members = [m for m in engine.player.members if m.member_class == btn.member_class and m.is_alive]
-                total_ammo = sum(m.ammo for m in members)
-                
-                # Get target building if attacking
-                attacking = [m for m in members if m.state == MemberState.ATTACKING]
-                if attacking and attacking[0].target_building is not None:
-                    target_str = f"B{attacking[0].target_building + 1}"
-                else:
-                    target_str = "--"
-                
-                info = self.font_small.render(f"Ammo:{total_ammo} T:{target_str}", True, text_color)
-                info_rect = info.get_rect(centerx=btn.rect.centerx, y=btn.rect.y + 32)
-                self.screen.blit(info, info_rect)
-        
-        # Draw attack mode toggle button
+    def _draw_ammo_readout(self, engine: BattleEngine, order_system: OrderSystem):
+        """Draw the bottom control readout:
+
+          * The attack-mode selector bar (1/4 | 1/2 | Full | Auto), current
+            mode highlighted. Clicking it or pressing A/S/D/F changes the mode.
+          * ESA group rounds remaining (sniper icon) and Demo group rounds
+            remaining (demo icon), scaled by the current mode.
+          * Health packs remaining (firstaid icon).
+        """
+        mode = order_system.attack_mode
+
+        # --- mode selector bar ---------------------------------------------
         btn = ATTACK_MODE_BUTTON
-        if btn.hovered:
-            bg_color = btn.color
-            text_color = config.BLACK
-        else:
-            bg_color = config.DARK_GRAY
-            text_color = btn.color
-        
-        pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
-        pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
-        label = self.font_btn.render(btn.label, True, text_color)
-        label_rect = label.get_rect(center=btn.rect.center)
-        self.screen.blit(label, label_rect)
-        
-        # Draw heal button
-        btn = HEAL_BUTTON
-        if btn.hovered:
-            bg_color = (180, 40, 40)
-            text_color = config.WHITE
-        else:
-            bg_color = config.DARK_GRAY
-            text_color = btn.color
-        
-        pygame.draw.rect(self.screen, bg_color, btn.rect, border_radius=6)
-        pygame.draw.rect(self.screen, btn.color, btn.rect, 2, border_radius=6)
-        
-        label = self.font_btn.render(btn.label, True, text_color)
-        label_rect = label.get_rect(center=btn.rect.center)
-        self.screen.blit(label, label_rect)
+        pygame.draw.rect(self.screen, (24, 24, 32), btn.rect, border_radius=8)
+        pygame.draw.rect(self.screen, config.LIGHT_GRAY, btn.rect, 2, border_radius=8)
+        n = len(btn.MODES)
+        seg_w = btn.rect.width / n
+        for i, m in enumerate(btn.MODES):
+            seg = pygame.Rect(int(btn.rect.x + i * seg_w), btn.rect.y,
+                              int(seg_w), btn.rect.height)
+            if i == btn.mode_index:
+                pygame.draw.rect(self.screen, config.GOLD, seg.inflate(-4, -4),
+                                 border_radius=6)
+                txt_color = config.BLACK
+            else:
+                txt_color = config.LIGHT_GRAY
+            label = config.ATTACK_MODE_LABELS.get(m, m)
+            surf = self.font_btn.render(label, True, txt_color)
+            self.screen.blit(surf, surf.get_rect(center=seg.center))
+
+        # A/S/D/F hint under the bar.
+        hint = self.font_tiny.render("A / S / D / F", True, config.GRAY)
+        self.screen.blit(hint, hint.get_rect(centerx=btn.rect.centerx,
+                                             y=btn.rect.bottom + 2))
+
+        # --- per-group rounds + health packs (right of the bar) ------------
+        esa_rounds = engine.group_rounds_remaining(engine.player, ESA_CLASSES, mode)
+        demo_rounds = engine.group_rounds_remaining(engine.player, DEMO_CLASSES, mode)
+        packs = engine.player.health_packs
+
+        items = [
+            ("sniper", f"{esa_rounds:.1f}", config.SNIPER_COLOR),
+            ("demo", f"{demo_rounds:.1f}", config.DEMO_COLOR),
+            ("firstaid", f"{packs}", (220, 80, 80)),
+        ]
+
+        x = btn.rect.right + 30
+        cy = btn.rect.centery
+        for key, text, color in items:
+            icon = self.hud_icons.get(key)
+            if icon is not None:
+                iw, ih = icon.get_size()
+                self.screen.blit(icon, (x, cy - ih // 2))
+                x += iw + 6
+            else:
+                # Text fallback label when the icon is missing.
+                tag = {"sniper": "ESA", "demo": "Demo", "firstaid": "Pack"}[key]
+                lab = self.font_small.render(tag, True, color)
+                self.screen.blit(lab, (x, cy - lab.get_height() // 2))
+                x += lab.get_width() + 6
+            val = self.font_medium.render(text, True, color)
+            self.screen.blit(val, (x, cy - val.get_height() // 2))
+            x += val.get_width() + 28
     
     def _draw_hud(self, engine: BattleEngine):
         """Draw top HUD bar with timer, scores, building counts."""
@@ -682,7 +701,7 @@ class Renderer:
                                                  config.SCREEN_HEIGHT // 2 + 10))
         self.screen.blit(score_text, score_rect)
         
-        hint_text = self.font_medium.render("Press ENTER to continue", True, config.GRAY)
+        hint_text = self.font_medium.render("Press ENTER or click to continue", True, config.GRAY)
         hint_rect = hint_text.get_rect(center=(config.SCREEN_WIDTH // 2,
                                                config.SCREEN_HEIGHT // 2 + 50))
         self.screen.blit(hint_text, hint_rect)

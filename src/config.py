@@ -383,6 +383,44 @@ PROJECTILE_SPEED_ASSASSIN = 450 # Pixels per second (fast)
 AMMO_MAX = 10          # Starting/max ammo per member
 AMMO_REGEN_INTERVAL = 10.0  # Seconds per ammo regen
 
+# --- Attack modes -----------------------------------------------------------
+# How large one volley is, as a fraction of the available members of a class.
+# Fractional modes round UP (ceil) and always fire at least one member. The
+# player cycles these with A/S/D/F (quarter/half/full/auto). 'full'/'once'/'auto'
+# fire every available member; 'auto' additionally keeps firing (sustained).
+# 'once' is a legacy alias of 'full'. This single source of truth is used by
+# both engine.execute_order (how many actually fire) and the HUD "rounds
+# remaining" readout (so the two never disagree).
+ATTACK_MODE_FRACTION = {
+    "quarter": 0.25,
+    "half": 0.50,
+    "full": 1.00,
+    "once": 1.00,   # legacy alias of 'full'
+    "auto": 1.00,
+}
+
+# The four selectable attack modes, in A/S/D/F order (keys set in battle_session).
+ATTACK_MODES = ["quarter", "half", "full", "auto"]
+# Human labels for the mode selector / HUD.
+ATTACK_MODE_LABELS = {
+    "quarter": "1/4",
+    "half": "1/2",
+    "full": "Full",
+    "auto": "Auto",
+}
+
+# Attack class groups for the new click scheme:
+#   Left-click an enemy building  -> the ESA group (Enforcer + Sniper + Assassin)
+#   Right-click an enemy building -> the Demolitionist group
+# Each class in a group is ordered independently (its own visibility/attack
+# checks), so e.g. only the assassin may reach a backdoored building. The ESA
+# group's remaining "rounds" are shown with the sniper icon, the demo group's
+# with the demo icon. Values are MemberClass.value strings (config must not
+# import models).
+ATTACK_GROUP_ESA = ["enforcer", "sniper", "assassin"]
+ATTACK_GROUP_DEMO = ["demolitionist"]
+
+
 # Points
 POINTS_PER_BUILDING_DESTROYED = 100
 POINTS_PER_MEMBER_KILLED = 10

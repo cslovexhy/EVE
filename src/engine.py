@@ -597,34 +597,78 @@ class BattleEngine:
     
     def execute_order(self, order: Order, empire: Empire, target_empire: Empire, attack_mode: str = "half"):
         """Execute a player/AI order.
-        
-        attack_mode:
-            'half' — only half (rounded up) of available members fire, then stop
-            'once' — all available members fire one volley, then stop
-            'auto' — all available members fire continuously
+
+        attack_mode controls how many of the available members fire and whether
+        they keep firing:
+            'quarter' — a quarter (ceil) of available members fire one volley
+            'half'    — half (ceil) of available members fire one volley
+            'full' / 'once' — all available members fire one volley, then stop
+            'auto'    — all available members fire continuously (sustained)
+        'once' is kept as an alias of 'full' for older callers. The fraction of
+        members a volley fires is defined by config.ATTACK_MODE_FRACTION and
+        mirrored by volley_size() so the HUD's "rounds remaining" math matches
+        exactly what gets ordered here.
         """
         available = empire.get_available_by_class(order.member_class)
-        
+
         if not available:
             return  # No available members of this class
-        
+
         if order.action == OrderAction.ATTACK:
             side = "PLAYER" if empire == self.player else "ENEMY"
-            
-            # In "half" mode, only select half the available members (rounded up)
-            if attack_mode == "half":
-                import math as _math
-                count = _math.ceil(len(available) / 2)
-                # Pick the first N available (deterministic, no randomness)
-                members_to_order = available[:count]
-            else:
-                members_to_order = available
-            
+
+            # Fractional modes fire only the first N available (deterministic).
+            count = self.volley_size(attack_mode, len(available))
+            members_to_order = available[:count]
+
             self._log(f"{side} orders {len(members_to_order)} {order.member_class.value}(s) to attack building {order.target_building+1} ({attack_mode})")
+            # Sustained fire only in 'auto'; every other mode is a single volley.
+            fire_once = attack_mode != "auto"
             for member in members_to_order:
                 member.state = MemberState.ATTACKING
                 member.target_building = order.target_building
-                member.attack_once = (attack_mode in ("once", "half"))
+                member.attack_once = fire_once
+
+    @staticmethod
+    def volley_size(attack_mode: str, available: int) -> int:
+        """How many members fire in one volley at this mode, given how many are
+        available. Fractional modes round up so a volley always fires at least
+        one member when any are available. 'full'/'once'/'auto' fire everyone.
+        Shared by execute_order and the HUD rounds-remaining readout."""
+        if available <= 0:
+            return 0
+        frac = config.ATTACK_MODE_FRACTION.get(attack_mode, 1.0)
+        if frac >= 1.0:
+            return available
+        return max(1, math.ceil(available * frac))
+
+    def group_rounds_remaining(self, empire: Empire, member_classes, attack_mode: str) -> float:
+        """How many whole volleys ("rounds") this group of classes can still
+        fire at the given mode, from current ammo.
+
+        A round fires a FRACTION of each class's alive members
+        (config.ATTACK_MODE_FRACTION). Scaling the mode down makes a round
+        smaller, so the SAME ammo stretches to proportionally more rounds:
+        2 full rounds of demo show as 8 on 1/4 mode (2 / 0.25 = 8).
+
+        Uses the exact fractional divisor (members * frac), NOT the ceil'd
+        actual volley size, so the readout scales cleanly by 1/frac the way the
+        player expects. (The engine still fires a whole, ceil'd number of
+        members per volley — this is purely the HUD's remaining-rounds figure.)
+        Summed per class; a class with no members or no ammo contributes 0."""
+        total_ammo = 0
+        members_per_round = 0.0
+        for cls in member_classes:
+            alive = [m for m in empire.members
+                     if m.member_class == cls and m.is_alive]
+            if not alive:
+                continue
+            frac = config.ATTACK_MODE_FRACTION.get(attack_mode, 1.0)
+            total_ammo += sum(m.ammo for m in alive)
+            members_per_round += len(alive) * frac
+        if members_per_round <= 0:
+            return 0.0
+        return total_ammo / members_per_round
     
     def is_visible_to_player(self, building_index: int) -> bool:
         """Fog of war: flood-fill visibility from entry points through destroyed buildings.

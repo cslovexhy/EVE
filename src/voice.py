@@ -50,16 +50,22 @@ def _key_for_intent(intent: Intent, pygame):
     p = intent.payload
 
     if k == "select_class":
-        return {
-            "enforcer": pygame.K_e, "assassin": pygame.K_a,
-            "sniper": pygame.K_s, "demolitionist": pygame.K_d,
-        }.get(p.get("cls"))
+        # The old class-select hotkeys (E/A/S/D) were removed in the click-driven
+        # control revamp — bare class selection no longer maps to a key. Numbered
+        # "{class} {n}" commands still work (routed to the battle session as an
+        # attack intent, not here). So a class word with no building is a no-op.
+        return None
     if k == "heal" and "building" not in p:
-        return pygame.K_h
+        # Heal is now left-click on your own building (needs a target); there is
+        # no keyboard heal-mode anymore, so a bare "heal" is a no-op. "heal {n}"
+        # still works via the numbered battle path.
+        return None
     if k == "nuke" and "building" not in p:
         return pygame.K_n
     if k == "mode":
-        return pygame.K_t
+        # The old T mode-cycle was replaced by A/S/D/F direct mode selection; a
+        # bare "mode" command no longer has a single key, so no-op it.
+        return None
     if k == "ai_assist":
         return pygame.K_TAB
     if k == "next_tab":

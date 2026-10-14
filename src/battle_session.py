@@ -9,7 +9,7 @@ import sys
 import pygame
 
 import config
-from models import OrderAction
+from models import OrderAction, Order
 from engine import BattleEngine
 from orders import OrderSystem
 from ai import BattleAI
@@ -102,9 +102,25 @@ class BattleSession:
                     else:
                         self._handle_keydown(event.key)
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button in (1, 3):
+                if self.engine.battle_over:
+                    # On the battle-over (victory/defeat) screen, a left-click
+                    # acknowledges the result and proceeds — same as pressing
+                    # ENTER — so the player can continue to the loot/recruit
+                    # reveal with either the keyboard or the mouse.
+                    if event.button == 1:
+                        self.finished = True
+                else:
+                    self._handle_click(event.pos, button=event.button)
+
+            elif event.type == pygame.MOUSEWHEEL:
+                # Scroll forward (up) speeds up, scroll back (down) slows down —
+                # same 1x/2x/4x/8x ladder as the +/- keys.
                 if not self.engine.battle_over:
-                    self._handle_click(event.pos)
+                    if event.y > 0:
+                        self._speed_up()
+                    elif event.y < 0:
+                        self._speed_down()
 
     def _handle_voice_battle_intent(self, intent):
         """Resolve a numbered voice command (attack/heal/nuke {n}) through the
@@ -150,27 +166,13 @@ class BattleSession:
             member_class = cls_map.get(p.get("cls"))
             if member_class is None:
                 return
-            # Select the class (same as pressing its hotkey / clicking its button).
-            idx_btn = {MemberClass.ENFORCER: 0, MemberClass.ASSASSIN: 1,
-                       MemberClass.SNIPER: 2, MemberClass.DEMOLITIONIST: 3}[member_class]
-            self.order_system.select_button_by_index(idx_btn)
-            self.order_system.heal_mode = False
-            # Apply the same reachability/attack-block checks the click path uses.
-            if not self.engine.is_attackable_by_class(idx, member_class, is_player=True):
-                self.order_system.feedback_msg = "No visibility"
-                self.order_system.feedback_timer = 1.5
-                return
-            reason = self.engine.attack_block_reason(idx, is_player=True)
-            if reason:
-                self.order_system.feedback_msg = reason
-                self.order_system.feedback_timer = 2.5
-                return
-            order = Order(member_class=member_class, target_building=idx,
-                          action=OrderAction.ATTACK)
-            self._execute_player_order(order)
+            # Route through the same group-order path a click uses (single-class
+            # group), so visibility / attack-block / availability checks all apply.
+            self._order_attack_group([member_class], idx)
 
-    def _handle_click(self, pos):
-        if self.nuke_armed:
+    def _handle_click(self, pos, button: int = 1):
+        # Nuke targeting is a left-click on an enemy building while armed.
+        if self.nuke_armed and button == 1:
             idx = self._enemy_building_at(pos)
             if idx is not None and self.engine.launch_nuke(self.player_empire, idx):
                 self.order_system.feedback_msg = f"NUKE launched on building {idx + 1}!"
@@ -179,16 +181,46 @@ class BattleSession:
             return
         if self.ai_mode:
             return  # AI is driving your side; manual orders are ignored
-        order = self.order_system.handle_click(
+        result = self.order_system.handle_click(
             pos,
             self.player_empire.buildings,
             self.enemy_empire.buildings,
             engine=self.engine,
+            button=button,
         )
-        if isinstance(order, tuple) and order[0] == "heal_building":
-            self._use_health_pack_on_building(order[1])
-        elif order:
+        if not result:
+            return
+        if result[0] == "heal_building":
+            self._use_health_pack_on_building(result[1])
+        elif result[0] == "attack_group":
+            _, classes, idx = result
+            self._order_attack_group(classes, idx)
+
+    def _order_attack_group(self, classes, building_index: int):
+        """Order each class in a group to attack a building, applying the same
+        per-class visibility / attack-block checks a single click used to.
+        Classes that can't reach the target are skipped; if NONE can reach it,
+        a single feedback message explains why (shared across the group)."""
+        ordered_any = False
+        last_reason = None
+        for member_class in classes:
+            if not self.engine.is_attackable_by_class(building_index, member_class,
+                                                      is_player=True):
+                last_reason = "No visibility"
+                continue
+            reason = self.engine.attack_block_reason(building_index, is_player=True)
+            if reason:
+                last_reason = reason
+                continue
+            if not self.player_empire.get_available_by_class(member_class):
+                continue  # none of this class alive/available — silently skip
+            order = Order(member_class=member_class, target_building=building_index,
+                          action=OrderAction.ATTACK)
             self._execute_player_order(order)
+            ordered_any = True
+        if not ordered_any and last_reason:
+            self.order_system.feedback_msg = last_reason
+            self.order_system.feedback_timer = 2.0
 
     def _use_health_pack_on_building(self, building_index: int):
         if self.player_empire.health_packs <= 0:
@@ -213,22 +245,18 @@ class BattleSession:
         self.order_system.feedback_timer = 2.0
 
     def _handle_keydown(self, key):
-        from orders import CLASS_BUTTONS  # noqa: F401 (kept for parity)
-
-        key_map = {
-            pygame.K_e: 0,      # Enforcer
-            pygame.K_a: 1,      # Assassin
-            pygame.K_s: 2,      # Sniper
-            pygame.K_d: 3,      # Demolitionist
+        # A/S/D/F select the attack mode: 1/4, 1/2, Full, Auto.
+        mode_keys = {
+            pygame.K_a: 0,   # 1/4
+            pygame.K_s: 1,   # 1/2
+            pygame.K_d: 2,   # Full
+            pygame.K_f: 3,   # Auto
         }
-        if key in key_map:
-            self.order_system.select_button_by_index(key_map[key])
-            self.order_system.heal_mode = False
-        elif key == pygame.K_h:
-            self.order_system.heal_mode = not self.order_system.heal_mode
-        elif key == pygame.K_t:
+        if key in mode_keys:
+            self.order_system.set_mode_index(mode_keys[key])
             from orders import ATTACK_MODE_BUTTON
-            ATTACK_MODE_BUTTON.toggle()
+            self.order_system.feedback_msg = f"Mode: {ATTACK_MODE_BUTTON.label}"
+            self.order_system.feedback_timer = 1.0
         elif key == pygame.K_TAB:
             self.ai_mode = not self.ai_mode
         elif key == pygame.K_n:
@@ -245,9 +273,9 @@ class BattleSession:
                 # Armed; the nuke is one-shot, charge scales the damage.
                 self.nuke_armed = not self.nuke_armed
         elif key in (pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS):
-            self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
+            self._speed_up()
         elif key in (pygame.K_MINUS, pygame.K_KP_MINUS):
-            self.speed_idx = max(0, self.speed_idx - 1)
+            self._speed_down()
         elif key == pygame.K_m:
             # Sound effects are disabled game-wide; keep the mixer muted so M
             # cannot re-enable SFX (and so the choice is never persisted on).
@@ -255,6 +283,16 @@ class BattleSession:
             sound.set_muted(True)
             self.order_system.feedback_msg = "Sound disabled"
             self.order_system.feedback_timer = 1.2
+
+    def _speed_up(self):
+        """Step war speed up one notch (1x/2x/4x/8x). Shared by +/- keys and
+        mouse-wheel-forward."""
+        self.speed_idx = min(len(self.SPEEDS) - 1, self.speed_idx + 1)
+
+    def _speed_down(self):
+        """Step war speed down one notch. Shared by +/- keys and
+        mouse-wheel-back."""
+        self.speed_idx = max(0, self.speed_idx - 1)
 
     def _execute_player_order(self, order):
         if order.action == OrderAction.ATTACK:
@@ -343,7 +381,7 @@ class BattleSession:
                 self.screen.blit(surf, (x_right - surf.get_width(), y))
                 y += line_h
 
-            _blit_right(f"Speed {self.speed}x  (+/-)", config.GOLD)
+            _blit_right(f"Speed {self.speed}x  (+/- or scroll)", config.GOLD)
             mode_txt = "AI: ON  (Tab)" if self.ai_mode else "Manual  (Tab)"
             _blit_right(mode_txt, config.GREEN if self.ai_mode else config.LIGHT_GRAY)
 

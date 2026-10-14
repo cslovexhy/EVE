@@ -130,11 +130,16 @@ class TestRouterKeyMapping(unittest.TestCase):
         return voice._key_for_intent(vi.Intent(kind, payload), _FakeKey)
 
     def test_keystroke_intents_map(self):
-        self.assertEqual(self._key("select_class", cls="sniper"), _FakeKey.K_s)
-        self.assertEqual(self._key("select_class", cls="demolitionist"), _FakeKey.K_d)
-        self.assertEqual(self._key("heal"), _FakeKey.K_h)          # bare heal
+        # select_class, bare heal, and mode no longer map to a key: the old
+        # E/A/S/D class-select, H heal-mode, and T mode-cycle hotkeys were
+        # removed in the click-driven control revamp. The parser still EMITS
+        # these intents, but the router no-ops them (numbered "{class} {n}" and
+        # "heal {n}" commands still work via the battle-session path).
+        self.assertIsNone(self._key("select_class", cls="sniper"))
+        self.assertIsNone(self._key("select_class", cls="demolitionist"))
+        self.assertIsNone(self._key("heal"))                      # bare heal -> no-op
+        self.assertIsNone(self._key("mode"))                      # bare mode -> no-op
         self.assertEqual(self._key("nuke"), _FakeKey.K_n)          # bare nuke
-        self.assertEqual(self._key("mode"), _FakeKey.K_t)
         self.assertEqual(self._key("ai_assist", on=True), _FakeKey.K_TAB)
         self.assertEqual(self._key("next_tab"), _FakeKey.K_TAB)
         self.assertEqual(self._key("speed", direction="up"), _FakeKey.K_EQUALS)

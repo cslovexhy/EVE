@@ -1,132 +1,66 @@
-"""EVE - Order System: Click class button, then click building."""
+"""EVE - Order System (click-driven).
+
+New control scheme:
+  * A / S / D / F         -> attack mode = 1/4 | 1/2 | Full | Auto
+  * Left-click enemy bldg  -> attack with the ESA group (Enforcer+Sniper+Assassin)
+  * Right-click enemy bldg -> attack with the Demolitionist group
+  * Left-click OWN bldg    -> heal the strongest dead member in that building
+
+There is no class-selection step and no separate heal mode anymore: the mouse
+button + which side you clicked fully determine the action. Each class in an
+attack group is ordered independently so per-class visibility (e.g. the
+assassin backdoor) still applies.
+"""
 
 import pygame
 from models import MemberClass, OrderAction, Order
 import config
 
 
-# Button layout at bottom of screen (positions calculated at init)
-BUTTON_HEIGHT = 50
-BUTTON_WIDTH = 120
-BUTTON_GAP = 12
-
-
-class ClassButton:
-    """A clickable class selection button."""
-    
-    def __init__(self, index: int, label: str, member_class: MemberClass = None):
-        """member_class=None means 'All' (all classes)."""
-        self.label = label
-        self.member_class = member_class
-        self.index = index
-        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
-        self.hovered = False
-        self.selected = False
-    
-    def update_rect(self):
-        """Recalculate button position based on current screen size."""
-        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
-        button_y = config.SCREEN_HEIGHT - 90
-        self.rect = pygame.Rect(
-            start_x + self.index * (BUTTON_WIDTH + BUTTON_GAP),
-            button_y,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
-        )
-    
-    @property
-    def color(self):
-        if self.member_class is None:
-            return config.WHITE
-        return {
-            MemberClass.ENFORCER: config.ENFORCER_COLOR,
-            MemberClass.SNIPER: config.SNIPER_COLOR,
-            MemberClass.ASSASSIN: config.ASSASSIN_COLOR,
-            MemberClass.DEMOLITIONIST: config.DEMO_COLOR,
-        }[self.member_class]
-
-
-# Build the 4 buttons
-CLASS_BUTTONS = [
-    ClassButton(0, "[E] Enf", MemberClass.ENFORCER),
-    ClassButton(1, "[A] Ass", MemberClass.ASSASSIN),
-    ClassButton(2, "[S] Sni", MemberClass.SNIPER),
-    ClassButton(3, "[D] Dem", MemberClass.DEMOLITIONIST),
-]
-
-
-class HealButton:
-    """The Heal button — uses a health pack on selected class."""
-    
-    def __init__(self):
-        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
-        self.hovered = False
-        self.label = "[H] Heal"
-        self.color = (200, 50, 50)  # Red cross color
-    
-    def update_rect(self):
-        """Position to the right of class buttons."""
-        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
-        button_y = config.SCREEN_HEIGHT - 90
-        # Place after the 4 class buttons with a larger gap
-        self.rect = pygame.Rect(
-            start_x + 4 * (BUTTON_WIDTH + BUTTON_GAP) + BUTTON_GAP,
-            button_y,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
-        )
-
-
-HEAL_BUTTON = HealButton()
+# Which MemberClass each attack group fires, derived from the config string
+# lists (config must not import models, so the mapping lives here).
+_CLASS_BY_VALUE = {c.value: c for c in MemberClass}
+ESA_CLASSES = [_CLASS_BY_VALUE[v] for v in config.ATTACK_GROUP_ESA]
+DEMO_CLASSES = [_CLASS_BY_VALUE[v] for v in config.ATTACK_GROUP_DEMO]
 
 
 class AttackModeButton:
-    """Toggle between Half, Once, and Auto attack modes.
-    
-    Rotation: Half -> Once -> Auto -> Half
-    Half = fire only half of the selected class (reduces ammo waste)
-    Once = single volley from all, then stop
-    Auto = sustained fire from all
+    """The attack-mode selector: 1/4 -> 1/2 -> Full -> Auto.
+
+    Driven by the A/S/D/F keys (set in battle_session), and also clickable:
+    clicking the bar cycles to the next mode. `set_mode_index` lets the keys
+    jump straight to a specific mode.
     """
-    
-    # Mode cycle order
-    MODES = ["half", "once", "auto"]
-    
+
+    MODES = config.ATTACK_MODES  # ["quarter", "half", "full", "auto"]
+
     def __init__(self):
-        self.rect = pygame.Rect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT)
+        self.rect = pygame.Rect(0, 0, 320, 50)
         self.hovered = False
-        self.mode_index = 0  # Start on "half" (default)
-    
+        self.mode_index = 1  # default: 1/2 (half)
+
     @property
     def mode(self) -> str:
         return self.MODES[self.mode_index]
-    
+
     @property
-    def label(self):
-        return f"[T] {self.mode.capitalize()}"
-    
-    @property
-    def color(self):
-        if self.mode == "half":
-            return (50, 140, 180)   # Blue-teal for half
-        elif self.mode == "once":
-            return (180, 180, 50)   # Yellow for once
-        else:
-            return (50, 180, 50)    # Green for auto
-    
+    def label(self) -> str:
+        return config.ATTACK_MODE_LABELS.get(self.mode, self.mode)
+
+    def set_mode_index(self, index: int):
+        if 0 <= index < len(self.MODES):
+            self.mode_index = index
+
     def toggle(self):
-        """Cycle to next mode: Half -> Once -> Auto -> Half."""
         self.mode_index = (self.mode_index + 1) % len(self.MODES)
-    
+
     def update_rect(self):
-        """Position to the left of class buttons."""
-        start_x = (config.SCREEN_WIDTH - (4 * BUTTON_WIDTH + 3 * BUTTON_GAP)) // 2
-        button_y = config.SCREEN_HEIGHT - 90
+        """Centered mode selector bar in the order panel."""
+        w, h = 360, 50
         self.rect = pygame.Rect(
-            start_x - BUTTON_WIDTH - BUTTON_GAP * 2,
-            button_y,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
+            (config.SCREEN_WIDTH - w) // 2,
+            config.SCREEN_HEIGHT - 90,
+            w, h,
         )
 
 
@@ -134,170 +68,101 @@ ATTACK_MODE_BUTTON = AttackModeButton()
 
 
 class OrderSystem:
-    """Mouse-click order flow: select class → click building."""
-    
+    """Click-driven order flow. No class selection; the mouse button + the
+    clicked side decide the action."""
+
     def __init__(self):
-        self.selected_class = None
-        self.selected_button = None
         self.order_history = []
-        self.hovered_building = None
+        self.hovered_building = None   # ("player"|"enemy", index)
         self.feedback_msg = ""
         self.feedback_timer = 0.0
-        self.heal_mode = False  # True when player presses H, waiting for building click
-        # Update button positions based on screen size
-        for btn in CLASS_BUTTONS:
-            btn.update_rect()
-        HEAL_BUTTON.update_rect()
         ATTACK_MODE_BUTTON.update_rect()
-    
+
     def update(self, dt: float):
-        """Update feedback timer."""
         if self.feedback_timer > 0:
             self.feedback_timer -= dt
             if self.feedback_timer <= 0:
                 self.feedback_msg = ""
-    
-    @property
-    def can_issue_order(self) -> bool:
-        return True
-    
+
     @property
     def attack_mode(self) -> str:
-        """Current attack mode from the toggle button."""
         return ATTACK_MODE_BUTTON.mode
-    
-    @property
-    def has_class_selected(self) -> bool:
-        return self.selected_button is not None
-    
-    def handle_mouse_move(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list):
-        """Update hover state for buttons and buildings."""
+
+    def set_mode_index(self, index: int):
+        ATTACK_MODE_BUTTON.set_mode_index(index)
+
+    # --- hover ----------------------------------------------------------
+    def handle_mouse_move(self, mouse_pos, player_buildings, enemy_buildings):
+        """Highlight whatever building is under the cursor (either side)."""
         mx, my = mouse_pos
-        
-        # Update button hover
-        for btn in CLASS_BUTTONS:
-            btn.hovered = btn.rect.collidepoint(mx, my)
-        HEAL_BUTTON.hovered = HEAL_BUTTON.rect.collidepoint(mx, my)
         ATTACK_MODE_BUTTON.hovered = ATTACK_MODE_BUTTON.rect.collidepoint(mx, my)
-        
-        # Update building hover (only if a class is selected or in heal mode)
+
         self.hovered_building = None
-        if self.has_class_selected or self.heal_mode:
-            for b in player_buildings:
-                if self._building_rect(b).collidepoint(mx, my):
-                    self.hovered_building = ("player", b.index)
-                    return
-            if not self.heal_mode:
-                for b in enemy_buildings:
-                    if self._building_rect(b).collidepoint(mx, my):
-                        self.hovered_building = ("enemy", b.index)
-                        return
-    
-    def handle_click(self, mouse_pos: tuple, player_buildings: list, enemy_buildings: list, engine=None) -> Order:
-        """Handle a mouse click. Returns an Order if one was completed, else None.
-        Returns ('heal_building', index) tuple if heal was applied to a building."""
-        mx, my = mouse_pos
-        
-        # Check heal button — toggles heal mode
-        if HEAL_BUTTON.rect.collidepoint(mx, my):
-            self.heal_mode = not self.heal_mode
-            return None
-        
-        # Check attack mode toggle
-        if ATTACK_MODE_BUTTON.rect.collidepoint(mx, my):
-            ATTACK_MODE_BUTTON.toggle()
-            return None
-        
-        # Check class buttons
-        for btn in CLASS_BUTTONS:
-            if btn.rect.collidepoint(mx, my):
-                self._select_button(btn)
-                self.heal_mode = False  # Exit heal mode on class select
-                return None
-        
-        # If in heal mode, clicking a player building triggers heal. Destroyed
-        # slots are still clickable so dead members orphaned in rubble can be
-        # revived; Empire.heal_building validates there is someone to revive.
-        if self.heal_mode:
-            for b in player_buildings:
-                if self._building_rect(b).collidepoint(mx, my):
-                    self.heal_mode = False
-                    return ("heal_building", b.index)
-            return None
-        
-        # Check building click (only if class is selected)
-        if not self.has_class_selected:
-            return None
-        
-        # Check enemy buildings → attack (with visibility check). Destroyed
-        # slots are still clickable so you can finish off members orphaned in
-        # rubble (e.g. left alive by a nuke that flattened their building).
         for b in enemy_buildings:
             if self._building_rect(b).collidepoint(mx, my):
-                # Check if selected class can reach this building
-                if engine and self.selected_class is not None:
-                    if not engine.is_attackable_by_class(b.index, self.selected_class, is_player=True):
-                        self.feedback_msg = "No visibility"
-                        self.feedback_timer = 1.5
-                        return None
-                    reason = engine.attack_block_reason(b.index, is_player=True)
-                    if reason:
-                        self.feedback_msg = reason
-                        self.feedback_timer = 2.5
-                        return None
+                self.hovered_building = ("enemy", b.index)
+                return
+        for b in player_buildings:
+            if self._building_rect(b).collidepoint(mx, my):
+                self.hovered_building = ("player", b.index)
+                return
 
-                return self._create_order(b.index, OrderAction.ATTACK)
-        
+    # --- click ----------------------------------------------------------
+    def handle_click(self, mouse_pos, player_buildings, enemy_buildings,
+                     engine=None, button: int = 1):
+        """Resolve a mouse click into an action.
+
+        button: 1 = left, 3 = right.
+          * Left-click a mode-selector hit  -> cycle mode (returns None)
+          * Left-click an OWN building       -> ("heal_building", index)
+          * Left-click an ENEMY building     -> ("attack_group", ESA_CLASSES, index)
+          * Right-click an ENEMY building    -> ("attack_group", DEMO_CLASSES, index)
+        Returns None if the click hit nothing actionable. Attack results list the
+        classes to order; the battle session applies per-class visibility checks
+        (the same ones a reach check would) and orders each that can reach.
+        """
+        mx, my = mouse_pos
+
+        # Left-click on the mode bar cycles the attack mode.
+        if button == 1 and ATTACK_MODE_BUTTON.rect.collidepoint(mx, my):
+            ATTACK_MODE_BUTTON.toggle()
+            return None
+
+        # Own buildings: left-click heals the strongest dead member there.
+        # (Right-clicking your own building does nothing.)
+        if button == 1:
+            for b in player_buildings:
+                if self._building_rect(b).collidepoint(mx, my):
+                    return ("heal_building", b.index)
+
+        # Enemy buildings: left = ESA group, right = Demo group.
+        for b in enemy_buildings:
+            if self._building_rect(b).collidepoint(mx, my):
+                classes = ESA_CLASSES if button == 1 else DEMO_CLASSES
+                return ("attack_group", classes, b.index)
+
         return None
-    
-    def _select_button(self, btn: ClassButton):
-        """Select a class button (no deselect on repeat click)."""
-        if self.selected_button == btn:
-            return  # Already selected, do nothing
-        
-        # Deselect old
-        if self.selected_button:
-            self.selected_button.selected = False
-        
-        # Select new
-        btn.selected = True
-        self.selected_button = btn
-        self.selected_class = btn.member_class  # None = "all"
-    
-    def select_button_by_index(self, index: int):
-        """Select a class button by index (for keyboard shortcuts)."""
-        if 0 <= index < len(CLASS_BUTTONS):
-            self._select_button(CLASS_BUTTONS[index])
-    
-    def _create_order(self, building_index: int, action: OrderAction) -> Order:
-        """Create and return an order."""
-        order = Order(
-            member_class=self.selected_class,  # None means all classes
-            target_building=building_index,
-            action=action,
-        )
+
+    # --- helpers --------------------------------------------------------
+    def _create_order(self, member_class, building_index: int) -> Order:
+        order = Order(member_class=member_class,
+                      target_building=building_index,
+                      action=OrderAction.ATTACK)
         self.order_history.append(order)
         return order
-    
+
     def _building_rect(self, building) -> pygame.Rect:
-        """Get the clickable rect for a building."""
         size = config.BUILDING_SIZE
         return pygame.Rect(
             int(building.x) - size // 2,
             int(building.y) - size // 2,
-            size,
-            size,
+            size, size,
         )
-    
+
     def get_prompt(self) -> str:
-        """Get the current prompt/status text."""
         if self.feedback_msg:
             return self.feedback_msg
-        if self.heal_mode:
-            return "HEAL MODE — click a building to revive a defender"
-        if not self.has_class_selected:
-            return "Select a class, then click a building"
-        
-        class_name = self.selected_button.label
-        mode = ATTACK_MODE_BUTTON.mode.capitalize()
-        return f"{class_name} selected [{mode}] — click enemy building to attack"
+        mode = ATTACK_MODE_BUTTON.label
+        return (f"[{mode}]  L-click enemy: Enf+Sni+Assassin   "
+                f"R-click enemy: Demo   L-click own: heal   "
+                f"(A/S/D/F = 1/4 1/2 Full Auto)")
