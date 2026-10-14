@@ -16,6 +16,7 @@ only difference is which power scalar feeds in.
 """
 import math
 import random
+import hashlib
 from typing import List, Tuple
 
 import config
@@ -333,6 +334,64 @@ def _make_layout_and_levels(power: float) -> Tuple[List[BuildingType], List[int]
     return ladder_state(ladder_row_for_power(power))
 
 
+# --- Per-city slot permutation (restores base-arrangement diversity) --------
+# The build ladder assigns LOGICAL slot roles (fixed: HQ in logical slot 4,
+# Armory 7, Hospital 2, ...). To stop every enemy base from looking identical,
+# we remap those logical slots onto PHYSICAL grid slots per city, deterministic
+# from the city id. The remap is CONSTRAINED so the documented placement bans
+# still hold: HQ/Armory/Hospital/Research Lab/Nuclear Silo/late-Safehouse must
+# stay OFF the exposed front row (physical slots 0/3/6), and the front-row roles
+# (Sniper Tower + the two Bunkers) stay ON it. We therefore shuffle the three
+# front-row roles among the three front slots, and the six backline roles among
+# the six backline slots, independently. Gates are unaffected (they are baked
+# into the build ORDER, not physical position). Levels move with their slot.
+_FRONT_PHYSICAL = (0, 3, 6)            # exposed front column (battlefield 1/4/7)
+_BACKLINE_PHYSICAL = (1, 2, 4, 5, 7, 8)
+# Logical slots the ladder uses for front-row roles vs backline roles. These are
+# the SAME physical indices by default (fixed roles), so we classify by value.
+_FRONT_LOGICAL = (_SLOT["St"], _SLOT["Bu4"], _SLOT["Bu7"])          # 0, 3, 6
+_BACKLINE_LOGICAL = (_SLOT["Rl"], _SLOT["Ho"], _SLOT["HQ"],
+                     _SLOT["Nu"], _SLOT["Ar"], _SLOT["Sf9"])        # 1,2,4,5,7,8
+
+
+def slot_permutation(seed_key: str) -> List[int]:
+    """A per-city mapping logical_slot -> physical_slot (length 9).
+
+    Front-row logical roles are shuffled only among front physical slots, and
+    backline logical roles only among backline physical slots, so the front-row
+    ban is preserved for every city. Deterministic in `seed_key` (the city id)
+    via an md5-seeded RNG, matching ai_profiles' cross-run-stable approach — and
+    kept on its OWN RNG so it never perturbs the member level/rarity streams."""
+    digest = hashlib.md5(f"{seed_key}|layout".encode("utf-8")).hexdigest()
+    rng = random.Random(int(digest, 16))
+
+    front_targets = list(_FRONT_PHYSICAL)
+    back_targets = list(_BACKLINE_PHYSICAL)
+    rng.shuffle(front_targets)
+    rng.shuffle(back_targets)
+
+    mapping = [0] * 9
+    for logical, phys in zip(_FRONT_LOGICAL, front_targets):
+        mapping[logical] = phys
+    for logical, phys in zip(_BACKLINE_LOGICAL, back_targets):
+        mapping[logical] = phys
+    return mapping
+
+
+def _apply_slot_permutation(layout: List[BuildingType], levels: List[int],
+                            mapping: List[int]) -> Tuple[List[BuildingType], List[int]]:
+    """Rewrite (layout, levels) so each logical slot's building+level lands at
+    its mapped physical slot. Physical slots not targeted stay as the ladder
+    left them (always Warehouse L1, since every non-base role is in the mapping)."""
+    new_layout = [WH] * 9
+    new_levels = [1] * 9
+    for logical in range(9):
+        phys = mapping[logical]
+        new_layout[phys] = layout[logical]
+        new_levels[phys] = levels[logical]
+    return new_layout, new_levels
+
+
 def _assign_members(members: List[Member], building_order: List[int],
                     rng: random.Random) -> List[List[int]]:
     """Attackers stack in the HQ slot; enforcers spread across all buildings."""
@@ -386,9 +445,15 @@ def build_enemy(underworld_power: float, name: str = "Rival Gang",
     members = _make_members(_member_count(norm), power, norm, rng,
                             income=per_capita_income)
 
-    # Buildings come straight from the tier-mapped build ladder (fixed slot
-    # roles, deterministic — no random placement, no police max-override).
+    # Buildings come from the tier-mapped build ladder (fixed logical roles),
+    # then a per-city slot PERMUTATION remaps those roles onto physical grid
+    # slots so bases don't all look identical. The permutation preserves the
+    # front-row ban and is deterministic in the city id (same key as the AI
+    # profile), falling back to the name when no profile_seed is given.
     layout, levels = _make_layout_and_levels(power)
+    perm_key = profile_seed if profile_seed is not None else name
+    mapping = slot_permutation(perm_key)
+    layout, levels = _apply_slot_permutation(layout, levels, mapping)
     order = buildings.building_order_from_layout(layout)
 
     empire = Empire(name=name, members=members, is_player=False)
