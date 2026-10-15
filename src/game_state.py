@@ -73,6 +73,10 @@ class GameState:
     # Human-readable profile name (shown on the Profile Select screen). Persisted
     # inside the JSON as "profile_name"; the filename is a slug of it.
     profile_name: str = "default"
+    # Magic Find (0..100): biases loot toward higher-level recruits by sliding
+    # the Gaussian peak used in models.loot_recruits from the crew's lowest
+    # level (MF=0) up to its highest (MF=100). How to raise it is TBD; starts 0.
+    magic_find: int = 0
 
     # --- persistence -----------------------------------------------------
     @classmethod
@@ -125,6 +129,7 @@ class GameState:
                 map_sort_desc=bool(data.get("map_sort_desc", False)),
                 path=path,
                 profile_name=str(data.get("profile_name", "default")),
+                magic_find=max(0, min(100, int(data.get("magic_find", 0)))),
             )
             # Self-heal: if the saved home city no longer exists in the world
             # data (e.g. the map changed), reset birthplace + territory so the
@@ -150,6 +155,7 @@ class GameState:
             "map_sort_mode": self.map_sort_mode,
             "map_sort_desc": self.map_sort_desc,
             "profile_name": self.profile_name,
+            "magic_find": self.magic_find,
         }
         os.makedirs(os.path.dirname(self.path), exist_ok=True)
         with open(self.path, "w") as f:

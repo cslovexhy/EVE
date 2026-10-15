@@ -15,9 +15,9 @@ import buildings
 import enemy_gen
 import world_map as wm
 from game_state import GameState, war_reward
-from models import top_rarity_recruit
+from models import loot_recruits
 from screens import (ProfileSelect, MainMenu, EveLayout, MapScreen, USMapScreen,
-                     GameOverScreen, VictoryScreen, RecruitPopup, CapBlockedPopup)
+                     GameOverScreen, VictoryScreen, LootChoiceScreen, CapBlockedPopup)
 from battle_session import BattleSession
 
 
@@ -177,13 +177,17 @@ class Game:
         return won, enemy
 
     def _acquire_recruit(self, enemy):
-        """Recruit a top-rarity member from a defeated enemy into the backup
-        force and show the reveal popup. The caller persists state on the win."""
-        recruit = top_rarity_recruit(enemy)
-        if recruit is None:
+        """Offer up to 3 distinct candidate recruits from a defeated enemy —
+        drawn by level, biased by the player's Magic Find — and let the player
+        choose one (or decline) via the loot-choice screen. The chosen member
+        joins the Backup Force. The caller persists state on the win."""
+        candidates = loot_recruits(enemy, magic_find=self.state.magic_find)
+        if not candidates:
             return
-        kept = self.state.add_recruit(recruit)
-        RecruitPopup(self.screen, recruit, backup_full=not kept).run()
+        chosen = LootChoiceScreen(self.screen, candidates).run()
+        if chosen is None:
+            return  # player declined
+        self.state.add_recruit(chosen)
 
     def _browse_state(self, state_name: str):
         """Drill into one state's counties/cities (launched from the US map).

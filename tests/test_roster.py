@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import config  # noqa: E402
 import game_state as gs  # noqa: E402
 from models import (Member, MemberClass, Rarity, BuildingType,  # noqa: E402
-                    create_starting_roster, top_rarity_recruit,
+                    create_starting_roster, loot_recruits,
                     default_player_members)
 
 
@@ -74,21 +74,31 @@ class TestRosterPersistence(unittest.TestCase):
 
 
 class TestAcquisition(unittest.TestCase):
-    def test_top_rarity_recruit_picks_best_and_copies(self):
+    def test_loot_returns_distinct_copies(self):
         enemy = create_starting_roster("E", is_player=False)
-        # Make one clear best: super rare, high level.
-        enemy.members[5].rarity = Rarity.SUPER_RARE
-        enemy.members[5].level = 12
-        rec = top_rarity_recruit(enemy)
-        self.assertEqual(rec.rarity, Rarity.SUPER_RARE)
-        self.assertEqual(rec.level, 12)
-        # It's a COPY — mutating the recruit must not change the enemy member.
-        rec.level = 1
-        self.assertEqual(enemy.members[5].level, 12)
+        recruits = loot_recruits(enemy, magic_find=50)
+        self.assertEqual(len(recruits), 3)
+        # Distinct members (no duplicates by identity).
+        ids = [(r.name, r.member_class) for r in recruits]
+        self.assertEqual(len(ids), len(set(ids)))
+        # They're COPIES — mutating a recruit must not change the enemy roster.
+        recruits[0].level = 999
+        self.assertTrue(all(m.level != 999 for m in enemy.members))
 
-    def test_top_rarity_recruit_none_for_empty(self):
+    def test_loot_empty_for_empty_empire(self):
         from models import Empire
-        self.assertIsNone(top_rarity_recruit(Empire(name="x", members=[])))
+        self.assertEqual(loot_recruits(Empire(name="x", members=[])), [])
+
+    def test_loot_fewer_than_count(self):
+        from models import Empire
+        two = Empire(name="x", members=[
+            Member(name="A", member_class=MemberClass.SNIPER, level=5,
+                   rarity=Rarity.COMMON),
+            Member(name="B", member_class=MemberClass.ENFORCER, level=8,
+                   rarity=Rarity.RARE),
+        ])
+        recruits = loot_recruits(two, magic_find=50, count=3)
+        self.assertEqual(len(recruits), 2)
 
 
 class TestRosterMoves(unittest.TestCase):

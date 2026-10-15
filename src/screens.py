@@ -2111,25 +2111,85 @@ class VictoryScreen(_Screen):
         self.btn.draw(self.screen, mouse_pos)
 
 
-class RecruitPopup(_Screen):
-    """Shown after winning a war: reveals the recruit acquired from the
-    defeated empire and confirms they've joined the Backup Force."""
+class LootChoiceScreen(_Screen):
+    """Shown after winning a war: presents up to 3 distinct candidate recruits
+    (drawn from the defeated empire, level-biased by Magic Find) as cards and
+    lets the player recruit exactly one — or decline with the X button.
 
-    def __init__(self, screen, member, backup_full=False):
+    run() returns the chosen Member (to be added to the Backup Force) or None
+    if the player declined / there were no candidates."""
+
+    # Card geometry
+    CARD_W = 240
+    CARD_H = 320
+    CARD_GAP = 40
+    ICON_SIZE = 96
+
+    def __init__(self, screen, candidates):
         super().__init__(screen)
-        self.member = member
-        self.backup_full = backup_full
-        self.btn = Button(
-            (config.SCREEN_WIDTH // 2 - 160, config.SCREEN_HEIGHT // 2 + 110, 320, 60),
-            "Continue", self.font_btn, base_color=config.GREEN)
+        self.candidates = candidates or []
+        self.font_x = pygame.font.SysFont("Arial", 26, bold=True)
+        self._load_class_icons()
+        self._layout_cards()
+        # Decline (X) button in the top-right corner.
+        self.close_btn = Button(
+            (config.SCREEN_WIDTH - 70, 30, 44, 44), "X", self.font_x,
+            base_color=config.RED)
+
+    def _load_class_icons(self):
+        """Load the 4 class icons scaled to the card icon size (headless-safe:
+        a missing/failed icon just falls back to a text label on the card)."""
+        import os
+        from models import MemberClass
+        icon_dir = os.path.join(os.path.dirname(__file__), "..", "assets", "icons")
+        self.class_icons = {}
+        if not os.path.isdir(icon_dir):
+            return
+        for cls in MemberClass:
+            path = os.path.join(icon_dir, f"{cls.value}.png")
+            try:
+                img = pygame.image.load(path).convert_alpha()
+                img = pygame.transform.smoothscale(
+                    img, (self.ICON_SIZE, self.ICON_SIZE))
+                self.class_icons[cls] = img
+            except (pygame.error, FileNotFoundError, ValueError):
+                pass
+
+    def _layout_cards(self):
+        """Compute each candidate's card rect, centered as a horizontal row."""
+        n = len(self.candidates)
+        self.card_rects = []
+        if n == 0:
+            return
+        total_w = n * self.CARD_W + (n - 1) * self.CARD_GAP
+        x0 = (config.SCREEN_WIDTH - total_w) // 2
+        y = config.SCREEN_HEIGHT // 2 - self.CARD_H // 2 + 20
+        for i in range(n):
+            x = x0 + i * (self.CARD_W + self.CARD_GAP)
+            self.card_rects.append(pygame.Rect(x, y, self.CARD_W, self.CARD_H))
 
     def handle_key(self, key):
-        if key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE, pygame.K_q):
+        # ESC / Q decline (same as the X button).
+        if key in (pygame.K_ESCAPE, pygame.K_q):
+            self.result = None
             self.done = True
+        # Number keys 1..3 pick a candidate.
+        elif key in (pygame.K_1, pygame.K_2, pygame.K_3):
+            idx = key - pygame.K_1
+            if idx < len(self.candidates):
+                self.result = self.candidates[idx]
+                self.done = True
 
     def handle_click(self, pos):
-        if self.btn.hit(pos):
+        if self.close_btn.hit(pos):
+            self.result = None
             self.done = True
+            return
+        for rect, member in zip(self.card_rects, self.candidates):
+            if rect.collidepoint(pos):
+                self.result = member
+                self.done = True
+                return
 
     def _rarity_color(self, rarity):
         return {
@@ -2139,35 +2199,63 @@ class RecruitPopup(_Screen):
             "super_rare": config.GOLD,
         }.get(rarity.value, config.LIGHT_GRAY)
 
+    def _draw_card(self, rect, member, mouse_pos):
+        rc = self._rarity_color(member.rarity)
+        hover = rect.collidepoint(mouse_pos)
+        bg = (34, 38, 54) if hover else (24, 27, 40)
+        pygame.draw.rect(self.screen, bg, rect, border_radius=12)
+        # Rarity-colored border (thicker on hover).
+        pygame.draw.rect(self.screen, rc, rect, 4 if hover else 2,
+                         border_radius=12)
+
+        cx = rect.centerx
+        # Class icon (fall back to the class name if the icon is unavailable).
+        icon = self.class_icons.get(member.member_class)
+        icon_top = rect.y + 24
+        if icon is not None:
+            self.screen.blit(icon, icon.get_rect(centerx=cx, y=icon_top))
+        else:
+            lbl = self.font_med.render(
+                member.member_class.value.title(), True, config.LIGHT_GRAY)
+            self.screen.blit(lbl, lbl.get_rect(centerx=cx, y=icon_top + 30))
+
+        y = icon_top + self.ICON_SIZE + 18
+        name = self.font_h.render(member.name, True, config.WHITE)
+        self.screen.blit(name, name.get_rect(centerx=cx, y=y))
+
+        y += 40
+        rarity_name = member.rarity.value.replace("_", " ").title()
+        rar = self.font_med.render(rarity_name, True, rc)
+        self.screen.blit(rar, rar.get_rect(centerx=cx, y=y))
+
+        y += 30
+        cls = self.font_small.render(
+            member.member_class.value.title(), True, config.LIGHT_GRAY)
+        self.screen.blit(cls, cls.get_rect(centerx=cx, y=y))
+
+        y += 28
+        lvl = self.font_h.render(f"Level {member.level}", True, config.WHITE)
+        self.screen.blit(lvl, lvl.get_rect(centerx=cx, y=y))
+
     def render(self, mouse_pos):
         self.screen.fill((14, 16, 26))
         cx = config.SCREEN_WIDTH // 2
-        cy = config.SCREEN_HEIGHT // 2
+        top = config.SCREEN_HEIGHT // 2 - self.CARD_H // 2 + 20
 
-        t = self.font_title.render("New Recruit!", True, config.GOLD)
-        self.screen.blit(t, t.get_rect(centerx=cx, y=cy - 200))
+        t = self.font_title.render("Choose Your Recruit", True, config.GOLD)
+        self.screen.blit(t, t.get_rect(centerx=cx, y=top - 120))
+        sub = self.font_med.render(
+            "Pick one to join your Backup Force  —  or decline (X / ESC).",
+            True, config.LIGHT_GRAY)
+        self.screen.blit(sub, sub.get_rect(centerx=cx, y=top - 70))
 
-        m = self.member
-        rc = self._rarity_color(m.rarity)
-        name = self.font_h.render(m.name, True, config.WHITE)
-        self.screen.blit(name, name.get_rect(centerx=cx, y=cy - 110))
-        rarity_name = m.rarity.value.replace("_", " ").title()
-        detail = self.font_med.render(
-            f"{rarity_name} {m.member_class.value.title()}   ·   Level {m.level}",
-            True, rc)
-        self.screen.blit(detail, detail.get_rect(centerx=cx, y=cy - 66))
+        if not self.candidates:
+            msg = self.font_h.render("No recruits available.", True, config.GRAY)
+            self.screen.blit(msg, msg.get_rect(centerx=cx, y=cx))
+        for rect, member in zip(self.card_rects, self.candidates):
+            self._draw_card(rect, member, mouse_pos)
 
-        if self.backup_full:
-            msg = self.font_med.render(
-                f"Backup Force is full (max {config.BACKUP_FORCE_CAP}) — recruit not kept.",
-                True, config.RED)
-        else:
-            msg = self.font_med.render(
-                "Joined your Backup Force. Move them into the roster in EVE Layout ▸ Force.",
-                True, config.LIGHT_GRAY)
-        self.screen.blit(msg, msg.get_rect(centerx=cx, y=cy - 10))
-
-        self.btn.draw(self.screen, mouse_pos)
+        self.close_btn.draw(self.screen, mouse_pos)
 
 
 class CapBlockedPopup(_Screen):

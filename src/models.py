@@ -421,16 +421,54 @@ def default_enemy_members() -> list:
     return _members_from_names(_ENEMY_NAMES_BY_CLASS())
 
 
-def top_rarity_recruit(empire: "Empire", rng=None) -> Optional["Member"]:
-    """Pick a recruit from a (defeated) empire: the highest-rarity member,
-    breaking ties randomly, then by highest level. Returns a fresh Member with
-    the same identity, or None if the empire has no members."""
+def loot_recruits(empire: "Empire", magic_find: int = 0, rng=None,
+                  count: int = 3) -> list:
+    """Pick up to `count` distinct recruits from a (defeated) empire, biased by
+    member *level* through a Gaussian whose peak slides with the player's
+    Magic Find (0..100).
+
+    Distribution over level (formulation (A)):
+        lo, hi = min / max member level in the crew
+        t      = magic_find / 100               (clamped to [0, 1])
+        mu     = lo + t * (hi - lo)             peak slides lo -> hi
+        sigma  = (hi - lo) / 6                  fixed, so at MF=0 the +3 sigma
+                                                edge sits at the midpoint and
+                                                everything above is deep tail
+
+    Each draw samples a target level x ~ Normal(mu, sigma), clamps it to
+    [lo, hi], and takes the crew member whose level is nearest to x (ties
+    broken randomly). Draws are WITHOUT replacement, so the result is up to
+    `count` *distinct* members (fewer only if the crew is smaller than `count`).
+    The distribution is over level alone and ignores rarity, so a low-level but
+    high-rarity member can still be drawn even at low Magic Find.
+
+    Returns a list of fresh Member copies (empty if the empire has no members).
+    """
     import random as _random
     rng = rng or _random
     if not empire.members:
-        return None
-    best_rarity = max(RARITY_ORDER[m.rarity] for m in empire.members)
-    pool = [m for m in empire.members if RARITY_ORDER[m.rarity] == best_rarity]
-    top_level = max(m.level for m in pool)
-    pool = [m for m in pool if m.level == top_level]
-    return rng.choice(pool).copy_identity()
+        return []
+
+    remaining = list(empire.members)
+    levels = [m.level for m in remaining]
+    lo, hi = min(levels), max(levels)
+    t = max(0.0, min(1.0, magic_find / 100.0))
+    mu = lo + t * (hi - lo)
+    # Guard the degenerate case where every member is the same level (hi == lo):
+    # sigma would be 0, so just draw uniformly at random.
+    sigma = (hi - lo) / 6.0
+
+    picks = []
+    for _ in range(min(count, len(remaining))):
+        if sigma <= 0:
+            chosen = rng.choice(remaining)
+        else:
+            x = rng.gauss(mu, sigma)
+            x = max(float(lo), min(float(hi), x))
+            # Nearest level to x; break ties randomly among the equally-near.
+            best_dist = min(abs(m.level - x) for m in remaining)
+            nearest = [m for m in remaining if abs(m.level - x) == best_dist]
+            chosen = rng.choice(nearest)
+        remaining.remove(chosen)
+        picks.append(chosen.copy_identity())
+    return picks
